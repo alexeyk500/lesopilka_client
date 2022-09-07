@@ -1,0 +1,8 @@
+.container {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  height: 56px;
+  background-color: var(--section_background);
+  box-shadow: var(--box_shadow);
+}
