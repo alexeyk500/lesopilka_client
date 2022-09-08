@@ -134,6 +134,10 @@ template {
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .appContainer {
   display: flex;
   width: 100vw;

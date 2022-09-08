@@ -1,0 +1,5 @@
+.container {
+  display: flex;
+  font-weight: bold;
+  color: var(--dark_blue_color);
+}

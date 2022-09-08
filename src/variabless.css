@@ -1,7 +1,8 @@
 :root {
   --main_background: #FAFAFA;
   --section_background: #FFFFFF;
-  --blue_collor: #4A90E2;
+  --blue_color: #4A90E2;
+  --dark_blue_color: #3E4FFF; /*--dark_blue_color: #5C69DE;*/
 
   --box_shadow: 1px 2px 25px rgba(102, 126, 234, 0.2);
 }

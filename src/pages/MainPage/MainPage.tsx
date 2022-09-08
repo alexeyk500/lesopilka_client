@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MainPage: React.FC = () => {
-  return <div>Hello Lesopilka24</div>;
+  return <div>Hello World</div>;
 };
 
 export default MainPage;
