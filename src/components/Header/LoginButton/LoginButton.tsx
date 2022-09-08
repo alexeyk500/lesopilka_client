@@ -1,7 +1,8 @@
 import React from 'react';
 import classes from './LoginButton.module.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { selectorUser, showLoginPopUp } from '../../../store/userSlice';
+import { selectorUser } from '../../../store/userSlice';
+import { showPopUp } from '../../../store/appSlice';
 
 const LoginButton: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +10,7 @@ const LoginButton: React.FC = () => {
 
   const onClickLogin = () => {
     if (!user) {
-      dispatch(showLoginPopUp());
+      dispatch(showPopUp());
     }
   };
 

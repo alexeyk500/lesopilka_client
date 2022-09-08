@@ -2,14 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 import classes from './LoginPopUp.module.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { hideLoginPopUp, selectorUserIsShowLoginPopUp } from '../../../store/userSlice';
+import { hidePopUp, selectorShowPopUp } from '../../../store/appSlice';
 
 const LoginPopUp: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isShow = useAppSelector(selectorUserIsShowLoginPopUp);
+  const isShow = useAppSelector(selectorShowPopUp);
 
   const closePopUp = () => {
-    dispatch(hideLoginPopUp());
+    dispatch(hidePopUp());
   };
 
   return (

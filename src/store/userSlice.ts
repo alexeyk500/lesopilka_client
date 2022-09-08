@@ -4,12 +4,10 @@ import { UserType } from '../types/types';
 
 type UserSliceType = {
   user: UserType | undefined;
-  isShowLoginPopUp: boolean;
 };
 
 const initialState: UserSliceType = {
   user: undefined,
-  isShowLoginPopUp: false,
 };
 
 export const userSlice = createSlice({
@@ -18,12 +16,6 @@ export const userSlice = createSlice({
   reducers: {
     resetUser: (state) => {
       state.user = undefined;
-    },
-    showLoginPopUp: (state) => {
-      state.isShowLoginPopUp = true;
-    },
-    hideLoginPopUp: (state) => {
-      state.isShowLoginPopUp = false;
     },
   },
   // extraReducers: (builder) => {
@@ -41,9 +33,8 @@ export const userSlice = createSlice({
   // },
 });
 
-export const { resetUser, showLoginPopUp, hideLoginPopUp } = userSlice.actions;
+export const { resetUser } = userSlice.actions;
 
 export const selectorUser = (state: RootState) => state.user.user;
-export const selectorUserIsShowLoginPopUp = (state: RootState) => state.user.isShowLoginPopUp;
 
 export default userSlice.reducer;
