@@ -4,3 +4,7 @@
   color: var(--dark_blue_color);
   cursor: pointer;
 }
+
+.customClassBottomBtnGroup {
+  padding: 0 32px 0 64px;
+}
