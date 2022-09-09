@@ -1,9 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import classes from './LoginForm.module.css';
 import emailIco from './../../../img/mail.svg';
 import passwordIco from './../../../img/password.svg';
+import eyeIco from "../../../img/eyeIco.svg";
 
 const LoginForm = () => {
+
+  const [typePasswordInput, setTypePasswordInput] = useState<string>('password');
+
+  const onClickShowPassword = () => {
+    setTypePasswordInput((value) => {
+      if (value === 'password') {
+        return 'text';
+      }
+      return 'password';
+    });
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.mainPart}>
@@ -29,12 +42,13 @@ const LoginForm = () => {
             <input
               className={classes.input}
               name="password"
-              type="password"
+              type={typePasswordInput}
               autoComplete="off"
               placeholder={'Введите пароль'}
               required
             />
           </label>
+          <img src={eyeIco} className={classes.eyeIco} alt="email" onClick={onClickShowPassword} />
         </div>
       </div>
     </div>
