@@ -15,6 +15,19 @@
   flex-direction: column;
 }
 
+.titleBold {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 3px;
+  color: var(--blue_color);
+  white-space: pre-line;
+}
+
 .title {
   display: flex;
   width: 100%;
@@ -25,7 +38,16 @@
   font-size: 16px;
   line-height: 20px;
   color: var(--blue_color);
-  white-space: pre-line;
+}
+
+.field {
+  display: flex;
+  width: 100%;
+}
+
+.ico {
+  width: 32px;
+  margin-right: 12px ;
 }
 
 .label {
@@ -39,7 +61,7 @@
   color: var(--blue_color);
 }
 
-.label + .label {
+.field + .field {
   margin-top: 28px;
 }
 
