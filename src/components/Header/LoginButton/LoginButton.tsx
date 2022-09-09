@@ -4,27 +4,57 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import LoginForm from '../LoginForm/LoginForm';
-import RegistrationButton from '../LoginForm/RegistrationButton/RegistrationButton';
-import ForgotPasswordButton from '../LoginForm/ForgotPasswordButton/ForgotPasswordButton';
+import ButtonComponent, { ButtonType } from '../../commonComponents/ButtonComponent/ButtonComponent';
+import RegistrationForm from '../RegistrationForm/RegistrationForm';
 
 const LoginButton: React.FC = () => {
   const user = useAppSelector(selectorUser);
 
-  const onClosePopUp = (response: boolean | FormData | undefined) => {
+  const onCloseLoginPopUp = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
       const email = response.get('email');
       const password = response.get('password');
-      console.log('email =', email, '   password =', password);
-    } else {
-      console.log('response =', response);
+      console.log('onCloseLoginPopUp: email =', email, '   password =', password);
     }
+  };
+
+  const onCloseRegistrationPopUp = (response: boolean | FormData | undefined) => {
+    if (response instanceof FormData) {
+      const email = response.get('email');
+      const password = response.get('password');
+      console.log('onCloseRegistrationPopUp: email =', email, '   password =', password);
+    }
+  };
+
+  const RegistrationButton: React.FC = () => {
+    const onRegisterClick = () => {
+      showPortalPopUp({
+        popUpContent: <RegistrationForm />,
+        onClosePopUp: onCloseRegistrationPopUp,
+        titleConfirmBtn: 'Регистрация',
+      });
+    };
+    return (
+      <ButtonComponent title={'Регистрация'} buttonType={ButtonType.SECONDARY} onClick={onRegisterClick} type="reset" />
+    );
+  };
+
+  const ForgotPasswordButton: React.FC = () => {
+    const onForgotClick = () => {
+      showPortalPopUp({
+        popUpContent: <h1>Забыл пароль</h1>,
+      });
+    };
+    return (
+      <ButtonComponent className={classes.forgotBtn} title={'Не помню пароль'} onClick={onForgotClick} type="reset" />
+    );
   };
 
   const onClickLogin = () => {
     if (!user) {
       showPortalPopUp({
         popUpContent: <LoginForm />,
-        onClosePopUp: onClosePopUp,
+        onClosePopUp: onCloseLoginPopUp,
         hideCancelBottomBtn: true,
         customBottomBtn: <RegistrationButton />,
         customBottomBtnTwo: <ForgotPasswordButton />,

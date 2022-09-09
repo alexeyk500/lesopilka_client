@@ -43,11 +43,20 @@ const PortalPopUp: React.FC<PropsType> = ({
     const form = formRef?.current;
     if (form && form.checkValidity()) {
       const formData = new FormData(form);
-      if (!!formData.entries().next().value) {
-        onClosePopUp && onClosePopUp(formData);
-      } else {
-        onClosePopUp && onClosePopUp(true);
+      if (formData) {
+        const blockToClosePopUp = formData.get('blockToClosePopUp');
+        if (blockToClosePopUp) {
+          if (blockToClosePopUp === 'false') {
+            onClosePopUp && onClosePopUp(formData);
+            destroyPortalPopUp();
+          }
+        } else {
+          onClosePopUp && onClosePopUp(formData);
+          destroyPortalPopUp();
+        }
       }
+    } else {
+      onClosePopUp && onClosePopUp(true);
       destroyPortalPopUp();
     }
   };
@@ -79,6 +88,7 @@ const PortalPopUp: React.FC<PropsType> = ({
 export const showPortalPopUp = ({
   popUpContent,
   onClosePopUp,
+  titleConfirmBtn,
   hideCancelBottomBtn,
   customBottomBtn,
   customBottomBtnTwo,
@@ -86,6 +96,7 @@ export const showPortalPopUp = ({
 }: {
   popUpContent: React.ReactNode;
   onClosePopUp?: (result?: boolean | FormData) => void;
+  titleConfirmBtn?: string;
   hideCancelBottomBtn?: boolean;
   customBottomBtn?: React.ReactNode;
   customBottomBtnTwo?: React.ReactNode;
@@ -102,6 +113,7 @@ export const showPortalPopUp = ({
       divId={div.id}
       popUpRoot={popUpRoot}
       onClosePopUp={onClosePopUp}
+      titleConfirmBtn={titleConfirmBtn}
       hideCancelBottomBtn={hideCancelBottomBtn}
       customBottomBtn={customBottomBtn}
       customBottomBtnTwo={customBottomBtnTwo}

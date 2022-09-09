@@ -16,7 +16,7 @@ const LoginForm = () => {
             <input
               className={classes.input}
               name="email"
-              type="text"
+              type="email"
               placeholder={'Введите электронную почту'}
               required
             />

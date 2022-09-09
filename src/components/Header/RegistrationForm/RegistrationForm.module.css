@@ -1,0 +1,113 @@
+.container {
+  display: flex;
+  width: 600px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  background-color: inherit;
+}
+
+.mainPart {
+  display: flex;
+  width: 100%;
+  padding: 48px 32px 24px 32px;
+  flex-direction: column;
+}
+
+.titleBold {
+  display: flex;
+  width: 100%;
+  margin-bottom: 4px;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 3px;
+  color: var(--blue_color);
+  white-space: pre-line;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--blue_color);
+}
+
+.titleLine {
+  display: flex;
+  width: 100%;
+  margin-bottom: 28px;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: var(--blue_color);
+}
+
+.field {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.ico {
+  width: 32px;
+  margin-right: 12px ;
+}
+
+.eyeIco{
+  position: absolute;
+  top: 8px;
+  right: 0;
+  cursor: pointer;
+}
+
+.label {
+  display: flex;
+  width: 100%;
+  margin-left: 2px;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--blue_color);
+}
+
+.field + .field {
+  margin-top: 28px;
+}
+
+.input {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 4px;
+  outline: none;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: solid 2px var(--blue_color);
+  background-color: #FFFFFF;
+  color: var(--dark_blue_color);
+}
+
+.checkPasswordInfo {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  margin-left: 43px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--green_color);
+}
+
+.blockToClose {
+  color: var(--red_color);
+}
