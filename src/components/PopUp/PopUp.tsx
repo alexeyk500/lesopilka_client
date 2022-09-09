@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { hidePopUp, selectorShowPopUp } from '../../store/appSlice';
 import ButtonComponent, { ButtonType } from '../commonComponents/ButtonComponent/ButtonComponent';
 import { clearFormAfterSubmit } from '../../utils/functions';
-import {createRoot} from "react-dom/client";
+import { createRoot } from 'react-dom/client';
 
 type PropsType = {
   popUpContent: React.ReactNode;
@@ -98,7 +98,7 @@ export const showPopUp = () => {
 
   const popUpContainer = document.getElementById(div.id)!;
   const rootPopUp = createRoot(popUpContainer);
-  rootPopUp.render(<ButtonComponent title={'Ok'} />)
-}
+  rootPopUp.render(<ButtonComponent title={'Ok'} />);
+};
 
 export default PopUp;
