@@ -7,6 +7,7 @@ import LoginForm from './LoginForm/LoginForm';
 import ButtonComponent, { ButtonType } from '../../commonComponents/ButtonComponent/ButtonComponent';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 import ConfirmEmailForm from './ConfirmEmailForm/ConfirmEmailForm';
+import { serverApi } from '../../../api/serverApi';
 
 const LoginButton: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -19,21 +20,29 @@ const LoginButton: React.FC = () => {
     }
   };
 
-  const onCloseRegistrationPopUp = (response: boolean | FormData | undefined) => {
+  const onCloseRegistrationPopUp = async (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
       const email = response.get('email')!.toString();
       const password = response.get('password')!.toString();
-      console.log('onCloseRegistrationPopUp: email =', email, '   password =', password);
       if (email && password) {
-        showPortalPopUp({
-          popUpContent: <ConfirmEmailForm email={email} />,
-          titleConfirmBtn: 'Понятно',
-          oneCenterConfirmBtn: true,
-          customClassBottomBtnGroup: classes.oneCenterBtn,
-        });
+        try {
+          await serverApi.sendConfirmationEmail(email, password);
+          showPortalPopUp({
+            popUpContent: <ConfirmEmailForm email={email} />,
+            titleConfirmBtn: 'Понятно',
+            oneCenterConfirmBtn: true,
+            customClassBottomBtnGroup: classes.oneCenterBtn,
+          });
+        } catch (e) {
+          showPortalPopUp({
+            popUpContent: <h3>{`${email} - Ошибка отправки письма`}</h3>,
+            titleConfirmBtn: 'Понятно',
+            oneCenterConfirmBtn: true,
+          });
+        }
       } else {
         showPortalPopUp({
-          popUpContent: <h5>Что-то пошло не так</h5>,
+          popUpContent: <h3>Что-то пошло не так</h3>,
           titleConfirmBtn: 'Понятно',
           oneCenterConfirmBtn: true,
         });
