@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import classes from './LoginForm.module.css';
-import emailIco from './../../../img/mail.svg';
-import passwordIco from './../../../img/password.svg';
-import eyeIco from "../../../img/eyeIco.svg";
+import emailIco from '../../../../img/mail.svg';
+import passwordIco from '../../../../img/password.svg';
+import eyeIco from '../../../../img/eyeIco.svg';
 
 const LoginForm = () => {
-
   const [typePasswordInput, setTypePasswordInput] = useState<string>('password');
 
   const onClickShowPassword = () => {

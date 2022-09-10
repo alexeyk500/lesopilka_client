@@ -10,6 +10,7 @@ type PropsType = {
   popUpContent: React.ReactNode;
   onClosePopUp?: (result?: boolean | FormData) => void;
   titleConfirmBtn?: string;
+  oneCenterConfirmBtn?: boolean;
   hideCancelBottomBtn?: boolean;
   customBottomBtn?: React.ReactNode;
   customBottomBtnTwo?: React.ReactNode;
@@ -22,6 +23,7 @@ const PortalPopUp: React.FC<PropsType> = ({
   popUpRoot,
   onClosePopUp,
   titleConfirmBtn,
+  oneCenterConfirmBtn,
   hideCancelBottomBtn,
   customBottomBtn,
   customBottomBtnTwo,
@@ -74,9 +76,16 @@ const PortalPopUp: React.FC<PropsType> = ({
           &times;
         </button>
         {popUpContent}
-        <div className={classNames(classes.btnGroups, { [customClassBtnGroup]: customClassBottomBtnGroup })}>
+        <div
+          className={classNames(classes.btnGroups, {
+            [classes.oneCenterConfirmBtn]: oneCenterConfirmBtn,
+            [customClassBtnGroup]: customClassBottomBtnGroup,
+          })}
+        >
           <ButtonComponent title={titleConfirmBtn ? titleConfirmBtn : 'Подтвердить'} type="submit" />
-          {!hideCancelBottomBtn && <ButtonComponent title="Отмена" buttonType={ButtonType.SECONDARY} type="reset" />}
+          {!hideCancelBottomBtn && !oneCenterConfirmBtn && (
+            <ButtonComponent title="Отмена" buttonType={ButtonType.SECONDARY} type="reset" />
+          )}
           {customBottomBtn && customBottomBtn}
           {customBottomBtnTwo && customBottomBtnTwo}
         </div>
@@ -89,6 +98,7 @@ export const showPortalPopUp = ({
   popUpContent,
   onClosePopUp,
   titleConfirmBtn,
+  oneCenterConfirmBtn,
   hideCancelBottomBtn,
   customBottomBtn,
   customBottomBtnTwo,
@@ -97,6 +107,7 @@ export const showPortalPopUp = ({
   popUpContent: React.ReactNode;
   onClosePopUp?: (result?: boolean | FormData) => void;
   titleConfirmBtn?: string;
+  oneCenterConfirmBtn?: boolean;
   hideCancelBottomBtn?: boolean;
   customBottomBtn?: React.ReactNode;
   customBottomBtnTwo?: React.ReactNode;
@@ -114,6 +125,7 @@ export const showPortalPopUp = ({
       popUpRoot={popUpRoot}
       onClosePopUp={onClosePopUp}
       titleConfirmBtn={titleConfirmBtn}
+      oneCenterConfirmBtn={oneCenterConfirmBtn}
       hideCancelBottomBtn={hideCancelBottomBtn}
       customBottomBtn={customBottomBtn}
       customBottomBtnTwo={customBottomBtnTwo}

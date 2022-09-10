@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import classes from './RegistrationForm.module.css';
-import emailIco from './../../../img/mail.svg';
-import passwordIco from './../../../img/password.svg';
-import eyeIco from './../../../img/eyeIco.svg';
+import emailIco from '../../../../img/mail.svg';
+import passwordIco from '../../../../img/password.svg';
+import eyeIco from '../../../../img/eyeIco.svg';
 import classNames from 'classnames';
 
 const RegistrationForm: React.FC = () => {
