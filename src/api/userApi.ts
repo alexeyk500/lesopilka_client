@@ -8,7 +8,7 @@ export const userApi = {
   },
 
   async sendConfirmationEmail(email: string, password: string) {
-    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/user/send_confirmation_email', {
+    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/send_confirmation_email', {
       email,
       password,
     });

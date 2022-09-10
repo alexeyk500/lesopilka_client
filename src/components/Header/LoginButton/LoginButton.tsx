@@ -33,9 +33,15 @@ const LoginButton: React.FC = () => {
             oneCenterConfirmBtn: true,
             customClassBottomBtnGroup: classes.oneCenterBtn,
           });
-        } catch (e) {
+        } catch (e: any) {
           showPortalPopUp({
-            popUpContent: <h3>{`${email} - Ошибка отправки письма`}</h3>,
+            popUpContent: (
+              <>
+                <h3 style={{ color: '#4A90E2', marginTop: 32 }}>{`${email} - Ошибка регистрации`}</h3>
+                <br />
+                {e.response.data.message && <h4 style={{ color: '#FF0000' }}>{e.response.data.message}</h4>}
+              </>
+            ),
             titleConfirmBtn: 'Понятно',
             oneCenterConfirmBtn: true,
           });
