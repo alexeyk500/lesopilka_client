@@ -2,13 +2,17 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import MainPage from '../../pages/MainPage/MainPage';
 import UserPage from '../../pages/UserPage/UserPage';
+import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
 
 type RouteType = {
   path: string;
   element: JSX.Element;
 };
 
-const publicRoutes: RouteType[] = [{ path: '/', element: <MainPage /> }];
+const publicRoutes: RouteType[] = [
+  { path: '/', element: <MainPage /> },
+  { path: '/success_registration', element: <SuccessRegistrationPage /> },
+];
 
 const protectedRoutes: RouteType[] = [{ path: '/user', element: <UserPage /> }];
 

@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  color: var(--blue_color);
+}
+
+.title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 1px;
+  white-space: pre-line;
+  margin-bottom: 24px;
+}
+
+.subTitle {
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  white-space: pre-line;
+}
