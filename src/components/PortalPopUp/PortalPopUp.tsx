@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useRef } from 'react';
 import classes from './PortalPopUp.module.css';
 import { createRoot, Root } from 'react-dom/client';
 import classNames from 'classnames';
@@ -42,13 +42,13 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
     const formRef = useRef<HTMLFormElement | null>(null);
     const customClassBtnGroup = classNames(customClassBottomBtnGroup);
 
-    const destroyPortalPopUp = () => {
+    const destroyPortalPopUp = useCallback(() => {
       popUpRoot.unmount();
       const div = document.getElementById(divId);
       if (div) {
         div.parentNode?.removeChild(div);
       }
-    };
+    }, [divId, popUpRoot]);
 
     useImperativeHandle<PopupRef, PopupRef>(
       ref,
@@ -58,7 +58,7 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
           destroyPortalPopUp();
         },
       }),
-      [onClosePopUp]
+      [onClosePopUp, destroyPortalPopUp]
     );
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
