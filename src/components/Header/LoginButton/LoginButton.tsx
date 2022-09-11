@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import classes from './LoginButton.module.css';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
-import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
+import { PopupRef, showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import LoginForm from './LoginForm/LoginForm';
 import ButtonComponent, { ButtonType } from '../../commonComponents/ButtonComponent/ButtonComponent';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
@@ -11,6 +11,7 @@ import { serverApi } from '../../../api/serverApi';
 
 const LoginButton: React.FC = () => {
   const user = useAppSelector(selectorUser);
+  const preloaderPopUpRef = useRef<PopupRef | null>(null);
 
   const onCloseLoginPopUp = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
@@ -26,7 +27,13 @@ const LoginButton: React.FC = () => {
       const password = response.get('password')!.toString();
       if (email && password) {
         try {
+          showPortalPopUp({
+            popUpContent: <h3 style={{ color: '#4A90E2', margin: '64px 96px 64px 96px' }}>Регистрация...</h3>,
+            withoutButtons: true,
+            ref: preloaderPopUpRef,
+          });
           await serverApi.sendConfirmationEmail(email, password);
+          preloaderPopUpRef.current?.closePopup();
           showPortalPopUp({
             popUpContent: <ConfirmEmailForm email={email} />,
             titleConfirmBtn: 'Понятно',
@@ -34,6 +41,7 @@ const LoginButton: React.FC = () => {
             customClassBottomBtnGroup: classes.oneCenterBtn,
           });
         } catch (e: any) {
+          preloaderPopUpRef.current?.closePopup();
           showPortalPopUp({
             popUpContent: (
               <>
@@ -47,6 +55,7 @@ const LoginButton: React.FC = () => {
           });
         }
       } else {
+        preloaderPopUpRef.current?.closePopup();
         showPortalPopUp({
           popUpContent: <h3>Что-то пошло не так</h3>,
           titleConfirmBtn: 'Понятно',

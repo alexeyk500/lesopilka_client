@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import classes from './PortalPopUp.module.css';
 import { createRoot, Root } from 'react-dom/client';
 import classNames from 'classnames';
@@ -15,84 +15,111 @@ type PropsType = {
   customBottomBtn?: React.ReactNode;
   customBottomBtnTwo?: React.ReactNode;
   customClassBottomBtnGroup?: string;
+  withoutButtons?: boolean;
 };
 
-const PortalPopUp: React.FC<PropsType> = ({
-  popUpContent,
-  divId,
-  popUpRoot,
-  onClosePopUp,
-  titleConfirmBtn,
-  oneCenterConfirmBtn,
-  hideCancelBottomBtn,
-  customBottomBtn,
-  customBottomBtnTwo,
-  customClassBottomBtnGroup,
-}) => {
-  const formRef = useRef<HTMLFormElement | null>(null);
-  const customClassBtnGroup = classNames(customClassBottomBtnGroup);
+export interface PopupRef {
+  closePopup: () => void;
+}
 
-  const destroyPortalPopUp = () => {
-    popUpRoot.unmount();
-    const div = document.getElementById(divId);
-    if (div) {
-      div.parentNode?.removeChild(div);
-    }
-  };
+const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
+  (
+    {
+      popUpContent,
+      divId,
+      popUpRoot,
+      onClosePopUp,
+      titleConfirmBtn,
+      oneCenterConfirmBtn,
+      hideCancelBottomBtn,
+      customBottomBtn,
+      customBottomBtnTwo,
+      customClassBottomBtnGroup,
+      withoutButtons,
+    },
+    ref
+  ) => {
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const customClassBtnGroup = classNames(customClassBottomBtnGroup);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = formRef?.current;
-    if (form && form.checkValidity()) {
-      const formData = new FormData(form);
-      if (formData) {
-        const blockToClosePopUp = formData.get('blockToClosePopUp');
-        if (blockToClosePopUp) {
-          if (blockToClosePopUp === 'false') {
+    const destroyPortalPopUp = () => {
+      popUpRoot.unmount();
+      const div = document.getElementById(divId);
+      if (div) {
+        div.parentNode?.removeChild(div);
+      }
+    };
+
+    useImperativeHandle<PopupRef, PopupRef>(
+      ref,
+      () => ({
+        closePopup() {
+          onClosePopUp && onClosePopUp();
+          destroyPortalPopUp();
+        },
+      }),
+      [onClosePopUp]
+    );
+
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = formRef?.current;
+      if (form && form.checkValidity()) {
+        const formData = new FormData(form);
+        if (formData) {
+          const blockToClosePopUp = formData.get('blockToClosePopUp');
+          if (blockToClosePopUp) {
+            if (blockToClosePopUp === 'false') {
+              onClosePopUp && onClosePopUp(formData);
+              destroyPortalPopUp();
+            }
+          } else {
             onClosePopUp && onClosePopUp(formData);
             destroyPortalPopUp();
           }
-        } else {
-          onClosePopUp && onClosePopUp(formData);
-          destroyPortalPopUp();
         }
+      } else {
+        onClosePopUp && onClosePopUp(true);
+        destroyPortalPopUp();
       }
-    } else {
-      onClosePopUp && onClosePopUp(true);
+    };
+
+    const onReset = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onClosePopUp && onClosePopUp();
       destroyPortalPopUp();
-    }
-  };
+    };
 
-  const onReset = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onClosePopUp && onClosePopUp();
-    destroyPortalPopUp();
-  };
-
-  return (
-    <form ref={formRef} className={classes.container} onSubmit={onSubmit} onReset={onReset}>
-      <div className={classes.content}>
-        <button className={classes.topCloseBtn} type="reset">
-          &times;
-        </button>
-        {popUpContent}
-        <div
-          className={classNames(classes.btnGroups, {
-            [classes.oneCenterConfirmBtn]: oneCenterConfirmBtn,
-            [customClassBtnGroup]: customClassBottomBtnGroup,
-          })}
-        >
-          <ButtonComponent title={titleConfirmBtn ? titleConfirmBtn : 'Подтвердить'} type="submit" />
-          {!hideCancelBottomBtn && !oneCenterConfirmBtn && (
-            <ButtonComponent title="Отмена" buttonType={ButtonType.SECONDARY} type="reset" />
+    return (
+      <form ref={formRef} className={classes.container} onSubmit={onSubmit} onReset={onReset}>
+        <div className={classes.content}>
+          {!withoutButtons && !oneCenterConfirmBtn && (
+            <button className={classes.topCloseBtn} type="reset">
+              &times;
+            </button>
           )}
-          {customBottomBtn && customBottomBtn}
-          {customBottomBtnTwo && customBottomBtnTwo}
+
+          {popUpContent}
+          {!withoutButtons && (
+            <div
+              className={classNames(classes.btnGroups, {
+                [classes.oneCenterConfirmBtn]: oneCenterConfirmBtn,
+                [customClassBtnGroup]: customClassBottomBtnGroup,
+              })}
+            >
+              <ButtonComponent title={titleConfirmBtn ? titleConfirmBtn : 'Подтвердить'} type="submit" />
+              {!hideCancelBottomBtn && !oneCenterConfirmBtn && (
+                <ButtonComponent title="Отмена" buttonType={ButtonType.SECONDARY} type="reset" />
+              )}
+              {customBottomBtn && customBottomBtn}
+              {customBottomBtnTwo && customBottomBtnTwo}
+            </div>
+          )}
         </div>
-      </div>
-    </form>
-  );
-};
+      </form>
+    );
+  }
+);
 
 export const showPortalPopUp = ({
   popUpContent,
@@ -103,6 +130,8 @@ export const showPortalPopUp = ({
   customBottomBtn,
   customBottomBtnTwo,
   customClassBottomBtnGroup,
+  ref,
+  withoutButtons,
 }: {
   popUpContent: React.ReactNode;
   onClosePopUp?: (result?: boolean | FormData) => void;
@@ -112,6 +141,8 @@ export const showPortalPopUp = ({
   customBottomBtn?: React.ReactNode;
   customBottomBtnTwo?: React.ReactNode;
   customClassBottomBtnGroup?: string;
+  ref?: React.MutableRefObject<PopupRef | null>;
+  withoutButtons?: boolean;
 }) => {
   const div = document.createElement('div');
   div.id = 'popup' + new Date().getTime();
@@ -130,6 +161,8 @@ export const showPortalPopUp = ({
       customBottomBtn={customBottomBtn}
       customBottomBtnTwo={customBottomBtnTwo}
       customClassBottomBtnGroup={customClassBottomBtnGroup}
+      withoutButtons={withoutButtons}
+      ref={ref}
     />
   );
 };
