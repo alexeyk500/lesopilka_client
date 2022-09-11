@@ -31,9 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx ./src",
-    "build": "react-scripts build",
-    "test": "react-scripts test"
+    "lint": "eslint --fix --ext .ts,.tsx,.js,.jsx ./src"
   },
   "eslintConfig": {
     "extends": [
