@@ -161,11 +161,6 @@ const LoginButton: React.FC = () => {
             ref: preloaderPopUpRef,
           });
           await serverApi.sendRecoveryPasswordEmail(email);
-          // await new Promise((resolve) => {
-          //   setTimeout(() => {
-          //     resolve(undefined);
-          //   }, 1000);
-          // });
           preloaderPopUpRef.current?.closePopup();
           showPortalPopUp({
             popUpContent: <ConfirmSendingPasswordRecoveryCodeForm email={email} />,
