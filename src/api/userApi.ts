@@ -14,4 +14,19 @@ export const userApi = {
     });
     return response.data;
   },
+
+  async sendRecoveryPasswordEmail(email: string) {
+    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/send_recovery_password_email', {
+      email,
+    });
+    return response.data;
+  },
+
+  async sendConfirmedRecoveryPasswordCode(code: string, password: string) {
+    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/confirm_recovery_password_code', {
+      code,
+      password,
+    });
+    return response.data;
+  },
 };

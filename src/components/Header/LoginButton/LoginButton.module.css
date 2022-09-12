@@ -16,7 +16,7 @@
   font-weight: bold;
   border: none;
   background-color: #FFFFFF;
-  color: var(--blue_color);
+  color: var(--red_color);
   cursor: pointer;
   text-decoration-line: underline;
 }

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import MainPage from '../MainPage/MainPage';
 import { showPortalPopUp } from '../../components/PortalPopUp/PortalPopUp';
-import {useNavigate} from "react-router-dom";
-import SuccessRegistrationMessageForm from "./SuccessRegistrationMessageForm/SuccessRegistrationMessageForm";
+import { useNavigate } from 'react-router-dom';
+import SuccessRegistrationMessageForm from './SuccessRegistrationMessageForm/SuccessRegistrationMessageForm';
 
 const SuccessRegistrationPage: React.FC = () => {
   const navigate = useNavigate();
 
   const onClosePopUp = () => {
-    navigate('/', { replace: true })
+    navigate('/', { replace: true });
   };
 
   useEffect(() => {
@@ -18,6 +18,7 @@ const SuccessRegistrationPage: React.FC = () => {
       oneCenterConfirmBtn: true,
       onClosePopUp: onClosePopUp,
     });
+    // eslint-disable-next-line
   }, []);
   return (
     <>
