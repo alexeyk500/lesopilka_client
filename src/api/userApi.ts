@@ -1,7 +1,15 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CheckTokenServerType, SendConfirmationEmailServerType } from './serverResponseTypes';
+import { CheckTokenServerType, SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
 
 export const userApi = {
+  async userLoginByPassword(email: string, password: string) {
+    const response = await instanceAxios.post<UserLoginServerType>('/user/login', {
+      email,
+      password,
+    });
+    return response.data;
+  },
+
   async checkToken(token: string) {
     const response = await instanceAxios.get<CheckTokenServerType>('/user/auth', setAuthHeader(token));
     return response.data;

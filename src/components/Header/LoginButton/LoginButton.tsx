@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import classes from './LoginButton.module.css';
-import { useAppSelector } from '../../../hooks/hooks';
-import { selectorUser } from '../../../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { resetUser, selectorUser, userLoginByPasswordThunk } from '../../../store/userSlice';
 import { PopupRef, showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import LoginForm from './LoginForm/LoginForm';
 import ButtonComponent, { ButtonType } from '../../commonComponents/ButtonComponent/ButtonComponent';
@@ -11,16 +11,38 @@ import { serverApi } from '../../../api/serverApi';
 import EmailInputForm from './EmailInputForm/EmailInputForm';
 import ConfirmSendingPasswordRecoveryCodeForm from './ConfirmSendingPasswordRecoveryCodeForm/ConfirmSendingPasswordRecoveryCodeForm';
 import EnterCodeForgotPasswordForm from './EnterCodeForgotPasswordForm/EnterCodeForgotPasswordForm';
+import {
+  showConfirmPopUp,
+  showErrorPopUp,
+  showPreloaderPopUp,
+} from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 const LoginButton: React.FC = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const preloaderPopUpRef = useRef<PopupRef | null>(null);
 
-  const onCloseLoginPopUp = (response: boolean | FormData | undefined) => {
+  const onCloseLoginPopUp = async (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const email = response.get('email');
-      const password = response.get('password');
-      console.log('onCloseLoginPopUp: email =', email, '   password =', password);
+      const email = response.get('email')!.toString();
+      const password = response.get('password')!.toString();
+      if (email && password) {
+        try {
+          showPreloaderPopUp('Вход в систему...', preloaderPopUpRef);
+          dispatch(userLoginByPasswordThunk({ email, password })).then(() => {
+            preloaderPopUpRef.current?.closePopup();
+          });
+        } catch (e: any) {
+          preloaderPopUpRef.current?.closePopup();
+          const message =
+            `${email} - Ошибка входа в систему` + e.message
+              ? `\n${e.message}`
+              : '' + e.response.data.message
+              ? `\n${e.response.data.message}`
+              : '';
+          showErrorPopUp(message);
+        }
+      }
     }
   };
 
@@ -209,16 +231,27 @@ const LoginButton: React.FC = () => {
     );
   };
 
+  const loginUser = () => {
+    showPortalPopUp({
+      popUpContent: <LoginForm />,
+      onClosePopUp: onCloseLoginPopUp,
+      titleConfirmBtn: 'Войти',
+      hideCancelBottomBtn: true,
+      customBottomBtn: <RegistrationButton />,
+      customBottomBtnTwo: <ForgotPasswordButton />,
+      customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
+    });
+  };
+
+  const logoutUser = () => {
+    dispatch(resetUser());
+  };
+
   const onClickLogin = () => {
-    if (!user) {
-      showPortalPopUp({
-        popUpContent: <LoginForm />,
-        onClosePopUp: onCloseLoginPopUp,
-        hideCancelBottomBtn: true,
-        customBottomBtn: <RegistrationButton />,
-        customBottomBtnTwo: <ForgotPasswordButton />,
-        customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
-      });
+    if (user) {
+      showConfirmPopUp(`Выйти из аккаунта: \n${user.name}`, logoutUser);
+    } else {
+      loginUser();
     }
   };
 
