@@ -19,13 +19,16 @@ const Header: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      <MenuButton />
-      <Logo />
-      <PlaceSelector />
-      <Search />
-      <SelectedButton />
-      <CartButton />
-      <LoginButton />
+      <div className={classes.headerContent}>
+        <MenuButton />
+        <Logo />
+        <PlaceSelector />
+        <Search />
+        <SelectedButton />
+        <CartButton />
+        <LoginButton />
+      </div>
+
     </div>
   );
 };

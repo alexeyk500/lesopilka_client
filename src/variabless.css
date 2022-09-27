@@ -7,5 +7,8 @@
   --red_color: #FF0000;
   --gray_color: #4A4A4A;
 
-  --box_shadow: 1px 2px 25px rgba(102, 126, 234, 0.2);
+  --box_shadow_light: 1px 2px 8px rgba(102, 126, 234, 0.2);
+  --box_shadow: 1px 2px 8px rgba(102, 126, 234, 0.4);
+  --box_shadow_dark: 1px 2px 8px rgba(102, 126, 234, 0.6);
+
 }

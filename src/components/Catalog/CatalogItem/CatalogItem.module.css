@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 224px;
+  margin: 8px 0;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow_dark);
+  background-color: var(--section_background);
+  cursor: pointer;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.img {
+  width: 176px;
+  height: 112px;
+  border-radius: 12px;
+  object-fit: cover;
+}
