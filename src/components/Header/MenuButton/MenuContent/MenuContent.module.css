@@ -1,0 +1,13 @@
+.container {
+  position: absolute;
+  top: 62px;
+  display: flex;
+  width: 320px;
+  min-height: 650px;
+  background-color: #FFFFFF;
+  color: var(--gray_color);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  filter: drop-shadow(var(--box_shadow));
+}

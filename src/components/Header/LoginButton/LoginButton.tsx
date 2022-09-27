@@ -11,11 +11,8 @@ import { serverApi } from '../../../api/serverApi';
 import EmailInputForm from './EmailInputForm/EmailInputForm';
 import ConfirmSendingPasswordRecoveryCodeForm from './ConfirmSendingPasswordRecoveryCodeForm/ConfirmSendingPasswordRecoveryCodeForm';
 import EnterCodeForgotPasswordForm from './EnterCodeForgotPasswordForm/EnterCodeForgotPasswordForm';
-import {
-  showConfirmPopUp,
-  showErrorPopUp,
-  showPreloaderPopUp,
-} from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import classNames from 'classnames';
 
 const LoginButton: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -247,9 +244,20 @@ const LoginButton: React.FC = () => {
     dispatch(resetUser());
   };
 
+  const onClosePopUpLogout = (result?: boolean | FormData | undefined) => {
+    if (result) {
+      logoutUser();
+    }
+  };
+
   const onClickLogin = () => {
     if (user) {
-      showConfirmPopUp(`Выйти из аккаунта: \n${user.name}`, logoutUser);
+      showPortalPopUp({
+        popUpContent: <div className={classNames(classes.containerLogout)}>{`Выйти из аккаунта: \n${user.name}`}</div>,
+        titleConfirmBtn: 'Выйти',
+        customClassBottomBtnGroup: classes.customClassBottomBtnGroupLogout,
+        onClosePopUp: onClosePopUpLogout,
+      });
     } else {
       loginUser();
     }

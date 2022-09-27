@@ -20,3 +20,18 @@
   cursor: pointer;
   text-decoration-line: underline;
 }
+
+.customClassBottomBtnGroupLogout {
+  padding: 0 32px 0 32px;
+}
+
+.containerLogout {
+  display: flex;
+  margin: 64px 96px 64px 96px;
+  font-size: 24px;
+  line-height: 32px;
+  color: #4A90E2;
+  justify-content: center;
+  text-align: center;
+  white-space: pre-line;
+}

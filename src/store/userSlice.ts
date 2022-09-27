@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { UserType } from '../types/types';
 import { UserLoginServerType } from '../api/serverResponseTypes';
@@ -25,6 +25,21 @@ export const userLoginByPasswordThunk = createAsyncThunk<
   }
 });
 
+export const userLoginByTokenThunk = createAsyncThunk<UserLoginServerType, undefined, { rejectValue: string }>(
+  'user/userLoginByTokenThunk',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        return await serverApi.userLoginByToken(token);
+      }
+      return rejectWithValue('Токен отсутствует или невалиден');
+    } catch (e) {
+      return rejectWithValue('Ошибка авторизации по токену');
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState,
@@ -36,13 +51,15 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(userLoginByPasswordThunk.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
-      })
       .addCase(userLoginByPasswordThunk.rejected, (state, action) => {
         userSlice.caseReducers.resetUser(state);
-        showErrorPopUp(action.payload!);
+        if (action.payload && action.payload !== 'Токен отсутствует или невалиден') {
+          showErrorPopUp(action.payload);
+        }
+      })
+      .addMatcher(isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled), (state, action) => {
+        state.user = action.payload.user;
+        localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
       });
   },
 });

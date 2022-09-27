@@ -40,9 +40,7 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
     ref
   ) => {
     const formRef = useRef<HTMLFormElement | null>(null);
-    console.log('customClassBottomBtnGroup =', customClassBottomBtnGroup);
     const customClassBtnGroup = classNames(customClassBottomBtnGroup);
-    console.log('customClassBtnGroup =', customClassBtnGroup);
 
     const destroyPortalPopUp = useCallback(() => {
       popUpRoot.unmount();

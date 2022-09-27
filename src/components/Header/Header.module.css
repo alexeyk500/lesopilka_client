@@ -3,25 +3,8 @@
   display: flex;
   width: 100%;
   height: 56px;
-  padding: 4px 32px;
+  padding: 4px 24px;
   align-items: center;
-  justify-content: space-between;
   background-color: var(--section_background);
   box-shadow: var(--box_shadow);
-}
-
-.forgotBtn {
-  padding-top: 12px;
-  font-size: 12px;
-  line-height: 12px;
-  font-weight: bold;
-  border: none;
-  background-color: #FFFFFF;
-  color: var(--blue_color);
-  cursor: pointer;
-  text-decoration-line: underline;
-}
-
-.customClassBottomBtnGroup {
-  padding: 0 32px 0 64px;
 }

@@ -1,5 +1,5 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CheckTokenServerType, SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
+import { SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
 
 export const userApi = {
   async userLoginByPassword(email: string, password: string) {
@@ -10,8 +10,8 @@ export const userApi = {
     return response.data;
   },
 
-  async checkToken(token: string) {
-    const response = await instanceAxios.get<CheckTokenServerType>('/user/auth', setAuthHeader(token));
+  async userLoginByToken(token: string) {
+    const response = await instanceAxios.get<UserLoginServerType>('/user/get_user', setAuthHeader(token));
     return response.data;
   },
 

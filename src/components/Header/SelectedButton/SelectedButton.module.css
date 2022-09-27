@@ -1,13 +1,13 @@
 .container {
-  position: relative;
   display: flex;
+  padding: 0;
+  margin-right: 24px;
   cursor: pointer;
   background-color: transparent;
   border: none;
-  margin-right: 24px;
 }
 
 .img {
-  height: 42px;
-  width: 42px;
+  height: 32px;
+  width: 32px;
 }

@@ -1,0 +1,7 @@
+.container {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--dark_blue_color);
+  margin-right: 24px;
+  cursor: pointer;
+}
