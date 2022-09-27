@@ -28,7 +28,6 @@ const Header: React.FC = () => {
         <CartButton />
         <LoginButton />
       </div>
-
     </div>
   );
 };
