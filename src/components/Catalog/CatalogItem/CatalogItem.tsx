@@ -1,14 +1,17 @@
 import React from 'react';
 import classes from './CatalogItem.module.css';
 
-import img from '../../../img/BrevnoDelete.jpg';
+type PropsType = {
+  title: string;
+  image: string;
+};
 
-const CatalogItem: React.FC = () => {
+const CatalogItem: React.FC<PropsType> = ({ title, image }) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>Бревно</div>
+      <div className={classes.title}>{title}</div>
       <div className={classes.imgContainer}>
-        <img src={img} className={classes.img} alt="catalog item" />
+        <img src={image} className={classes.img} alt="category item" />
       </div>
     </div>
   );
