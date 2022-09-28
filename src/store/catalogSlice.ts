@@ -2,6 +2,7 @@ import { CategoryType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { RootState } from './store';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type CatalogSliceType = {
   categories: CategoryType[];
@@ -40,7 +41,7 @@ export const catalogSlice = createSlice({
       })
       .addMatcher(isAnyOf(getCategoriesThunk.rejected), (state, action) => {
         state.isLoading = false;
-        console.log('ошибка =', action.payload);
+        showErrorPopUp(action.payload!);
       });
   },
 });
