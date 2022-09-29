@@ -3,10 +3,22 @@ import classes from '../MenuContent.module.css';
 import catalogIco from '../../../../../img/catalogIco.svg';
 import cartIcoOutlined from '../../../../../img/cartIcoOutlined.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
+import { useNavigate } from 'react-router-dom';
 
-const PurchasesSection: React.FC = () => {
+type PropsType = {
+  closeMenuContent: () => void;
+};
+
+const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
+  const navigate = useNavigate();
+
+  const onClickCatalog = () => {
+    navigate('/');
+    closeMenuContent();
+  };
+
   return (
-    <div className={classes.section}>
+    <div className={classes.section} onClick={onClickCatalog}>
       Покупки
       <button className={classes.menuButton}>
         <img src={catalogIco} className={classes.ico} alt="catalog button" />

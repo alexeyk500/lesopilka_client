@@ -5,12 +5,24 @@ import priceIco from '../../../../../img/priceIco.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
 import idCardIco from '../../../../../img/idCardIco.svg';
 import documentsIco from '../../../../../img/documentsIco.svg';
+import { useNavigate } from 'react-router-dom';
 
-const SalesSection: React.FC = () => {
+type PropsType = {
+  closeMenuContent: () => void;
+};
+
+const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
+  const navigate = useNavigate();
+
+  const onClickCatalog = () => {
+    navigate('/sales');
+    closeMenuContent();
+  };
+
   return (
     <div className={classes.section}>
       Продажи
-      <button className={classes.menuButton}>
+      <button className={classes.menuButton} onClick={onClickCatalog}>
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
         Каталог
       </button>

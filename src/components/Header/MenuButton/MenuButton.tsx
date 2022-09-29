@@ -15,7 +15,7 @@ const MenuButton: React.FC = () => {
       <button className={classes.container} onClick={onClick}>
         <img src={menuButton} alt="menu button" />
       </button>
-      {isShowMenu && <MenuContent />}
+      {isShowMenu && <MenuContent closeMenuContent={onClick} />}
     </>
   );
 };

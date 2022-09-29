@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import MainPage from '../../pages/MainPage/MainPage';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
+import SalesPage from '../../pages/SalesPage/SalesPage';
 
 type RouteType = {
   path: string;
@@ -14,7 +15,10 @@ const publicRoutes: RouteType[] = [
   { path: '/success_registration', element: <SuccessRegistrationPage /> },
 ];
 
-const protectedRoutes: RouteType[] = [{ path: '/user', element: <UserPage /> }];
+const protectedRoutes: RouteType[] = [
+  { path: '/user', element: <UserPage /> },
+  { path: '/sales', element: <SalesPage /> },
+];
 
 const AppRouter = () => {
   const isAuth = true;

@@ -6,11 +6,15 @@ import PersonalSection from './PersonalSection/PersonalSection';
 import FavoritesSection from './FavoritesSection/FavoritesSection';
 import ReferenceSection from './ReferenceSection/ReferenceSection';
 
-const MenuContent: React.FC = () => {
+type PropsType = {
+  closeMenuContent: () => void;
+};
+
+const MenuContent: React.FC<PropsType> = ({ closeMenuContent }) => {
   return (
     <div className={classes.container}>
-      <PurchasesSection />
-      <SalesSection />
+      <PurchasesSection closeMenuContent={closeMenuContent} />
+      <SalesSection closeMenuContent={closeMenuContent} />
       <FavoritesSection />
       <PersonalSection />
       <ReferenceSection />

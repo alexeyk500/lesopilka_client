@@ -23,17 +23,23 @@
   font-weight: 600;
 }
 
+
 .menuButton {
   display: flex;
-  margin-top: 6px;
-  padding-left: 16px;
+  margin-top: 4px;
+  padding: 4px 0 4px 16px;
   align-items: center;
   cursor: pointer;
   background-color: transparent;
   border: none;
   font-size: 18px;
   font-weight: 600;
-  color: var(--gray_color)
+  color: var(--gray_color);
+  border-radius: 8px;
+}
+
+.menuButton:hover {
+  box-shadow: var(--box_shadow_dark);
 }
 
 .ico {
