@@ -1,0 +1,12 @@
+.title {
+  margin-top: 16px;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.cardContainer {
+  margin-top: -8px;
+  margin-left: 15px;
+  scale: 0.85
+}

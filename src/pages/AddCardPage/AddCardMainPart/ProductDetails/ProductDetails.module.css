@@ -1,0 +1,6 @@
+.container {
+  display: flex;
+  padding-left: 8px;
+  flex-direction: column;
+  overflow-y: scroll;
+}

@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  width: 256px;
+  flex-direction: column;
+}
+
+.topLine {
+  display: flex;
+}
+
+.round {
+  width: 20px;
+  height: 20px;
+  background-color: var(--section_background);
+  border: 1px solid var(--gray_color_light);
+  border-radius: 50%;
+}
+
+.checkedRound {
+  width: 20px;
+  height: 20px;
+  background-color: var(--green_color);
+  border-radius: 50%;
+}
+
+.checkStatusIco {
+  margin-top: 4px;
+  margin-left: 3px;
+}
+
+.title {
+  margin-left: 8px;
+  color: var(--blue_color);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.bottomLine {
+  display: flex;
+  margin-top: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--blue_color);
+}

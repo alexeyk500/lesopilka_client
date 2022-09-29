@@ -4,6 +4,7 @@ import MainPage from '../../pages/MainPage/MainPage';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
 import SalesPage from '../../pages/SalesPage/SalesPage';
+import AddCardPage from '../../pages/AddCardPage/AddCardPage';
 
 type RouteType = {
   path: string;
@@ -18,6 +19,7 @@ const publicRoutes: RouteType[] = [
 const protectedRoutes: RouteType[] = [
   { path: '/user', element: <UserPage /> },
   { path: '/sales', element: <SalesPage /> },
+  { path: '/add_card', element: <AddCardPage /> },
 ];
 
 const AppRouter = () => {

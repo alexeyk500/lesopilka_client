@@ -8,6 +8,7 @@
   background-color: var(--section_background);
   box-shadow: var(--box_shadow);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .addProductCardContainer {
