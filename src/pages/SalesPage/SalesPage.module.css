@@ -1,6 +1,10 @@
 .container {
   display: flex;
   height: calc(100vh - 56px);
-  padding-top: 8px;
+  padding-top: 4px;
   overflow: hidden;
+}
+
+.catalogContainer {
+  margin-top: 8px;
 }

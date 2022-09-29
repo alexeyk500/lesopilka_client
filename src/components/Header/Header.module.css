@@ -6,12 +6,13 @@
   align-items: center;
   justify-content: center;
   background-color: var(--section_background);
-  box-shadow: var(--box_shadow_light);
+  box-shadow: var(--box_shadow);
   z-index: 10;
 }
 
 .headerContent {
   display: flex;
-  width: 1410px;
+  padding: 0 32px;
+  width: 1474px;
   align-items: center;
 }

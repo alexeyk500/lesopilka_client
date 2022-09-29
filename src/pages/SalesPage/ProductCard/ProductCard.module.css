@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  width: 268px;
+  height: 312px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: var(--section_background);
+  box-shadow: var(--box_shadow);
+  overflow: hidden;
+}
+
+.addProductCardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: var(--blue_color);
+}
+
+.addCardButton {
+  margin-top: 100px;
+  width: 96px;
+  height: 96px;
+}
+
+.addCardTitle {
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--main_background);
+}

@@ -4,6 +4,7 @@ import Catalog from '../../components/Catalog/Catalog';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { catalogIsLoading, getCategoriesThunk } from '../../store/catalogSlice';
 import Preloader from '../../components/Preloader/Preloader';
+import LeftColumn from '../../components/LeftColumn/LeftColumn';
 
 const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -13,7 +14,17 @@ const MainPage: React.FC = () => {
     dispatch(getCategoriesThunk());
   }, [dispatch]);
 
-  return <div className={classes.container}>{isLoading ? <Preloader /> : <Catalog />}</div>;
+  return (
+    <div className={classes.container}>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <LeftColumn>
+          <Catalog />
+        </LeftColumn>
+      )}
+    </div>
+  );
 };
 
 export default MainPage;
