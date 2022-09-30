@@ -3,3 +3,9 @@
   flex-direction: column;
   width: 100%;
 }
+
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 28px;
+}
