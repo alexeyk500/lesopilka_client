@@ -10,11 +10,18 @@ export type CategoryType = {
   order: number;
 };
 
+export type SubCategoryType = {
+  id: string;
+  title: string;
+  order: number;
+  categoryId: string;
+};
+
 export type CardType = {
   categoryId: string | undefined;
   subCategoryId: string | undefined;
   productCode: string | undefined;
-  photos: string[];
+  images: string[];
   heightId: string | undefined;
   widthId: string | undefined;
   lengthId: string | undefined;

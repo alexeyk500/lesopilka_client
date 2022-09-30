@@ -9,7 +9,7 @@ import SelectedButton from './SelectedButton/SelectedButton';
 import PlaceSelector from './PlaceSelector/PlaceSelector';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
-import { getCategoriesThunk } from '../../store/catalogSlice';
+import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +17,7 @@ const Header: React.FC = () => {
   useEffect(() => {
     dispatch(userLoginByTokenThunk());
     dispatch(getCategoriesThunk());
+    dispatch(getSubCategoriesThunk());
   }, [dispatch]);
 
   return (

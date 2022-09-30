@@ -4,12 +4,12 @@ import CheckIndicator from '../../../../../components/commonComponents/CheckIndi
 import CheckBoxBlue from '../../../../../components/commonComponents/CheckBoxBlue/CheckBoxBlue';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories } from '../../../../../store/catalogSlice';
-import { newCardStore, setCategoryId } from '../../../../../store/newCardSlice';
+import { selectorNewCard, setCategoryId } from '../../../../../store/newCardSlice';
 
 const CategorySection: React.FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectorCategories);
-  const newCard = useAppSelector(newCardStore);
+  const newCard = useAppSelector(selectorNewCard);
 
   const onSelect = (id: string) => {
     dispatch(setCategoryId(id));
