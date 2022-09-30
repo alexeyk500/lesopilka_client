@@ -1,11 +1,13 @@
 .container {
   display: flex;
-  width: 256px;
+  width: 268px;
   flex-direction: column;
+  margin-bottom: 8px;
 }
 
 .topLine {
   display: flex;
+  align-items: center;
 }
 
 .round {

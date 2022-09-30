@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  align-items: center;
+  width: 268px;
+  padding: 8px 16px 8px 0;
+}
+
+.box {
+  width: 20px;
+  height: 20px;
+  background-color: var(--section_background);
+  border: 1px solid var(--gray_color_light);
+  border-radius: 6px;
+}
+
+.checkedBox {
+  width: 20px;
+  height: 20px;
+  background-color: var(--blue_color);
+  border-radius: 6px;
+}
+
+.title {
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+.checkStatusIco {
+  margin-top: 4px;
+  margin-left: 3px;
+}
