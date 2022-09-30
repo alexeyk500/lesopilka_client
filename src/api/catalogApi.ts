@@ -1,13 +1,19 @@
-import { instanceAxios } from './instanceAxios';
-import { CategoryType, SubCategoryType } from '../types/types';
+import {instanceAxios, setAuthHeader} from './instanceAxios';
+import { CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
 
 export const catalogApi = {
   async getCategories() {
     const response = await instanceAxios.get<CategoryType[]>('/category/categories');
     return response.data;
   },
+
   async getSubCategories() {
     const response = await instanceAxios.get<SubCategoryType[]>('/category/sub_categories');
+    return response.data;
+  },
+
+  async getProductMaterials(token: string) {
+    const response = await instanceAxios.get<ProductMaterialType[]>('/product/material', setAuthHeader(token));
     return response.data;
   },
 };

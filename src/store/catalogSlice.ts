@@ -1,4 +1,4 @@
-import { CategoryType, SubCategoryType } from '../types/types';
+import { CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { RootState } from './store';
@@ -7,12 +7,14 @@ import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErr
 type CatalogSliceType = {
   categories: CategoryType[];
   subCategories: SubCategoryType[];
+  productMaterials: ProductMaterialType[];
   isLoading: boolean;
 };
 
 const initialState: CatalogSliceType = {
   categories: [],
   subCategories: [],
+  productMaterials: [],
   isLoading: false,
 };
 
@@ -38,6 +40,21 @@ export const getSubCategoriesThunk = createAsyncThunk<SubCategoryType[], undefin
   }
 );
 
+export const getProductMaterialsThunk = createAsyncThunk<ProductMaterialType[], undefined, { rejectValue: string }>(
+  'user/getProductMaterialsThunk',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        return await serverApi.getProductMaterials(token);
+      }
+      return rejectWithValue('Пользователь не авторизован');
+    } catch (e) {
+      return rejectWithValue('Ошибка получения материалов для продукта');
+    }
+  }
+);
+
 export const catalogSlice = createSlice({
   name: 'catalogSlice',
   initialState,
@@ -53,10 +70,14 @@ export const catalogSlice = createSlice({
         state.subCategories = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getCategoriesThunk.pending, getSubCategoriesThunk.pending), (state) => {
+      .addCase(getProductMaterialsThunk.fulfilled, (state, action) => {
+        state.productMaterials = action.payload;
+        state.isLoading = false;
+      })
+      .addMatcher(isAnyOf(getCategoriesThunk.pending, getSubCategoriesThunk.pending, getProductMaterialsThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getCategoriesThunk.rejected, getSubCategoriesThunk.rejected), (state, action) => {
+      .addMatcher(isAnyOf(getCategoriesThunk.rejected, getSubCategoriesThunk.rejected, getProductMaterialsThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);
       });
@@ -65,6 +86,6 @@ export const catalogSlice = createSlice({
 
 export const selectorCategories = (state: RootState) => state.catalog.categories;
 export const selectorSubCategories = (state: RootState) => state.catalog.subCategories;
-export const catalogIsLoading = (state: RootState) => state.catalog.isLoading;
+export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLoading;
 
 export default catalogSlice.reducer;

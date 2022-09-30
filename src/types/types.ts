@@ -30,3 +30,10 @@ export type CardType = {
   description: string | undefined;
   price: string | undefined;
 };
+
+export type ProductMaterialType = {
+  id: string;
+  material: string;
+  isPine: boolean;
+  order: number;
+};
