@@ -5,7 +5,6 @@ import LeftColumnContent from './LeftColumnContent/LeftColumnContent';
 import AddCardMainPart from './AddCardMainPart/AddCardMainPart';
 
 const AddCardPage = () => {
-
   return (
     <div className={classes.container}>
       <LeftColumn>

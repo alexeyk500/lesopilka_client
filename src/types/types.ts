@@ -11,15 +11,15 @@ export type CategoryType = {
 };
 
 export type CardType = {
-  categoryId: number | undefined;
-  subCategoryId: number | undefined;
+  categoryId: string | undefined;
+  subCategoryId: string | undefined;
   productCode: string | undefined;
   photos: string[];
-  heightId: number | undefined;
-  widthId: number | undefined;
-  lengthId: number | undefined;
-  sortId: number | undefined;
+  heightId: string | undefined;
+  widthId: string | undefined;
+  lengthId: string | undefined;
+  sortId: string | undefined;
   antisepticId: boolean | undefined;
   description: string | undefined;
-  price: number | undefined;
-}
+  price: string | undefined;
+};

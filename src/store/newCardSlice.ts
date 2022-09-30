@@ -1,6 +1,6 @@
-import {CardType} from "../types/types";
-import {createSlice} from "@reduxjs/toolkit";
-import {RootState} from "./store";
+import { CardType } from '../types/types';
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from './store';
 
 type newCardSliceType = {
   newCard: CardType;
@@ -27,10 +27,16 @@ const initialState: newCardSliceType = {
 export const newCardSlice = createSlice({
   name: 'newCardSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setCategoryId: (state, action) => {
+      state.newCard.categoryId = action.payload;
+    },
+  },
 });
 
-export const newCard = (state: RootState) => state.newCard.newCard;
+export const { setCategoryId } = newCardSlice.actions;
+
+export const newCardStore = (state: RootState) => state.newCard.newCard;
 export const isLoading = (state: RootState) => state.newCard.isLoading;
 
 export default newCardSlice.reducer;
