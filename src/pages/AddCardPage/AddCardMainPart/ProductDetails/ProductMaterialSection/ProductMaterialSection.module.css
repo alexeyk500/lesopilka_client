@@ -2,6 +2,26 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 110px;
-  margin: 8px 0;
+  margin: 16px 0;
+}
+
+.rowContainer {
+  display: flex;
+  padding: 8px 0;
+}
+
+.subTitle {
+  display: flex;
+  align-items: center;
+  width: 268px;
+  flex-shrink: 0;
+  padding: 8px 16px 8px 28px;
+  font-weight: 600;
+  color: var(--blue_color);
+}
+
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 28px;
 }

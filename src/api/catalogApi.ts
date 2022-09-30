@@ -1,4 +1,4 @@
-import {instanceAxios, setAuthHeader} from './instanceAxios';
+import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
 
 export const catalogApi = {

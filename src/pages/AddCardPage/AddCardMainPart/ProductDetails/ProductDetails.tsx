@@ -5,6 +5,7 @@ import SubCategorySection from './SubCategorySection/SubCategorySection';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { getProductMaterialsThunk, selectorCatalogIsLoading } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
+import ProductMaterialSection from './ProductMaterialSection/ProductMaterialSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const ProductDetails: React.FC = () => {
         <>
           <CategorySection />
           <SubCategorySection />
+          <ProductMaterialSection />
         </>
       )}
     </div>

@@ -20,6 +20,7 @@ export type SubCategoryType = {
 export type CardType = {
   categoryId: string | undefined;
   subCategoryId: string | undefined;
+  productMaterialId: string | undefined;
   productCode: string | undefined;
   images: string[];
   heightId: string | undefined;

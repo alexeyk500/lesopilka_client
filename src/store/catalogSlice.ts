@@ -74,18 +74,25 @@ export const catalogSlice = createSlice({
         state.productMaterials = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getCategoriesThunk.pending, getSubCategoriesThunk.pending, getProductMaterialsThunk.pending), (state) => {
-        state.isLoading = true;
-      })
-      .addMatcher(isAnyOf(getCategoriesThunk.rejected, getSubCategoriesThunk.rejected, getProductMaterialsThunk.rejected), (state, action) => {
-        state.isLoading = false;
-        showErrorPopUp(action.payload!);
-      });
+      .addMatcher(
+        isAnyOf(getCategoriesThunk.pending, getSubCategoriesThunk.pending, getProductMaterialsThunk.pending),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(getCategoriesThunk.rejected, getSubCategoriesThunk.rejected, getProductMaterialsThunk.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          showErrorPopUp(action.payload!);
+        }
+      );
   },
 });
 
 export const selectorCategories = (state: RootState) => state.catalog.categories;
 export const selectorSubCategories = (state: RootState) => state.catalog.subCategories;
+export const selectorProductMaterials = (state: RootState) => state.catalog.productMaterials;
 export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLoading;
 
 export default catalogSlice.reducer;

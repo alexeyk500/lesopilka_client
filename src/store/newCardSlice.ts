@@ -11,6 +11,7 @@ const initialState: newCardSliceType = {
   newCard: {
     categoryId: undefined,
     subCategoryId: undefined,
+    productMaterialId: undefined,
     productCode: undefined,
     images: [],
     heightId: undefined,
@@ -34,10 +35,13 @@ export const newCardSlice = createSlice({
     setSubCategoryId: (state, action) => {
       state.newCard.subCategoryId = action.payload;
     },
+    setProductMaterialId: (state, action) => {
+      state.newCard.productMaterialId = action.payload;
+    },
   },
 });
 
-export const { setCategoryId, setSubCategoryId } = newCardSlice.actions;
+export const { setCategoryId, setSubCategoryId, setProductMaterialId } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;
 export const selectorIsLoading = (state: RootState) => state.newCard.isLoading;
