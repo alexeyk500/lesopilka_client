@@ -13,7 +13,7 @@ export const catalogApi = {
   },
 
   async getProductMaterials(token: string) {
-    const response = await instanceAxios.get<ProductMaterialType[]>('/product/material', setAuthHeader(token));
+    const response = await instanceAxios.get<ProductMaterialType[]>('/product/materials', setAuthHeader(token));
     return response.data;
   },
 };

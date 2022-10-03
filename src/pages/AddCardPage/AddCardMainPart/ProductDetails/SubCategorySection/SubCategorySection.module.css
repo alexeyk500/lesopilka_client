@@ -12,6 +12,12 @@
   padding-left: 28px;
 }
 
+.placeHolderContainer {
+  display: flex;
+  height: 100%;
+  padding-left: 28px;
+}
+
 .placeHolderTitle {
   display: flex;
   align-items: center;

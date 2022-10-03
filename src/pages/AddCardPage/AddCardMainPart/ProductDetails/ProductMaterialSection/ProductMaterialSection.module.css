@@ -7,6 +7,8 @@
 
 .rowContainer {
   display: flex;
+  height: 126px;
+  align-items: center;
   padding: 8px 0;
 }
 
@@ -23,5 +25,25 @@
 .optionsContainer {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   padding-left: 28px;
+}
+
+.narrowContainer {
+  display: flex;
+  height: 74px;
+}
+
+.selectorContainer {
+  display: flex;
+  align-items: center;
+  width: 268px;
+  flex-shrink: 0;
+  padding-left: 28px;
+}
+
+.selector {
+  width: 252px;
+  background-color: var(--section_background);
+  margin-right: 0 !important;
 }

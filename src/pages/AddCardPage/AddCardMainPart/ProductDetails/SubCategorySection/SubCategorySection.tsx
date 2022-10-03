@@ -32,7 +32,11 @@ const SubCategorySection: React.FC = () => {
           );
         })}
       </div>
-      {subCategories.length === 0 && <div className={classes.placeHolderTitle}>Пиломатериал не выбран</div>}
+      {subCategories.length === 0 && (
+        <div className={classes.placeHolderContainer}>
+          <div className={classes.placeHolderTitle}>Пиломатериал не выбран</div>
+        </div>
+      )}
     </div>
   );
 };

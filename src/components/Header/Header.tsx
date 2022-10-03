@@ -6,10 +6,12 @@ import { userLoginByTokenThunk } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import CartButton from './CartButton/CartButton';
 import SelectedButton from './SelectedButton/SelectedButton';
-import PlaceSelector from './PlaceSelector/PlaceSelector';
+import Selector from './Selector/Selector';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
 import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
+
+const options = ['Санкт-Петербург', 'Москва', 'Новосибирск', 'Владивосток'];
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ const Header: React.FC = () => {
       <div className={classes.headerContent}>
         <MenuButton />
         <Logo />
-        <PlaceSelector />
+        <Selector options={options} />
         <Search />
         <SelectedButton />
         <CartButton />
