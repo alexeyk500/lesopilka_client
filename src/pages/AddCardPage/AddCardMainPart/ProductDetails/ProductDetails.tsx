@@ -3,7 +3,11 @@ import classes from './ProductDetails.module.css';
 import CategorySection from './CategorySection/CategorySection';
 import SubCategorySection from './SubCategorySection/SubCategorySection';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { getProductMaterialsThunk, selectorCatalogIsLoading } from '../../../../store/catalogSlice';
+import {
+  getCategorySizesThunk,
+  getProductMaterialsThunk,
+  selectorCatalogIsLoading,
+} from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
 import ProductMaterialSection from './ProductMaterialSection/ProductMaterialSection';
 
@@ -13,6 +17,7 @@ const ProductDetails: React.FC = () => {
 
   useEffect(() => {
     dispatch(getProductMaterialsThunk());
+    dispatch(getCategorySizesThunk());
   }, [dispatch]);
 
   return (
@@ -22,11 +27,15 @@ const ProductDetails: React.FC = () => {
           <Preloader />
         </div>
       ) : (
-        <>
+        <div className={classes.scrollContainer}>
           <CategorySection />
           <SubCategorySection />
           <ProductMaterialSection />
-        </>
+          {/*<SizeSection sizeType={SizeTypeEnum.height} />*/}
+          {/*<SizeSection sizeType={SizeTypeEnum.width} />*/}
+          {/*<SizeSection sizeType={SizeTypeEnum.length} />*/}
+          {/*<SizeSection sizeType={SizeTypeEnum.caliber} />*/}
+        </div>
       )}
     </div>
   );

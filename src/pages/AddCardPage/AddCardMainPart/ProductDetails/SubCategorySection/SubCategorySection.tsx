@@ -4,39 +4,40 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorSubCategories } from '../../../../../store/catalogSlice';
 import { selectorNewCard, setSubCategoryId } from '../../../../../store/newCardSlice';
 import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
-import CheckBoxBlue from '../../../../../components/commonComponents/CheckBoxBlue/CheckBoxBlue';
+import Selector from '../../../../../components/commonComponents/Selector/Selector';
+import classNames from 'classnames';
 
 const SubCategorySection: React.FC = () => {
   const dispatch = useAppDispatch();
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const newCard = useAppSelector(selectorNewCard);
-  const subCategories = subCategoriesStore.filter((subCategory) => newCard.categoryId === subCategory.categoryId);
+  const subCategories = subCategoriesStore.filter(
+    (subCategory) => newCard.categoryId === String(subCategory.categoryId)
+  );
 
-  const onSelect = (id: string) => {
+  const onChangeSelector = (id: string) => {
     dispatch(setSubCategoryId(id));
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, { [classes.blurAndOpacity]: !newCard.categoryId })}>
       <CheckIndicator title={'Тип'} checked={!!newCard.subCategoryId} />
-      <div className={classes.optionsContainer}>
-        {subCategories.map((subCategory) => {
-          return (
-            <CheckBoxBlue
-              key={subCategory.id}
-              id={subCategory.id}
-              title={subCategory.title}
-              checked={subCategory.id === newCard.subCategoryId}
-              onSelect={onSelect}
+      <div className={classes.rowContainer}>
+        {newCard.categoryId ? (
+          <div className={classes.selectorContainer}>
+            <Selector
+              hasNullChoice
+              options={subCategories}
+              customClassName={classes.selector}
+              onChange={onChangeSelector}
             />
-          );
-        })}
+          </div>
+        ) : (
+          <div className={classes.placeHolderContainer}>
+            <div className={classes.placeHolderTitle}>Пиломатериал не выбран</div>
+          </div>
+        )}
       </div>
-      {subCategories.length === 0 && (
-        <div className={classes.placeHolderContainer}>
-          <div className={classes.placeHolderTitle}>Пиломатериал не выбран</div>
-        </div>
-      )}
     </div>
   );
 };

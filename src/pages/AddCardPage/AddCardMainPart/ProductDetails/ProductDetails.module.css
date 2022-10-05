@@ -1,11 +1,25 @@
 .container {
   display: flex;
-  flex-direction: column;
-  padding: 8px 18px 0 8px;
-  overflow-y: scroll;
+  width: 100%;
+  padding: 6px 18px 0 8px;
+  margin-bottom: 8px;
 }
 
 .preloaderContainer {
   display: flex;
-  height: calc(100vh - 130px);
+}
+
+.scrollContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 127px);
+  padding: 6px 12px;
+  box-shadow: var(--box_shadow);
+  border-radius: 12px;
+  color: var(--blue_color);
+  font-size: 18px;
+  font-weight: 600;
+  background-color: var(--section_background);
+  overflow-y: scroll;
 }

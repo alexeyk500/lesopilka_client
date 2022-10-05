@@ -1,3 +1,8 @@
+export type SelectOptionsType = {
+  id: string | undefined;
+  title: string;
+};
+
 export type UserType = {
   name: string;
   email: string;
@@ -24,8 +29,13 @@ export type CardType = {
   productCode: string | undefined;
   images: string[];
   heightId: string | undefined;
+  customHeight: string | undefined;
   widthId: string | undefined;
+  customWidth: string | undefined;
   lengthId: string | undefined;
+  customLength: string | undefined;
+  caliberId: string | undefined;
+  customCaliber: string | undefined;
   sortId: string | undefined;
   antisepticId: boolean | undefined;
   description: string | undefined;
@@ -34,7 +44,23 @@ export type CardType = {
 
 export type ProductMaterialType = {
   id: string;
-  material: string;
+  title: string;
   isPine: boolean;
   order: number;
+};
+
+export enum SizeTypeEnum {
+  height = 'height',
+  width = 'width',
+  length = 'length',
+  caliber = 'caliber',
+}
+
+export type CategorySizeType = {
+  id: string;
+  type: string;
+  value: number;
+  isCustomSize: boolean;
+  order: number;
+  categoryId: string;
 };

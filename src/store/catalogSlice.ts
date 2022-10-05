@@ -1,4 +1,4 @@
-import { CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
+import { CategorySizeType, CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { RootState } from './store';
@@ -8,6 +8,7 @@ type CatalogSliceType = {
   categories: CategoryType[];
   subCategories: SubCategoryType[];
   productMaterials: ProductMaterialType[];
+  categorySizes: CategorySizeType[];
   isLoading: boolean;
 };
 
@@ -15,6 +16,7 @@ const initialState: CatalogSliceType = {
   categories: [],
   subCategories: [],
   productMaterials: [],
+  categorySizes: [],
   isLoading: false,
 };
 
@@ -55,6 +57,17 @@ export const getProductMaterialsThunk = createAsyncThunk<ProductMaterialType[], 
   }
 );
 
+export const getCategorySizesThunk = createAsyncThunk<CategorySizeType[], undefined, { rejectValue: string }>(
+  'user/getCategorySizesThunk',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await serverApi.getCategorySizes();
+    } catch (e) {
+      return rejectWithValue('Ошибка размеров для категорий');
+    }
+  }
+);
+
 export const catalogSlice = createSlice({
   name: 'catalogSlice',
   initialState,
@@ -74,14 +87,28 @@ export const catalogSlice = createSlice({
         state.productMaterials = action.payload;
         state.isLoading = false;
       })
+      .addCase(getCategorySizesThunk.fulfilled, (state, action) => {
+        state.categorySizes = action.payload;
+        state.isLoading = false;
+      })
       .addMatcher(
-        isAnyOf(getCategoriesThunk.pending, getSubCategoriesThunk.pending, getProductMaterialsThunk.pending),
+        isAnyOf(
+          getCategoriesThunk.pending,
+          getSubCategoriesThunk.pending,
+          getProductMaterialsThunk.pending,
+          getCategorySizesThunk.pending
+        ),
         (state) => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(getCategoriesThunk.rejected, getSubCategoriesThunk.rejected, getProductMaterialsThunk.rejected),
+        isAnyOf(
+          getCategoriesThunk.rejected,
+          getSubCategoriesThunk.rejected,
+          getProductMaterialsThunk.rejected,
+          getCategorySizesThunk.rejected
+        ),
         (state, action) => {
           state.isLoading = false;
           showErrorPopUp(action.payload!);
@@ -90,9 +117,10 @@ export const catalogSlice = createSlice({
   },
 });
 
+export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLoading;
 export const selectorCategories = (state: RootState) => state.catalog.categories;
 export const selectorSubCategories = (state: RootState) => state.catalog.subCategories;
 export const selectorProductMaterials = (state: RootState) => state.catalog.productMaterials;
-export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLoading;
+export const selectorCategorySizes = (state: RootState) => state.catalog.categorySizes;
 
 export default catalogSlice.reducer;

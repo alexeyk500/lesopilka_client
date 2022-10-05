@@ -2,7 +2,7 @@
   display: flex;
   width: 20vw;
   height: 42px;
-  padding: 0 24px;
+  padding: 0 12px;
   align-items: center;
   border: 1px solid var(--dark_blue_color);
   border-radius: 12px;
