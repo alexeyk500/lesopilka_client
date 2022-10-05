@@ -10,6 +10,8 @@ import {
 } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
 import ProductMaterialSection from './ProductMaterialSection/ProductMaterialSection';
+import { SizeTypeEnum } from '../../../../types/types';
+import SizeSectionNew from './SizeSectionNew/SizeSectionNew';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,10 +33,10 @@ const ProductDetails: React.FC = () => {
           <CategorySection />
           <SubCategorySection />
           <ProductMaterialSection />
-          {/*<SizeSection sizeType={SizeTypeEnum.height} />*/}
-          {/*<SizeSection sizeType={SizeTypeEnum.width} />*/}
-          {/*<SizeSection sizeType={SizeTypeEnum.length} />*/}
-          {/*<SizeSection sizeType={SizeTypeEnum.caliber} />*/}
+          <SizeSectionNew sizeType={SizeTypeEnum.height} />
+          <SizeSectionNew sizeType={SizeTypeEnum.width} />
+          <SizeSectionNew sizeType={SizeTypeEnum.length} />
+          <SizeSectionNew sizeType={SizeTypeEnum.caliber} />
         </div>
       )}
     </div>
