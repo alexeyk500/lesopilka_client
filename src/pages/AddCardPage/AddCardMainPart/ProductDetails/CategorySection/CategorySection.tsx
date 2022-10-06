@@ -3,7 +3,7 @@ import classes from './CategorySection.module.css';
 import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories } from '../../../../../store/catalogSlice';
-import { selectorNewCard, setCategoryId } from '../../../../../store/newCardSlice';
+import { selectorNewCard, setNewCardCategoryId } from '../../../../../store/newCardSlice';
 import Selector from '../../../../../components/commonComponents/Selector/Selector';
 
 const CategorySection: React.FC = () => {
@@ -12,7 +12,7 @@ const CategorySection: React.FC = () => {
   const newCard = useAppSelector(selectorNewCard);
 
   const onChangeSelector = (id: number) => {
-    dispatch(setCategoryId(id));
+    dispatch(setNewCardCategoryId(id));
   };
 
   return (

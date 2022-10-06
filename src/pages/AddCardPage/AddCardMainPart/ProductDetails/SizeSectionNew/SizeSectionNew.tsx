@@ -3,14 +3,14 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
 import {
   selectorNewCard,
-  setProductCaliberId,
-  setProductCustomCaliber,
-  setProductCustomHeight,
-  setProductCustomLength,
-  setProductCustomWidth,
-  setProductHeightId,
-  setProductLengthId,
-  setProductWidthId,
+  setNewCardProductCaliberId,
+  setNewCardProductCustomCaliber,
+  setNewCardProductCustomHeight,
+  setNewCardProductCustomLength,
+  setNewCardProductCustomWidth,
+  setNewCardProductHeightId,
+  setNewCardProductLengthId,
+  setNewCardProductWidthId,
 } from '../../../../../store/newCardSlice';
 import classNames from 'classnames';
 import classes from './SizeSectionNew.module.css';
@@ -42,9 +42,7 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
 
   const categorySizesRaw = allCategorySizes.filter(
     (categorySize) =>
-      categorySize.categoryId === newCard.categoryId &&
-      !categorySize.isCustomSize &&
-      categorySize.type === sizeType
+      categorySize.categoryId === newCard.categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
   );
   const categorySizes = categorySizesRaw.map((categorySizeRaw) => {
     return { ...categorySizeRaw, title: `${categorySizeRaw.value} мм` };
@@ -52,20 +50,20 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
 
   const onChangeSelector = (id: number) => {
     if (sizeType === SizeTypeEnum.height) {
-      dispatch(setProductHeightId(id));
-      newCard.customHeight && dispatch(setProductCustomHeight(undefined));
+      dispatch(setNewCardProductHeightId(id));
+      newCard.customHeight && dispatch(setNewCardProductCustomHeight(undefined));
     }
     if (sizeType === SizeTypeEnum.width) {
-      dispatch(setProductWidthId(id));
-      newCard.customWidth && dispatch(setProductCustomWidth(undefined));
+      dispatch(setNewCardProductWidthId(id));
+      newCard.customWidth && dispatch(setNewCardProductCustomWidth(undefined));
     }
     if (sizeType === SizeTypeEnum.length) {
-      dispatch(setProductLengthId(id));
-      newCard.customLength && dispatch(setProductCustomLength(undefined));
+      dispatch(setNewCardProductLengthId(id));
+      newCard.customLength && dispatch(setNewCardProductCustomLength(undefined));
     }
     if (sizeType === SizeTypeEnum.caliber) {
-      dispatch(setProductCaliberId(id));
-      newCard.customCaliber && dispatch(setProductCustomCaliber(undefined));
+      dispatch(setNewCardProductCaliberId(id));
+      newCard.customCaliber && dispatch(setNewCardProductCustomCaliber(undefined));
     }
   };
 
@@ -81,19 +79,19 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
   const onChangeCustomSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || onlyDigitRegExp.test(e.target.value)) {
       if (sizeType === SizeTypeEnum.height) {
-        dispatch(setProductCustomHeight(e.currentTarget.value));
+        dispatch(setNewCardProductCustomHeight(e.currentTarget.value));
         // newCard.heightId && dispatch(setProductHeightId(undefined));
       }
       if (sizeType === SizeTypeEnum.width) {
-        dispatch(setProductCustomWidth(e.currentTarget.value));
+        dispatch(setNewCardProductCustomWidth(e.currentTarget.value));
         // newCard.widthId && dispatch(setProductWidthId(undefined));
       }
       if (sizeType === SizeTypeEnum.length) {
-        dispatch(setProductCustomLength(e.currentTarget.value));
+        dispatch(setNewCardProductCustomLength(e.currentTarget.value));
         // newCard.lengthId && dispatch(setProductLengthId(undefined));
       }
       if (sizeType === SizeTypeEnum.caliber) {
-        dispatch(setProductCustomCaliber(e.currentTarget.value));
+        dispatch(setNewCardProductCustomCaliber(e.currentTarget.value));
         // newCard.caliberId && dispatch(setProductCaliberId(undefined));
       }
     }

@@ -12,19 +12,6 @@ type PropsType = {
   customClassName?: string;
 };
 
-const getStartedId = (options: SelectOptionsType[], selectedOption?: SelectOptionsType, hasNullChoice?: boolean) => {
-  if (selectedOption) {
-    return selectedOption.id;
-  }
-  if (hasNullChoice) {
-    return 0;
-  }
-  if (options.length > 0) {
-    return options[0].id;
-  }
-  return 0;
-};
-
 const Selector: React.FC<PropsType> = ({
   options,
   selectedOption,
@@ -33,9 +20,7 @@ const Selector: React.FC<PropsType> = ({
   hasNullChoice,
   customClassName,
 }) => {
-  const [selectedOptionId, setSelectedOptionId] = useState<number | undefined>(
-    getStartedId(options, selectedOption, hasNullChoice)
-  );
+  const [selectedOptionId, setSelectedOptionId] = useState<number | undefined>(selectedOption ? selectedOption.id : 0);
   const [selectOptions, setSelectOptions] = useState<SelectOptionsType[]>([]);
 
   useEffect(() => {
@@ -49,10 +34,6 @@ const Selector: React.FC<PropsType> = ({
     }
     setSelectOptions(fullOptions);
   }, [hasNullChoice, options, customOptionTitle]);
-
-  useEffect(()=>{
-    setSelectedOptionId(getStartedId(options, selectedOption, hasNullChoice))
-  },[selectedOption])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.currentTarget.value) {

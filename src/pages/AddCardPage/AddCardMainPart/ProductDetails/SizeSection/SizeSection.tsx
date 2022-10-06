@@ -7,14 +7,14 @@ import { selectorCategorySizes } from '../../../../../store/catalogSlice';
 import CheckBoxBlue from '../../../../../components/commonComponents/CheckBoxBlue/CheckBoxBlue';
 import {
   selectorNewCard,
-  setProductCaliberId,
-  setProductCustomCaliber,
-  setProductCustomHeight,
-  setProductCustomLength,
-  setProductCustomWidth,
-  setProductHeightId,
-  setProductLengthId,
-  setProductWidthId,
+  setNewCardProductCaliberId,
+  setNewCardProductCustomCaliber,
+  setNewCardProductCustomHeight,
+  setNewCardProductCustomLength,
+  setNewCardProductCustomWidth,
+  setNewCardProductHeightId,
+  setNewCardProductLengthId,
+  setNewCardProductWidthId,
 } from '../../../../../store/newCardSlice';
 
 type PropsType = {
@@ -83,55 +83,55 @@ const SizeSection: React.FC<PropsType> = ({ sizeType }) => {
   const onChangeCustomSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || onlyDigitRegExp.test(e.target.value)) {
       if (sizeType === SizeTypeEnum.height) {
-        dispatch(setProductCustomHeight(e.currentTarget.value));
-        newCard.heightId && dispatch(setProductHeightId(undefined));
+        dispatch(setNewCardProductCustomHeight(e.currentTarget.value));
+        newCard.heightId && dispatch(setNewCardProductHeightId(undefined));
       }
       if (sizeType === SizeTypeEnum.width) {
-        dispatch(setProductCustomWidth(e.currentTarget.value));
-        newCard.widthId && dispatch(setProductWidthId(undefined));
+        dispatch(setNewCardProductCustomWidth(e.currentTarget.value));
+        newCard.widthId && dispatch(setNewCardProductWidthId(undefined));
       }
       if (sizeType === SizeTypeEnum.length) {
-        dispatch(setProductCustomLength(e.currentTarget.value));
-        newCard.lengthId && dispatch(setProductLengthId(undefined));
+        dispatch(setNewCardProductCustomLength(e.currentTarget.value));
+        newCard.lengthId && dispatch(setNewCardProductLengthId(undefined));
       }
       if (sizeType === SizeTypeEnum.caliber) {
-        dispatch(setProductCustomCaliber(e.currentTarget.value));
-        newCard.caliberId && dispatch(setProductCaliberId(undefined));
+        dispatch(setNewCardProductCustomCaliber(e.currentTarget.value));
+        newCard.caliberId && dispatch(setNewCardProductCaliberId(undefined));
       }
     }
   };
 
   const onSelect = (id: number) => {
     if (sizeType === SizeTypeEnum.height) {
-      dispatch(setProductHeightId(id));
-      newCard.customHeight && dispatch(setProductCustomHeight(undefined));
+      dispatch(setNewCardProductHeightId(id));
+      newCard.customHeight && dispatch(setNewCardProductCustomHeight(undefined));
     }
     if (sizeType === SizeTypeEnum.width) {
-      dispatch(setProductWidthId(id));
-      newCard.customWidth && dispatch(setProductCustomWidth(undefined));
+      dispatch(setNewCardProductWidthId(id));
+      newCard.customWidth && dispatch(setNewCardProductCustomWidth(undefined));
     }
     if (sizeType === SizeTypeEnum.length) {
-      dispatch(setProductLengthId(id));
-      newCard.customLength && dispatch(setProductCustomLength(undefined));
+      dispatch(setNewCardProductLengthId(id));
+      newCard.customLength && dispatch(setNewCardProductCustomLength(undefined));
     }
     if (sizeType === SizeTypeEnum.caliber) {
-      dispatch(setProductCaliberId(id));
-      newCard.customCaliber && dispatch(setProductCustomCaliber(undefined));
+      dispatch(setNewCardProductCaliberId(id));
+      newCard.customCaliber && dispatch(setNewCardProductCustomCaliber(undefined));
     }
   };
 
   const onInputFocus = () => {
     if (sizeType === SizeTypeEnum.height) {
-      newCard.heightId && dispatch(setProductHeightId(undefined));
+      newCard.heightId && dispatch(setNewCardProductHeightId(undefined));
     }
     if (sizeType === SizeTypeEnum.width) {
-      newCard.widthId && dispatch(setProductWidthId(undefined));
+      newCard.widthId && dispatch(setNewCardProductWidthId(undefined));
     }
     if (sizeType === SizeTypeEnum.length) {
-      newCard.lengthId && dispatch(setProductLengthId(undefined));
+      newCard.lengthId && dispatch(setNewCardProductLengthId(undefined));
     }
     if (sizeType === SizeTypeEnum.caliber) {
-      newCard.caliberId && dispatch(setProductCaliberId(undefined));
+      newCard.caliberId && dispatch(setNewCardProductCaliberId(undefined));
     }
   };
 

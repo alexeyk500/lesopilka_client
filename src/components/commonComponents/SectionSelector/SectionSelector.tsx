@@ -9,9 +9,17 @@ type PropsType = {
   onChangeSelector: (id: number) => void;
   selectedOption?: SelectOptionsType;
   hasNullChoice?: boolean;
+  customOptionTitle?: string;
 };
 
-const SectionSelector: React.FC<PropsType> = ({ title, options, selectedOption, onChangeSelector, hasNullChoice = true }) => {
+const SectionSelector: React.FC<PropsType> = ({
+  title,
+  options,
+  selectedOption,
+  onChangeSelector,
+  hasNullChoice = true,
+  customOptionTitle,
+}) => {
   return (
     <div className={classes.selectorGroupContainer}>
       <div className={classes.title}>{title}</div>
@@ -22,6 +30,7 @@ const SectionSelector: React.FC<PropsType> = ({ title, options, selectedOption, 
           selectedOption={selectedOption}
           customClassName={classes.selector}
           onChange={onChangeSelector}
+          customOptionTitle={customOptionTitle}
         />
       </div>
     </div>

@@ -1,43 +1,42 @@
 import React from 'react';
-import classes from './LumberSection.module.css';
+import classes from './CatalogSection.module.css';
 import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories, selectorProductMaterials, selectorSubCategories } from '../../../../../store/catalogSlice';
 import {
+  clearNewCard,
   selectorNewCard,
-  setCategoryId,
-  setProductMaterialId,
-  setSubCategoryId,
+  setNewCardCategoryId,
+  setNewCardProductMaterialId,
+  setNewCardSubCategoryId,
 } from '../../../../../store/newCardSlice';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 
-const LumberSection: React.FC = () => {
+const CatalogSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
   const categories = useAppSelector(selectorCategories);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const productMaterials = useAppSelector(selectorProductMaterials);
 
-  const subCategories = subCategoriesStore.filter(
-    (subCategory) => newCard.categoryId === subCategory.categoryId
+  const subCategories = subCategoriesStore.filter((subCategory) => newCard.categoryId === subCategory.categoryId);
+  const selectedCategory = categories.find((category) => category.id === newCard.categoryId);
+  const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === newCard.subCategoryId);
+  const selectedProductMaterials = productMaterials.find(
+    (productMaterial) => productMaterial.id === newCard.productMaterialId
   );
-  const selectedCategory = categories.find(category=>category.id === newCard.categoryId);
-  const selectedSubCategory = subCategories.find(subCategory=>subCategory.id === newCard.subCategoryId);
-  const selectedProductMaterials = productMaterials.find(productMaterial=>productMaterial.id === newCard.productMaterialId);
 
   const onChangeCategorySelector = (id: number) => {
-    dispatch(setCategoryId(id));
-    newCard.subCategoryId && dispatch(setSubCategoryId(undefined))
-    newCard.productMaterialId && dispatch(setProductMaterialId(undefined));
+    dispatch(clearNewCard());
+    dispatch(setNewCardCategoryId(id));
   };
 
   const onChangeSubCategorySelector = (id: number) => {
-    dispatch(setSubCategoryId(id));
-    newCard.productMaterialId && dispatch(setProductMaterialId(undefined));
+    dispatch(setNewCardSubCategoryId(id));
   };
 
   const onChangeMaterialSelector = (id: number) => {
-    dispatch(setProductMaterialId(id));
+    dispatch(setNewCardProductMaterialId(id));
   };
 
   return (
@@ -70,4 +69,4 @@ const LumberSection: React.FC = () => {
   );
 };
 
-export default LumberSection;
+export default CatalogSection;

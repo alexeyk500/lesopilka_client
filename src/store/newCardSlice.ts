@@ -7,26 +7,28 @@ type newCardSliceType = {
   isLoading: boolean;
 };
 
+const emptyCard = {
+  categoryId: undefined,
+  subCategoryId: undefined,
+  productMaterialId: undefined,
+  productCode: undefined,
+  images: [],
+  heightId: undefined,
+  customHeight: undefined,
+  widthId: undefined,
+  customWidth: undefined,
+  lengthId: undefined,
+  customLength: undefined,
+  sortId: undefined,
+  caliberId: undefined,
+  customCaliber: undefined,
+  antisepticId: undefined,
+  description: undefined,
+  price: undefined,
+};
+
 const initialState: newCardSliceType = {
-  newCard: {
-    categoryId: undefined,
-    subCategoryId: undefined,
-    productMaterialId: undefined,
-    productCode: undefined,
-    images: [],
-    heightId: undefined,
-    customHeight: undefined,
-    widthId: undefined,
-    customWidth: undefined,
-    lengthId: undefined,
-    customLength: undefined,
-    sortId: undefined,
-    caliberId: undefined,
-    customCaliber: undefined,
-    antisepticId: undefined,
-    description: undefined,
-    price: undefined,
-  },
+  newCard: { ...emptyCard },
   isLoading: false,
 };
 
@@ -34,54 +36,58 @@ export const newCardSlice = createSlice({
   name: 'newCardSlice',
   initialState,
   reducers: {
-    setCategoryId: (state, action) => {
+    setNewCardCategoryId: (state, action) => {
       state.newCard.categoryId = action.payload;
     },
-    setSubCategoryId: (state, action) => {
+    setNewCardSubCategoryId: (state, action) => {
       state.newCard.subCategoryId = action.payload;
     },
-    setProductMaterialId: (state, action) => {
+    setNewCardProductMaterialId: (state, action) => {
       state.newCard.productMaterialId = action.payload;
     },
-    setProductHeightId: (state, action) => {
+    setNewCardProductHeightId: (state, action) => {
       state.newCard.heightId = action.payload;
     },
-    setProductCustomHeight: (state, action) => {
+    setNewCardProductCustomHeight: (state, action) => {
       state.newCard.customHeight = action.payload;
     },
-    setProductWidthId: (state, action) => {
+    setNewCardProductWidthId: (state, action) => {
       state.newCard.widthId = action.payload;
     },
-    setProductCustomWidth: (state, action) => {
+    setNewCardProductCustomWidth: (state, action) => {
       state.newCard.customWidth = action.payload;
     },
-    setProductLengthId: (state, action) => {
+    setNewCardProductLengthId: (state, action) => {
       state.newCard.lengthId = action.payload;
     },
-    setProductCustomLength: (state, action) => {
+    setNewCardProductCustomLength: (state, action) => {
       state.newCard.customLength = action.payload;
     },
-    setProductCaliberId: (state, action) => {
+    setNewCardProductCaliberId: (state, action) => {
       state.newCard.caliberId = action.payload;
     },
-    setProductCustomCaliber: (state, action) => {
+    setNewCardProductCustomCaliber: (state, action) => {
       state.newCard.customCaliber = action.payload;
+    },
+    clearNewCard: (state) => {
+      state.newCard = { ...emptyCard };
     },
   },
 });
 
 export const {
-  setCategoryId,
-  setSubCategoryId,
-  setProductMaterialId,
-  setProductCustomHeight,
-  setProductCustomWidth,
-  setProductCustomLength,
-  setProductCustomCaliber,
-  setProductHeightId,
-  setProductWidthId,
-  setProductLengthId,
-  setProductCaliberId,
+  setNewCardCategoryId,
+  setNewCardSubCategoryId,
+  setNewCardProductMaterialId,
+  setNewCardProductCustomHeight,
+  setNewCardProductCustomWidth,
+  setNewCardProductCustomLength,
+  setNewCardProductCustomCaliber,
+  setNewCardProductHeightId,
+  setNewCardProductWidthId,
+  setNewCardProductLengthId,
+  setNewCardProductCaliberId,
+  clearNewCard,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;

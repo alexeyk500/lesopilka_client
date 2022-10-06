@@ -3,7 +3,7 @@ import classes from './ProductMaterialSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorProductMaterials } from '../../../../../store/catalogSlice';
 import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
-import { selectorNewCard, setProductMaterialId } from '../../../../../store/newCardSlice';
+import { selectorNewCard, setNewCardProductMaterialId } from '../../../../../store/newCardSlice';
 import Selector from '../../../../../components/commonComponents/Selector/Selector';
 import classNames from 'classnames';
 
@@ -13,7 +13,7 @@ const ProductMaterialSection: React.FC = () => {
   const productMaterials = useAppSelector(selectorProductMaterials);
 
   const onChangeSelector = (id: number) => {
-    dispatch(setProductMaterialId(id));
+    dispatch(setNewCardProductMaterialId(id));
   };
 
   return (
