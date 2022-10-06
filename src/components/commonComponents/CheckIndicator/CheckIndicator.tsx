@@ -4,7 +4,7 @@ import checkStatusIco from '../../../img/checkStatusIco.svg';
 
 type PropsType = {
   title: string;
-  checked: boolean;
+  checked: boolean | undefined;
 };
 
 const CheckIndicator: React.FC<PropsType> = ({ title, checked }) => {

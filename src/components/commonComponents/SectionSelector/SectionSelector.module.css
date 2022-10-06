@@ -21,3 +21,23 @@
   background-color: var(--section_background);
   margin-right: 0 !important;
 }
+
+.customSizeInputContainer {
+  display: flex;
+  margin-top: 12px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--gray_color);
+}
+
+.customSizeInput {
+  display: flex;
+  width: 80px;
+  margin-left: 32px;
+  margin-right: 12px;
+  padding: 4px 12px;
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 6px;
+}

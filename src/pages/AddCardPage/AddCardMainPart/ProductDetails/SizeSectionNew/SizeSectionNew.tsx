@@ -123,13 +123,7 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
       <div className={classes.rowContainer}>
         {newCard.productMaterialId ? (
           <div className={classes.selectorContainer}>
-            <Selector
-              hasNullChoice
-              options={categorySizes}
-              customClassName={classes.selector}
-              onChange={onChangeSelector}
-              customOptionTitle={'Другой размер'}
-            />
+            <Selector options={categorySizes} customClassName={classes.selector} onChange={onChangeSelector} />
           </div>
         ) : (
           <div className={classes.placeHolderContainer}>

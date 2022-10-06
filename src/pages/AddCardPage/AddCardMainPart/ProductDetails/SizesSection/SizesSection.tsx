@@ -15,52 +15,49 @@ import {
   setNewCardProductWidthId,
 } from '../../../../../store/newCardSlice';
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
-import { SizeTypeEnum } from '../../../../../types/types';
+import { CardType, CategorySizeType, SelectOptionsType, SizeTypeEnum } from '../../../../../types/types';
+import classNames from 'classnames';
+
+export const getSizesSectionIndicator = (newCard: CardType) => {
+  if (newCard.categoryId === 6) {
+    const result =
+      (newCard.caliberId && newCard.caliberId > 0) ||
+      (newCard.caliberId === -1 && newCard.customCaliber && newCard.lengthId && newCard.lengthId > 0) ||
+      (newCard.lengthId === -1 && newCard.customLength);
+    return Boolean(result);
+  }
+  const result =
+    (newCard.heightId && newCard.heightId > 0) ||
+    (newCard.heightId === -1 && newCard.customHeight && newCard.widthId && newCard.widthId > 0) ||
+    (newCard.widthId === -1 && newCard.customWidth && newCard.lengthId && newCard.lengthId > 0) ||
+    (newCard.lengthId === -1 && newCard.customLength);
+  return Boolean(result);
+};
+
+const getOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
+  const filteredSizes = sizes.filter(
+    (categorySize) =>
+      categorySize.categoryId === categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
+  );
+  const optionsFromSizes = filteredSizes.map((size) => {
+    return { id: size.id, title: `${size.value} мм` };
+  });
+  const options: SelectOptionsType[] = [];
+  options.push({ id: 0, title: '' });
+  options.push(...optionsFromSizes);
+  options.push({ id: -1, title: 'Другой размер' });
+  return options;
+};
 
 const SizesSection = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
-  const heightSizesRaw = allCategorySizes.filter(
-    (categorySize) =>
-      categorySize.categoryId === newCard.categoryId &&
-      !categorySize.isCustomSize &&
-      categorySize.type === SizeTypeEnum.height
-  );
-  const heightSizes = heightSizesRaw.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
-  });
-
-  const widthSizesRaw = allCategorySizes.filter(
-    (categorySize) =>
-      categorySize.categoryId === newCard.categoryId &&
-      !categorySize.isCustomSize &&
-      categorySize.type === SizeTypeEnum.width
-  );
-  const widthSizes = widthSizesRaw.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
-  });
-
-  const lengthSizesRaw = allCategorySizes.filter(
-    (categorySize) =>
-      categorySize.categoryId === newCard.categoryId &&
-      !categorySize.isCustomSize &&
-      categorySize.type === SizeTypeEnum.length
-  );
-  const lengthSizes = lengthSizesRaw.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
-  });
-
-  const caliberSizesRaw = allCategorySizes.filter(
-    (categorySize) =>
-      categorySize.categoryId === newCard.categoryId &&
-      !categorySize.isCustomSize &&
-      categorySize.type === SizeTypeEnum.caliber
-  );
-  const caliberSizes = caliberSizesRaw.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
-  });
+  const heightSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.height);
+  const widthSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.width);
+  const lengthSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.length);
+  const caliberSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.caliber);
 
   const selectedHeightId = heightSizes.find((heightSize) => heightSize.id === newCard.heightId);
   const selectedWidthId = widthSizes.find((widthSize) => widthSize.id === newCard.widthId);
@@ -87,20 +84,34 @@ const SizesSection = () => {
     newCard.customCaliber && dispatch(setNewCardProductCustomCaliber(undefined));
   };
 
+  const onChangeCustomHeight = (value: string) => {
+    dispatch(setNewCardProductCustomHeight(value));
+  };
+
+  const onChangeCustomWidth = (value: string) => {
+    dispatch(setNewCardProductCustomWidth(value));
+  };
+
+  const onChangeCustomLength = (value: string) => {
+    dispatch(setNewCardProductCustomLength(value));
+  };
+
+  const onChangeCustomCaliber = (value: string) => {
+    dispatch(setNewCardProductCustomCaliber(value));
+  };
+
   return (
-    <div className={classes.container}>
-      <CheckIndicator
-        title={'Размеры'}
-        checked={!!newCard.categoryId && !!newCard.subCategoryId && !!newCard.productMaterialId}
-      />
-      <div className={classes.rowContainer}>
+    <div className={classNames(classes.container, { [classes.blurAndOpacity]: !newCard.categoryId })}>
+      <CheckIndicator title={'Размеры'} checked={getSizesSectionIndicator(newCard)} />
+      <div className={classNames(classes.rowContainer, { [classes.rowContainerSlim]: newCard.widthId === -1 })}>
         {newCard.categoryId === 6 ? (
           <SectionSelector
             title={'Диаметр'}
             options={caliberSizes}
             selectedOption={selectedCaliberId}
-            customOptionTitle={'Другой размер'}
             onChangeSelector={onChangeCaliberSelector}
+            customSize={newCard.customCaliber}
+            onChangeCustomSize={onChangeCustomCaliber}
           />
         ) : (
           <>
@@ -108,15 +119,17 @@ const SizesSection = () => {
               title={'Толщина'}
               options={heightSizes}
               selectedOption={selectedHeightId}
-              customOptionTitle={'Другой размер'}
               onChangeSelector={onChangeHeightSelector}
+              customSize={newCard.customHeight}
+              onChangeCustomSize={onChangeCustomHeight}
             />
             <SectionSelector
               title={'Ширина'}
               options={widthSizes}
               selectedOption={selectedWidthId}
-              customOptionTitle={'Другой размер'}
               onChangeSelector={onChangeWidthSelector}
+              customSize={newCard.customWidth}
+              onChangeCustomSize={onChangeCustomWidth}
             />
           </>
         )}
@@ -124,8 +137,9 @@ const SizesSection = () => {
           title={'Длинна'}
           options={lengthSizes}
           selectedOption={selectedLengthId}
-          customOptionTitle={'Другой размер'}
           onChangeSelector={onChangeLengthSelector}
+          customSize={newCard.customLength}
+          onChangeCustomSize={onChangeCustomLength}
         />
       </div>
     </div>

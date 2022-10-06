@@ -22,12 +22,7 @@ const ProductMaterialSection: React.FC = () => {
       <div className={classes.rowContainer}>
         {newCard.subCategoryId ? (
           <div className={classes.selectorContainer}>
-            <Selector
-              hasNullChoice
-              options={productMaterials}
-              customClassName={classes.selector}
-              onChange={onChangeSelector}
-            />
+            <Selector options={productMaterials} customClassName={classes.selector} onChange={onChangeSelector} />
           </div>
         ) : (
           <div className={classes.placeHolderContainer}>

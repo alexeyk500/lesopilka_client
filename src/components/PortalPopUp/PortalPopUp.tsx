@@ -120,6 +120,8 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
   }
 );
 
+export type OnClosePopUpResultType = boolean | FormData | undefined;
+
 export const showPortalPopUp = ({
   popUpContent,
   onClosePopUp,
