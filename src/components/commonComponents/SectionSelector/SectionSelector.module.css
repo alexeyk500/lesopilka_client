@@ -1,0 +1,23 @@
+.selectorGroupContainer {
+  display: flex;
+  flex-direction: column;
+  width: 268px;
+  flex-shrink: 0;
+  padding-left: 28px;
+}
+
+.title {
+  color: var(--blue_color);
+  margin-bottom: 4px;
+}
+
+.selectorContainer {
+  display: flex;
+  align-items: center;
+}
+
+.selector {
+  font-size: 16px;
+  background-color: var(--section_background);
+  margin-right: 0 !important;
+}

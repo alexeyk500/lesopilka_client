@@ -12,6 +12,8 @@ import Preloader from '../../../../components/Preloader/Preloader';
 import ProductMaterialSection from './ProductMaterialSection/ProductMaterialSection';
 import { SizeTypeEnum } from '../../../../types/types';
 import SizeSectionNew from './SizeSectionNew/SizeSectionNew';
+import LumberSection from './LumberSection/LumberSection';
+import SizesSection from './SizesSection/SizesSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,13 +32,12 @@ const ProductDetails: React.FC = () => {
         </div>
       ) : (
         <div className={classes.scrollContainer}>
-          <CategorySection />
-          <SubCategorySection />
-          <ProductMaterialSection />
-          <SizeSectionNew sizeType={SizeTypeEnum.height} />
-          <SizeSectionNew sizeType={SizeTypeEnum.width} />
-          <SizeSectionNew sizeType={SizeTypeEnum.length} />
-          <SizeSectionNew sizeType={SizeTypeEnum.caliber} />
+          <LumberSection />
+          {/*<SizesSection />*/}
+          {/*<SizeSectionNew sizeType={SizeTypeEnum.height} />*/}
+          {/*<SizeSectionNew sizeType={SizeTypeEnum.width} />*/}
+          {/*<SizeSectionNew sizeType={SizeTypeEnum.length} />*/}
+          {/*<SizeSectionNew sizeType={SizeTypeEnum.caliber} />*/}
         </div>
       )}
     </div>
