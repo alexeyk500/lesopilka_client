@@ -5,7 +5,7 @@ import { SelectOptionsType } from '../../../types/types';
 
 type PropsType = {
   options: SelectOptionsType[];
-  onChange: (value: string) => void;
+  onChange: (value: number) => void;
   selectedOption?: SelectOptionsType;
   customOptionTitle?: string;
   hasNullChoice?: boolean;
@@ -17,12 +17,12 @@ const getStartedId = (options: SelectOptionsType[], selectedOption?: SelectOptio
     return selectedOption.id;
   }
   if (hasNullChoice) {
-    return '0';
+    return 0;
   }
   if (options.length > 0) {
     return options[0].id;
   }
-  return '0';
+  return 0;
 };
 
 const Selector: React.FC<PropsType> = ({
@@ -33,7 +33,7 @@ const Selector: React.FC<PropsType> = ({
   hasNullChoice,
   customClassName,
 }) => {
-  const [selectedOptionId, setSelectedOptionId] = useState<string | undefined>(
+  const [selectedOptionId, setSelectedOptionId] = useState<number | undefined>(
     getStartedId(options, selectedOption, hasNullChoice)
   );
   const [selectOptions, setSelectOptions] = useState<SelectOptionsType[]>([]);
@@ -41,11 +41,11 @@ const Selector: React.FC<PropsType> = ({
   useEffect(() => {
     const fullOptions: SelectOptionsType[] = [];
     if (hasNullChoice) {
-      fullOptions.push({ id: '0', title: '' });
+      fullOptions.push({ id: 0, title: '' });
     }
     fullOptions.push(...options);
     if (customOptionTitle) {
-      fullOptions.push({ id: '-1', title: customOptionTitle });
+      fullOptions.push({ id: -1, title: customOptionTitle });
     }
     setSelectOptions(fullOptions);
   }, [hasNullChoice, options, customOptionTitle]);
@@ -56,8 +56,8 @@ const Selector: React.FC<PropsType> = ({
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.currentTarget.value) {
-      setSelectedOptionId(e.currentTarget.value);
-      onChange && onChange(e.currentTarget.value);
+      setSelectedOptionId(Number(e.currentTarget.value));
+      onChange && onChange(Number(e.currentTarget.value));
     }
   };
 

@@ -12,10 +12,10 @@ import Search from './Search/Search';
 import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
 
 const options = [
-  { id: '1', title: 'Санкт-Петербург' },
-  { id: '2', title: 'Москва' },
-  { id: '3', title: 'Новосибирск' },
-  { id: '4', title: 'Владивосток' },
+  { id: 1, title: 'Санкт-Петербург' },
+  { id: 2, title: 'Москва' },
+  { id: 3, title: 'Новосибирск' },
+  { id: 4, title: 'Владивосток' },
 ];
 
 const Header: React.FC = () => {
@@ -27,7 +27,7 @@ const Header: React.FC = () => {
     dispatch(getSubCategoriesThunk());
   }, [dispatch]);
 
-  const onChangeRegion = (id: string) => {
+  const onChangeRegion = (id: number) => {
     console.log('onChangeRegion id=', id);
   };
 

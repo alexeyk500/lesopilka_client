@@ -64,7 +64,7 @@ const SizeSection: React.FC<PropsType> = ({ sizeType }) => {
       ? true
       : !!(sizeType === SizeTypeEnum.caliber && (newCard.caliberId || newCard.customCaliber));
 
-  const getIsCheckedCheckBox = (id: string) => {
+  const getIsCheckedCheckBox = (id: number) => {
     if (sizeType === SizeTypeEnum.height && newCard.heightId === id) {
       return true;
     }
@@ -101,7 +101,7 @@ const SizeSection: React.FC<PropsType> = ({ sizeType }) => {
     }
   };
 
-  const onSelect = (id: string) => {
+  const onSelect = (id: number) => {
     if (sizeType === SizeTypeEnum.height) {
       dispatch(setProductHeightId(id));
       newCard.customHeight && dispatch(setProductCustomHeight(undefined));
@@ -135,7 +135,7 @@ const SizeSection: React.FC<PropsType> = ({ sizeType }) => {
     }
   };
 
-  if (newCard.categoryId === '6' && sizeType !== SizeTypeEnum.caliber && sizeType !== SizeTypeEnum.length) {
+  if (newCard.categoryId === 6 && sizeType !== SizeTypeEnum.caliber && sizeType !== SizeTypeEnum.length) {
     return null;
   }
 

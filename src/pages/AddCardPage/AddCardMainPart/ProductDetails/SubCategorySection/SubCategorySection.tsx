@@ -12,10 +12,10 @@ const SubCategorySection: React.FC = () => {
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const newCard = useAppSelector(selectorNewCard);
   const subCategories = subCategoriesStore.filter(
-    (subCategory) => newCard.categoryId === String(subCategory.categoryId)
+    (subCategory) => newCard.categoryId === subCategory.categoryId
   );
 
-  const onChangeSelector = (id: string) => {
+  const onChangeSelector = (id: number) => {
     dispatch(setSubCategoryId(id));
   };
 

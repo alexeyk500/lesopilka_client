@@ -19,24 +19,24 @@ const LumberSection: React.FC = () => {
   const productMaterials = useAppSelector(selectorProductMaterials);
 
   const subCategories = subCategoriesStore.filter(
-    (subCategory) => newCard.categoryId === String(subCategory.categoryId)
+    (subCategory) => newCard.categoryId === subCategory.categoryId
   );
-  const selectedCategory = categories.find(category=>String(category.id) === newCard.categoryId);
-  const selectedSubCategory = subCategories.find(subCategory=>String(subCategory.id) === newCard.subCategoryId);
-  const selectedProductMaterials = productMaterials.find(productMaterial=>String(productMaterial.id) === newCard.productMaterialId);
+  const selectedCategory = categories.find(category=>category.id === newCard.categoryId);
+  const selectedSubCategory = subCategories.find(subCategory=>subCategory.id === newCard.subCategoryId);
+  const selectedProductMaterials = productMaterials.find(productMaterial=>productMaterial.id === newCard.productMaterialId);
 
-  const onChangeCategorySelector = (id: string) => {
+  const onChangeCategorySelector = (id: number) => {
     dispatch(setCategoryId(id));
     newCard.subCategoryId && dispatch(setSubCategoryId(undefined))
     newCard.productMaterialId && dispatch(setProductMaterialId(undefined));
   };
 
-  const onChangeSubCategorySelector = (id: string) => {
+  const onChangeSubCategorySelector = (id: number) => {
     dispatch(setSubCategoryId(id));
     newCard.productMaterialId && dispatch(setProductMaterialId(undefined));
   };
 
-  const onChangeMaterialSelector = (id: string) => {
+  const onChangeMaterialSelector = (id: number) => {
     dispatch(setProductMaterialId(id));
   };
 

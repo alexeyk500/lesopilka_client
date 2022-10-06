@@ -12,7 +12,7 @@ const ProductMaterialSection: React.FC = () => {
   const newCard = useAppSelector(selectorNewCard);
   const productMaterials = useAppSelector(selectorProductMaterials);
 
-  const onChangeSelector = (id: string) => {
+  const onChangeSelector = (id: number) => {
     dispatch(setProductMaterialId(id));
   };
 

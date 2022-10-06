@@ -1,5 +1,5 @@
 export type SelectOptionsType = {
-  id: string | undefined;
+  id: number | undefined;
   title: string;
 };
 
@@ -9,41 +9,41 @@ export type UserType = {
 };
 
 export type CategoryType = {
-  id: string;
+  id: number;
   title: string;
   image: string;
   order: number;
 };
 
 export type SubCategoryType = {
-  id: string;
+  id: number;
   title: string;
   order: number;
-  categoryId: string;
+  categoryId: number;
 };
 
 export type CardType = {
-  categoryId: string | undefined;
-  subCategoryId: string | undefined;
-  productMaterialId: string | undefined;
+  categoryId: number | undefined;
+  subCategoryId: number | undefined;
+  productMaterialId: number | undefined;
   productCode: string | undefined;
   images: string[];
-  heightId: string | undefined;
+  heightId: number | undefined;
   customHeight: string | undefined;
-  widthId: string | undefined;
+  widthId: number | undefined;
   customWidth: string | undefined;
-  lengthId: string | undefined;
+  lengthId: number | undefined;
   customLength: string | undefined;
-  caliberId: string | undefined;
+  caliberId: number | undefined;
   customCaliber: string | undefined;
-  sortId: string | undefined;
-  antisepticId: boolean | undefined;
+  sortId: number | undefined;
+  antisepticId: number | undefined;
   description: string | undefined;
   price: string | undefined;
 };
 
 export type ProductMaterialType = {
-  id: string;
+  id: number;
   title: string;
   isPine: boolean;
   order: number;
@@ -57,10 +57,10 @@ export enum SizeTypeEnum {
 }
 
 export type CategorySizeType = {
-  id: string;
+  id: number;
   type: string;
   value: number;
   isCustomSize: boolean;
   order: number;
-  categoryId: string;
+  categoryId: number;
 };

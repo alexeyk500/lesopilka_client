@@ -6,7 +6,7 @@ import { SelectOptionsType } from '../../../types/types';
 type PropsType = {
   title: string;
   options: SelectOptionsType[];
-  onChangeSelector: (id: string) => void;
+  onChangeSelector: (id: number) => void;
   selectedOption?: SelectOptionsType;
   hasNullChoice?: boolean;
 };

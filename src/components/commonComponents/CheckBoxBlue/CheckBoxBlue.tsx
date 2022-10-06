@@ -3,10 +3,10 @@ import classes from './CheckBoxBlue.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
 
 type PropsType = {
-  id: string;
+  id: number;
   title: string;
   checked: boolean;
-  onSelect: (id: string) => void;
+  onSelect: (id: number) => void;
 };
 
 const CheckBoxBlue: React.FC<PropsType> = ({ id, title, checked, onSelect }) => {

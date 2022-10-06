@@ -11,7 +11,7 @@ const CategorySection: React.FC = () => {
   const categories = useAppSelector(selectorCategories);
   const newCard = useAppSelector(selectorNewCard);
 
-  const onChangeSelector = (id: string) => {
+  const onChangeSelector = (id: number) => {
     dispatch(setCategoryId(id));
   };
 

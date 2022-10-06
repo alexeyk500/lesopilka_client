@@ -42,22 +42,22 @@ const SizesSection = () => {
     return { id: size.id, title: `${size.value} мм` };
   });
 
-  const onChangeWidthSelector = (id: string) => {
+  const onChangeWidthSelector = (id: number) => {
     dispatch(setProductWidthId(id));
     newCard.customWidth && dispatch(setProductCustomWidth(undefined));
   };
 
-  const onChangeHeightSelector = (id: string) => {
+  const onChangeHeightSelector = (id: number) => {
     dispatch(setProductHeightId(id));
     newCard.customHeight && dispatch(setProductCustomHeight(undefined));
   };
 
-  const onChangeLengthSelector = (id: string) => {
+  const onChangeLengthSelector = (id: number) => {
     dispatch(setProductLengthId(id));
     newCard.customLength && dispatch(setProductCustomLength(undefined));
   };
 
-  const onChangeCaliberSelector = (id: string) => {
+  const onChangeCaliberSelector = (id: number) => {
     dispatch(setProductCaliberId(id));
     newCard.customCaliber && dispatch(setProductCustomCaliber(undefined));
   };
@@ -69,7 +69,7 @@ const SizesSection = () => {
         checked={!!newCard.categoryId && !!newCard.subCategoryId && !!newCard.productMaterialId}
       />
       <div className={classes.rowContainer}>
-        {newCard.categoryId === '6' ? (
+        {newCard.categoryId === 6 ? (
           <SectionSelector title={'Диаметр'} options={caliberSizes} onChangeSelector={onChangeCaliberSelector} />
         ) : (
           <>

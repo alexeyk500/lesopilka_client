@@ -42,7 +42,7 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
 
   const categorySizesRaw = allCategorySizes.filter(
     (categorySize) =>
-      String(categorySize.categoryId) === newCard.categoryId &&
+      categorySize.categoryId === newCard.categoryId &&
       !categorySize.isCustomSize &&
       categorySize.type === sizeType
   );
@@ -50,7 +50,7 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
     return { ...categorySizeRaw, title: `${categorySizeRaw.value} мм` };
   });
 
-  const onChangeSelector = (id: string) => {
+  const onChangeSelector = (id: number) => {
     if (sizeType === SizeTypeEnum.height) {
       dispatch(setProductHeightId(id));
       newCard.customHeight && dispatch(setProductCustomHeight(undefined));
@@ -70,13 +70,13 @@ const SizeSectionNew: React.FC<PropsType> = ({ sizeType }) => {
   };
 
   const showCustomSizeInput =
-    sizeType === SizeTypeEnum.height && newCard.heightId === '-1'
+    sizeType === SizeTypeEnum.height && newCard.heightId === -1
       ? true
-      : sizeType === SizeTypeEnum.width && newCard.widthId === '-1'
+      : sizeType === SizeTypeEnum.width && newCard.widthId === -1
       ? true
-      : sizeType === SizeTypeEnum.length && newCard.lengthId === '-1'
+      : sizeType === SizeTypeEnum.length && newCard.lengthId === -1
       ? true
-      : sizeType === SizeTypeEnum.caliber && newCard.caliberId === '-1';
+      : sizeType === SizeTypeEnum.caliber && newCard.caliberId === -1;
 
   const onChangeCustomSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || onlyDigitRegExp.test(e.target.value)) {
