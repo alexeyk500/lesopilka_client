@@ -21,16 +21,14 @@ import classNames from 'classnames';
 export const getSizesSectionIndicator = (newCard: CardType) => {
   if (newCard.categoryId === 6) {
     const result =
-      (newCard.caliberId && newCard.caliberId > 0) ||
-      (newCard.caliberId === -1 && newCard.customCaliber && newCard.lengthId && newCard.lengthId > 0) ||
-      (newCard.lengthId === -1 && newCard.customLength);
+      ((newCard.caliberId && newCard.caliberId > 0) || (newCard.caliberId === -1 && newCard.customCaliber)) &&
+      ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength))
     return Boolean(result);
   }
   const result =
-    (newCard.heightId && newCard.heightId > 0) ||
-    (newCard.heightId === -1 && newCard.customHeight && newCard.widthId && newCard.widthId > 0) ||
-    (newCard.widthId === -1 && newCard.customWidth && newCard.lengthId && newCard.lengthId > 0) ||
-    (newCard.lengthId === -1 && newCard.customLength);
+    ((newCard.heightId && newCard.heightId > 0) || (newCard.heightId === -1 && newCard.customHeight)) &&
+    ((newCard.widthId && newCard.widthId > 0) || (newCard.widthId === -1 && newCard.customWidth)) &&
+    ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength))
   return Boolean(result);
 };
 
@@ -84,26 +82,30 @@ const SizesSection = () => {
     newCard.customCaliber && dispatch(setNewCardProductCustomCaliber(undefined));
   };
 
-  const onChangeCustomHeight = (value: string) => {
+  const onChangeCustomHeight = (value: string | undefined) => {
     dispatch(setNewCardProductCustomHeight(value));
   };
 
-  const onChangeCustomWidth = (value: string) => {
+  const onChangeCustomWidth = (value: string | undefined) => {
     dispatch(setNewCardProductCustomWidth(value));
   };
 
-  const onChangeCustomLength = (value: string) => {
+  const onChangeCustomLength = (value: string | undefined) => {
     dispatch(setNewCardProductCustomLength(value));
   };
 
-  const onChangeCustomCaliber = (value: string) => {
+  const onChangeCustomCaliber = (value: string | undefined) => {
     dispatch(setNewCardProductCustomCaliber(value));
   };
 
   return (
     <div className={classNames(classes.container, { [classes.blurAndOpacity]: !newCard.categoryId })}>
       <CheckIndicator title={'Размеры'} checked={getSizesSectionIndicator(newCard)} />
-      <div className={classNames(classes.rowContainer, { [classes.rowContainerSlim]: newCard.widthId === -1 })}>
+      <div
+        className={classNames(classes.rowContainer, {
+          [classes.rowContainerSlim]: newCard.widthId === -1 || newCard.heightId === -1 || newCard.lengthId === -1,
+        })}
+      >
         {newCard.categoryId === 6 ? (
           <SectionSelector
             title={'Диаметр'}

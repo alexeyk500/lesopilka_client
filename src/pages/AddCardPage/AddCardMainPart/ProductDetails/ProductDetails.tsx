@@ -9,6 +9,7 @@ import {
 import Preloader from '../../../../components/Preloader/Preloader';
 import CatalogSection from './CatalogSection/CatalogSection';
 import SizesSection from './SizesSection/SizesSection';
+import ProductCode from './ProductCode/ProductCode';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const ProductDetails: React.FC = () => {
         <div className={classes.scrollContainer}>
           <CatalogSection />
           <SizesSection />
+          <ProductCode />
         </div>
       )}
     </div>

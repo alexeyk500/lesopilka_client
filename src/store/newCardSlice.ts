@@ -69,6 +69,9 @@ export const newCardSlice = createSlice({
     setNewCardProductCustomCaliber: (state, action) => {
       state.newCard.customCaliber = action.payload;
     },
+    setProductCode: (state, action) => {
+      state.newCard.productCode = action.payload;
+    },
     clearNewCard: (state) => {
       state.newCard = { ...emptyCard };
     },
@@ -87,6 +90,7 @@ export const {
   setNewCardProductWidthId,
   setNewCardProductLengthId,
   setNewCardProductCaliberId,
+  setProductCode,
   clearNewCard,
 } = newCardSlice.actions;
 

@@ -9,7 +9,7 @@ type PropsType = {
   onChangeSelector: (id: number) => void;
   selectedOption?: SelectOptionsType;
   customSize?: string;
-  onChangeCustomSize?: (value: string) => void;
+  onChangeCustomSize?: (value: string | undefined) => void;
 };
 
 const onlyDigitRegExp = /^[0-9\b]+$/;
@@ -24,7 +24,7 @@ const SectionSelector: React.FC<PropsType> = ({
 }) => {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || onlyDigitRegExp.test(e.target.value)) {
-      onChangeCustomSize && onChangeCustomSize(e.currentTarget.value);
+      onChangeCustomSize && onChangeCustomSize(e.currentTarget.value ? e.currentTarget.value : undefined);
     }
   };
 
