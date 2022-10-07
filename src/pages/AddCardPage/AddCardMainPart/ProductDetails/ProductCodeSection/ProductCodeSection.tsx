@@ -1,11 +1,11 @@
 import React from 'react';
-import classes from './ProductCode.module.css';
+import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorNewCard, setProductCode } from '../../../../../store/newCardSlice';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import {getSizesSectionIndicator} from "../SizesSection/SizesSection";
+import { getSizesSectionIndicator } from '../SizesSection/SizesSection';
 
-const ProductCode = () => {
+const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
 
@@ -14,7 +14,11 @@ const ProductCode = () => {
   };
 
   return (
-    <SectionContainer title={'Артикул'} completeCondition={!!newCard.productCode} blurCondition={!getSizesSectionIndicator(newCard)}>
+    <SectionContainer
+      title={'Артикул'}
+      completeCondition={!!newCard.productCode}
+      blurCondition={!getSizesSectionIndicator(newCard)}
+    >
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>
         <input className={classes.customSizeInput} value={newCard.productCode} onChange={onChangeInput} type="text" />
@@ -23,4 +27,4 @@ const ProductCode = () => {
   );
 };
 
-export default ProductCode;
+export default ProductCodeSection;

@@ -1,13 +1,3 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 6px 0;
-  padding: 12px;
-  box-shadow: var(--box_shadow);
-  border-radius: 12px;
-}
-
 .rowContainer {
   display: flex;
   align-items: center;

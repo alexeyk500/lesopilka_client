@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './SizesSection.module.css';
-import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import {
@@ -17,18 +16,19 @@ import {
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
 import { CardType, CategorySizeType, SelectOptionsType, SizeTypeEnum } from '../../../../../types/types';
 import classNames from 'classnames';
+import SectionContainer from '../SectionContainer/SectionContainer';
 
 export const getSizesSectionIndicator = (newCard: CardType) => {
   if (newCard.categoryId === 6) {
     const result =
       ((newCard.caliberId && newCard.caliberId > 0) || (newCard.caliberId === -1 && newCard.customCaliber)) &&
-      ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength))
+      ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength));
     return Boolean(result);
   }
   const result =
     ((newCard.heightId && newCard.heightId > 0) || (newCard.heightId === -1 && newCard.customHeight)) &&
     ((newCard.widthId && newCard.widthId > 0) || (newCard.widthId === -1 && newCard.customWidth)) &&
-    ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength))
+    ((newCard.lengthId && newCard.lengthId > 0) || (newCard.lengthId === -1 && newCard.customLength));
   return Boolean(result);
 };
 
@@ -99,8 +99,11 @@ const SizesSection = () => {
   };
 
   return (
-    <div className={classNames(classes.container, { [classes.blurAndOpacity]: !newCard.categoryId })}>
-      <CheckIndicator title={'Размеры'} checked={getSizesSectionIndicator(newCard)} />
+    <SectionContainer
+      title={'Размеры'}
+      completeCondition={getSizesSectionIndicator(newCard)}
+      blurCondition={!newCard.categoryId}
+    >
       <div
         className={classNames(classes.rowContainer, {
           [classes.rowContainerSlim]: newCard.widthId === -1 || newCard.heightId === -1 || newCard.lengthId === -1,
@@ -144,7 +147,7 @@ const SizesSection = () => {
           onChangeCustomSize={onChangeCustomLength}
         />
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 

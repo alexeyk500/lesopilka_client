@@ -1,6 +1,5 @@
 import React from 'react';
 import classes from './CatalogSection.module.css';
-import CheckIndicator from '../../../../../components/commonComponents/CheckIndicator/CheckIndicator';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories, selectorProductMaterials, selectorSubCategories } from '../../../../../store/catalogSlice';
 import {
@@ -14,6 +13,7 @@ import SectionSelector from '../../../../../components/commonComponents/SectionS
 import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { SelectOptionsType } from '../../../../../types/types';
+import SectionContainer from '../SectionContainer/SectionContainer';
 
 const getOptions = (optionsStore: SelectOptionsType[]) => {
   const options: SelectOptionsType[] = [];
@@ -71,11 +71,10 @@ const CatalogSection: React.FC = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <CheckIndicator
-        title={'Пиломатериал'}
-        checked={!!newCard.categoryId && !!newCard.subCategoryId && !!newCard.productMaterialId}
-      />
+    <SectionContainer
+      title={'Пиломатериал'}
+      completeCondition={!!newCard.categoryId && !!newCard.subCategoryId && !!newCard.productMaterialId}
+    >
       <div className={classes.rowContainer}>
         <SectionSelector
           title={'Раздел Каталога'}
@@ -96,7 +95,7 @@ const CatalogSection: React.FC = () => {
           onChangeSelector={onChangeMaterialSelector}
         />
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 
