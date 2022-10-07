@@ -10,6 +10,7 @@ import Preloader from '../../../../components/Preloader/Preloader';
 import CatalogSection from './CatalogSection/CatalogSection';
 import SizesSection from './SizesSection/SizesSection';
 import ProductCodeSection from './ProductCodeSection/ProductCodeSection';
+import ImagesSection from './ImagesSection/ImagesSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ const ProductDetails: React.FC = () => {
           <CatalogSection />
           <SizesSection />
           <ProductCodeSection />
+          <ImagesSection />
         </div>
       )}
     </div>
