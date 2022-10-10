@@ -64,3 +64,8 @@ export type CategorySizeType = {
   order: number;
   categoryId: number;
 };
+
+export type ProductSortsType = {
+  id: number;
+  title: string;
+};

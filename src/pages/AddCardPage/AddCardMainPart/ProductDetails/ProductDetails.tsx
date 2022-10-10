@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import {
   getCategorySizesThunk,
   getProductMaterialsThunk,
+  getProductSortsThunk,
   selectorCatalogIsLoading,
 } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
@@ -19,6 +20,7 @@ const ProductDetails: React.FC = () => {
 
   useEffect(() => {
     dispatch(getProductMaterialsThunk());
+    dispatch(getProductSortsThunk());
     dispatch(getCategorySizesThunk());
   }, [dispatch]);
 

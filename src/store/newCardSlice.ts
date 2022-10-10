@@ -79,7 +79,10 @@ export const newCardSlice = createSlice({
       state.newCard.images.push(action.payload);
     },
     deleteImageFromNewCardImages: (state, action) => {
-      state.newCard.images = state.newCard.images.filter(image=>image !== action.payload);
+      state.newCard.images = state.newCard.images.filter((image) => image !== action.payload);
+    },
+    setNewCardSortId: (state, action) => {
+      state.newCard.sortId = action.payload;
     },
   },
 });
@@ -100,6 +103,7 @@ export const {
   clearNewCard,
   addImageToNewCardImages,
   deleteImageFromNewCardImages,
+  setNewCardSortId,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;

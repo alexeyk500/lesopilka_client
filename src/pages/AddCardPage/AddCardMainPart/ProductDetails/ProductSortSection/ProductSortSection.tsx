@@ -1,10 +1,11 @@
 import React from 'react';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { selectorNewCard } from '../../../../../store/newCardSlice';
+import { selectorNewCard, setNewCardSortId } from '../../../../../store/newCardSlice';
 import classes from '../CatalogSection/CatalogSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { SelectOptionsType } from '../../../../../types/types';
+import { selectorProductSorts } from '../../../../../store/catalogSlice';
 
 const getSortOptions = (sorts: SelectOptionsType[]) => {
   const options: SelectOptionsType[] = [];
@@ -16,21 +17,18 @@ const getSortOptions = (sorts: SelectOptionsType[]) => {
 const ProductSortSection = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
-  const sortsOption = getSortOptions([
-    { id: 1, title: 'экстра' },
-    { id: 2, title: '1-й' },
-    { id: 3, title: '2-й' },
-  ]);
+  const sorts = useAppSelector(selectorProductSorts);
+  const sortsOption = getSortOptions(sorts);
+  const selectedSortId = sortsOption.find((sort) => sort.id === newCard.sortId);
 
   const onChangeSelector = (id: number) => {
-    console.log('onChangeSelector id =', id);
-    // dispatch(setNewCardProductCaliberId(id));
+    dispatch(setNewCardSortId(id));
   };
 
   return (
     <SectionContainer title={'Сорт'} completeCondition={!!newCard.sortId} blurCondition={false}>
       <div className={classes.rowContainer}>
-        <SectionSelector options={sortsOption} selectedOption={undefined} onChangeSelector={onChangeSelector} />
+        <SectionSelector options={sortsOption} selectedOption={selectedSortId} onChangeSelector={onChangeSelector} />
       </div>
     </SectionContainer>
   );

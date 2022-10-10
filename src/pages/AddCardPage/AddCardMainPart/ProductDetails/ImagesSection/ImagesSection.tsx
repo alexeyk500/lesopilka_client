@@ -2,11 +2,10 @@ import React from 'react';
 import classes from './ImagesSection.module.css';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import ImagesList from './ImagesList/ImagesList';
-import {useAppSelector} from "../../../../../hooks/hooks";
-import {selectorNewCard} from "../../../../../store/newCardSlice";
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { selectorNewCard } from '../../../../../store/newCardSlice';
 
 const ImagesSection: React.FC = () => {
-
   const newCard = useAppSelector(selectorNewCard);
 
   return (

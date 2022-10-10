@@ -1,4 +1,4 @@
-import { CategorySizeType, CategoryType, ProductMaterialType, SubCategoryType } from '../types/types';
+import { CategorySizeType, CategoryType, ProductMaterialType, ProductSortsType, SubCategoryType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { RootState } from './store';
@@ -8,6 +8,7 @@ type CatalogSliceType = {
   categories: CategoryType[];
   subCategories: SubCategoryType[];
   productMaterials: ProductMaterialType[];
+  productSorts: ProductSortsType[];
   categorySizes: CategorySizeType[];
   isLoading: boolean;
 };
@@ -16,6 +17,7 @@ const initialState: CatalogSliceType = {
   categories: [],
   subCategories: [],
   productMaterials: [],
+  productSorts: [],
   categorySizes: [],
   isLoading: false,
 };
@@ -52,7 +54,22 @@ export const getProductMaterialsThunk = createAsyncThunk<ProductMaterialType[], 
       }
       return rejectWithValue('Пользователь не авторизован');
     } catch (e) {
-      return rejectWithValue('Ошибка получения материалов для продукта');
+      return rejectWithValue('Ошибка получения справочника материалов для продукта');
+    }
+  }
+);
+
+export const getProductSortsThunk = createAsyncThunk<ProductSortsType[], undefined, { rejectValue: string }>(
+  'user/getProductSortsThunk',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        return await serverApi.getProductSorts(token);
+      }
+      return rejectWithValue('Пользователь не авторизован');
+    } catch (e) {
+      return rejectWithValue('Ошибка получения справочника для сортов продукта');
     }
   }
 );
@@ -87,6 +104,10 @@ export const catalogSlice = createSlice({
         state.productMaterials = action.payload;
         state.isLoading = false;
       })
+      .addCase(getProductSortsThunk.fulfilled, (state, action) => {
+        state.productSorts = action.payload;
+        state.isLoading = false;
+      })
       .addCase(getCategorySizesThunk.fulfilled, (state, action) => {
         state.categorySizes = action.payload;
         state.isLoading = false;
@@ -96,6 +117,7 @@ export const catalogSlice = createSlice({
           getCategoriesThunk.pending,
           getSubCategoriesThunk.pending,
           getProductMaterialsThunk.pending,
+          getProductSortsThunk.pending,
           getCategorySizesThunk.pending
         ),
         (state) => {
@@ -107,6 +129,7 @@ export const catalogSlice = createSlice({
           getCategoriesThunk.rejected,
           getSubCategoriesThunk.rejected,
           getProductMaterialsThunk.rejected,
+          getProductSortsThunk.rejected,
           getCategorySizesThunk.rejected
         ),
         (state, action) => {
@@ -121,6 +144,7 @@ export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLo
 export const selectorCategories = (state: RootState) => state.catalog.categories;
 export const selectorSubCategories = (state: RootState) => state.catalog.subCategories;
 export const selectorProductMaterials = (state: RootState) => state.catalog.productMaterials;
+export const selectorProductSorts = (state: RootState) => state.catalog.productSorts;
 export const selectorCategorySizes = (state: RootState) => state.catalog.categorySizes;
 
 export default catalogSlice.reducer;

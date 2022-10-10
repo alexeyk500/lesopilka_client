@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './ImageCard.module.css';
 import addImgButton from '../../../../../../../img/addImageButton.svg';
 import { useAppDispatch } from '../../../../../../../hooks/hooks';
-import {addImageToNewCardImages, deleteImageFromNewCardImages} from '../../../../../../../store/newCardSlice';
+import { addImageToNewCardImages, deleteImageFromNewCardImages } from '../../../../../../../store/newCardSlice';
 import redRoundDeleteIco from './../../../../../../../img/redRoundDeleteIco.svg';
 
 type PropsType = {
@@ -22,9 +22,9 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard }) => {
 
   const onClickDelete = () => {
     if (imageUrl) {
-      dispatch(deleteImageFromNewCardImages(imageUrl))
+      dispatch(deleteImageFromNewCardImages(imageUrl));
     }
-  }
+  };
 
   return (
     <div className={classes.container}>
@@ -38,7 +38,7 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard }) => {
         </div>
       ) : (
         <>
-          {imageUrl &&
+          {imageUrl && (
             <>
               <div className={classes.containerImg}>
                 <img src={imageUrl} className={classes.img} alt="product" />
@@ -47,9 +47,7 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard }) => {
                 <img src={redRoundDeleteIco} className={classes.imgDeleteBtn} alt="delete" />
               </button>
             </>
-
-
-          }
+          )}
         </>
       )}
     </div>
