@@ -87,6 +87,9 @@ export const newCardSlice = createSlice({
     setNewCardIsSeptic: (state, action) => {
       state.newCard.isSeptic = action.payload;
     },
+    setProductDescription: (state, action) => {
+      state.newCard.description = action.payload;
+    },
   },
 });
 
@@ -108,6 +111,7 @@ export const {
   deleteImageFromNewCardImages,
   setNewCardSortId,
   setNewCardIsSeptic,
+  setProductDescription,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;

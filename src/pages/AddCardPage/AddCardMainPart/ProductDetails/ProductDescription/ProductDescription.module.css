@@ -14,11 +14,13 @@
 
 .customSizeInput {
   display: flex;
-  width: 508px;
+  width: 776px;
+  height: 104px;
   padding: 4px 12px;
   font-size: 16px;
   color: var(--gray_color);
   background-color: var(--section_background);
   border: 1px solid var(--blue_color);
   border-radius: 12px;
+  resize: none;
 }
