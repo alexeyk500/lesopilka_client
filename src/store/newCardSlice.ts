@@ -22,7 +22,7 @@ const emptyCard = {
   sortId: undefined,
   caliberId: undefined,
   customCaliber: undefined,
-  antisepticId: undefined,
+  isSeptic: false,
   description: undefined,
   price: undefined,
 };
@@ -84,6 +84,9 @@ export const newCardSlice = createSlice({
     setNewCardSortId: (state, action) => {
       state.newCard.sortId = action.payload;
     },
+    setNewCardIsSeptic: (state, action) => {
+      state.newCard.isSeptic = action.payload;
+    },
   },
 });
 
@@ -104,6 +107,7 @@ export const {
   addImageToNewCardImages,
   deleteImageFromNewCardImages,
   setNewCardSortId,
+  setNewCardIsSeptic,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;

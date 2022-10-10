@@ -37,7 +37,7 @@ export type CardType = {
   caliberId: number | undefined;
   customCaliber: string | undefined;
   sortId: number | undefined;
-  antisepticId: number | undefined;
+  isSeptic: boolean;
   description: string | undefined;
   price: string | undefined;
 };
