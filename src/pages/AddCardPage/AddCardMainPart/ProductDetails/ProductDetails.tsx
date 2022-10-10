@@ -13,8 +13,9 @@ import SizesSection from './SizesSection/SizesSection';
 import ProductCodeSection from './ProductCodeSection/ProductCodeSection';
 import ImagesSection from './ImagesSection/ImagesSection';
 import ProductSortSection from './ProductSortSection/ProductSortSection';
-import ProductSepticSection from "./ProductSepticSection/ProductSepticSection";
-import ProductDescription from "./ProductDescription/ProductDescription";
+import ProductSepticSection from './ProductSepticSection/ProductSepticSection';
+import ProductDescription from './ProductDescription/ProductDescription';
+import ProductPriceSection from './ProductPriceSection/ProductPriceSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ const ProductDetails: React.FC = () => {
           <CatalogSection />
           <SizesSection />
           <ProductCodeSection />
+          <ProductPriceSection />
           <ImagesSection />
           <ProductSortSection />
           <ProductSepticSection />

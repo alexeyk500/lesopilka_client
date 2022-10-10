@@ -1,0 +1,34 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 8px 28px;
+}
+
+.title {
+  margin-top: 2px;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--gray_color);
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray_color);
+}
+
+.customSizeInput {
+  display: flex;
+  width: 120px;
+  font-size: 100%;
+  line-height: 1.15;
+  margin-right: 8px;
+  padding: 4px 12px;
+  color: var(--gray_color);
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 6px;
+}

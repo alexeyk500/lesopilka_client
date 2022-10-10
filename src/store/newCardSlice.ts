@@ -90,6 +90,10 @@ export const newCardSlice = createSlice({
     setProductDescription: (state, action) => {
       state.newCard.description = action.payload;
     },
+    setProductPrice: (state, action) => {
+      console.log('action.payload =', action.payload);
+      state.newCard.price = action.payload;
+    },
   },
 });
 
@@ -112,6 +116,7 @@ export const {
   setNewCardSortId,
   setNewCardIsSeptic,
   setProductDescription,
+  setProductPrice,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;
