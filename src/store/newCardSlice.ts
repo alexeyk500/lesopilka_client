@@ -75,6 +75,12 @@ export const newCardSlice = createSlice({
     clearNewCard: (state) => {
       state.newCard = { ...emptyCard };
     },
+    addImageToNewCardImages: (state, action) => {
+      state.newCard.images.push(action.payload);
+    },
+    deleteImageFromNewCardImages: (state, action) => {
+      state.newCard.images = state.newCard.images.filter(image=>image !== action.payload);
+    },
   },
 });
 
@@ -92,6 +98,8 @@ export const {
   setNewCardProductCaliberId,
   setProductCode,
   clearNewCard,
+  addImageToNewCardImages,
+  deleteImageFromNewCardImages,
 } = newCardSlice.actions;
 
 export const selectorNewCard = (state: RootState) => state.newCard.newCard;

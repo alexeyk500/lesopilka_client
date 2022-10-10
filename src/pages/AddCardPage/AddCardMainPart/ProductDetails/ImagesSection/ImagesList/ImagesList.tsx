@@ -9,10 +9,10 @@ const ImagesList: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      {newCard.images.map((image) => {
-        return <ImageCard />;
+      {newCard.images.map((imageUrl, ind) => {
+        return <ImageCard key={ind} imageUrl={imageUrl} />;
       })}
-      {newCard.images.length <= 3 && <ImageCard isAddImageCard />}
+      {newCard.images.length <= 2 && <ImageCard isAddImageCard />}
     </div>
   );
 };
