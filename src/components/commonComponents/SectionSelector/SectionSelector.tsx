@@ -4,9 +4,9 @@ import Selector from '../Selector/Selector';
 import { SelectOptionsType } from '../../../types/types';
 
 type PropsType = {
-  title: string;
   options: SelectOptionsType[];
   onChangeSelector: (id: number) => void;
+  title?: string;
   selectedOption?: SelectOptionsType;
   customSize?: string;
   onChangeCustomSize?: (value: string | undefined) => void;
@@ -30,7 +30,7 @@ const SectionSelector: React.FC<PropsType> = ({
 
   return (
     <div className={classes.selectorGroupContainer}>
-      <div className={classes.title}>{title}</div>
+      {title && <div className={classes.title}>{title}</div>}
       <div className={classes.selectorContainer}>
         <Selector
           options={options}

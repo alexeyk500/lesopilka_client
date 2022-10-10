@@ -11,6 +11,7 @@ import CatalogSection from './CatalogSection/CatalogSection';
 import SizesSection from './SizesSection/SizesSection';
 import ProductCodeSection from './ProductCodeSection/ProductCodeSection';
 import ImagesSection from './ImagesSection/ImagesSection';
+import ProductSortSection from './ProductSortSection/ProductSortSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,6 +34,7 @@ const ProductDetails: React.FC = () => {
           <SizesSection />
           <ProductCodeSection />
           <ImagesSection />
+          <ProductSortSection />
         </div>
       )}
     </div>
