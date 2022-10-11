@@ -102,7 +102,7 @@ const SizesSection = () => {
     <SectionContainer
       title={'Размеры'}
       completeCondition={getSizesSectionIndicator(newCard)}
-      blurCondition={!newCard.categoryId}
+      blurCondition={false}
     >
       <div
         className={classNames(classes.rowContainer, {

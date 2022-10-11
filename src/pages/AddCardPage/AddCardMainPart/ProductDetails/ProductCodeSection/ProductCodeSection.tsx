@@ -3,7 +3,6 @@ import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorNewCard, setProductCode } from '../../../../../store/newCardSlice';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { getSizesSectionIndicator } from '../SizesSection/SizesSection';
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +16,7 @@ const ProductCodeSection = () => {
     <SectionContainer
       title={'Артикул'}
       completeCondition={!!newCard.productCode}
-      blurCondition={!getSizesSectionIndicator(newCard)}
+      blurCondition={false}
     >
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>

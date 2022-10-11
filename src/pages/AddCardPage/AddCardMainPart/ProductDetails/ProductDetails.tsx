@@ -37,12 +37,12 @@ const ProductDetails: React.FC = () => {
         <div className={classes.scrollContainer}>
           <CatalogSection />
           <SizesSection />
-          <ProductCodeSection />
-          <ProductPriceSection />
-          <ImagesSection />
           <ProductSortSection />
+          <ProductCodeSection />
+          <ImagesSection />
           <ProductSepticSection />
           <ProductDescription />
+          <ProductPriceSection />
         </div>
       )}
     </div>
