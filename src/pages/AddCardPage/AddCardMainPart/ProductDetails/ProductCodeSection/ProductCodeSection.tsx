@@ -13,11 +13,7 @@ const ProductCodeSection = () => {
   };
 
   return (
-    <SectionContainer
-      title={'Артикул'}
-      completeCondition={!!newCard.productCode}
-      blurCondition={false}
-    >
+    <SectionContainer title={'Артикул'} completeCondition={!!newCard.productCode} blurCondition={false}>
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>
         <input className={classes.customSizeInput} value={newCard.productCode} onChange={onChangeInput} type="text" />

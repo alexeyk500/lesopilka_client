@@ -1,0 +1,5 @@
+.rowContainer {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px 0;
+}

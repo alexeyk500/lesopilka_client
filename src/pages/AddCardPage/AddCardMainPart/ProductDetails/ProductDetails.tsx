@@ -9,13 +9,12 @@ import {
 } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
 import CatalogSection from './CatalogSection/CatalogSection';
-import SizesSection from './SizesSection/SizesSection';
+import ProductSizesSection from './ProductSizesSection/ProductSizesSection';
 import ProductCodeSection from './ProductCodeSection/ProductCodeSection';
-import ImagesSection from './ImagesSection/ImagesSection';
-import ProductSortSection from './ProductSortSection/ProductSortSection';
-import ProductSepticSection from './ProductSepticSection/ProductSepticSection';
+import ProductImagesSection from './ProductImagesSection/ProductImagesSection';
 import ProductDescription from './ProductDescription/ProductDescription';
 import ProductPriceSection from './ProductPriceSection/ProductPriceSection';
+import ProductSortAndSepticSection from './ProductSortAndSepticSection/ProductSortAndSepticSection';
 
 const ProductDetails: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,12 +35,11 @@ const ProductDetails: React.FC = () => {
       ) : (
         <div className={classes.scrollContainer}>
           <CatalogSection />
-          <SizesSection />
-          <ProductSortSection />
-          <ProductCodeSection />
-          <ImagesSection />
-          <ProductSepticSection />
+          <ProductSizesSection />
+          <ProductSortAndSepticSection />
+          <ProductImagesSection />
           <ProductDescription />
+          <ProductCodeSection />
           <ProductPriceSection />
         </div>
       )}

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './SizesSection.module.css';
+import classes from './ProductSizesSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import {
@@ -47,7 +47,7 @@ const getOptions = (sizes: CategorySizeType[], categoryId: number | undefined, s
   return options;
 };
 
-const SizesSection = () => {
+const ProductSizesSection = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
@@ -99,11 +99,7 @@ const SizesSection = () => {
   };
 
   return (
-    <SectionContainer
-      title={'Размеры'}
-      completeCondition={getSizesSectionIndicator(newCard)}
-      blurCondition={false}
-    >
+    <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(newCard)} blurCondition={false}>
       <div
         className={classNames(classes.rowContainer, {
           [classes.rowContainerSlim]: newCard.widthId === -1 || newCard.heightId === -1 || newCard.lengthId === -1,
@@ -151,4 +147,4 @@ const SizesSection = () => {
   );
 };
 
-export default SizesSection;
+export default ProductSizesSection;

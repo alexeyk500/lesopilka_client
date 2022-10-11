@@ -1,11 +1,11 @@
 import React from 'react';
-import classes from './ImagesSection.module.css';
+import classes from './ProductImagesSection.module.css';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import ImagesList from './ImagesList/ImagesList';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorNewCard } from '../../../../../store/newCardSlice';
 
-const ImagesSection: React.FC = () => {
+const ProductImagesSection: React.FC = () => {
   const newCard = useAppSelector(selectorNewCard);
 
   return (
@@ -18,4 +18,4 @@ const ImagesSection: React.FC = () => {
   );
 };
 
-export default ImagesSection;
+export default ProductImagesSection;
