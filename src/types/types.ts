@@ -3,9 +3,15 @@ export type SelectOptionsType = {
   title: string;
 };
 
+export type ManufacturerType = {
+  title: string;
+  location: string;
+};
+
 export type UserType = {
   name: string;
   email: string;
+  manufacturer?: ManufacturerType;
 };
 
 export type CategoryType = {
@@ -22,7 +28,7 @@ export type SubCategoryType = {
   categoryId: number;
 };
 
-export type CardType = {
+export type NewCardType = {
   categoryId: number | undefined;
   subCategoryId: number | undefined;
   productMaterialId: number | undefined;
@@ -42,6 +48,17 @@ export type CardType = {
   price: string | undefined;
 };
 
+export type ProductCardDataType = {
+  manufacturer: ManufacturerType;
+  subCategoryTile: string;
+  image: string | undefined;
+  width: string | undefined;
+  height: string | undefined;
+  caliber: string | undefined;
+  length: string;
+  price: string;
+};
+
 export type ProductMaterialType = {
   id: number;
   title: string;
@@ -59,7 +76,7 @@ export enum SizeTypeEnum {
 export type CategorySizeType = {
   id: number;
   type: string;
-  value: number;
+  value: string;
   isCustomSize: boolean;
   order: number;
   categoryId: number;

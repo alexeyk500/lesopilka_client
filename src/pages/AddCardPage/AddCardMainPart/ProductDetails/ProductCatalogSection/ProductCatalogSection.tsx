@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './CatalogSection.module.css';
+import classes from './ProductCatalogSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories, selectorProductMaterials, selectorSubCategories } from '../../../../../store/catalogSlice';
 import {
@@ -22,7 +22,7 @@ const getOptions = (optionsStore: SelectOptionsType[]) => {
   return options;
 };
 
-const CatalogSection: React.FC = () => {
+const ProductCatalogSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const newCard = useAppSelector(selectorNewCard);
   const categoriesRaw = useAppSelector(selectorCategories);
@@ -99,4 +99,4 @@ const CatalogSection: React.FC = () => {
   );
 };
 
-export default CatalogSection;
+export default ProductCatalogSection;

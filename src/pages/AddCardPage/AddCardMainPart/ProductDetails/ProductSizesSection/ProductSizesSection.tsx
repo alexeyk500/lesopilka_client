@@ -14,11 +14,11 @@ import {
   setNewCardProductWidthId,
 } from '../../../../../store/newCardSlice';
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
-import { CardType, CategorySizeType, SelectOptionsType, SizeTypeEnum } from '../../../../../types/types';
+import { NewCardType, CategorySizeType, SelectOptionsType, SizeTypeEnum } from '../../../../../types/types';
 import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
 
-export const getSizesSectionIndicator = (newCard: CardType) => {
+export const getSizesSectionIndicator = (newCard: NewCardType) => {
   if (newCard.categoryId === 6) {
     const result =
       ((newCard.caliberId && newCard.caliberId > 0) || (newCard.caliberId === -1 && newCard.customCaliber)) &&

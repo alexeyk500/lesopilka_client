@@ -1,9 +1,9 @@
-import { CardType } from '../types/types';
+import { NewCardType } from '../types/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 type newCardSliceType = {
-  newCard: CardType;
+  newCard: NewCardType;
   isLoading: boolean;
 };
 

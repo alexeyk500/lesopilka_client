@@ -1,14 +1,17 @@
 .container {
   display: flex;
+  flex-direction: column;
   width: 268px;
-  height: 312px;
+  /*height: 312px;*/
+  height: 342px;
   margin-right: 16px;
   margin-bottom: 16px;
   border-radius: 12px;
-  background-color: var(--section_background);
   box-shadow: var(--box_shadow);
   overflow: hidden;
   cursor: pointer;
+  color: var(--gray_color);
+  background-color: var(--section_background);
 }
 
 .addProductCardContainer {
@@ -16,6 +19,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
   background-color: var(--blue_color);
 }
 
@@ -30,4 +34,128 @@
   font-size: 18px;
   font-weight: 600;
   color: var(--main_background);
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 201px;
+  border-radius: 12px 12px 0 0;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0
+}
+
+.noImageContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px 12px 0 0;
+  border: 2px dotted var(--blue_color);
+}
+
+.descriptionContainer {
+  display: flex;
+  width: 100%;
+  padding: 4px 8px;
+  flex-direction: column;
+}
+
+.rowContainer {
+  display: flex;
+  align-items: center;
+}
+
+.rowContainerEnd {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+}
+
+.starIco {
+  margin-top: 2px;
+  height: 20px;
+}
+
+.cartIco {
+  height: 19px;
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  height: 1px;
+  margin: 2px 0;
+  background-color: #c0c0c0;
+}
+
+.subCategoryTile {
+  display: flex;
+  flex-grow: 1;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rowContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.dimensionsTile {
+  font-size: 16px;
+}
+
+.dimensionsIcoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.dimensionsIco {
+  height: 22px;
+}
+
+.wareHouseIcoContainer {
+  height: 22px;
+  margin-right: 12px;
+}
+
+.wareHouseIco {
+  margin-top: 2px;
+  margin-left: 2px;
+  height: 17px;
+}
+
+.locationIcoContainer {
+  height: 22px;
+  margin-right: 12px;
+}
+
+.locationIco {
+  margin: 1px 0;
+  height: 20px;
+}
+
+.rubleIcoContainer {
+  height: 22px;
+  margin-right: 10px;
+}
+
+.rubleIco {
+  margin: 1px 0;
+  height: 20px;
 }

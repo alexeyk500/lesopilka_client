@@ -8,7 +8,7 @@ import {
   selectorCatalogIsLoading,
 } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
-import CatalogSection from './CatalogSection/CatalogSection';
+import ProductCatalogSection from './ProductCatalogSection/ProductCatalogSection';
 import ProductSizesSection from './ProductSizesSection/ProductSizesSection';
 import ProductCodeSection from './ProductCodeSection/ProductCodeSection';
 import ProductImagesSection from './ProductImagesSection/ProductImagesSection';
@@ -34,7 +34,7 @@ const ProductDetails: React.FC = () => {
         </div>
       ) : (
         <div className={classes.scrollContainer}>
-          <CatalogSection />
+          <ProductCatalogSection />
           <ProductSizesSection />
           <ProductSortAndSepticSection />
           <ProductImagesSection />
