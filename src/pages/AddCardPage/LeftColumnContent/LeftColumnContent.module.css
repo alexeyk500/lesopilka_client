@@ -1,12 +1,53 @@
 .title {
-  margin-top: 16px;
+  margin-top: 6px;
   font-size: 22px;
   font-weight: 600;
-  line-height: 32px;
 }
 
 .cardContainer {
-  margin-top: -8px;
-  margin-left: 15px;
+  margin-top: -12px;
+  margin-left: 14px;
   scale: 0.85
 }
+
+.saveBtnSection {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.saveBtnContainer {
+  display: flex;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.infoSaveContainer {
+  display: flex;
+  height: 20px;
+  align-items: center;
+  margin-top: -24px;
+  margin-bottom: -4px;
+}
+
+.saveBtnTitle {
+  margin-left: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.saveBtnDate {
+  margin-top: 2px;
+  margin-left: 8px;
+  font-size: 12px;
+}
+
+.publicationContainer {
+  display: flex;
+  width: 100%;
+  padding: 0 14px;
+}
+
+

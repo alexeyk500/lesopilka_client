@@ -53,6 +53,7 @@ export type ProductCardDataType = {
   subCategoryTile: string;
   material: string;
   sort: string;
+  isSeptic: boolean;
   image: string | undefined;
   width: string | undefined;
   height: string | undefined;

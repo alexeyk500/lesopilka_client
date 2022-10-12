@@ -74,10 +74,6 @@
   flex-direction: column;
 }
 
-/*.materialTitle {*/
-/*  font-size: 16px;*/
-/*}*/
-
 .dimensionsAndMaterialContainer {
   display: flex;
   align-items: center;
@@ -179,4 +175,9 @@
 .rubleIco {
   margin: 1px 0;
   height: 20px;
+}
+
+.isSeptic {
+  display: flex;
+  font-size: 14px;
 }

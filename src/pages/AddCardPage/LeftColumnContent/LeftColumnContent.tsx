@@ -10,10 +10,12 @@ import {
   selectorProductSorts,
   selectorSubCategories,
 } from '../../../store/catalogSlice';
+import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
+import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 
 const MANUFACTURER: ManufacturerType = {
   title: 'ООО Лесопилка',
-  location: 'г.Самара',
+  location: 'г. Самара',
 };
 
 const getPrice = (price: string) => {
@@ -67,6 +69,7 @@ const LeftColumnContent: React.FC = () => {
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
     image: newCard.images.length > 0 ? newCard.images[0] : undefined,
+    isSeptic: newCard.isSeptic,
     width,
     height,
     caliber,
@@ -79,6 +82,18 @@ const LeftColumnContent: React.FC = () => {
       <div className={classes.title}>Карточка Товара</div>
       <div className={classes.cardContainer}>
         <ProductCard productCardData={productCardData} />
+      </div>
+      <div className={classes.saveBtnSection}>
+        <div className={classes.infoSaveContainer}>
+          <div className={classes.saveBtnTitle}>Сохранено:</div>
+          <div className={classes.saveBtnDate}>14 октября 2022 в 17:50</div>
+        </div>
+        <div className={classes.saveBtnContainer}>
+          <ButtonComponent title={'Сохранить'} onClick={() => {}} />
+        </div>
+      </div>
+      <div className={classes.publicationContainer}>
+        <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
       </div>
     </>
   );

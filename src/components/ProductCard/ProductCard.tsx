@@ -73,24 +73,27 @@ const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData })
             <div className={classes.delimiter} />
 
             <div className={classes.rowContainer}>
-              <div className={classes.dimensionsIcoContainer}>
-                <img src={dimensionsIco} className={classes.dimensionsIco} alt="dimensions" />
-              </div>
-              <div className={classes.dimensionsTile}>
-                {productCardData && productCardData.caliber ? (
-                  <>
-                    {productCardData && productCardData.caliber && productCardData.caliber}
+              <div className={classes.rowContainer}>
+                <div className={classes.dimensionsIcoContainer}>
+                  <img src={dimensionsIco} className={classes.dimensionsIco} alt="dimensions" />
+                </div>
+                <div className={classes.dimensionsTile}>
+                  {productCardData && productCardData.caliber ? (
+                    <>
+                      {productCardData && productCardData.caliber && productCardData.caliber}
 
-                    {productCardData && productCardData.length && `*${productCardData.length}`}
-                  </>
-                ) : (
-                  <>
-                    {productCardData && productCardData.height && productCardData.height}
-                    {productCardData && productCardData.width && `*${productCardData.width}`}
-                    {productCardData && productCardData.length && `*${productCardData.length}`}
-                  </>
-                )}
+                      {productCardData && productCardData.length && `*${productCardData.length}`}
+                    </>
+                  ) : (
+                    <>
+                      {productCardData && productCardData.height && productCardData.height}
+                      {productCardData && productCardData.width && `*${productCardData.width}`}
+                      {productCardData && productCardData.length && `*${productCardData.length}`}
+                    </>
+                  )}
+                </div>
               </div>
+              {productCardData && productCardData.isSeptic ? <div className={classes.isSeptic}>Септирован</div> : null}
             </div>
             <div className={classes.delimiter} />
             <div className={classes.rowContainer}>

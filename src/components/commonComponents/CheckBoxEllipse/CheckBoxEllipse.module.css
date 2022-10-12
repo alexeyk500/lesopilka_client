@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.containerSelect {
+  position: relative;
+  display: flex;
+  width: 45px;
+  height: 20px;
+  background-color: #DADADA;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.notChecked {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--gray_color_light);
+}
+
+.checked {
+  left: 25px;
+  background-color: var(--green_color);
+}
+
+.title {
+  margin-right: 12px;
+  font-weight: 600;
+}
