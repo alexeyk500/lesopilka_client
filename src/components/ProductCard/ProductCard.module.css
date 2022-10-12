@@ -2,8 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 268px;
-  /*height: 312px;*/
-  height: 342px;
+  height: 370px;
   margin-right: 16px;
   margin-bottom: 16px;
   border-radius: 12px;
@@ -54,12 +53,18 @@
 
 .noImageContainer {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   justify-content: center;
   align-items: center;
+  color: var(--blue_color);
   border-radius: 12px 12px 0 0;
   border: 2px dotted var(--blue_color);
+}
+
+.noImg {
+  margin-bottom: 8px;
 }
 
 .descriptionContainer {
@@ -69,9 +74,15 @@
   flex-direction: column;
 }
 
-.rowContainer {
+/*.materialTitle {*/
+/*  font-size: 16px;*/
+/*}*/
+
+.dimensionsAndMaterialContainer {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .rowContainerEnd {
@@ -111,6 +122,7 @@
 
 .rowContainer {
   display: flex;
+  width: 100%;
   justify-content: flex-start;
   align-items: center;
 }
@@ -120,9 +132,18 @@
 }
 
 .dimensionsIcoContainer {
+  height: 22px;
   display: flex;
   align-items: center;
   margin-right: 12px;
+}
+
+.sortTitle {
+  font-size: 14px;
+}
+
+.materialsIco {
+  height: 22px;
 }
 
 .dimensionsIco {

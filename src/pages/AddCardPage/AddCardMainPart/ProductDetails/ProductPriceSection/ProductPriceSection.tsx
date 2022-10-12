@@ -11,12 +11,12 @@ const ProductPriceSection: React.FC = () => {
   const newCard = useAppSelector(selectorNewCard);
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    console.log(event.currentTarget.value, onlyDigitAndCommaRegExp.test(event.currentTarget.value));
     if (event.currentTarget.value === '') {
       dispatch(setProductPrice(undefined));
     }
     if (onlyDigitAndCommaRegExp.test(event.currentTarget.value)) {
-      dispatch(setProductPrice(event.currentTarget.value));
+      const priceStr = event.currentTarget.value.replace('.', ',');
+      dispatch(setProductPrice(priceStr));
     }
   };
 

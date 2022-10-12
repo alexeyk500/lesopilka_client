@@ -51,6 +51,8 @@ export type NewCardType = {
 export type ProductCardDataType = {
   manufacturer: ManufacturerType;
   subCategoryTile: string;
+  material: string;
+  sort: string;
   image: string | undefined;
   width: string | undefined;
   height: string | undefined;

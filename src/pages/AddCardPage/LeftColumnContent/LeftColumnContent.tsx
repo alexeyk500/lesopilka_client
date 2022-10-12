@@ -4,7 +4,12 @@ import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorNewCard } from '../../../store/newCardSlice';
 import { ManufacturerType, ProductCardDataType } from '../../../types/types';
-import { selectorCategorySizes, selectorSubCategories } from '../../../store/catalogSlice';
+import {
+  selectorCategorySizes,
+  selectorProductMaterials,
+  selectorProductSorts,
+  selectorSubCategories,
+} from '../../../store/catalogSlice';
 
 const MANUFACTURER: ManufacturerType = {
   title: 'ООО Лесопилка',
@@ -12,17 +17,21 @@ const MANUFACTURER: ManufacturerType = {
 };
 
 const getPrice = (price: string) => {
-
-  const splitPrice = String((Math.round(Number(price) * 100) / 100).toFixed(2)).split('.');
-  return `${splitPrice[0]},${splitPrice[1]}`
-}
+  const priceInNumber = Number(price.replace(',', '.'));
+  const splitPrice = String((Math.round(priceInNumber * 100) / 100).toFixed(2)).split('.');
+  return `${splitPrice[0]},${splitPrice[1]}`;
+};
 
 const LeftColumnContent: React.FC = () => {
   const newCard = useAppSelector(selectorNewCard);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
+  const allMaterials = useAppSelector(selectorProductMaterials);
+  const allSorts = useAppSelector(selectorProductSorts);
 
   const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === newCard.subCategoryId);
+  const material = allMaterials.find((material) => material.id === newCard.productMaterialId);
+  const sort = allSorts.find((sort) => sort.id === newCard.sortId);
 
   let width: string | undefined;
   if (newCard.customWidth) {
@@ -31,7 +40,6 @@ const LeftColumnContent: React.FC = () => {
     width = allCategorySizes.find((categorySize) => categorySize.id === newCard.widthId)?.value || undefined;
   }
 
-
   let height: string | undefined;
   if (newCard.customHeight) {
     height = newCard.customHeight;
@@ -39,12 +47,11 @@ const LeftColumnContent: React.FC = () => {
     height = allCategorySizes.find((categorySize) => categorySize.id === newCard.heightId)?.value || undefined;
   }
 
-  let caliber: string | undefined ;
+  let caliber: string | undefined;
   if (newCard.customCaliber) {
     caliber = newCard.customCaliber;
   } else {
-    caliber =
-      allCategorySizes.find((categorySize) => categorySize.id === newCard.caliberId)?.value || undefined;
+    caliber = allCategorySizes.find((categorySize) => categorySize.id === newCard.caliberId)?.value || undefined;
   }
 
   let length;
@@ -54,10 +61,10 @@ const LeftColumnContent: React.FC = () => {
     length = allCategorySizes.find((categorySize) => categorySize.id === newCard.lengthId)?.value || '';
   }
 
-
-
   const productCardData: ProductCardDataType = {
     manufacturer: MANUFACTURER,
+    material: material ? material.title : '',
+    sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
     image: newCard.images.length > 0 ? newCard.images[0] : undefined,
     width,

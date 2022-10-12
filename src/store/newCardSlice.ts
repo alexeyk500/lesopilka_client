@@ -91,7 +91,6 @@ export const newCardSlice = createSlice({
       state.newCard.description = action.payload;
     },
     setProductPrice: (state, action) => {
-      console.log('action.payload =', action.payload);
       state.newCard.price = action.payload;
     },
   },
