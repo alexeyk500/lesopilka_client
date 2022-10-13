@@ -1,0 +1,33 @@
+.content {
+  display: flex;
+  margin-top: 32px;
+  margin-left: 28px;
+  flex-direction: column;
+  font-size: 18px;
+  color: var(--gray_color);
+}
+
+.rowContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 325px;
+  text-align: center;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-weight: 600;
+}
+
+.btnContainer {
+  margin-left: 181px;
+}

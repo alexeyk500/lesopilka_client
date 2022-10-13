@@ -1,8 +1,6 @@
 .container {
   display: flex;
-  width: 100%;
-  padding: 8px 18px 0 8px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .content {
@@ -14,11 +12,7 @@
   box-shadow: var(--box_shadow);
   border-radius: 12px;
   color: var(--blue_color);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   background-color: var(--section_background);
-}
-
-.rightArrow {
-  margin: 0 8px;
 }

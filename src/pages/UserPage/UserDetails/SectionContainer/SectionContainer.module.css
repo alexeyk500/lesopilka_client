@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 6px 0;
+  padding: 12px;
+  box-shadow: var(--box_shadow);
+  border-radius: 12px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--blue_color);
+}
+
+.bottomLine {
+  display: flex;
+  width: 268px;
+  margin-top: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--blue_color);
+}

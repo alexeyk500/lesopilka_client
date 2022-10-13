@@ -16,7 +16,7 @@ const MenuContent: React.FC<PropsType> = ({ closeMenuContent }) => {
       <PurchasesSection closeMenuContent={closeMenuContent} />
       <SalesSection closeMenuContent={closeMenuContent} />
       <FavoritesSection />
-      <PersonalSection />
+      <PersonalSection closeMenuContent={closeMenuContent} />
       <ReferenceSection />
     </div>
   );

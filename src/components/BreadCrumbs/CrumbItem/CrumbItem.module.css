@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+}
+
+.title {
+  cursor: pointer;
+}
+
+.colonContainer {
+  margin-left: 2px;
+  margin-right: 8px;
+}
+
+.separatorContainer {
+  margin: 0 8px;
+}
+
+.lastCrumbs {
+  cursor: default;
+}
+

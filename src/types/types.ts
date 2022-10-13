@@ -89,3 +89,8 @@ export type ProductSortsType = {
   id: number;
   title: string;
 };
+
+export type CrumbType = {
+  title: string;
+  route?: string;
+};

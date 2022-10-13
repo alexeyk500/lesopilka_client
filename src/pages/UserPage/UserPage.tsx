@@ -1,7 +1,33 @@
 import React from 'react';
+import classes from './UserPage.module.css';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumps';
+import UserDetails from './UserDetails/UserDetails';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectorUser } from '../../store/userSlice';
+import { CrumbType, UserType } from '../../types/types';
+
+export const getUserName = (user: UserType | undefined) => {
+  if (user) {
+    if (user.manufacturer?.title) {
+      return user.manufacturer.title;
+    }
+    if (user.name) {
+      return user.name;
+    }
+  }
+  return '';
+};
 
 const UserPage: React.FC = () => {
-  return <div>UserPage</div>;
+  const user = useAppSelector(selectorUser);
+  const crumbs: CrumbType[] = [{ title: getUserName(user), route: '/' }, { title: 'профиль пользователя' }];
+
+  return (
+    <div className={classes.container}>
+      <BreadCrumbs crumbs={crumbs} />
+      <UserDetails />
+    </div>
+  );
 };
 
 export default UserPage;

@@ -1,14 +1,19 @@
 import React from 'react';
 import classes from './BreadCrumbs.module.css';
-import rightArrow from '../../img/rightArrow.svg';
+import { CrumbType } from '../../types/types';
+import CrumbItem from './CrumbItem/CrumbItem';
 
-const BreadCrumbs = () => {
+type PropsType = {
+  crumbs: CrumbType[];
+};
+
+const BreadCrumbs: React.FC<PropsType> = ({ crumbs }) => {
   return (
     <div className={classes.container}>
       <div className={classes.content}>
-        <div>ООО "Лесопилка"</div>
-        <img src={rightArrow} className={classes.rightArrow} alt="rightArrow" />
-        <div>Каталог</div>
+        {crumbs.map((crumb, ind) => (
+          <CrumbItem key={ind} crumb={crumb} isColonAfterFirstCrumb={ind === 0} isLastCrumb={ind === crumbs.length -1} />
+        ))}
       </div>
     </div>
   );
