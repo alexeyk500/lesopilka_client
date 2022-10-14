@@ -5,7 +5,10 @@ export type SelectOptionsType = {
 
 export type ManufacturerType = {
   title: string;
-  location: string;
+  location: {
+    id: number;
+    title: string;
+  };
 };
 
 export type UserType = {

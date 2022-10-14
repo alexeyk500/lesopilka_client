@@ -23,14 +23,11 @@ const ButtonComponent: React.FC<PropsType> = ({
     onClick && onClick();
   };
 
-  const otherClasses = classNames(otherProps.className);
-
   return (
     <button
       className={classNames(classes.container, {
         [classes.default]: buttonType === ButtonType.DEFAULT,
         [classes.secondary]: buttonType === ButtonType.SECONDARY,
-        [otherClasses]: otherProps.className,
       })}
       onClick={onClickHandler}
       {...otherProps}

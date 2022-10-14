@@ -113,7 +113,7 @@ const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData })
               {productCardData &&
                 productCardData.manufacturer &&
                 productCardData.manufacturer.location &&
-                productCardData.manufacturer.location}
+                productCardData.manufacturer.location.title}
             </div>
             <div className={classes.delimiter} />
             <div className={classes.rowContainer}>

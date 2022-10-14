@@ -12,7 +12,12 @@ const BreadCrumbs: React.FC<PropsType> = ({ crumbs }) => {
     <div className={classes.container}>
       <div className={classes.content}>
         {crumbs.map((crumb, ind) => (
-          <CrumbItem key={ind} crumb={crumb} isColonAfterFirstCrumb={ind === 0} isLastCrumb={ind === crumbs.length -1} />
+          <CrumbItem
+            key={ind}
+            crumb={crumb}
+            isColonAfterFirstCrumb={ind === 0}
+            isLastCrumb={ind === crumbs.length - 1}
+          />
         ))}
       </div>
     </div>

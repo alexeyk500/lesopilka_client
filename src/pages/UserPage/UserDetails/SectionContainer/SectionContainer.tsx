@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from "./SectionContainer.module.css";
+import classes from './SectionContainer.module.css';
 
 type PropsType = {
   title: string;
   children: React.ReactNode;
 };
 
-const SectionContainer: React.FC <PropsType> = ({title, children}) => {
+const SectionContainer: React.FC<PropsType> = ({ title, children }) => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>{title}</div>

@@ -3,7 +3,7 @@ import classes from './CrumbItem.module.css';
 import rightArrow from '../../../img/rightArrow.svg';
 import { CrumbType } from '../../../types/types';
 import { useNavigate } from 'react-router-dom';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 type PropsType = {
   crumb: CrumbType;
@@ -20,13 +20,14 @@ const CrumbItem: React.FC<PropsType> = ({ crumb, isLastCrumb, isColonAfterFirstC
 
   return (
     <div className={classes.container}>
-      <div className={classNames(classes.title, {[classes.lastCrumbs]: isLastCrumb})} onClick={onClick}>
+      <div className={classNames(classes.title, { [classes.lastCrumbs]: isLastCrumb })} onClick={onClick}>
         {crumb.title}
       </div>
-      {isColonAfterFirstCrumb
-        ? <div className={classes.colonContainer}>:</div>
-        :!isLastCrumb && <img src={rightArrow} className={classes.separatorContainer} alt="rightArrow" />
-      }
+      {isColonAfterFirstCrumb ? (
+        <div className={classes.colonContainer}>:</div>
+      ) : (
+        !isLastCrumb && <img src={rightArrow} className={classes.separatorContainer} alt="rightArrow" />
+      )}
     </div>
   );
 };

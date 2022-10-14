@@ -3,7 +3,7 @@ import classes from './LeftColumnContent.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorNewCard } from '../../../store/newCardSlice';
-import { ManufacturerType, ProductCardDataType } from '../../../types/types';
+import { ProductCardDataType } from '../../../types/types';
 import {
   selectorCategorySizes,
   selectorProductMaterials,
@@ -12,11 +12,7 @@ import {
 } from '../../../store/catalogSlice';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
-
-const MANUFACTURER: ManufacturerType = {
-  title: 'ООО Лесопилка',
-  location: 'г. Самара',
-};
+import { selectorUser } from '../../../store/userSlice';
 
 const getPrice = (price: string) => {
   const priceInNumber = Number(price.replace(',', '.'));
@@ -25,6 +21,7 @@ const getPrice = (price: string) => {
 };
 
 const LeftColumnContent: React.FC = () => {
+  const user = useAppSelector(selectorUser);
   const newCard = useAppSelector(selectorNewCard);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
@@ -64,7 +61,7 @@ const LeftColumnContent: React.FC = () => {
   }
 
   const productCardData: ProductCardDataType = {
-    manufacturer: MANUFACTURER,
+    manufacturer: user?.manufacturer || { title: '', location: { id: 0, title: '' } },
     material: material ? material.title : '',
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
