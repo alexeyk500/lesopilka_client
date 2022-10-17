@@ -40,6 +40,18 @@ export const userLoginByTokenThunk = createAsyncThunk<UserLoginServerType, undef
   }
 );
 
+export const userUpdateNameOrPasswordThunk = createAsyncThunk<
+  UserLoginServerType,
+  { token: string; name?: string; password?: string },
+  { rejectValue: string }
+>('user/userUpdateNameOrPasswordThunk', async ({ token, name, password }, { rejectWithValue }) => {
+  try {
+    return await serverApi.updateUserNameOrPassword(token, name, password);
+  } catch (e) {
+    return rejectWithValue('Ошибка обновления данных пользователя');
+  }
+});
+
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState,
@@ -57,10 +69,20 @@ export const userSlice = createSlice({
           showErrorPopUp(action.payload);
         }
       })
-      .addMatcher(isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled), (state, action) => {
-        state.user = action.payload.user;
-        localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
-      });
+      .addMatcher(isAnyOf(userUpdateNameOrPasswordThunk.rejected), (state, action) => {
+        showErrorPopUp(action.payload ? action.payload :'Неизвестная ошибка в userSlice');
+      })
+      .addMatcher(
+        isAnyOf(
+          userLoginByPasswordThunk.fulfilled,
+          userLoginByTokenThunk.fulfilled,
+          userUpdateNameOrPasswordThunk.fulfilled
+        ),
+        (state, action) => {
+          state.user = action.payload.user;
+          localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
+        }
+      );
   },
 });
 
