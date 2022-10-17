@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser, userUpdateNameOrPasswordThunk } from '../../../../store/userSlice';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
-import ChangeUserNameForm from '../ChangeUserNameForm/ChangeUserNameForm';
+import ChangeUserNameForm from './ChangeUserNameForm/ChangeUserNameForm';
 
 const MainInformation: React.FC = () => {
   const user = useAppSelector(selectorUser);

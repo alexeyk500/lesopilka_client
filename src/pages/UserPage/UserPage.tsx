@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './UserPage.module.css';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumps';
 import UserDetails from './UserDetails/UserDetails';
-import { useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import { CrumbType, UserType } from '../../types/types';
+import { getRegionsThunk } from '../../store/addressSlice';
 
 export const getUserName = (user: UserType | undefined) => {
   if (user) {
@@ -19,8 +20,13 @@ export const getUserName = (user: UserType | undefined) => {
 };
 
 const UserPage: React.FC = () => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const crumbs: CrumbType[] = [{ title: getUserName(user), route: '/' }, { title: 'профиль пользователя' }];
+
+  useEffect(() => {
+    dispatch(getRegionsThunk());
+  }, [dispatch]);
 
   return (
     <div className={classes.container}>

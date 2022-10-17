@@ -59,3 +59,27 @@
   background-color: #FFFFFF;
   color: var(--dark_blue_color);
 }
+
+.selectorLabel {
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+
+.selectorContainer {
+  display: flex;
+  margin-top: 8px;
+  justify-content: space-between;
+}
+
+.selector {
+  margin-right: 0;
+  position: relative;
+}
+
+.inputInvisible {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  top: 30px;
+  left: 400px;
+}

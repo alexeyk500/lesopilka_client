@@ -3,7 +3,7 @@ import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ChangePassword.module.css';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
-import ChangePasswordForm from '../ChangePasswordForm/ChangePasswordForm';
+import ChangePasswordForm from './ChangePasswordForm/ChangePasswordForm';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser, userCheckPasswordThunk, userUpdateNameOrPasswordThunk } from '../../../../store/userSlice';
 import NewPasswordForm from './NewPasswordForm/NewPasswordForm';

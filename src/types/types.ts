@@ -97,3 +97,14 @@ export type CrumbType = {
   title: string;
   route?: string;
 };
+
+export type RegionsType = {
+  id: number;
+  title: string;
+};
+
+export type LocationsType = {
+  id: number;
+  title: string;
+  regionId: string;
+};

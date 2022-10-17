@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './ChangePasswordForm.module.css';
-import passwordIco from '../../../../img/password.svg';
-import eyeIco from '../../../../img/eyeIco.svg';
+import passwordIco from '../../../../../img/password.svg';
+import eyeIco from '../../../../../img/eyeIco.svg';
 
 const ChangePasswordForm: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState<string>('');

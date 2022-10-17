@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  width: 600px;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  background-color: inherit;
+}
+
+.mainPart {
+  display: flex;
+  width: 100%;
+  padding: 48px 32px 24px 32px;
+  flex-direction: column;
+}
+
+.titleBold {
+  display: flex;
+  width: 100%;
+  margin-bottom: 32px;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: 3px;
+  color: var(--blue_color);
+  white-space: pre-line;
+}
+
+.rulesContainer {
+  display: flex;
+}
+
+.title {
+  display: flex;
+  margin-top: 0;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--blue_color);
+  white-space: pre-line;
+  text-indent: 16px;
+}
+
+.email {
+  display: flex;
+  width: 100%;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--blue_color);
+  white-space: pre-line;
+  margin-bottom: 32px;
+}
+
+.emailBold {
+  font-weight: 600;
+}
