@@ -1,17 +1,16 @@
-import React, {useState} from 'react';
-import classes from './NewUserNameForm.module.css';
+import React, { useState } from 'react';
+import classes from './ChangeUserNameForm.module.css';
 
 type PropsType = {
   name: string;
-}
+};
 
-const NewUserNameForm: React.FC <PropsType> = ({name}) => {
-
+const ChangeUserNameForm: React.FC<PropsType> = ({ name }) => {
   const [nameValue, setNameValue] = useState<string>(name);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNameValue(event.currentTarget.value)
-  }
+    setNameValue(event.currentTarget.value);
+  };
 
   return (
     <div className={classes.container}>
@@ -20,8 +19,15 @@ const NewUserNameForm: React.FC <PropsType> = ({name}) => {
         <div className={classes.field}>
           <label className={classes.label}>
             Имя пользователя
-            <input className={classes.input} name="name" type="text" placeholder={'Введите имя пользователя'} value={nameValue}
-                   onChange={onChange} required />
+            <input
+              className={classes.input}
+              name="name"
+              type="text"
+              placeholder={'Введите имя пользователя'}
+              value={nameValue}
+              onChange={onChange}
+              required
+            />
           </label>
         </div>
       </div>
@@ -29,4 +35,4 @@ const NewUserNameForm: React.FC <PropsType> = ({name}) => {
   );
 };
 
-export default NewUserNameForm;
+export default ChangeUserNameForm;

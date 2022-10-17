@@ -13,7 +13,7 @@ const RegistrationForm: React.FC = () => {
       <div className={classes.mainPart}>
         <div className={classes.titleBold}>{'Пожалуйста,'}</div>
         <div className={classes.title}>{'введите адрес электронной почты и пароль,'}</div>
-        <div className={classes.titleLine}>{'чтобы зарегстрироваться в системе'}</div>
+        <div className={classes.titleLine}>{'чтобы зарегистрироваться в системе'}</div>
         <div className={classes.field}>
           <img src={emailIco} className={classes.ico} alt="email" />
           <label className={classes.label}>

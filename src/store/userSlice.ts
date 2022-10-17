@@ -25,6 +25,18 @@ export const userLoginByPasswordThunk = createAsyncThunk<
   }
 });
 
+export const userCheckPasswordThunk = createAsyncThunk<
+  UserLoginServerType,
+  { email: string; password: string },
+  { rejectValue: string }
+>('user/userCheckPasswordThunk', async ({ email, password }, { rejectWithValue }) => {
+  try {
+    return await serverApi.userLoginByPassword(email, password);
+  } catch (e) {
+    return rejectWithValue('Введен неправильный пароль');
+  }
+});
+
 export const userLoginByTokenThunk = createAsyncThunk<UserLoginServerType, undefined, { rejectValue: string }>(
   'user/userLoginByTokenThunk',
   async (_, { rejectWithValue }) => {
@@ -69,8 +81,13 @@ export const userSlice = createSlice({
           showErrorPopUp(action.payload);
         }
       })
+      .addCase(userCheckPasswordThunk.rejected, (state, action) => {
+        if (action.payload) {
+          showErrorPopUp(action.payload);
+        }
+      })
       .addMatcher(isAnyOf(userUpdateNameOrPasswordThunk.rejected), (state, action) => {
-        showErrorPopUp(action.payload ? action.payload :'Неизвестная ошибка в userSlice');
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка в userSlice');
       })
       .addMatcher(
         isAnyOf(

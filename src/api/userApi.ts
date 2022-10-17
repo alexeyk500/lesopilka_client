@@ -39,10 +39,14 @@ export const userApi = {
   },
 
   async updateUserNameOrPassword(token: string, name?: string, password?: string) {
-    const response = await instanceAxios.put<UserLoginServerType>('/user/update_user', {
-      name,
-      password,
-    }, setAuthHeader(token));
+    const response = await instanceAxios.put<UserLoginServerType>(
+      '/user/update_user',
+      {
+        name,
+        password,
+      },
+      setAuthHeader(token)
+    );
     return response.data;
   },
 };

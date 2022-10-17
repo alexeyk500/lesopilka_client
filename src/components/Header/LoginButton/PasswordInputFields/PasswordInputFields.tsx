@@ -11,6 +11,7 @@ type PropsType = {
   setPasswordRepeated: (value: string) => void;
   blockToClose: string;
   setBlockToClose: (value: string) => void;
+  isChangePasswordForm?: boolean;
 };
 
 const PasswordInputFields: React.FC<PropsType> = ({
@@ -20,6 +21,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
   setPasswordRepeated,
   blockToClose,
   setBlockToClose,
+  isChangePasswordForm,
 }) => {
   const [typePasswordInput, setTypePasswordInput] = useState<string>('password');
 
@@ -45,7 +47,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
       <div className={classes.field}>
         <img src={passwordIco} className={classes.ico} alt="email" />
         <label className={classes.label}>
-          Пароль
+          {isChangePasswordForm ? 'Новый пароль' : 'Пароль'}
           <input
             className={classes.input}
             name="password"
@@ -55,7 +57,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
               setPassword(e.target.value);
             }}
             autoComplete="off"
-            placeholder={'Введите пароль'}
+            placeholder={isChangePasswordForm ? 'Введите новый пароль' : 'Введите пароль'}
             required
           />
         </label>
@@ -64,7 +66,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
       <div className={classes.field}>
         <img src={passwordIco} className={classes.ico} alt="password" />
         <label className={classes.label}>
-          Повторите пароль
+          {isChangePasswordForm ? 'Повторите новый пароль' : 'Повторите пароль'}
           <input
             className={classes.input}
             name="passwordRepeated"
@@ -74,7 +76,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
               setPasswordRepeated(e.target.value);
             }}
             autoComplete="off"
-            placeholder={'Повторите пароль'}
+            placeholder={isChangePasswordForm ? 'Повторите новый пароль' : 'Повторите пароль'}
             required
           />
         </label>

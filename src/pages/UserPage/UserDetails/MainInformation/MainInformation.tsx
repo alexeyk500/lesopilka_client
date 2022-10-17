@@ -1,11 +1,11 @@
 import React from 'react';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './MainInformation.module.css';
-import {useAppDispatch, useAppSelector} from '../../../../hooks/hooks';
-import {selectorUser, userUpdateNameOrPasswordThunk} from '../../../../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { selectorUser, userUpdateNameOrPasswordThunk } from '../../../../store/userSlice';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
-import NewUserNameForm from '../NewUserNameForm/NewUserNameForm';
+import ChangeUserNameForm from '../ChangeUserNameForm/ChangeUserNameForm';
 
 const MainInformation: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -16,7 +16,7 @@ const MainInformation: React.FC = () => {
       const name = response.get('name')!.toString();
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && name) {
-        dispatch(userUpdateNameOrPasswordThunk({token, name}))
+        dispatch(userUpdateNameOrPasswordThunk({ token, name }));
       }
     }
   };
@@ -24,7 +24,7 @@ const MainInformation: React.FC = () => {
   const onClick = () => {
     if (user && user.name) {
       showPortalPopUp({
-        popUpContent: <NewUserNameForm name={user.name}/>,
+        popUpContent: <ChangeUserNameForm name={user.name} />,
         onClosePopUp: onClosePopUp,
         titleConfirmBtn: 'Сохранить',
       });
