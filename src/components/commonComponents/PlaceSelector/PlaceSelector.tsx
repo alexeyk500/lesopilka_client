@@ -4,6 +4,8 @@ import selectorArrowIco from './../../../img/selectorArrow.svg';
 import classNames from 'classnames';
 import Selector from '../Selector/Selector';
 import { SelectOptionsType } from '../../../types/types';
+import {useAppSelector} from "../../../hooks/hooks";
+import {selectorAddressSliceIsLoading} from "../../../store/addressSlice";
 
 type PropsType = {
   regionsOptions: SelectOptionsType[];
@@ -24,6 +26,7 @@ const PlaceSelector: React.FC<PropsType> = ({
 }) => {
   const [expand, setExpand] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isLoading = useAppSelector(selectorAddressSliceIsLoading)
 
   const onClickExpand = () => {
     setExpand((prev) => !prev);
@@ -63,7 +66,13 @@ const PlaceSelector: React.FC<PropsType> = ({
   return (
     <div ref={ref} className={classNames(classes.container, { [classes.containerExpand]: expand })}>
       <div className={classes.row} onClick={onClickExpand}>
-        <div className={classes.title}>{selectedRegionOption ? selectedRegionOption.title : ''}</div>
+        <div className={classes.title}>{
+          selectedRegionOption
+            ? selectedLocationOption
+              ? selectedLocationOption.title
+              : selectedRegionOption.title
+            : ''
+        }</div>
         <img src={selectorArrowIco} className={classes.selectorArrowIco} alt="selector arrow" />
       </div>
       {expand && (
@@ -79,12 +88,19 @@ const PlaceSelector: React.FC<PropsType> = ({
           </div>
           <div className={classes.selectorContainer}>
             <div className={classes.titleSelector}>Населенный Пункт</div>
-            <Selector
-              options={locationsOptions}
-              selectedOption={selectedLocationOption}
-              onChange={onChangeLocation}
-              customClassName={classes.selector}
-            />
+            {
+              isLoading
+              ? <div className={classes.loading}>
+                  Загрузка...
+                </div>
+              : <Selector
+                  options={locationsOptions}
+                  selectedOption={selectedLocationOption}
+                  onChange={onChangeLocation}
+                  customClassName={classes.selector}
+                />
+            }
+
           </div>
         </div>
       )}
