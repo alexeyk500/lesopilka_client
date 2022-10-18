@@ -63,6 +63,13 @@ const PlaceSelector: React.FC<PropsType> = ({
   const selectedRegionOption = getSelectedRegionOption();
   const selectedLocationOption = getSelectedLocationOption();
 
+  const onChangeLocationLocal = (id: number) => {
+    if (id > 0) {
+      onChangeLocation(id);
+      setExpand(false);
+    }
+  }
+
   return (
     <div ref={ref} className={classNames(classes.container, { [classes.containerExpand]: expand })}>
       <div className={classes.row} onClick={onClickExpand}>
@@ -96,7 +103,7 @@ const PlaceSelector: React.FC<PropsType> = ({
               : <Selector
                   options={locationsOptions}
                   selectedOption={selectedLocationOption}
-                  onChange={onChangeLocation}
+                  onChange={onChangeLocationLocal}
                   customClassName={classes.selector}
                 />
             }
