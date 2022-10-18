@@ -13,7 +13,7 @@ const ChangeManufacturerData: React.FC = () => {
         <div className={classes.rowContainer}>
           <div className={classes.rowDataContainer}>
             <div className={classes.title}>{'ИНН :'}</div>
-            <div className={classes.value}>{user?.manufacturer?.title}</div>
+            <div className={classes.value}>{user?.manufacturer?.inn}</div>
           </div>
         </div>
         <div className={classes.rowContainer}>
@@ -25,7 +25,7 @@ const ChangeManufacturerData: React.FC = () => {
         <div className={classes.rowContainer}>
           <div className={classes.rowDataContainer}>
             <div className={classes.title}>{'Местонахождениe :'}</div>
-            <div className={classes.value}>{user?.manufacturer?.location.title}</div>
+            <div className={classes.value}>{user?.location?.title}</div>
           </div>
         </div>
       </div>

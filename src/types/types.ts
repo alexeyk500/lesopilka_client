@@ -4,16 +4,17 @@ export type SelectOptionsType = {
 };
 
 export type ManufacturerType = {
+  inn: string;
   title: string;
-  location: {
-    id: number;
-    title: string;
-  };
 };
 
 export type UserType = {
   name: string;
   email: string;
+  location?: {
+    id: number;
+    title: string;
+  };
   manufacturer?: ManufacturerType;
 };
 
@@ -52,6 +53,7 @@ export type NewCardType = {
 };
 
 export type ProductCardDataType = {
+  location: RegionsType;
   manufacturer: ManufacturerType;
   subCategoryTile: string;
   material: string;
