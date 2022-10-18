@@ -32,7 +32,7 @@ const MainInformation: React.FC = () => {
   };
 
   return (
-    <SectionContainer title={'Общая информация'}>
+    <SectionContainer title={'Учетная информация'}>
       <div className={classes.content}>
         <div className={classes.rowContainer}>
           <div className={classes.dataContainer}>

@@ -1,3 +1,5 @@
+import { SelectOptionsType } from '../types/types';
+
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
   for (let i = 0; i < elements.length; i++) {
@@ -29,3 +31,10 @@ export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
     }
   }
 }
+
+export const getOptionsWithFirstEmptyOption = (optionsStore: SelectOptionsType[]) => {
+  const options: SelectOptionsType[] = [];
+  options.push({ id: 0, title: '' });
+  options.push(...optionsStore);
+  return options;
+};

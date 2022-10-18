@@ -61,8 +61,8 @@ const LeftColumnContent: React.FC = () => {
   }
 
   const productCardData: ProductCardDataType = {
-    location: user?.location || { id: 0, title: '' },
     manufacturer: user?.manufacturer || { inn: '', title: '' },
+    manufacturerLocation: user?.manufacturer?.location || { id: 0, title: '' },
     material: material ? material.title : '',
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',

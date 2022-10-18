@@ -1,24 +1,24 @@
-import { CategoryType, LocationsType, RegionsType } from '../types/types';
+import { LocationType, RegionType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { RootState } from './store';
 
 type AddressSliceType = {
-  regions: RegionsType[];
-  regionId: number | undefined;
-  locationsByRegionId: LocationsType[];
+  regions: RegionType[];
+  searchRegionId: number | undefined;
+  searchLocationsByRegionId: LocationType[];
   isLoading: boolean;
 };
 
 const initialState: AddressSliceType = {
   regions: [],
-  regionId: undefined,
-  locationsByRegionId: [],
+  searchRegionId: undefined,
+  searchLocationsByRegionId: [],
   isLoading: false,
 };
 
-export const getRegionsThunk = createAsyncThunk<CategoryType[], undefined, { rejectValue: string }>(
+export const getRegionsThunk = createAsyncThunk<RegionType[], undefined, { rejectValue: string }>(
   'address/getRegionsThunk',
   async (_, { rejectWithValue }) => {
     try {
@@ -29,16 +29,18 @@ export const getRegionsThunk = createAsyncThunk<CategoryType[], undefined, { rej
   }
 );
 
-export const getLocationsByRegionIdThunk = createAsyncThunk<CategoryType[], number, { rejectValue: string }>(
-  'address/getRegionsThunk',
-  async (regionId, { rejectWithValue }) => {
-    try {
-      return await serverApi.getLocationsByRegionId(regionId);
-    } catch (e) {
-      return rejectWithValue(`Ошибка получения Локаций для Региона - ${regionId}`);
-    }
+export const getSearchLocationsByRegionIdThunk = createAsyncThunk<
+  { searchRegionId: number; searchLocations: LocationType[] },
+  number,
+  { rejectValue: string }
+>('address/getSearchLocationsByRegionIdThunk', async (searchRegionId, { rejectWithValue }) => {
+  try {
+    const searchLocations = await serverApi.getLocationsByRegionId(searchRegionId);
+    return { searchRegionId, searchLocations };
+  } catch (e) {
+    return rejectWithValue(`Ошибка получения Поисковых Локаций для Региона - ${searchRegionId}`);
   }
-);
+});
 
 export const addressSlice = createSlice({
   name: 'addressSlice',
@@ -51,10 +53,15 @@ export const addressSlice = createSlice({
         state.regions = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getRegionsThunk.pending), (state) => {
+      .addCase(getSearchLocationsByRegionIdThunk.fulfilled, (state, action) => {
+        state.searchRegionId = action.payload.searchRegionId;
+        state.searchLocationsByRegionId = action.payload.searchLocations;
+        state.isLoading = false;
+      })
+      .addMatcher(isAnyOf(getRegionsThunk.pending, getSearchLocationsByRegionIdThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getRegionsThunk.rejected), (state, action) => {
+      .addMatcher(isAnyOf(getRegionsThunk.rejected, getSearchLocationsByRegionIdThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);
       });
@@ -62,5 +69,6 @@ export const addressSlice = createSlice({
 });
 
 export const selectorRegions = (state: RootState) => state.address.regions;
+export const selectorSearchLocationsByRegionId = (state: RootState) => state.address.searchLocationsByRegionId;
 
 export default addressSlice.reducer;

@@ -1,6 +1,6 @@
 .content {
   display: flex;
-  margin-top: 32px;
+  margin-top: 16px;
   margin-left: 28px;
   flex-direction: column;
   font-size: 18px;
@@ -10,7 +10,7 @@
 .rowContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .dataContainer {

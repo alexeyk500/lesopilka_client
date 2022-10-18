@@ -24,8 +24,8 @@ const ChangeManufacturerData: React.FC = () => {
         </div>
         <div className={classes.rowContainer}>
           <div className={classes.rowDataContainer}>
-            <div className={classes.title}>{'Местонахождениe :'}</div>
-            <div className={classes.value}>{user?.location?.title}</div>
+            <div className={classes.title}>{'Место поиска :'}</div>
+            <div className={classes.value}>{user?.searchLocation?.title}</div>
           </div>
         </div>
       </div>

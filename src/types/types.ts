@@ -6,12 +6,16 @@ export type SelectOptionsType = {
 export type ManufacturerType = {
   inn: string;
   title: string;
+  location?: {
+    id: number;
+    title: string;
+  };
 };
 
 export type UserType = {
   name: string;
   email: string;
-  location?: {
+  searchLocation?: {
     id: number;
     title: string;
   };
@@ -53,8 +57,8 @@ export type NewCardType = {
 };
 
 export type ProductCardDataType = {
-  location: RegionsType;
   manufacturer: ManufacturerType;
+  manufacturerLocation: LocationType;
   subCategoryTile: string;
   material: string;
   sort: string;
@@ -100,13 +104,13 @@ export type CrumbType = {
   route?: string;
 };
 
-export type RegionsType = {
+export type RegionType = {
   id: number;
   title: string;
 };
 
-export type LocationsType = {
+export type LocationType = {
   id: number;
   title: string;
-  regionId: string;
+  regionId?: string;
 };

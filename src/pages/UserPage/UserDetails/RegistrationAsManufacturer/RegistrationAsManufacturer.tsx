@@ -7,20 +7,9 @@ import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import RulesInformForm from './RulesInformForm/RulesInformForm';
 import ManufacturerDataForm from './ManufacturerDataForm/ManufacturerDataForm';
-import { selectorRegions } from '../../../../store/addressSlice';
-import { SelectOptionsType } from '../../../../types/types';
-
-const getOptions = (optionsStore: SelectOptionsType[]) => {
-  const options: SelectOptionsType[] = [];
-  options.push({ id: 0, title: '' });
-  options.push(...optionsStore);
-  return options;
-};
 
 const RegistrationAsManufacturer = () => {
   const user = useAppSelector(selectorUser);
-  const regions = useAppSelector(selectorRegions);
-  const regionsOptions = getOptions(regions);
 
   const onCloseManufacturerDataForm = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
@@ -34,7 +23,7 @@ const RegistrationAsManufacturer = () => {
   const onCloseRulesInformForm = (result: boolean | FormData | undefined) => {
     if (result) {
       showPortalPopUp({
-        popUpContent: <ManufacturerDataForm regionsOptions={regionsOptions} />,
+        popUpContent: <ManufacturerDataForm />,
         onClosePopUp: onCloseManufacturerDataForm,
         titleConfirmBtn: 'Регистрация',
       });
