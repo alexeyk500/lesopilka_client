@@ -7,6 +7,7 @@ import { RootState } from './store';
 type AddressSliceType = {
   regions: RegionType[];
   searchRegionId: number | undefined;
+  searchLocationId: number | undefined;
   searchLocationsByRegionId: LocationType[];
   isLoading: boolean;
 };
@@ -14,6 +15,7 @@ type AddressSliceType = {
 const initialState: AddressSliceType = {
   regions: [],
   searchRegionId: undefined,
+  searchLocationId: undefined,
   searchLocationsByRegionId: [],
   isLoading: false,
 };
@@ -45,7 +47,11 @@ export const getSearchLocationsByRegionIdThunk = createAsyncThunk<
 export const addressSlice = createSlice({
   name: 'addressSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchLocationId: (state, action) => {
+      state.searchLocationId = action.payload;
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -54,6 +60,7 @@ export const addressSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getSearchLocationsByRegionIdThunk.fulfilled, (state, action) => {
+        state.searchLocationId = undefined;
         state.searchRegionId = action.payload.searchRegionId;
         state.searchLocationsByRegionId = action.payload.searchLocations;
         state.isLoading = false;
@@ -68,7 +75,11 @@ export const addressSlice = createSlice({
   },
 });
 
+export const { setSearchLocationId } = addressSlice.actions;
+
 export const selectorRegions = (state: RootState) => state.address.regions;
+export const selectorSearchRegionId = (state: RootState) => state.address.searchRegionId;
+export const selectorSearchLocationId = (state: RootState) => state.address.searchLocationId;
 export const selectorSearchLocationsByRegionId = (state: RootState) => state.address.searchLocationsByRegionId;
 
 export default addressSlice.reducer;

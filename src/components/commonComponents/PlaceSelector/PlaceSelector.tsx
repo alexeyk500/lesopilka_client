@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classes from './PlaceSelector.module.css';
 import selectorArrowIco from './../../../img/selectorArrow.svg';
 import classNames from 'classnames';
@@ -7,11 +7,21 @@ import { SelectOptionsType } from '../../../types/types';
 
 type PropsType = {
   regionsOptions: SelectOptionsType[];
-  selectedRegionOption: SelectOptionsType | undefined;
+  locationsOptions: SelectOptionsType[];
+  selectedRegionId: number | undefined;
+  selectedLocationId: number | undefined;
   onChangeRegion: (id: number) => void;
+  onChangeLocation: (id: number) => void;
 };
 
-const PlaceSelector: React.FC<PropsType> = ({ regionsOptions, selectedRegionOption, onChangeRegion }) => {
+const PlaceSelector: React.FC<PropsType> = ({
+  regionsOptions,
+  locationsOptions,
+  selectedRegionId,
+  selectedLocationId,
+  onChangeRegion,
+  onChangeLocation,
+}) => {
   const [expand, setExpand] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -30,6 +40,25 @@ const PlaceSelector: React.FC<PropsType> = ({ regionsOptions, selectedRegionOpti
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
+
+  const getSelectedRegionOption = useCallback(() => {
+    if (selectedRegionId && selectedRegionId > 0) {
+      return regionsOptions.find((option) => option.id === selectedRegionId);
+    } else {
+      return undefined;
+    }
+  }, [selectedRegionId, regionsOptions]);
+
+  const getSelectedLocationOption = useCallback(() => {
+    if (selectedLocationId && selectedLocationId > 0) {
+      return locationsOptions.find((option) => option.id === selectedLocationId);
+    } else {
+      return undefined;
+    }
+  }, [selectedLocationId, locationsOptions]);
+
+  const selectedRegionOption = getSelectedRegionOption();
+  const selectedLocationOption = getSelectedLocationOption();
 
   return (
     <div ref={ref} className={classNames(classes.container, { [classes.containerExpand]: expand })}>
@@ -51,9 +80,9 @@ const PlaceSelector: React.FC<PropsType> = ({ regionsOptions, selectedRegionOpti
           <div className={classes.selectorContainer}>
             <div className={classes.titleSelector}>Населенный Пункт</div>
             <Selector
-              options={regionsOptions}
-              selectedOption={selectedRegionOption}
-              onChange={onChangeRegion}
+              options={locationsOptions}
+              selectedOption={selectedLocationOption}
+              onChange={onChangeLocation}
               customClassName={classes.selector}
             />
           </div>
