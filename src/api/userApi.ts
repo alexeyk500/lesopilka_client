@@ -38,11 +38,12 @@ export const userApi = {
     return response.data;
   },
 
-  async updateUserNameOrPassword(token: string, name?: string, password?: string) {
+  async updateUser(token: string, name?: string, phone?: string, password?: string) {
     const response = await instanceAxios.put<UserLoginServerType>(
-      '/user/update_user',
+      '/user',
       {
         name,
+        phone,
         password,
       },
       setAuthHeader(token)

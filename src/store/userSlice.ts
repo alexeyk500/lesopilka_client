@@ -58,7 +58,7 @@ export const userUpdateNameOrPasswordThunk = createAsyncThunk<
   { rejectValue: string }
 >('user/userUpdateNameOrPasswordThunk', async ({ token, name, password }, { rejectWithValue }) => {
   try {
-    return await serverApi.updateUserNameOrPassword(token, name, password);
+    return await serverApi.updateUser(token, name, password);
   } catch (e) {
     return rejectWithValue('Ошибка обновления данных пользователя');
   }

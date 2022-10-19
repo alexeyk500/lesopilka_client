@@ -3,12 +3,27 @@ export type SelectOptionsType = {
   title: string;
 };
 
+// export type ManufacturerType = {
+//   inn: string;
+//   title: string;
+//   location?: {
+//     id: number;
+//     title: string;
+//   };
+// };
+
 export type ManufacturerType = {
+  id: number;
   inn: string;
   title: string;
-  location?: {
+  phone: string;
+  address: {
     id: number;
-    title: string;
+    region: RegionType;
+    location: LocationType;
+    street: string;
+    building: string;
+    office: string;
   };
 };
 
@@ -58,7 +73,6 @@ export type NewCardType = {
 
 export type ProductCardDataType = {
   manufacturer: ManufacturerType;
-  manufacturerLocation: LocationType;
   subCategoryTile: string;
   material: string;
   sort: string;

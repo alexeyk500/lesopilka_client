@@ -13,7 +13,9 @@ const SalesMainPart: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      <BreadCrumbs crumbs={crumbs} />
+      <div className={classes.breadCrumbsContainer}>
+        <BreadCrumbs crumbs={crumbs} />
+      </div>
       <SalesCardList />
     </div>
   );

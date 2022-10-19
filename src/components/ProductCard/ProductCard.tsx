@@ -110,7 +110,9 @@ const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData })
               <div className={classes.locationIcoContainer}>
                 <img src={locationIco} className={classes.locationIco} alt="dimensions" />
               </div>
-              {productCardData && productCardData.manufacturer.location && productCardData.manufacturer.location.title}
+              {productCardData &&
+                productCardData.manufacturer.address.location.title &&
+                productCardData.manufacturer.address.location.title}
             </div>
             <div className={classes.delimiter} />
             <div className={classes.rowContainer}>
