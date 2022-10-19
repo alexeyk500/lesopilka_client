@@ -1,29 +1,55 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import classes from './PlaceSelector.module.css';
+import classes from './SearchLocationSelector.module.css';
 import selectorArrowIco from './../../../img/selectorArrow.svg';
 import classNames from 'classnames';
 import Selector from '../Selector/Selector';
-import { SelectOptionsType } from '../../../types/types';
-import { useAppSelector } from '../../../hooks/hooks';
-import { selectorAddressSliceIsLoading } from '../../../store/addressSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import {
+  getRegionsThunk,
+  getSearchLocationsByRegionIdThunk,
+  selectorAddressSliceIsLoading,
+  selectorRegions,
+  selectorSearchLocationsByRegionId,
+} from '../../../store/addressSlice';
+import { selectorUser, userUpdateThunk } from '../../../store/userSlice';
+import { getOptionsWithFirstEmptyOption } from '../../../utils/functions';
 
-type PropsType = {
-  regionsOptions: SelectOptionsType[];
-  locationsOptions: SelectOptionsType[];
-  selectedRegionId: number | undefined;
-  selectedLocationId: number | undefined;
-  onChangeRegion: (id: number) => void;
-  onChangeLocation: (id: number) => void;
-};
+const SearchLocationSelector: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-const PlaceSelector: React.FC<PropsType> = ({
-  regionsOptions,
-  locationsOptions,
-  selectedRegionId,
-  selectedLocationId,
-  onChangeRegion,
-  onChangeLocation,
-}) => {
+  const user = useAppSelector(selectorUser);
+  const regions = useAppSelector(selectorRegions);
+  const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
+
+  const searchRegionId = user?.searchRegion?.id;
+  const searchLocationId = user?.searchLocation?.id;
+  const regionsOptions = getOptionsWithFirstEmptyOption(regions);
+  const searchLocationsOptions = getOptionsWithFirstEmptyOption(searchLocationsByRegionId);
+
+  useEffect(() => {
+    dispatch(getRegionsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (searchRegionId) {
+      dispatch(getSearchLocationsByRegionIdThunk(searchRegionId));
+    }
+  }, [dispatch, searchRegionId]);
+
+  const onChangeRegion = (id: number) => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (id > 0 && token) {
+      dispatch(userUpdateThunk({ token, searchRegionId: id, searchLocationId: null }));
+    }
+  };
+
+  const onChangeLocation = (id: number) => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (id > 0 && token) {
+      dispatch(userUpdateThunk({ token, searchLocationId: id }));
+    }
+  };
+
   const [expand, setExpand] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const isLoading = useAppSelector(selectorAddressSliceIsLoading);
@@ -45,20 +71,20 @@ const PlaceSelector: React.FC<PropsType> = ({
   }, [ref]);
 
   const getSelectedRegionOption = useCallback(() => {
-    if (selectedRegionId && selectedRegionId > 0) {
-      return regionsOptions.find((option) => option.id === selectedRegionId);
+    if (searchRegionId && searchRegionId > 0) {
+      return regionsOptions.find((option) => option.id === searchRegionId);
     } else {
       return undefined;
     }
-  }, [selectedRegionId, regionsOptions]);
+  }, [searchRegionId, regionsOptions]);
 
   const getSelectedLocationOption = useCallback(() => {
-    if (selectedLocationId && selectedLocationId > 0) {
-      return locationsOptions.find((option) => option.id === selectedLocationId);
+    if (searchLocationId && searchLocationId > 0) {
+      return searchLocationsOptions.find((option) => option.id === searchLocationId);
     } else {
       return undefined;
     }
-  }, [selectedLocationId, locationsOptions]);
+  }, [searchLocationId, searchLocationsOptions]);
 
   const selectedRegionOption = getSelectedRegionOption();
   const selectedLocationOption = getSelectedLocationOption();
@@ -99,7 +125,7 @@ const PlaceSelector: React.FC<PropsType> = ({
               <div className={classes.loading}>Загрузка...</div>
             ) : (
               <Selector
-                options={locationsOptions}
+                options={searchLocationsOptions}
                 selectedOption={selectedLocationOption}
                 onChange={onChangeLocationLocal}
                 customClassName={classes.selector}
@@ -112,4 +138,4 @@ const PlaceSelector: React.FC<PropsType> = ({
   );
 };
 
-export default PlaceSelector;
+export default SearchLocationSelector;

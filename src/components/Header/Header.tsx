@@ -6,17 +6,10 @@ import { userLoginByTokenThunk } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import CartButton from './CartButton/CartButton';
 import SelectedButton from './SelectedButton/SelectedButton';
-import Selector from '../commonComponents/Selector/Selector';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
 import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
-
-const options = [
-  { id: 1, title: 'Санкт-Петербург' },
-  { id: 2, title: 'Москва' },
-  { id: 3, title: 'Новосибирск' },
-  { id: 4, title: 'Владивосток' },
-];
+import SearchLocationSelector from "../commonComponents/SearchLocationSelector/SearchLocationSelector";
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,16 +20,12 @@ const Header: React.FC = () => {
     dispatch(getSubCategoriesThunk());
   }, [dispatch]);
 
-  const onChangeRegion = (id: number) => {
-    console.log('onChangeRegion id=', id);
-  };
-
   return (
     <div className={classes.container}>
       <div className={classes.headerContent}>
         <MenuButton />
         <Logo />
-        <Selector options={options} onChange={onChangeRegion} />
+        <SearchLocationSelector />
         <Search />
         <SelectedButton />
         <CartButton />
