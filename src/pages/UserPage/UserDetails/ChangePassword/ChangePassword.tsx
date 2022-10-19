@@ -5,7 +5,7 @@ import ButtonComponent, { ButtonType } from '../../../../components/commonCompon
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
 import ChangePasswordForm from './ChangePasswordForm/ChangePasswordForm';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorUser, userCheckPasswordThunk, userUpdateNameOrPasswordThunk } from '../../../../store/userSlice';
+import { selectorUser, userCheckPasswordThunk, userUpdateThunk } from '../../../../store/userSlice';
 import NewPasswordForm from './NewPasswordForm/NewPasswordForm';
 
 const ChangePassword: React.FC = () => {
@@ -35,7 +35,7 @@ const ChangePassword: React.FC = () => {
       if (user && user.email && password) {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token && password) {
-          dispatch(userUpdateNameOrPasswordThunk({ token, password })).then((result) => {
+          dispatch(userUpdateThunk({ token, password })).then((result) => {
             if (result.type.includes('fulfilled')) {
               showPortalPopUp({
                 popUpContent: (

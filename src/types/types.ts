@@ -3,15 +3,6 @@ export type SelectOptionsType = {
   title: string;
 };
 
-// export type ManufacturerType = {
-//   inn: string;
-//   title: string;
-//   location?: {
-//     id: number;
-//     title: string;
-//   };
-// };
-
 export type ManufacturerType = {
   id: number;
   inn: string;
@@ -30,10 +21,9 @@ export type ManufacturerType = {
 export type UserType = {
   name: string;
   email: string;
-  searchLocation?: {
-    id: number;
-    title: string;
-  };
+  phone: string;
+  searchRegion?: RegionType;
+  searchLocation?: LocationType;
   manufacturer?: ManufacturerType;
 };
 
@@ -126,5 +116,4 @@ export type RegionType = {
 export type LocationType = {
   id: number;
   title: string;
-  regionId?: string;
 };
