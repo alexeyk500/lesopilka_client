@@ -1,35 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './SearchLocation.module.css';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import {
+  getRegionsThunk,
   getSearchLocationsByRegionIdThunk,
   selectorRegions,
-  selectorSearchLocationId,
   selectorSearchLocationsByRegionId,
-  selectorSearchRegionId,
-  setSearchLocationId,
 } from '../../../../store/addressSlice';
 import PlaceSelector from '../../../../components/commonComponents/PlaceSelector/PlaceSelector';
 import { getOptionsWithFirstEmptyOption } from '../../../../utils/functions';
+import { selectorUser, userUpdateThunk } from '../../../../store/userSlice';
 
 const SearchLocation: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  const user = useAppSelector(selectorUser);
   const regions = useAppSelector(selectorRegions);
-  const searchRegionId = useAppSelector(selectorSearchRegionId);
-  const searchLocationId = useAppSelector(selectorSearchLocationId);
+  const searchRegionId = user?.searchRegion?.id;
+  const searchLocationId = user?.searchLocation?.id;
+
   const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
 
   const regionsOptions = getOptionsWithFirstEmptyOption(regions);
   const searchLocationsOptions = getOptionsWithFirstEmptyOption(searchLocationsByRegionId);
 
   const onChangeRegion = (id: number) => {
-    id > 0 && dispatch(getSearchLocationsByRegionIdThunk(id));
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (id > 0 && token) {
+      dispatch(userUpdateThunk({ token, searchRegionId: id, searchLocationId: null }));
+    }
   };
 
+  useEffect(() => {
+    dispatch(getRegionsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (searchRegionId) {
+      dispatch(getSearchLocationsByRegionIdThunk(searchRegionId));
+    }
+  }, [dispatch, searchRegionId]);
+
   const onChangeLocation = (id: number) => {
-    dispatch(setSearchLocationId(id));
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (id > 0 && token) {
+      dispatch(userUpdateThunk({ token, searchLocationId: id }));
+    }
   };
 
   return (

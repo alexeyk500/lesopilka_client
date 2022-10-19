@@ -54,15 +54,25 @@ export const userLoginByTokenThunk = createAsyncThunk<UserLoginServerType, undef
 
 export const userUpdateThunk = createAsyncThunk<
   UserLoginServerType,
-  { token: string; name?: string; phone?: string; password?: string },
+  {
+    token: string;
+    name?: string;
+    phone?: string;
+    password?: string;
+    searchRegionId?: number | null;
+    searchLocationId?: number | null;
+  },
   { rejectValue: string }
->('user/userUpdateNameOrPasswordThunk', async ({ token, name, phone, password }, { rejectWithValue }) => {
-  try {
-    return await serverApi.updateUser(token, name, phone, password);
-  } catch (e) {
-    return rejectWithValue('Ошибка обновления данных пользователя');
+>(
+  'user/userUpdateNameOrPasswordThunk',
+  async ({ token, name, phone, password, searchRegionId, searchLocationId }, { rejectWithValue }) => {
+    try {
+      return await serverApi.updateUser(token, name, phone, password, searchRegionId, searchLocationId);
+    } catch (e) {
+      return rejectWithValue('Ошибка обновления данных пользователя');
+    }
   }
-});
+);
 
 export const userSlice = createSlice({
   name: 'userSlice',

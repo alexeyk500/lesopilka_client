@@ -6,16 +6,12 @@ import { RootState } from './store';
 
 type AddressSliceType = {
   regions: RegionType[];
-  searchRegionId: number | undefined;
-  searchLocationId: number | undefined;
   searchLocationsByRegionId: LocationType[];
   isLoading: boolean;
 };
 
 const initialState: AddressSliceType = {
   regions: [],
-  searchRegionId: undefined,
-  searchLocationId: undefined,
   searchLocationsByRegionId: [],
   isLoading: false,
 };
@@ -31,27 +27,21 @@ export const getRegionsThunk = createAsyncThunk<RegionType[], undefined, { rejec
   }
 );
 
-export const getSearchLocationsByRegionIdThunk = createAsyncThunk<
-  { searchRegionId: number; searchLocations: LocationType[] },
-  number,
-  { rejectValue: string }
->('address/getSearchLocationsByRegionIdThunk', async (searchRegionId, { rejectWithValue }) => {
-  try {
-    const searchLocations = await serverApi.getLocationsByRegionId(searchRegionId);
-    return { searchRegionId, searchLocations };
-  } catch (e) {
-    return rejectWithValue(`Ошибка получения Поисковых Локаций для Региона - ${searchRegionId}`);
+export const getSearchLocationsByRegionIdThunk = createAsyncThunk<LocationType[], number, { rejectValue: string }>(
+  'address/getSearchLocationsByRegionIdThunk',
+  async (searchRegionId, { rejectWithValue }) => {
+    try {
+      return await serverApi.getLocationsByRegionId(searchRegionId);
+    } catch (e) {
+      return rejectWithValue(`Ошибка получения Поисковых Локаций для Региона - ${searchRegionId}`);
+    }
   }
-});
+);
 
 export const addressSlice = createSlice({
   name: 'addressSlice',
   initialState,
-  reducers: {
-    setSearchLocationId: (state, action) => {
-      state.searchLocationId = action.payload;
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     builder
@@ -60,9 +50,7 @@ export const addressSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getSearchLocationsByRegionIdThunk.fulfilled, (state, action) => {
-        state.searchLocationId = undefined;
-        state.searchRegionId = action.payload.searchRegionId;
-        state.searchLocationsByRegionId = action.payload.searchLocations;
+        state.searchLocationsByRegionId = action.payload;
         state.isLoading = false;
       })
       .addMatcher(isAnyOf(getRegionsThunk.pending, getSearchLocationsByRegionIdThunk.pending), (state) => {
@@ -75,11 +63,11 @@ export const addressSlice = createSlice({
   },
 });
 
-export const { setSearchLocationId } = addressSlice.actions;
+// export const { setSearchLocationId } = addressSlice.actions;
 
 export const selectorRegions = (state: RootState) => state.address.regions;
-export const selectorSearchRegionId = (state: RootState) => state.address.searchRegionId;
-export const selectorSearchLocationId = (state: RootState) => state.address.searchLocationId;
+// export const selectorSearchRegionId = (state: RootState) => state.address.searchRegionId;
+// export const selectorSearchLocationId = (state: RootState) => state.address.searchLocationId;
 export const selectorSearchLocationsByRegionId = (state: RootState) => state.address.searchLocationsByRegionId;
 export const selectorAddressSliceIsLoading = (state: RootState) => state.address.isLoading;
 
