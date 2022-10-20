@@ -3,7 +3,7 @@ import classes from './UserDetails.module.css';
 import MainInformation from './MainInformation/MainInformation';
 import RegistrationAsManufacturer from './RegistrationAsManufacturer/RegistrationAsManufacturer';
 import ChangePassword from './ChangePassword/ChangePassword';
-import ChangeManufacturerData from './ChangeManufacturerData/ChangeManufacturerData';
+import ManufacturerData from './ManufacturerData/ManufacturerData';
 
 const UserDetails: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const UserDetails: React.FC = () => {
       <MainInformation />
       <ChangePassword />
       <RegistrationAsManufacturer />
-      <ChangeManufacturerData />
+      <ManufacturerData />
     </div>
   );
 };

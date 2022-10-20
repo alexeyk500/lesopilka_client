@@ -1,10 +1,10 @@
 import React from 'react';
-import classes from './ChangeManufacturerData.module.css';
+import classes from './ManufacturerData.module.css';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 
-const ChangeManufacturerData: React.FC = () => {
+const ManufacturerData: React.FC = () => {
   const user = useAppSelector(selectorUser);
 
   return (
@@ -56,4 +56,4 @@ const ChangeManufacturerData: React.FC = () => {
   );
 };
 
-export default ChangeManufacturerData;
+export default ManufacturerData;
