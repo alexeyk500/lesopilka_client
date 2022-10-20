@@ -1,6 +1,5 @@
 .content {
   display: flex;
-  margin-top: 32px;
   margin-left: 28px;
   flex-direction: column;
   font-size: 18px;
@@ -10,26 +9,51 @@
 .rowContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
 }
 
 .rowDataContainer {
   display: flex;
   align-items: center;
+  max-width: 720px;
+  flex-wrap: wrap;
 }
 
 .rowDataContainer + .rowDataContainer {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .title {
   display: flex;
+  width: 25%;
+  min-width: 240px;
   font-weight: 600;
-  width: 240px;
   margin-right: 18px;
+  padding: 4px 0;
 }
 
 .value {
   display: flex;
-  width: 240px;
+  align-items: center;
+  min-width: 280px;
+  padding: 4px 0;
+}
+
+.btnEdit {
+  margin-left: 17px;
+}
+
+.description {
+  margin-top: 8px;
+  margin-left: 28px;
+  font-size: 14px;
+  max-width: 360px;
+  text-indent: 8px;
+  color: var(--blue_color)
 }

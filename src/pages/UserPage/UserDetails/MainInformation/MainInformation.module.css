@@ -16,29 +16,36 @@
 .dataContainer {
   display: flex;
   flex-direction: column;
+  margin-top: 6px;
 }
 
 .rowDataContainer {
   display: flex;
   align-items: center;
+  max-width: 720px;
+  flex-wrap: wrap;
 }
 
 .rowDataContainer + .rowDataContainer {
-  margin-top: 18px;
+  margin-top: 12px;
 }
 
 .title {
   display: flex;
+  width: 25%;
+  min-width: 240px;
   font-weight: 600;
-  width: 240px;
   margin-right: 18px;
+  padding: 4px 0;
 }
 
 .value {
   display: flex;
-  width: 240px;
+  align-items: center;
+  min-width: 280px;
+  padding: 4px 0;
 }
 
-.btnContainer {
-  margin-left: 8px;
+.btnEdit {
+  margin-left: 17px;
 }

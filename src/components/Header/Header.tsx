@@ -9,7 +9,7 @@ import SelectedButton from './SelectedButton/SelectedButton';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
 import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
-import SearchLocationSelector from "../commonComponents/SearchLocationSelector/SearchLocationSelector";
+import SearchLocationSelector from '../commonComponents/SearchLocationSelector/SearchLocationSelector';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();

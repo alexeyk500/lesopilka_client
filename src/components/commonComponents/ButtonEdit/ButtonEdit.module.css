@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  padding: 0;
+  background-color: inherit;
+  height: 24px;
+  width: 24px;
+  border: 1px solid var(--blue_color);
+  border-radius: 6px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.editButtonIco {
+  height: 16px;
+}

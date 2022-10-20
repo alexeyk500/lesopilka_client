@@ -68,13 +68,8 @@ const ChangePassword: React.FC = () => {
       <div className={classes.content}>
         <div className={classes.rowContainer}>
           <div className={classes.title}>Сменить пароль</div>
-          <div className={classes.btnContainer}>
-            <ButtonComponent
-              title={'Сменить'}
-              buttonType={ButtonType.SECONDARY}
-              style={{ width: 180 }}
-              onClick={onClick}
-            />
+          <div className={classes.value}>
+            <ButtonComponent title={'Сменить'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
           </div>
         </div>
       </div>

@@ -3,10 +3,10 @@ import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './MainInformation.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser, userUpdateThunk } from '../../../../store/userSlice';
-import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
 import ChangeUserNameForm from './ChangeUserNameForm/ChangeUserNameForm';
 import ChangeUserPhoneForm from './ChangeUserPhoneForm/ChangeUserPhoneForm';
+import ButtonEdit from '../../../../components/commonComponents/ButtonEdit/ButtonEdit';
 
 const MainInformation: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -57,26 +57,16 @@ const MainInformation: React.FC = () => {
             </div>
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Имя пользователя :'}</div>
-              <div className={classes.value}>{user?.name}</div>
-              <div className={classes.btnContainer}>
-                <ButtonComponent
-                  title={'Редактировать'}
-                  buttonType={ButtonType.SECONDARY}
-                  style={{ width: 180 }}
-                  onClick={onClickEditName}
-                />
+              <div className={classes.value}>
+                {user?.name}
+                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditName} />
               </div>
             </div>
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Телефон пользователя :'}</div>
-              <div className={classes.value}>{user?.phone}</div>
-              <div className={classes.btnContainer}>
-                <ButtonComponent
-                  title={'Редактировать'}
-                  buttonType={ButtonType.SECONDARY}
-                  style={{ width: 180 }}
-                  onClick={onClickEditPhone}
-                />
+              <div className={classes.value}>
+                {user?.phone}
+                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditPhone} />
               </div>
             </div>
           </div>

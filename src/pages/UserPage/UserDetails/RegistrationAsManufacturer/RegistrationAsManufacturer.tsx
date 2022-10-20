@@ -45,17 +45,10 @@ const RegistrationAsManufacturer = () => {
       <div className={classes.content}>
         <div className={classes.rowContainer}>
           <div className={classes.titleContainer}>
-            <div className={classes.title}>{`Хочу получить доступ к продажам`}</div>
-            <div className={classes.title}>{`и созданию карточек товаров,`}</div>
-            <div className={classes.title}>{`как поставщик Пиломатериалов`}</div>
+            {`Хочу получить доступ к продажам\nи созданию карточек товаров,\nкак поставщик Пиломатериалов`}
           </div>
-          <div className={classes.btnContainer}>
-            <ButtonComponent
-              title={'Доступ'}
-              buttonType={ButtonType.SECONDARY}
-              style={{ width: 180 }}
-              onClick={onClick}
-            />
+          <div className={classes.value}>
+            <ButtonComponent title={'Доступ'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
           </div>
         </div>
       </div>
