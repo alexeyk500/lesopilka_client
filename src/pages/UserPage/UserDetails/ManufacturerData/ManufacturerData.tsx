@@ -10,8 +10,8 @@ const ManufacturerData: React.FC = () => {
   return (
     <SectionContainer title={'Поставщик'}>
       <div className={classes.description}>
-        После регистрации Поставщика пиломатериалов, его учетные данные можно изменить только
-        через электронное письмо в нашу службу поддержки.
+        После регистрации Поставщика пиломатериалов, его учетные данные можно изменить только через электронное письмо в
+        нашу службу поддержки.
       </div>
       <div className={classes.content}>
         <div className={classes.rowContainer}>
@@ -31,27 +31,6 @@ const ManufacturerData: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/*<div className={classes.content}>*/}
-      {/*  <div className={classes.rowContainer}>*/}
-      {/*    <div className={classes.rowDataContainer}>*/}
-      {/*      <div className={classes.title}>{'ИНН :'}</div>*/}
-      {/*      <div className={classes.value}>{user?.manufacturer?.inn}</div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.rowContainer}>*/}
-      {/*    <div className={classes.rowDataContainer}>*/}
-      {/*      <div className={classes.title}>{'Название :'}</div>*/}
-      {/*      <div className={classes.value}>{user?.manufacturer?.title}</div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*  <div className={classes.rowContainer}>*/}
-      {/*    <div className={classes.rowDataContainer}>*/}
-      {/*      <div className={classes.title}>{'Место поиска :'}</div>*/}
-      {/*      <div className={classes.value}>{user?.searchLocation?.title}</div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </SectionContainer>
   );
 };
