@@ -1,5 +1,5 @@
 import React from 'react';
-import SectionContainer from '../SectionContainer/SectionContainer';
+import SectionContainer from '../../../../components/commonComponents/SectionContainer/SectionContainer';
 import classes from './RegistrationAsManufacturer.module.css';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';

@@ -63,11 +63,7 @@ export const addressSlice = createSlice({
   },
 });
 
-// export const { setSearchLocationId } = addressSlice.actions;
-
 export const selectorRegions = (state: RootState) => state.address.regions;
-// export const selectorSearchRegionId = (state: RootState) => state.address.searchRegionId;
-// export const selectorSearchLocationId = (state: RootState) => state.address.searchLocationId;
 export const selectorSearchLocationsByRegionId = (state: RootState) => state.address.searchLocationsByRegionId;
 export const selectorAddressSliceIsLoading = (state: RootState) => state.address.isLoading;
 

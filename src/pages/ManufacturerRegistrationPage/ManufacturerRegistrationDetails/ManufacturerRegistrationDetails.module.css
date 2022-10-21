@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  height: 100%;
+  margin-top: 12px;
+  flex-direction: column;
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: var(--box_shadow);
+  overflow-y: scroll;
+}

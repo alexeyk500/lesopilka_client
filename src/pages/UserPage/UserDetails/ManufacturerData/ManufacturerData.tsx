@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './ManufacturerData.module.css';
-import SectionContainer from '../SectionContainer/SectionContainer';
+import SectionContainer from '../../../../components/commonComponents/SectionContainer/SectionContainer';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 

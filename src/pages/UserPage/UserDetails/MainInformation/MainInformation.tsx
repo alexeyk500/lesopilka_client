@@ -1,5 +1,5 @@
 import React from 'react';
-import SectionContainer from '../SectionContainer/SectionContainer';
+import SectionContainer from '../../../../components/commonComponents/SectionContainer/SectionContainer';
 import classes from './MainInformation.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser, userUpdateThunk } from '../../../../store/userSlice';
