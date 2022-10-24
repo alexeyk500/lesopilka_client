@@ -11,7 +11,7 @@ const ManufacturerRegistrationPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
   const crumbs: CrumbType[] = [
     { title: getUserName(user), route: '/' },
-    { title: 'профиль пользователя' },
+    { title: 'профиль пользователя', route: '/user' },
     { title: 'регистрация поставщика' },
   ];
 

@@ -1,7 +1,6 @@
 .content {
   display: flex;
   max-width: 500px;
-  margin-top: 16px;
   margin-left: 28px;
   flex-direction: column;
   font-size: 18px;
@@ -11,7 +10,7 @@
 .rowContainer {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .dataContainer {
@@ -29,7 +28,7 @@
 }
 
 .rowDataContainer + .rowDataContainer {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .title {
@@ -61,6 +60,12 @@
   display: flex;
   max-width: 500px;
   margin-top: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
   justify-content: space-between;
+}
+
+.subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--blue_color);
 }

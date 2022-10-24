@@ -6,27 +6,15 @@ import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp'
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import RulesInformForm from './RulesInformForm/RulesInformForm';
-import ManufacturerDataForm from './ManufacturerDataForm/ManufacturerDataForm';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationAsManufacturer = () => {
+  const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
-
-  const onCloseManufacturerDataForm = (response: boolean | FormData | undefined) => {
-    if (response instanceof FormData) {
-      const name = response.get('name')!.toString();
-      const inn = response.get('inn')!.toString();
-      const locationId = response.get('locationId')!.toString();
-      console.log('name, inn, locationId =', name, inn, locationId);
-    }
-  };
 
   const onCloseRulesInformForm = (result: boolean | FormData | undefined) => {
     if (result) {
-      showPortalPopUp({
-        popUpContent: <ManufacturerDataForm />,
-        onClosePopUp: onCloseManufacturerDataForm,
-        titleConfirmBtn: 'Регистрация',
-      });
+      navigate('/manufacturer_registration');
     }
   };
 

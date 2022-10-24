@@ -9,6 +9,17 @@
   white-space: pre-line;
 }
 
+.containerMobile {
+  display: flex;
+  margin: 64px 96px 64px 96px;
+  font-size: 24px;
+  line-height: 32px;
+  color: #4A90E2;
+  justify-content: center;
+  text-align: center;
+  white-space: pre-line;
+}
+
 .error {
   margin: 16px 32px 16px 32px;
   color: var(--red_color);
@@ -18,3 +29,11 @@
 .customClassBottomBtnGroup {
   padding: 0 32px 0 64px;
 }
+
+@media (max-width: 375px) {
+  .container {
+    margin: 24px 12px 24px 12px !important;
+    font-size: 18px !important;
+  }
+}
+

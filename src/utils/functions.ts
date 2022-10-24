@@ -38,3 +38,11 @@ export const getOptionsWithFirstEmptyOption = (optionsStore: SelectOptionsType[]
   options.push(...optionsStore);
   return options;
 };
+
+export const getInputFormData = (form: HTMLFormElement, name: string): string => {
+  const element = form.elements.namedItem(name);
+  if (element instanceof HTMLInputElement) {
+    return element.value;
+  }
+  return '';
+};

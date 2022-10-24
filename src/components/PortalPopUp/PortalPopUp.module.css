@@ -49,3 +49,22 @@
   margin-top: 32px;
   margin-bottom: 0;
 }
+
+@media (max-width: 375px) {
+  .content {
+    width: 360px !important;
+    padding: 4px 2px !important;
+  }
+
+  .btnGroups {
+    padding: 0 32px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .topCloseBtn {
+    top: 6px !important;
+    right: 6px !important;
+    font-size: 24px !important;
+    line-height: 16px !important;
+  }
+}

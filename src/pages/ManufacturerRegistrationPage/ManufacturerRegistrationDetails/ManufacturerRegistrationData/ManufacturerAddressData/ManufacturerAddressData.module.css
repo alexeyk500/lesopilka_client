@@ -1,7 +1,7 @@
 .container {
   position: relative;
   display: flex;
-  margin-top: 24px;
+  margin-top: 4px;
   flex-direction: column;
 }
 
