@@ -12,7 +12,11 @@
   font-weight: 600;
   margin-right: 18px;
   padding: 4px 0;
-  margin-bottom: 6px;
+}
+
+.title + .rowDataContainer {
+  margin-top: 4px;
+  margin-bottom: 8px;
 }
 
 .rowDataContainer {
@@ -30,7 +34,7 @@
 }
 
 .selectorContainer + .selectorContainer {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .selector {

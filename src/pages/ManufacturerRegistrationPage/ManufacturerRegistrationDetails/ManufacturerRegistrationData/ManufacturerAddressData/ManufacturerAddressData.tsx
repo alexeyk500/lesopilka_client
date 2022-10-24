@@ -71,6 +71,11 @@ const ManufacturerAddressData: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>Юридический адрес:</div>
+      <div className={classes.rowDataContainer}>
+        <div className={classes.titleSelector}>{'Почтовый индекс :'}</div>
+        <input className={classes.input} name="p0st1nd6x" type="text" placeholder={'Введите индекс'} required />
+      </div>
+
       <div className={classes.selectorContainer}>
         <div className={classes.titleSelector}>Регион</div>
         <Selector
@@ -82,9 +87,10 @@ const ManufacturerAddressData: React.FC = () => {
         <input
           className={classes.invisibleInput}
           tabIndex={-1}
-          name="r6gionId"
+          name="r6g1onId"
           autoComplete="off"
-          value={regionId}
+          value={regionId || ''}
+          onChange={(e) => setRegionId(Number(e.target.value))}
           required
         />
       </div>
@@ -99,10 +105,11 @@ const ManufacturerAddressData: React.FC = () => {
         <input
           className={classes.invisibleInput}
           tabIndex={-1}
-          name="locationId"
+          name="l0cat10n"
           autoComplete="off"
-          value={locationId}
+          value={locationId || ''}
           required
+          onChange={(e) => setLocationId(Number(e.target.value))}
         />
       </div>
       <div className={classes.rowDataContainer}>
@@ -115,7 +122,7 @@ const ManufacturerAddressData: React.FC = () => {
       </div>
       <div className={classes.rowDataContainer}>
         <div className={classes.titleSelector}>{'Офис:'}</div>
-        <input className={classes.input} name="off1c6" type="text" placeholder={'Введите офис'} required />
+        <input className={classes.input} name="off1c6" type="text" placeholder={'Введите офис'} />
       </div>
     </div>
   );

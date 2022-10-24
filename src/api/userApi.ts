@@ -1,5 +1,5 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
+import { CreateManufacturerType, SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
 
 export const userApi = {
   async userLoginByPassword(email: string, password: string) {
@@ -54,6 +54,34 @@ export const userApi = {
         password,
         searchRegionId,
         searchLocationId,
+      },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async createManufacturer(
+    token: string,
+    inn: string,
+    title: string,
+    phone: string,
+    locationId: number,
+    street: string,
+    building: string,
+    office: string | undefined,
+    postIndex: string
+  ) {
+    const response = await instanceAxios.post<CreateManufacturerType>(
+      '/manufacturer',
+      {
+        inn,
+        title,
+        phone,
+        locationId,
+        street,
+        building,
+        office,
+        postIndex,
       },
       setAuthHeader(token)
     );

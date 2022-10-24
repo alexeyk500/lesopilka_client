@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { UserType } from '../types/types';
-import { UserLoginServerType } from '../api/serverResponseTypes';
-import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { CreateManufacturerType, UserLoginServerType } from '../api/serverResponseTypes';
+import { showConfirmPopUp, showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { serverApi } from '../api/serverApi';
 
 type UserSliceType = {
@@ -74,6 +74,49 @@ export const userUpdateThunk = createAsyncThunk<
   }
 );
 
+export const userCreateManufacturerThunk = createAsyncThunk<
+  CreateManufacturerType,
+  {
+    token: string;
+    inn: string;
+    title: string;
+    phone: string;
+    locationId: number;
+    street: string;
+    building: string;
+    office: string | undefined;
+    postIndex: string;
+  },
+  { rejectValue: string }
+>(
+  'user/userCreateManufacturerThunk',
+  async ({ token, inn, title, phone, locationId, street, building, office, postIndex }, { rejectWithValue }) => {
+    try {
+      return await serverApi.createManufacturer(
+        token,
+        inn,
+        title,
+        phone,
+        locationId,
+        street,
+        building,
+        office,
+        postIndex
+      );
+    } catch (e: any) {
+      let message = `Ошибка создания Поставщика.\n`;
+      if (e?.response?.data?.message) {
+        if (e?.response?.data?.message.includes('already has been registered')) {
+          message += `поставщик с ИНН ${inn} уже зарегестрирован в системе`;
+        } else {
+          message += e?.response?.data?.message;
+        }
+      }
+      return rejectWithValue(message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState,
@@ -96,7 +139,12 @@ export const userSlice = createSlice({
           showErrorPopUp(action.payload);
         }
       })
-      .addMatcher(isAnyOf(userUpdateThunk.rejected), (state, action) => {
+      .addCase(userCreateManufacturerThunk.fulfilled, (state, action) => {
+        if (action.payload) {
+          showConfirmPopUp(`Поставщик \n${action.payload.title}\n успешно создан`);
+        }
+      })
+      .addMatcher(isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected), (state, action) => {
         showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка в userSlice');
       })
       .addMatcher(

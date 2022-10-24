@@ -1,15 +1,50 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import classes from './ManufacturerRegistrationData.module.css';
 import SectionContainer from '../../../../components/commonComponents/SectionContainer/SectionContainer';
 import ManufacturerAddressData from './ManufacturerAddressData/ManufacturerAddressData';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
+import { useAppDispatch } from '../../../../hooks/hooks';
+import { userCreateManufacturerThunk } from '../../../../store/userSlice';
+import { showErrorPopUp } from '../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+
+export const getInputFormData = (form: HTMLFormElement, name: string): string => {
+  const element = form.elements.namedItem(name);
+  if (element instanceof HTMLInputElement) {
+    return element.value;
+  }
+  return '';
+};
 
 const ManufacturerRegistrationData = () => {
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const title = getInputFormData(event.currentTarget, 't1tl6');
+    const inn = getInputFormData(event.currentTarget, 'inn');
+    const phone = getInputFormData(event.currentTarget, 'ph0n6');
+    const locationId = Number(getInputFormData(event.currentTarget, 'l0cat10n'));
+    const street = getInputFormData(event.currentTarget, 'str66t');
+    const building = getInputFormData(event.currentTarget, 'bu1ld1ng');
+    const office = getInputFormData(event.currentTarget, 'off1c6');
+    const postIndex = getInputFormData(event.currentTarget, 'p0st1nd6x');
+    if (title && inn && phone && locationId && street && building && postIndex) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        dispatch(
+          userCreateManufacturerThunk({ token, title, inn, phone, locationId, street, building, office, postIndex })
+        );
+      } else {
+        showErrorPopUp('Войдите в систему');
+      }
+    }
+  };
+
   return (
     <SectionContainer title={'Уставная информация'}>
       <div className={classes.content}>
         <div className={classes.rowContainer}>
-          <form className={classes.dataContainer}>
+          <form className={classes.dataContainer} onSubmit={onSubmit}>
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Название организации :'}</div>
               <input className={classes.input} name="t1tl6" type="text" placeholder={'Введите название'} required />
@@ -23,11 +58,11 @@ const ManufacturerRegistrationData = () => {
               <input className={classes.input} name="ph0n6" type="text" placeholder={'Введите телефон'} required />
             </div>
             <ManufacturerAddressData />
+            <div className={classes.btnGroup}>
+              <ButtonComponent title={'Регистрация'} type={'submit'} />
+              <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={() => {}} />
+            </div>
           </form>
-        </div>
-        <div className={classes.btnGroup}>
-          <ButtonComponent title={'Регистрация'} type={'submit'} />
-          <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={() => {}} />
         </div>
       </div>
     </SectionContainer>
