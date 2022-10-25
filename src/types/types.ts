@@ -117,3 +117,8 @@ export type LocationType = {
   id: number;
   title: string;
 };
+
+export type ProductType = {
+  id: number;
+  title: string;
+};

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 export enum ButtonType {
   DEFAULT,
   SECONDARY,
+  FILTER,
 }
 
 type PropsType = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -28,11 +29,17 @@ const ButtonComponent: React.FC<PropsType> = ({
       className={classNames(classes.container, {
         [classes.default]: buttonType === ButtonType.DEFAULT,
         [classes.secondary]: buttonType === ButtonType.SECONDARY,
+        [classes.filter]: buttonType === ButtonType.FILTER,
       })}
       onClick={onClickHandler}
       {...otherProps}
     >
       {title}
+      {buttonType === ButtonType.FILTER && (
+        <div className={classes.closeFilter} onClick={onClickHandler}>
+          &times;
+        </div>
+      )}
     </button>
   );
 };

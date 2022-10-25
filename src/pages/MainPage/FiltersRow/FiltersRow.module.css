@@ -1,0 +1,8 @@
+.container {
+  display: flex;
+  width: 100%;
+  padding: 8px;
+  border-radius: 12px;
+  background-color: var(--section_background);
+  box-shadow: var(--box_shadow);
+}

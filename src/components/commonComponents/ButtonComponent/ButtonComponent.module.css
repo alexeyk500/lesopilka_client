@@ -22,3 +22,32 @@
   background-color: #FFFFFF;
   border: solid 2px var(--blue_color);
 }
+
+.filter {
+  display: flex !important;
+  height: 32px;
+  align-items: center !important;
+  padding-left: 10px !important;
+  padding-right: 2px !important;
+  margin-right: 12px;
+  min-width: 80px !important;
+  color: var(--dark_blue_color);
+  background-color: #FFFFFF;
+  border: solid 2px var(--dark_blue_color);
+  cursor: default;
+}
+
+.closeFilter {
+  display: flex;
+  width: 28px;
+  margin-bottom: 2px;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--dark_blue_color);
+  border-radius: 50%;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}

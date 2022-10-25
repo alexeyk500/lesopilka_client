@@ -4,9 +4,9 @@ import SectionContainer from '../../../../components/commonComponents/SectionCon
 import ManufacturerAddressData from './ManufacturerAddressData/ManufacturerAddressData';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useAppDispatch } from '../../../../hooks/hooks';
-import {userCreateManufacturerThunk, userLoginByTokenThunk} from '../../../../store/userSlice';
-import {showErrorPopUp} from '../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import {getInputFormData} from "../../../../utils/functions";
+import { userCreateManufacturerThunk, userLoginByTokenThunk } from '../../../../store/userSlice';
+import { showErrorPopUp } from '../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { getInputFormData } from '../../../../utils/functions';
 
 const ManufacturerRegistrationData = () => {
   const dispatch = useAppDispatch();
@@ -26,9 +26,9 @@ const ManufacturerRegistrationData = () => {
       if (token) {
         dispatch(
           userCreateManufacturerThunk({ token, title, inn, phone, locationId, street, building, office, postIndex })
-        ).then(()=>{
+        ).then(() => {
           dispatch(userLoginByTokenThunk());
-        })
+        });
       } else {
         showErrorPopUp('Войдите в систему');
       }

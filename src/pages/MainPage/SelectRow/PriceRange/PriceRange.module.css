@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+  flex-wrap: wrap;
+}
+
+.title {
+  display: flex;
+  margin-right: 12px;
+}
+
+.priceRange {
+  display: flex;
+  width: 268px;
+  align-items: center;
+}
+
+.description {
+  width: 24px;
+  margin-right: 4px;
+  margin-bottom: 2px;
+  font-weight: 400;
+}
+
+.inputPrice {
+  height: 24px;
+  display: flex;
+  text-align: right;
+  width: 90px;
+  font-weight: 600;
+  padding-right: 4px;
+  border: none;
+  outline: none;
+  align-items: center;
+  color: var(--gray_color);
+}
+
+.priceFrom {
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  border: 2px solid var(--dark_blue_color);
+  border-radius: 12px 0 0 12px;
+}
+
+.priceTo {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border: 2px solid var(--dark_blue_color);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+}
+
+@media (max-width: 375px) {
+  .title {
+    display: none;
+  }
+  .container {
+    margin: 4px 0;
+  }
+}
