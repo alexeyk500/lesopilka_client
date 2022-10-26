@@ -12,7 +12,7 @@ const Catalog: React.FC = () => {
       <div className={classes.title}>Каталог</div>
       <div className={classes.scrollContainer}>
         {categories.map((category) => {
-          return <CatalogItem key={category.id} title={category.title} image={category.image} />;
+          return <CatalogItem key={category.id} category={category} />;
         })}
       </div>
     </>

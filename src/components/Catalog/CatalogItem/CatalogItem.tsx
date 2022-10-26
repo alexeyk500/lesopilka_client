@@ -1,17 +1,25 @@
 import React from 'react';
 import classes from './CatalogItem.module.css';
+import { CategoryType } from '../../../types/types';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { setFiltersValue } from '../../../store/productSlice';
 
 type PropsType = {
-  title: string;
-  image: string;
+  category: CategoryType;
 };
 
-const CatalogItem: React.FC<PropsType> = ({ title, image }) => {
+const CatalogItem: React.FC<PropsType> = ({ category }) => {
+  const dispatch = useAppDispatch();
+
+  const onClick = () => {
+    dispatch(setFiltersValue({ title: 'categoryId', value: category.id }));
+  };
+
   return (
-    <div className={classes.container}>
-      <div className={classes.title}>{title}</div>
+    <div className={classes.container} onClick={onClick}>
+      <div className={classes.title}>{category.title}</div>
       <div className={classes.imgContainer}>
-        <img src={image} className={classes.img} alt="category item" />
+        <img src={category.image} className={classes.img} alt="category item" />
       </div>
     </div>
   );

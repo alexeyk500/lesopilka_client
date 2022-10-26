@@ -1,4 +1,4 @@
-import { SelectOptionsType } from '../types/types';
+import { OptionsType } from '../types/types';
 
 export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
 // export const regExpForPrice = /^\d*[.,]?(?:\d{1,2})?$/
@@ -35,8 +35,8 @@ export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   }
 }
 
-export const getOptionsWithFirstEmptyOption = (optionsStore: SelectOptionsType[]) => {
-  const options: SelectOptionsType[] = [];
+export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[]) => {
+  const options: OptionsType[] = [];
   options.push({ id: 0, title: '' });
   options.push(...optionsStore);
   return options;

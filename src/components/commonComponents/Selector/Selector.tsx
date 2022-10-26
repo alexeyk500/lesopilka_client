@@ -1,12 +1,12 @@
 import React from 'react';
 import classes from './Selector.module.css';
 import classNames from 'classnames';
-import { SelectOptionsType } from '../../../types/types';
+import { OptionsType } from '../../../types/types';
 
 type PropsType = {
-  options: SelectOptionsType[];
+  options: OptionsType[];
   onChange: (value: number) => void;
-  selectedOption?: SelectOptionsType;
+  selectedOption?: OptionsType;
   customClassName?: string;
 };
 

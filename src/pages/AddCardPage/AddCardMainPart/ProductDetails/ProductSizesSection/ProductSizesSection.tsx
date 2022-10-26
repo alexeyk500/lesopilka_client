@@ -14,7 +14,7 @@ import {
   setNewCardProductWidthId,
 } from '../../../../../store/newCardSlice';
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
-import { NewCardType, CategorySizeType, SelectOptionsType, SizeTypeEnum } from '../../../../../types/types';
+import { NewCardType, CategorySizeType, OptionsType, SizeTypeEnum } from '../../../../../types/types';
 import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
 
@@ -40,7 +40,7 @@ const getOptions = (sizes: CategorySizeType[], categoryId: number | undefined, s
   const optionsFromSizes = filteredSizes.map((size) => {
     return { id: size.id, title: `${size.value} мм` };
   });
-  const options: SelectOptionsType[] = [];
+  const options: OptionsType[] = [];
   options.push({ id: 0, title: '' });
   options.push(...optionsFromSizes);
   options.push({ id: -1, title: 'Другой размер' });

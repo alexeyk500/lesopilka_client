@@ -36,16 +36,16 @@ const SearchLocationSelector: React.FC = () => {
     }
   }, [dispatch, searchRegionId]);
 
-  const onChangeRegion = (id: number) => {
+  const onChangeRegion = (id: number | null) => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (id > 0 && token) {
+    if (token) {
       dispatch(userUpdateThunk({ token, searchRegionId: id, searchLocationId: null }));
     }
   };
 
-  const onChangeLocation = (id: number) => {
+  const onChangeLocation = (id: number | null) => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (id > 0 && token) {
+    if (token) {
       dispatch(userUpdateThunk({ token, searchLocationId: id }));
     }
   };
@@ -92,8 +92,10 @@ const SearchLocationSelector: React.FC = () => {
   const onChangeLocationLocal = (id: number) => {
     if (id > 0) {
       onChangeLocation(id);
-      setExpand(false);
+    } else {
+      onChangeLocation(null);
     }
+    setExpand(false);
   };
 
   return (

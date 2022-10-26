@@ -1,4 +1,4 @@
-export type SelectOptionsType = {
+export type OptionsType = {
   id: number | undefined;
   title: string;
   key?: string;
@@ -128,3 +128,8 @@ export enum ProductsSortsEnum {
   priceASC = 'Цена по возрастанию',
   priceDESC = 'Цена по убыванию',
 }
+
+export type FilterType = {
+  title: string;
+  value: number | boolean | undefined;
+};

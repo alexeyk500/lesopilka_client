@@ -12,11 +12,11 @@ import {
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
-import { SelectOptionsType } from '../../../../../types/types';
+import { OptionsType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
 
-const getOptions = (optionsStore: SelectOptionsType[]) => {
-  const options: SelectOptionsType[] = [];
+const getOptions = (optionsStore: OptionsType[]) => {
+  const options: OptionsType[] = [];
   options.push({ id: 0, title: '' });
   options.push(...optionsStore);
   return options;

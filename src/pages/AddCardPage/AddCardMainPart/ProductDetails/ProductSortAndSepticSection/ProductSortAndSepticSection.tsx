@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectOptionsType } from '../../../../../types/types';
+import { OptionsType } from '../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorNewCard, setNewCardIsSeptic, setNewCardSortId } from '../../../../../store/newCardSlice';
 import { selectorProductSorts } from '../../../../../store/catalogSlice';
@@ -7,8 +7,8 @@ import classes from './ProductSortAndSepticSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import SectionContainer from '../SectionContainer/SectionContainer';
 
-const getSortOptions = (sorts: SelectOptionsType[]) => {
-  const options: SelectOptionsType[] = [];
+const getSortOptions = (sorts: OptionsType[]) => {
+  const options: OptionsType[] = [];
   options.push({ id: 0, title: '' });
   options.push(...sorts);
   return options;

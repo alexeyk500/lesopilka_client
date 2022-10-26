@@ -1,13 +1,13 @@
 import React from 'react';
 import classes from './SectionSelector.module.css';
 import Selector from '../Selector/Selector';
-import { SelectOptionsType } from '../../../types/types';
+import { OptionsType } from '../../../types/types';
 
 type PropsType = {
-  options: SelectOptionsType[];
+  options: OptionsType[];
   onChangeSelector: (id: number) => void;
   title?: string;
-  selectedOption?: SelectOptionsType;
+  selectedOption?: OptionsType;
   customSize?: string;
   onChangeCustomSize?: (value: string | undefined) => void;
 };
