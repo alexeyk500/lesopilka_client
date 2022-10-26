@@ -35,11 +35,11 @@ const PriceRange: React.FC = () => {
       <div className={classes.priceRange}>
         <div className={classes.priceFrom}>
           <div className={classes.description}>{'от:'}</div>
-          <input value={priceFrom} className={classes.inputPrice} onChange={onChangePriceFrom} pattern="^[0-9\b]+$" />
+          <input value={priceFrom || ''} className={classes.inputPrice} onChange={onChangePriceFrom} pattern="^[0-9\b]+$" />
         </div>
         <div className={classes.priceTo}>
           <div className={classes.description}>{'до:'}</div>
-          <input value={priceTo} className={classes.inputPrice} onChange={onChangePriceTo} />
+          <input value={priceTo || ''} className={classes.inputPrice} onChange={onChangePriceTo} />
         </div>
       </div>
     </div>
