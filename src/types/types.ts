@@ -1,6 +1,7 @@
 export type SelectOptionsType = {
   id: number | undefined;
   title: string;
+  key?: string;
 };
 
 export type ManufacturerType = {
@@ -122,3 +123,8 @@ export type ProductType = {
   id: number;
   title: string;
 };
+
+export enum ProductsSortsEnum {
+  priceASC = 'Цена по возрастанию',
+  priceDESC = 'Цена по убыванию',
+}

@@ -1,19 +1,26 @@
 import React from 'react';
 import classes from './SelectSortDirection.module.css';
+import { ProductsSortsEnum } from '../../../../types/types';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { selectorSorting, setSorting } from '../../../../store/productSlice';
 
-const options = [
-  { id: 1, title: 'Цена по убыванию' },
-  { id: 2, title: 'Цена по возрастанию' },
-];
+const options = Object.entries(ProductsSortsEnum).map(([key, value]) => ({ key, value }));
 
 const SelectSortDirection = () => {
+  const dispatch = useAppDispatch();
+  const sorting = useAppSelector(selectorSorting);
+
+  const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setSorting(e.currentTarget.value));
+  };
+
   return (
     <div className={classes.container}>
-      <select className={classes.select}>
-        {options.map((option, ind) => {
+      <select value={sorting} className={classes.select} onChange={onChange}>
+        {options.map((option) => {
           return (
-            <option key={ind} value={option.id}>
-              {option.title}
+            <option key={option.key} value={option.key}>
+              {option.value}
             </option>
           );
         })}
