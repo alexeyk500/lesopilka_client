@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  align-items: center;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid var(--gray_color);
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-color: var(--green_color);
+}

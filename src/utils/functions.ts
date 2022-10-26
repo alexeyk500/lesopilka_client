@@ -1,4 +1,4 @@
-import { OptionsType } from '../types/types';
+import { FilterType, OptionsType } from '../types/types';
 
 export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
 // export const regExpForPrice = /^\d*[.,]?(?:\d{1,2})?$/
@@ -48,4 +48,22 @@ export const getInputFormData = (form: HTMLFormElement, name: string): string =>
     return element.value;
   }
   return '';
+};
+
+export const getValueFromFilter = (filters: FilterType[], title: string) => {
+  const index = filters.findIndex((filter) => filter.title === title);
+  if (index > -1) {
+    return filters[index].value;
+  }
+  return undefined;
+};
+
+export const getOptionTitle = (options: OptionsType[], optionId: number | undefined) => {
+  if (optionId) {
+    const option = options.find((option) => option.id === optionId);
+    if (option?.title) {
+      return option.title;
+    }
+  }
+  return undefined;
 };

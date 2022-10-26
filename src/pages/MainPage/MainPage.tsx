@@ -9,18 +9,22 @@ import RightColumn from '../../components/RightColumn/RightColumn';
 import FiltersRow from './FiltersRow/FiltersRow';
 import ProductList from './ProductList/ProductList';
 import SelectRow from './SelectRow/SelectRow';
+import { selectorFilters } from '../../store/productSlice';
+import { getValueFromFilter } from '../../utils/functions';
+import FilterSelectors from './FilterSelectors/FilterSelectors';
 
 const MainPage: React.FC = () => {
   const isLoading = useAppSelector(selectorCatalogIsLoading);
+  const filters = useAppSelector(selectorFilters);
+  const categoryId = getValueFromFilter(filters, 'categoryId');
+
   return (
     <div className={classes.container}>
       {isLoading ? (
         <Preloader />
       ) : (
         <>
-          <LeftColumn>
-            <Catalog />
-          </LeftColumn>
+          <LeftColumn>{categoryId ? <FilterSelectors /> : <Catalog />}</LeftColumn>
           <RightColumn>
             <>
               <FiltersRow />
