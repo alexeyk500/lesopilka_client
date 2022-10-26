@@ -11,10 +11,14 @@
   padding: 0 12px;
   align-items: center;
   border: 1px solid var(--dark_blue_color);
-  border-radius: 12px 12px 0 0;
+  border-radius: 12px;
   color: var(--gray_color);
   background-color: var(--gray_color_light_light);
   font-weight: 600;
+}
+
+.titleExpand {
+  border-radius: 12px 12px 0 0;
 }
 
 .row {

@@ -111,7 +111,7 @@ const SearchLocationSelector: React.FC = () => {
         <img src={selectorArrowIco} className={classes.selectorArrowIco} alt="selector arrow" />
       </div>
       {expand && (
-        <div className={classes.expandContainer}>
+        <div className={classes.expandPart}>
           <div className={classes.selectorContainer}>
             <div className={classes.titleSelector}>Регион</div>
             <Selector
