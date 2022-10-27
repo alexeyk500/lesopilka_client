@@ -23,7 +23,7 @@ const OptionItem: React.FC<PropsType> = ({ option, selectedOptionId, onSelect })
         checked={option.id === selectedOptionId}
         onChange={onChangeHandler}
       />
-      {option.title}
+      <div className={classes.title}>{option.title}</div>
     </div>
   );
 };

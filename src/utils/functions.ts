@@ -53,7 +53,18 @@ export const getInputFormData = (form: HTMLFormElement, name: string): string =>
 export const getValueFromFilter = (filters: FilterType[], title: string) => {
   const index = filters.findIndex((filter) => filter.title === title);
   if (index > -1) {
-    return filters[index].value;
+    if (title === 'categoryId') {
+      return filters[index].values?.[0]?.value;
+    } else {
+      const categoryId = getValueFromFilter(filters, 'categoryId');
+      if (typeof (categoryId) === 'number' ) {
+        const keyIndex = filters[index].values.findIndex(filterValue => filterValue.key === categoryId)
+        if (keyIndex > -1) {
+          return filters[index].values?.[keyIndex]?.value;
+        }
+      }
+    }
+    return filters[index].values?.[0]?.value;
   }
   return undefined;
 };

@@ -17,6 +17,12 @@
   cursor: pointer;
 }
 
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .checkbox:checked {
   background-color: var(--green_color);
 }
