@@ -17,9 +17,7 @@ root.render(
       <div className={'appContainer'}>
         <Header />
         <div className={'contentContainer'}>
-          {/*<div className={'content'}>*/}
-            <AppRouter />
-          {/*</div>*/}
+          <AppRouter />
         </div>
       </div>
     </Provider>

@@ -27,8 +27,8 @@ const MainPage: React.FC = () => {
           <LeftColumn>{categoryId ? <FilterSelectors /> : <Catalog />}</LeftColumn>
           <RightColumn>
             <>
-              <FiltersRow />
-              <SelectRow />
+              {categoryId && <FiltersRow />}
+              {categoryId && <SelectRow />}
               <ProductList />
             </>
           </RightColumn>

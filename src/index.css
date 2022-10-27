@@ -156,9 +156,3 @@ template {
   flex-direction: column;
   background-color: var(--main_background);
 }
-
-.content {
-  display: flex;
-  padding-left: 8px;
-  height: 100%;
-}
