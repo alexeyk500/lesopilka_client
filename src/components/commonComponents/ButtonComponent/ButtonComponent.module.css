@@ -25,26 +25,29 @@
 
 .filter {
   display: flex !important;
-  height: 32px;
+  height: 24px;
   align-items: center !important;
   padding-left: 10px !important;
   padding-right: 2px !important;
   margin-right: 12px;
   min-width: 80px !important;
+  font-size: 14px;
+  font-weight: 400;
   color: var(--dark_blue_color);
   background-color: #FFFFFF;
-  border: solid 2px var(--dark_blue_color);
+  border: solid 1px var(--dark_blue_color);
   cursor: default;
+  margin-bottom: 4px;
 }
 
 .closeFilter {
   display: flex;
-  width: 28px;
-  margin-bottom: 2px;
+  width: 20px;
+  margin-bottom: 1px;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 17px;
+  font-weight: 400;
   color: var(--dark_blue_color);
   border-radius: 50%;
   background-color: inherit;

@@ -29,12 +29,22 @@ const FilterSelectors: React.FC = () => {
     categoryId && typeof categoryId === 'number'
       ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.height)
       : [];
+  const widthSizes =
+    categoryId && typeof categoryId === 'number'
+      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.width)
+      : [];
+  const lengthSizes =
+    categoryId && typeof categoryId === 'number'
+      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.length)
+      : [];
 
   return (
     <div className={classes.container}>
-      <FilterSelectorItem title={'Раздел каталога'} filterTitle={'categoryId'} options={categories} isExpand/>
-      <FilterSelectorItem title={'Пиломатериал'} filterTitle={'subCategoryId'} options={subCategories} />
+      <FilterSelectorItem title={'Раздел каталога'} filterTitle={'categoryId'} options={categories} isExpand />
+      <FilterSelectorItem title={'Пиломатериал'} filterTitle={'subCategoryId'} options={subCategories} isExpand />
       <FilterSelectorItem title={'Толщина'} filterTitle={'heightId'} options={heightSizes} />
+      <FilterSelectorItem title={'Ширина'} filterTitle={'widthId'} options={widthSizes} />
+      <FilterSelectorItem title={'Длинна'} filterTitle={'lengthId'} options={lengthSizes} />
     </div>
   );
 };
