@@ -10,9 +10,10 @@ type PropsType = {
   title: string;
   options: OptionsType[];
   filterTitle: string;
+  isExpand?: boolean;
 };
 
-const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle }) => {
+const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle, isExpand }) => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector(selectorFilters);
 
@@ -37,7 +38,7 @@ const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle }
         options={options}
         selectedOptionId={selectedCategoryId}
         onSelect={onSelect}
-        isExpand
+        isExpand={isExpand}
       />
     </div>
   );

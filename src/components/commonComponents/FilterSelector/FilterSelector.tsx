@@ -22,7 +22,7 @@ const FilterSelector: React.FC<PropsType> = ({ title, options, selectedOptionId,
 
   return (
     <div className={classes.container}>
-      <div className={classNames(classes.titlePart, { [classes.titleExpand]: expand })}>
+      <div className={classNames(classes.titlePart, { [classes.titleExpand]: expand && !!options.length })}>
         <div className={classes.row} onClick={onClickExpand}>
           <div className={classes.title}>{title}</div>
           <img
@@ -32,7 +32,7 @@ const FilterSelector: React.FC<PropsType> = ({ title, options, selectedOptionId,
           />
         </div>
       </div>
-      {expand && (
+      {expand && !!options.length && (
         <div className={classes.expandPart}>
           {options.map((option) => (
             <OptionItem key={option.id} option={option} selectedOptionId={selectedOptionId} onSelect={onSelect} />

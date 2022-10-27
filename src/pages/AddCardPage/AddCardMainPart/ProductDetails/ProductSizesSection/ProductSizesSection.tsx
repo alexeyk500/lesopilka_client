@@ -32,7 +32,7 @@ export const getSizesSectionIndicator = (newCard: NewCardType) => {
   return Boolean(result);
 };
 
-const getOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
+const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
     (categorySize) =>
       categorySize.categoryId === categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
@@ -52,10 +52,10 @@ const ProductSizesSection = () => {
   const newCard = useAppSelector(selectorNewCard);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
-  const heightSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.height);
-  const widthSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.width);
-  const lengthSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.length);
-  const caliberSizes = getOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.caliber);
+  const heightSizes = getSizeOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.height);
+  const widthSizes = getSizeOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.width);
+  const lengthSizes = getSizeOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.length);
+  const caliberSizes = getSizeOptions(allCategorySizes, newCard.categoryId, SizeTypeEnum.caliber);
 
   const selectedHeightId = heightSizes.find((heightSize) => heightSize.id === newCard.heightId);
   const selectedWidthId = widthSizes.find((widthSize) => widthSize.id === newCard.widthId);

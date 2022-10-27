@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classes from './ProductDetails.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import {
-  getCategorySizesThunk,
-  getProductMaterialsThunk,
-  getProductSortsThunk,
-  selectorCatalogIsLoading,
-} from '../../../../store/catalogSlice';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { selectorCatalogIsLoading } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
 import ProductCatalogSection from './ProductCatalogSection/ProductCatalogSection';
 import ProductSizesSection from './ProductSizesSection/ProductSizesSection';
@@ -17,14 +12,7 @@ import ProductPriceSection from './ProductPriceSection/ProductPriceSection';
 import ProductSortAndSepticSection from './ProductSortAndSepticSection/ProductSortAndSepticSection';
 
 const ProductDetails: React.FC = () => {
-  const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectorCatalogIsLoading);
-
-  useEffect(() => {
-    dispatch(getProductMaterialsThunk());
-    dispatch(getProductSortsThunk());
-    dispatch(getCategorySizesThunk());
-  }, [dispatch]);
 
   return (
     <div className={classes.container}>

@@ -18,6 +18,11 @@ const initialState: ProductsSliceType = {
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
+    { title: 'subCategoryId', values: [] },
+    { title: 'heightId', values: [] },
+    { title: 'widthId', values: [] },
+    { title: 'lengthId', values: [] },
+    { title: 'caliberId', values: [] },
   ],
 };
 

@@ -8,7 +8,13 @@ import CartButton from './CartButton/CartButton';
 import SelectedButton from './SelectedButton/SelectedButton';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
-import { getCategoriesThunk, getSubCategoriesThunk } from '../../store/catalogSlice';
+import {
+  getCategoriesThunk,
+  getCategorySizesThunk,
+  getProductMaterialsThunk,
+  getProductSortsThunk,
+  getSubCategoriesThunk,
+} from '../../store/catalogSlice';
 import SearchLocationSelector from '../commonComponents/SearchLocationSelector/SearchLocationSelector';
 
 const Header: React.FC = () => {
@@ -18,6 +24,9 @@ const Header: React.FC = () => {
     dispatch(userLoginByTokenThunk());
     dispatch(getCategoriesThunk());
     dispatch(getSubCategoriesThunk());
+    dispatch(getProductMaterialsThunk());
+    dispatch(getProductSortsThunk());
+    dispatch(getCategorySizesThunk());
   }, [dispatch]);
 
   return (
