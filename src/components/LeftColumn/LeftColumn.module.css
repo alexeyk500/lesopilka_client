@@ -4,8 +4,9 @@
   align-items: center;
   width: 256px;
   margin-top: 8px;
+  margin-left: 8px;
   flex-shrink: 0;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 72px);
   background-color: #FFFFFF;
   color: var(--gray_color);
   border-radius: 12px;

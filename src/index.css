@@ -150,9 +150,15 @@ template {
 .contentContainer {
   margin-top: 56px;
   display: flex;
-  padding: 0 32px;
+  padding: 0 32px 0 24px;
   width: 1474px;
   height: calc(100vh - 56px);
   flex-direction: column;
   background-color: var(--main_background);
+}
+
+.content {
+  display: flex;
+  padding-left: 8px;
+  height: 100%;
 }
