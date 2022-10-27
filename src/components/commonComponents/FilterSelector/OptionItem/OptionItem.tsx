@@ -5,13 +5,17 @@ import classes from './OptionItem.module.css';
 type PropsType = {
   option: OptionsType;
   selectedOptionId?: number;
-  onSelect?: (id: number) => void;
+  onSelect?: (id: number | undefined) => void;
 };
 
 const OptionItem: React.FC<PropsType> = ({ option, selectedOptionId, onSelect }) => {
   const onChangeHandler = () => {
     if (onSelect && option.id) {
-      onSelect(option.id);
+      if (option.id === selectedOptionId) {
+        onSelect(undefined);
+      } else {
+        onSelect(option.id);
+      }
     }
   };
 

@@ -26,7 +26,7 @@ const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle }
 
   const selectedCategoryId = getOptionId();
 
-  const onSelect = (id: number) => {
+  const onSelect = (id: number | undefined) => {
     dispatch(setFiltersValue({ title: filterTitle, value: id }));
   };
 

@@ -1,7 +1,6 @@
 import { FilterType, ProductsSortsEnum, ProductType } from '../types/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import {getValueFromFilter} from "../utils/functions";
 
 type ProductsSliceType = {
   products: ProductType[];
@@ -16,16 +15,6 @@ const initialState: ProductsSliceType = {
   priceFrom: undefined,
   priceTo: undefined,
   sorting: ProductsSortsEnum.priceASC,
-  // filters: [
-  //   { title: 'categoryId', value: undefined },
-  //   { title: 'subCategoryId', value: undefined },
-  //   { title: 'heightId', value: undefined },
-  //   { title: 'widthId', value: undefined },
-  //   { title: 'lengthId', value: undefined },
-  //   { title: 'caliberId', value: undefined },
-  //   { title: 'sortId', value: undefined },
-  // ],
-
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
@@ -49,15 +38,17 @@ export const productsSlice = createSlice({
       const filterIndex = state.filters.findIndex((filter) => action.payload.title === filter.title);
       if (filterIndex > -1) {
         if (action.payload.title === 'categoryId') {
-          state.filters[filterIndex].values = [{ key: 0, value: action.payload.value }];
+          state.filters[0].values = [{ key: 0, value: action.payload.value }];
         } else {
-          const categoryId = getValueFromFilter(state.filters, 'categoryId');
-          if (typeof (categoryId) === 'number' ) {
-            const keyIndex = state.filters[filterIndex].values.findIndex(filterValue => filterValue.key === categoryId)
+          const categoryId = state.filters[0].values?.[0]?.value;
+          if (typeof categoryId === 'number') {
+            const keyIndex = state.filters[filterIndex].values.findIndex(
+              (filterValue) => filterValue.key === categoryId
+            );
             if (keyIndex > -1) {
-              state.filters[filterIndex].values[keyIndex].value = action.payload.value
+              state.filters[filterIndex].values[keyIndex].value = action.payload.value;
             } else {
-              state.filters[filterIndex].values.push({key: categoryId, value: action.payload.value})
+              state.filters[filterIndex].values.push({ key: categoryId, value: action.payload.value });
             }
           }
         }

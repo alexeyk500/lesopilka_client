@@ -138,13 +138,3 @@ export type FilterType = {
   title: string;
   values: FilterValueType[];
 };
-
-// export type FilterType = {
-//   title: string;
-//   value: number | boolean | undefined;
-//   key?: number | undefined;
-// };
-//
-// export type OtherFiltersType = [
-//   { title: string, values: [{key: number, value: number | boolean}]}
-// ]

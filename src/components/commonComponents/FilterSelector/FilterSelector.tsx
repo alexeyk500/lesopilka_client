@@ -9,7 +9,7 @@ type PropsType = {
   title: string;
   options: OptionsType[];
   selectedOptionId?: number;
-  onSelect?: (id: number) => void;
+  onSelect?: (id: number | undefined) => void;
   isExpand?: boolean;
 };
 
