@@ -17,7 +17,7 @@ const FilterCategory: React.FC = () => {
     }
     return undefined;
   }, [filters, categories]);
-  const categoryTitle = getCategoryTitle();
+  const categoryTitle = 'Раздел: ' + getCategoryTitle();
   const resetCategoryFilter = () => {
     dispatch(setFiltersValue({ title: 'subCategoryId', value: undefined }));
     dispatch(setFiltersValue({ title: 'categoryId', value: undefined }));
