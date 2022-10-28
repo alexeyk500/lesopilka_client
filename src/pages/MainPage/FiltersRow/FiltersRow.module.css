@@ -1,7 +1,6 @@
 .container {
   display: flex;
   width: 100%;
-  min-height: 36px;
   padding: 6px 8px 2px 8px;
   border-radius: 12px;
   background-color: var(--section_background);

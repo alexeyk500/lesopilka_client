@@ -5,6 +5,8 @@ import FilterCategory from './FilterCategory/FilterCategory';
 import FilterSubCategory from './FilterSubCategory/FilterSubCategory';
 import FilterSize from './FilterSize/FilterSize';
 import { SizeTypeEnum } from '../../../types/types';
+import FilterSort from './FilterSort/FilterSort';
+import FilterSeptic from './FilterSeptic/FilterSeptic';
 
 const FiltersRow: React.FC = () => {
   return (
@@ -16,6 +18,8 @@ const FiltersRow: React.FC = () => {
       <FilterSize sizeType={SizeTypeEnum.width} />
       <FilterSize sizeType={SizeTypeEnum.caliber} />
       <FilterSize sizeType={SizeTypeEnum.length} />
+      <FilterSort />
+      <FilterSeptic />
     </div>
   );
 };

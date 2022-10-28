@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './PriceRange.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorPriceFrom, selectorPriceTo, setPriceFrom, setPriceTo } from '../../../../store/productSlice';
-import { regExpForPrice } from '../../../../utils/constatnts';
+import { regExpForPrice } from '../../../../utils/constants';
 
 const PriceRange: React.FC = () => {
   const dispatch = useAppDispatch();

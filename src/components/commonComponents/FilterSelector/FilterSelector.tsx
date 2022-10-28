@@ -24,7 +24,7 @@ const FilterSelector: React.FC<PropsType> = ({ title, options, selectedOptionId,
     <div className={classes.container}>
       <div className={classNames(classes.titlePart, { [classes.titleExpand]: expand && !!options.length })}>
         <div className={classes.row} onClick={onClickExpand}>
-          <div className={classes.title}>{title}</div>
+          <div className={classNames(classes.title, { [classes.titleBlue]: selectedOptionId })}>{title}</div>
           <img
             src={selectorArrowIco}
             className={classNames(classes.selectorArrowIco, { [classes.rotate]: expand })}

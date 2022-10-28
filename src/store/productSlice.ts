@@ -23,6 +23,8 @@ const initialState: ProductsSliceType = {
     { title: 'widthId', values: [] },
     { title: 'lengthId', values: [] },
     { title: 'caliberId', values: [] },
+    { title: 'sortId', values: [] },
+    { title: 'septicId', values: [] },
   ],
 };
 

@@ -21,6 +21,10 @@
   border-radius: 12px 12px 0 0;
 }
 
+.titleBlue {
+  color: var(--dark_blue_color)
+}
+
 .row {
   display: flex;
   width: 100%;

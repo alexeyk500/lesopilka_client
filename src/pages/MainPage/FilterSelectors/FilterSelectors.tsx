@@ -2,11 +2,17 @@ import React from 'react';
 import classes from './FilterSelectors.module.css';
 import FilterSelectorItem from './FilterSelectorItem/FilterSelectorItem';
 import { useAppSelector } from '../../../hooks/hooks';
-import { selectorCategories, selectorCategorySizes, selectorSubCategories } from '../../../store/catalogSlice';
+import {
+  selectorCategories,
+  selectorCategorySizes,
+  selectorProductSorts,
+  selectorSubCategories,
+} from '../../../store/catalogSlice';
 import { selectorFilters } from '../../../store/productSlice';
 import { getValueFromFilter } from '../../../utils/functions';
 import { CategorySizeType, SizeTypeEnum } from '../../../types/types';
-import { BREVNO_CATEGORY_ID } from '../../../utils/constatnts';
+import { BREVNO_CATEGORY_ID } from '../../../utils/constants';
+import { SEPTIC_OPTIONS } from '../../../utils/constants';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -21,6 +27,7 @@ const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefine
 const FilterSelectors: React.FC = () => {
   const filters = useAppSelector(selectorFilters);
   const categories = useAppSelector(selectorCategories);
+  const sorts = useAppSelector(selectorProductSorts);
   const subCategoriesState = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
@@ -57,6 +64,8 @@ const FilterSelectors: React.FC = () => {
         <FilterSelectorItem title={'Диаметр'} filterTitle={'caliberId'} options={caliberSizes} />
       )}
       <FilterSelectorItem title={'Длинна'} filterTitle={'lengthId'} options={lengthSizes} />
+      <FilterSelectorItem title={'Сорт'} filterTitle={'sortId'} options={sorts} />
+      <FilterSelectorItem title={'Антисептик'} filterTitle={'septicId'} options={SEPTIC_OPTIONS} />
     </div>
   );
 };
