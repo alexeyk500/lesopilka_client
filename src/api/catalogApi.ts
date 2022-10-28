@@ -1,4 +1,4 @@
-import { instanceAxios, setAuthHeader } from './instanceAxios';
+import { instanceAxios } from './instanceAxios';
 import { CategorySizeType, CategoryType, ProductMaterialType, ProductSortsType, SubCategoryType } from '../types/types';
 
 export const catalogApi = {
@@ -12,8 +12,8 @@ export const catalogApi = {
     return response.data;
   },
 
-  async getProductMaterials(token: string) {
-    const response = await instanceAxios.get<ProductMaterialType[]>('/product/materials', setAuthHeader(token));
+  async getProductMaterials() {
+    const response = await instanceAxios.get<ProductMaterialType[]>('/product/materials');
     return response.data;
   },
 
@@ -22,8 +22,8 @@ export const catalogApi = {
     return response.data;
   },
 
-  async getProductSorts(token: string) {
-    const response = await instanceAxios.get<ProductSortsType[]>('/product/sorts', setAuthHeader(token));
+  async getProductSorts() {
+    const response = await instanceAxios.get<ProductSortsType[]>('/product/sorts');
     return response.data;
   },
 };

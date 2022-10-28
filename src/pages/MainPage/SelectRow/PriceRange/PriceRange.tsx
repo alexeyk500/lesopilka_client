@@ -22,7 +22,7 @@ const PriceRange: React.FC = () => {
   const onChangePriceTo = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '' || regExpForPrice.test(event.target.value)) {
       if (event.target.value === '') {
-        dispatch(setPriceFrom(undefined));
+        dispatch(setPriceTo(undefined));
       } else {
         dispatch(setPriceTo(event.currentTarget.value));
       }

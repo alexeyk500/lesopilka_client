@@ -48,11 +48,7 @@ export const getProductMaterialsThunk = createAsyncThunk<ProductMaterialType[], 
   'user/getProductMaterialsThunk',
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (token) {
-        return await serverApi.getProductMaterials(token);
-      }
-      return rejectWithValue('Пользователь не авторизован');
+      return await serverApi.getProductMaterials();
     } catch (e) {
       return rejectWithValue('Ошибка получения справочника материалов для продукта');
     }
@@ -63,11 +59,7 @@ export const getProductSortsThunk = createAsyncThunk<ProductSortsType[], undefin
   'user/getProductSortsThunk',
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (token) {
-        return await serverApi.getProductSorts(token);
-      }
-      return rejectWithValue('Пользователь не авторизован');
+      return await serverApi.getProductSorts();
     } catch (e) {
       return rejectWithValue('Ошибка получения справочника для сортов продукта');
     }

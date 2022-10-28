@@ -12,7 +12,7 @@ export default function UseDebouncedFunction<F extends (...args: any) => ReturnT
       clearTimeout(timeoutRef.current);
       timeoutRef.current = undefined;
     }
-  }
+  };
 
   useEffect(() => (cleanUp ? clearTimer : undefined), [cleanUp]);
 
