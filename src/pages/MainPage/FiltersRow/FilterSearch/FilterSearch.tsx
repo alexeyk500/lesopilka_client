@@ -1,6 +1,11 @@
 import React, { useCallback } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { selectorUser, userUpdateThunk } from '../../../../store/userSlice';
+import {
+  selectorAppSearchLocationId,
+  selectorAppSearchRegionId,
+  selectorUser,
+  userUpdateThunk,
+} from '../../../../store/userSlice';
 import { getOptionTitle } from '../../../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorRegions, selectorSearchLocationsByRegionId } from '../../../../store/addressSlice';
@@ -9,9 +14,11 @@ const FilterSearch: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const regions = useAppSelector(selectorRegions);
+  const appSearchRegionId = useAppSelector(selectorAppSearchRegionId);
+  const appSearchRLocationId = useAppSelector(selectorAppSearchLocationId);
   const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
-  const searchRegionId = user?.searchRegion?.id;
-  const searchLocationId = user?.searchLocation?.id;
+  const searchRegionId = user ? user?.searchRegion?.id : appSearchRegionId;
+  const searchLocationId = user ? user?.searchLocation?.id : appSearchRLocationId;
 
   const getSearchTitle = useCallback(() => {
     if (searchLocationId) {

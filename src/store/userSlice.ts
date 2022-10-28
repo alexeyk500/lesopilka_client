@@ -6,7 +6,9 @@ import { showConfirmPopUp, showErrorPopUp } from '../components/InfoAndErrorMess
 import { serverApi } from '../api/serverApi';
 
 type UserSliceType = {
-  user: UserType | undefined;
+  user?: UserType;
+  appSearchRegionId?: number;
+  appSearchLocationId?: number;
 };
 
 const initialState: UserSliceType = {
@@ -125,6 +127,12 @@ export const userSlice = createSlice({
       state.user = undefined;
       localStorage.removeItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     },
+    setAppSearchRegionId: (state, action) => {
+      state.appSearchRegionId = action.payload;
+    },
+    setAppSearchLocationId: (state, action) => {
+      state.appSearchLocationId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -151,14 +159,18 @@ export const userSlice = createSlice({
         isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled, userUpdateThunk.fulfilled),
         (state, action) => {
           state.user = action.payload.user;
+          state.appSearchRegionId = undefined;
+          state.appSearchLocationId = undefined;
           localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
         }
       );
   },
 });
 
-export const { resetUser } = userSlice.actions;
+export const { resetUser, setAppSearchRegionId, setAppSearchLocationId } = userSlice.actions;
 
 export const selectorUser = (state: RootState) => state.user.user;
+export const selectorAppSearchRegionId = (state: RootState) => state.user.appSearchRegionId;
+export const selectorAppSearchLocationId = (state: RootState) => state.user.appSearchLocationId;
 
 export default userSlice.reducer;

@@ -11,7 +11,14 @@ import {
   selectorRegions,
   selectorSearchLocationsByRegionId,
 } from '../../../store/addressSlice';
-import { selectorUser, userUpdateThunk } from '../../../store/userSlice';
+import {
+  selectorAppSearchLocationId,
+  selectorAppSearchRegionId,
+  selectorUser,
+  setAppSearchLocationId,
+  setAppSearchRegionId,
+  userUpdateThunk,
+} from '../../../store/userSlice';
 import { getOptionsWithFirstEmptyOption } from '../../../utils/functions';
 
 const SearchLocationSelector: React.FC = () => {
@@ -19,10 +26,13 @@ const SearchLocationSelector: React.FC = () => {
 
   const user = useAppSelector(selectorUser);
   const regions = useAppSelector(selectorRegions);
+  const appSearchRegionId = useAppSelector(selectorAppSearchRegionId);
+  const appSearchRLocationId = useAppSelector(selectorAppSearchLocationId);
   const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
 
-  const searchRegionId = user?.searchRegion?.id;
-  const searchLocationId = user?.searchLocation?.id;
+  const searchRegionId = user ? user?.searchRegion?.id : appSearchRegionId;
+  const searchLocationId = user ? user?.searchLocation?.id : appSearchRLocationId;
+
   const regionsOptions = getOptionsWithFirstEmptyOption(regions);
   const searchLocationsOptions = getOptionsWithFirstEmptyOption(searchLocationsByRegionId);
 
@@ -37,16 +47,25 @@ const SearchLocationSelector: React.FC = () => {
   }, [dispatch, searchRegionId]);
 
   const onChangeRegion = (id: number | null) => {
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (token) {
-      dispatch(userUpdateThunk({ token, searchRegionId: id, searchLocationId: null }));
+    if (user) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        dispatch(userUpdateThunk({ token, searchRegionId: id, searchLocationId: null }));
+      }
+    } else {
+      dispatch(setAppSearchRegionId(id ? id : undefined));
+      dispatch(setAppSearchLocationId(undefined));
     }
   };
 
   const onChangeLocation = (id: number | null) => {
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (token) {
-      dispatch(userUpdateThunk({ token, searchLocationId: id }));
+    if (user) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        dispatch(userUpdateThunk({ token, searchLocationId: id }));
+      }
+    } else {
+      dispatch(setAppSearchLocationId(id ? id : undefined));
     }
   };
 
