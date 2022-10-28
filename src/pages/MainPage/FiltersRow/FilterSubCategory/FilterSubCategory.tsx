@@ -17,7 +17,9 @@ const FilterSubCategory: React.FC = () => {
     }
     return undefined;
   }, [filters, subCategories]);
+
   const categoryTitle = getCategoryTitle();
+  const title = 'Тип: ' + getCategoryTitle();
 
   const resetCategoryFilter = () => {
     dispatch(setFiltersValue({ title: 'subCategoryId', value: undefined }));
@@ -25,9 +27,7 @@ const FilterSubCategory: React.FC = () => {
 
   return (
     <>
-      {categoryTitle && (
-        <ButtonComponent title={categoryTitle || ''} buttonType={ButtonType.FILTER} onClick={resetCategoryFilter} />
-      )}
+      {categoryTitle && <ButtonComponent title={title} buttonType={ButtonType.FILTER} onClick={resetCategoryFilter} />}
     </>
   );
 };

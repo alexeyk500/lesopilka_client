@@ -1,8 +1,5 @@
 import { FilterType, OptionsType } from '../types/types';
 
-export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
-// export const regExpForPrice = /^\d*[.,]?(?:\d{1,2})?$/
-
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
   for (let i = 0; i < elements.length; i++) {

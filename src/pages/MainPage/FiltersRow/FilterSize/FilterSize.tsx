@@ -9,13 +9,13 @@ import { CategorySizeType, SizeTypeEnum } from '../../../../types/types';
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const sizeTitle =
     sizeType === SizeTypeEnum.height
-      ? 'Толщина'
+      ? 'Толщина:'
       : sizeType === SizeTypeEnum.width
-      ? 'Ширина'
+      ? 'Ширина:'
       : sizeType === SizeTypeEnum.length
-      ? 'Длинна'
+      ? 'Длинна:'
       : sizeType === SizeTypeEnum.caliber
-      ? 'Диаметр'
+      ? 'Диаметр:'
       : undefined;
   const filteredSizes = sizes.filter(
     (categorySize) =>

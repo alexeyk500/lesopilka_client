@@ -3,7 +3,7 @@ import classes from './FiltersRow.module.css';
 import FilterSearch from './FilterSearch/FilterSearch';
 import FilterCategory from './FilterCategory/FilterCategory';
 import FilterSubCategory from './FilterSubCategory/FilterSubCategory';
-import FilterSize from './FilterHeight/FilterSize';
+import FilterSize from './FilterSize/FilterSize';
 import { SizeTypeEnum } from '../../../types/types';
 
 const FiltersRow: React.FC = () => {
@@ -14,6 +14,7 @@ const FiltersRow: React.FC = () => {
       <FilterSubCategory />
       <FilterSize sizeType={SizeTypeEnum.height} />
       <FilterSize sizeType={SizeTypeEnum.width} />
+      <FilterSize sizeType={SizeTypeEnum.caliber} />
       <FilterSize sizeType={SizeTypeEnum.length} />
     </div>
   );

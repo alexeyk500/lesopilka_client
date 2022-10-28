@@ -6,6 +6,7 @@ import { selectorCategories, selectorCategorySizes, selectorSubCategories } from
 import { selectorFilters } from '../../../store/productSlice';
 import { getValueFromFilter } from '../../../utils/functions';
 import { CategorySizeType, SizeTypeEnum } from '../../../types/types';
+import { BREVNO_CATEGORY_ID } from '../../../utils/constatnts';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -37,13 +38,24 @@ const FilterSelectors: React.FC = () => {
     categoryId && typeof categoryId === 'number'
       ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.length)
       : [];
+  const caliberSizes =
+    categoryId && typeof categoryId === 'number'
+      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.caliber)
+      : [];
 
   return (
     <div className={classes.container}>
       <FilterSelectorItem title={'Раздел каталога'} filterTitle={'categoryId'} options={categories} isExpand />
       <FilterSelectorItem title={'Пиломатериал'} filterTitle={'subCategoryId'} options={subCategories} isExpand />
-      <FilterSelectorItem title={'Толщина'} filterTitle={'heightId'} options={heightSizes} />
-      <FilterSelectorItem title={'Ширина'} filterTitle={'widthId'} options={widthSizes} />
+      {categoryId !== BREVNO_CATEGORY_ID && (
+        <FilterSelectorItem title={'Толщина'} filterTitle={'heightId'} options={heightSizes} />
+      )}
+      {categoryId !== BREVNO_CATEGORY_ID && (
+        <FilterSelectorItem title={'Ширина'} filterTitle={'widthId'} options={widthSizes} />
+      )}
+      {categoryId === BREVNO_CATEGORY_ID && (
+        <FilterSelectorItem title={'Диаметр'} filterTitle={'caliberId'} options={caliberSizes} />
+      )}
       <FilterSelectorItem title={'Длинна'} filterTitle={'lengthId'} options={lengthSizes} />
     </div>
   );
