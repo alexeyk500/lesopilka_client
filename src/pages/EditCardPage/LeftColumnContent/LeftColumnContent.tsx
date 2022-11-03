@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './LeftColumnContent.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../hooks/hooks';
-import { selectorNewCard } from '../../../store/newCardSlice';
+import { selectorProductCard } from '../../../store/productCardSlice';
 import { ProductCardDataType } from '../../../types/types';
 import {
   selectorCategorySizes,
@@ -22,42 +22,42 @@ const getPrice = (price: string) => {
 
 const LeftColumnContent: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const newCard = useAppSelector(selectorNewCard);
+  const productCard = useAppSelector(selectorProductCard);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
   const allMaterials = useAppSelector(selectorProductMaterials);
   const allSorts = useAppSelector(selectorProductSorts);
 
-  const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === newCard.subCategoryId);
-  const material = allMaterials.find((material) => material.id === newCard.productMaterialId);
-  const sort = allSorts.find((sort) => sort.id === newCard.sortId);
+  const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === productCard.subCategoryId);
+  const material = allMaterials.find((material) => material.id === productCard.productMaterialId);
+  const sort = allSorts.find((sort) => sort.id === productCard.sortId);
 
   let width: string | undefined;
-  if (newCard.customWidth) {
-    width = newCard.customWidth;
+  if (productCard.customWidth) {
+    width = productCard.customWidth;
   } else {
-    width = allCategorySizes.find((categorySize) => categorySize.id === newCard.widthId)?.value || undefined;
+    width = allCategorySizes.find((categorySize) => categorySize.id === productCard.widthId)?.value || undefined;
   }
 
   let height: string | undefined;
-  if (newCard.customHeight) {
-    height = newCard.customHeight;
+  if (productCard.customHeight) {
+    height = productCard.customHeight;
   } else {
-    height = allCategorySizes.find((categorySize) => categorySize.id === newCard.heightId)?.value || undefined;
+    height = allCategorySizes.find((categorySize) => categorySize.id === productCard.heightId)?.value || undefined;
   }
 
   let caliber: string | undefined;
-  if (newCard.customCaliber) {
-    caliber = newCard.customCaliber;
+  if (productCard.customCaliber) {
+    caliber = productCard.customCaliber;
   } else {
-    caliber = allCategorySizes.find((categorySize) => categorySize.id === newCard.caliberId)?.value || undefined;
+    caliber = allCategorySizes.find((categorySize) => categorySize.id === productCard.caliberId)?.value || undefined;
   }
 
   let length;
-  if (newCard.customLength) {
-    length = newCard.customLength;
+  if (productCard.customLength) {
+    length = productCard.customLength;
   } else {
-    length = allCategorySizes.find((categorySize) => categorySize.id === newCard.lengthId)?.value || '';
+    length = allCategorySizes.find((categorySize) => categorySize.id === productCard.lengthId)?.value || '';
   }
 
   const productCardData: ProductCardDataType = {
@@ -78,13 +78,13 @@ const LeftColumnContent: React.FC = () => {
     material: material ? material.title : '',
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
-    image: newCard.images.length > 0 ? newCard.images[0] : undefined,
-    isSeptic: newCard.isSeptic,
+    image: productCard.images.length > 0 ? productCard.images[0] : undefined,
+    isSeptic: productCard.isSeptic,
     width,
     height,
     caliber,
     length,
-    price: newCard.price ? getPrice(newCard.price) : '',
+    price: productCard.price ? getPrice(productCard.price) : '',
   };
 
   return (

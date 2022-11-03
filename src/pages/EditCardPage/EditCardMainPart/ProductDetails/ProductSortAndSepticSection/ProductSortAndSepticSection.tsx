@@ -1,7 +1,11 @@
 import React from 'react';
 import { OptionsType } from '../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { selectorNewCard, setNewCardIsSeptic, setNewCardSortId } from '../../../../../store/newCardSlice';
+import {
+  selectorProductCard,
+  setProductCardIsSeptic,
+  setProductCardSortId,
+} from '../../../../../store/productCardSlice';
 import { selectorProductSorts } from '../../../../../store/catalogSlice';
 import classes from './ProductSortAndSepticSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
@@ -21,21 +25,21 @@ const antisepticOptions = [
 
 const ProductSortAndSepticSection = () => {
   const dispatch = useAppDispatch();
-  const newCard = useAppSelector(selectorNewCard);
+  const editCard = useAppSelector(selectorProductCard);
   const sorts = useAppSelector(selectorProductSorts);
   const sortsOption = getSortOptions(sorts);
-  const selectedSortId = sortsOption.find((sort) => sort.id === newCard.sortId);
+  const selectedSortId = sortsOption.find((sort) => sort.id === editCard.sortId);
 
   const onChangeSortSelector = (id: number) => {
-    dispatch(setNewCardSortId(id));
+    dispatch(setProductCardSortId(id));
   };
 
   const onChangeSepticSelector = (id: number) => {
-    dispatch(setNewCardIsSeptic(!!id));
+    dispatch(setProductCardIsSeptic(!!id));
   };
 
   return (
-    <SectionContainer title={'Сорт и Антисептик'} completeCondition={!!newCard.sortId} blurCondition={false}>
+    <SectionContainer title={'Сорт и Антисептик'} completeCondition={!!editCard.sortId} blurCondition={false}>
       <div className={classes.rowContainer}>
         <SectionSelector
           title={'Сорт пиломатериала'}
@@ -46,7 +50,7 @@ const ProductSortAndSepticSection = () => {
         <SectionSelector
           title={'Обработка Антисептиком'}
           options={antisepticOptions}
-          selectedOption={newCard.isSeptic ? antisepticOptions[1] : antisepticOptions[0]}
+          selectedOption={editCard.isSeptic ? antisepticOptions[1] : antisepticOptions[0]}
           onChangeSelector={onChangeSepticSelector}
         />
       </div>

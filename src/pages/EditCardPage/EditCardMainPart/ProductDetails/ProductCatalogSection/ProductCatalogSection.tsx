@@ -3,12 +3,12 @@ import classes from './ProductCatalogSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories, selectorProductMaterials, selectorSubCategories } from '../../../../../store/catalogSlice';
 import {
-  clearNewCard,
-  selectorNewCard,
-  setNewCardCategoryId,
-  setNewCardProductMaterialId,
-  setNewCardSubCategoryId,
-} from '../../../../../store/newCardSlice';
+  clearProductCard,
+  selectorProductCard,
+  setProductCardCategoryId,
+  setProductCardProductMaterialId,
+  setProductCardSubCategoryId,
+} from '../../../../../store/productCardSlice';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
@@ -24,32 +24,34 @@ const getOptions = (optionsStore: OptionsType[]) => {
 
 const ProductCatalogSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const newCard = useAppSelector(selectorNewCard);
+  const productCard = useAppSelector(selectorProductCard);
   const categoriesRaw = useAppSelector(selectorCategories);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const productMaterialsRaw = useAppSelector(selectorProductMaterials);
 
-  const subCategoriesRaw = subCategoriesStore.filter((subCategory) => newCard.categoryId === subCategory.categoryId);
+  const subCategoriesRaw = subCategoriesStore.filter(
+    (subCategory) => productCard.categoryId === subCategory.categoryId
+  );
 
   const categories = getOptions(categoriesRaw);
   const subCategories = getOptions(subCategoriesRaw);
   const productMaterials = getOptions(productMaterialsRaw);
 
-  const selectedCategory = categories.find((category) => category.id === newCard.categoryId);
-  const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === newCard.subCategoryId);
+  const selectedCategory = categories.find((category) => category.id === productCard.categoryId);
+  const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === productCard.subCategoryId);
   const selectedProductMaterial = productMaterials.find(
-    (productMaterial) => productMaterial.id === newCard.productMaterialId
+    (productMaterial) => productMaterial.id === productCard.productMaterialId
   );
 
   const onChangeCategorySelector = (id: number) => {
     const onConfirm = (result: OnClosePopUpResultType) => {
       if (result) {
-        dispatch(clearNewCard());
-        dispatch(setNewCardCategoryId(id));
+        dispatch(clearProductCard());
+        dispatch(setProductCardCategoryId(id));
       }
     };
-    if (newCard.categoryId) {
-      const curCategory = categories.find((category) => category.id === newCard.categoryId);
+    if (productCard.categoryId) {
+      const curCategory = categories.find((category) => category.id === productCard.categoryId);
       const newCategory = categories.find((category) => category.id === id);
       showConfirmPopUp(
         `Раздела каталога "${curCategory!.title}" \nбудет изменен на \nраздел каталога "${
@@ -58,22 +60,22 @@ const ProductCatalogSection: React.FC = () => {
         onConfirm
       );
     } else {
-      dispatch(setNewCardCategoryId(id));
+      dispatch(setProductCardCategoryId(id));
     }
   };
 
   const onChangeSubCategorySelector = (id: number) => {
-    dispatch(setNewCardSubCategoryId(id));
+    dispatch(setProductCardSubCategoryId(id));
   };
 
   const onChangeMaterialSelector = (id: number) => {
-    dispatch(setNewCardProductMaterialId(id));
+    dispatch(setProductCardProductMaterialId(id));
   };
 
   return (
     <SectionContainer
       title={'Пиломатериал'}
-      completeCondition={!!newCard.categoryId && !!newCard.subCategoryId && !!newCard.productMaterialId}
+      completeCondition={!!productCard.categoryId && !!productCard.subCategoryId && !!productCard.productMaterialId}
     >
       <div className={classes.rowContainer}>
         <SectionSelector

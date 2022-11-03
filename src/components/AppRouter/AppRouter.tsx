@@ -4,7 +4,7 @@ import MainPage from '../../pages/MainPage/MainPage';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
 import SalesPage from '../../pages/SalesPage/SalesPage';
-import AddCardPage from '../../pages/AddCardPage/AddCardPage';
+import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
 
 type RouteType = {
@@ -20,7 +20,7 @@ const publicRoutes: RouteType[] = [
 const protectedRoutes: RouteType[] = [
   { path: '/user', element: <UserPage /> },
   { path: '/sales', element: <SalesPage /> },
-  { path: '/add_card', element: <AddCardPage /> },
+  { path: '/edit_card', element: <EditCardPage /> },
   { path: '/manufacturer_registration', element: <ManufacturerRegistrationPage /> },
 ];
 

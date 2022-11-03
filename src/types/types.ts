@@ -42,7 +42,7 @@ export type SubCategoryType = {
   categoryId: number;
 };
 
-export type NewCardType = {
+export type ProductCardType = {
   categoryId: number | undefined;
   subCategoryId: number | undefined;
   productMaterialId: number | undefined;

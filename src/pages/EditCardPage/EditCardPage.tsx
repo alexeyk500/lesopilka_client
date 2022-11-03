@@ -1,18 +1,18 @@
 import React from 'react';
-import classes from './AddCardPage.module.css';
+import classes from './EditCardPage.module.css';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import LeftColumnContent from './LeftColumnContent/LeftColumnContent';
-import AddCardMainPart from './AddCardMainPart/AddCardMainPart';
+import EditCardMainPart from './EditCardMainPart/EditCardMainPart';
 
-const AddCardPage = () => {
+const EditCardPage = () => {
   return (
     <div className={classes.container}>
       <LeftColumn>
         <LeftColumnContent />
       </LeftColumn>
-      <AddCardMainPart />
+      <EditCardMainPart />
     </div>
   );
 };
 
-export default AddCardPage;
+export default EditCardPage;

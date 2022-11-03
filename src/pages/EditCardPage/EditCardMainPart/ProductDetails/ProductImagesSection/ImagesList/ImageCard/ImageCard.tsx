@@ -2,7 +2,10 @@ import React from 'react';
 import classes from './ImageCard.module.css';
 import addImgButton from '../../../../../../../img/addImageButton.svg';
 import { useAppDispatch } from '../../../../../../../hooks/hooks';
-import { addImageToNewCardImages, deleteImageFromNewCardImages } from '../../../../../../../store/newCardSlice';
+import {
+  addImageToProductCardImages,
+  deleteImageFromProductCardImages,
+} from '../../../../../../../store/productCardSlice';
 import redRoundDeleteIco from './../../../../../../../img/redRoundDeleteIco.svg';
 
 type PropsType = {
@@ -16,13 +19,13 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target && event.target.files && event.target.files[0]) {
       const blobUrl = URL.createObjectURL(event.target.files[0]);
-      dispatch(addImageToNewCardImages(blobUrl));
+      dispatch(addImageToProductCardImages(blobUrl));
     }
   };
 
   const onClickDelete = () => {
     if (imageUrl) {
-      dispatch(deleteImageFromNewCardImages(imageUrl));
+      dispatch(deleteImageFromProductCardImages(imageUrl));
     }
   };
 

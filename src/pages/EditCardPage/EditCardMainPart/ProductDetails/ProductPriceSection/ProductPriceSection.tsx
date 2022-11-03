@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { selectorNewCard, setProductPrice } from '../../../../../store/newCardSlice';
+import { selectorProductCard, setProductPrice } from '../../../../../store/productCardSlice';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ProductPriceSection.module.css';
 
@@ -8,7 +8,7 @@ const onlyDigitAndCommaRegExp = /^([1-9][0-9]*)+(.[0-9]{0,2})?$/;
 
 const ProductPriceSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const newCard = useAppSelector(selectorNewCard);
+  const productCard = useAppSelector(selectorProductCard);
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     if (event.currentTarget.value === '') {
@@ -21,11 +21,16 @@ const ProductPriceSection: React.FC = () => {
   };
 
   return (
-    <SectionContainer title={'Цена'} completeCondition={!!newCard.price} blurCondition={false}>
+    <SectionContainer title={'Цена'} completeCondition={!!productCard.price} blurCondition={false}>
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите стоимость одной единицы товара в рублях</div>
         <div className={classes.inputContainer}>
-          <input className={classes.customSizeInput} value={newCard.price || ''} onChange={onChangeInput} type="text" />
+          <input
+            className={classes.customSizeInput}
+            value={productCard.price || ''}
+            onChange={onChangeInput}
+            type="text"
+          />
           {'руб'}
         </div>
       </div>

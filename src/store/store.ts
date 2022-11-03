@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import userReducer from './userSlice';
 import catalogReducer from './catalogSlice';
-import newCardReducer from './newCardSlice';
+import productCardReducer from './productCardSlice';
 import addressReducer from './addressSlice';
 import productsReducer from './productSlice';
 
@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     catalog: catalogReducer,
-    newCard: newCardReducer,
+    productCard: productCardReducer,
     address: addressReducer,
     products: productsReducer,
   },

@@ -22,7 +22,7 @@ const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData })
 
   const onClick = () => {
     if (isAddProductCard) {
-      navigate('/add_card');
+      navigate('/edit_card');
     }
   };
 
