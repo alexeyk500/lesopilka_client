@@ -43,6 +43,7 @@ export type SubCategoryType = {
 };
 
 export type ProductCardType = {
+  id: number;
   categoryId: number | undefined;
   subCategoryId: number | undefined;
   productMaterialId: number | undefined;
@@ -63,6 +64,7 @@ export type ProductCardType = {
 };
 
 export type ProductCardDataType = {
+  id: number;
   manufacturer: ManufacturerType;
   subCategoryTile: string;
   material: string;

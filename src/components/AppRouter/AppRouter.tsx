@@ -20,7 +20,7 @@ const publicRoutes: RouteType[] = [
 const protectedRoutes: RouteType[] = [
   { path: '/user', element: <UserPage /> },
   { path: '/sales', element: <SalesPage /> },
-  { path: '/edit_card', element: <EditCardPage /> },
+  { path: '/edit_card/:id', element: <EditCardPage /> },
   { path: '/manufacturer_registration', element: <ManufacturerRegistrationPage /> },
 ];
 

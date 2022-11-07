@@ -43,6 +43,17 @@ export const getProductsThunk = createAsyncThunk<ProductType[], undefined, { rej
   }
 );
 
+export const createProductThunk = createAsyncThunk<ProductType, string, { rejectValue: string }>(
+  'user/createProductThunk',
+  async (token, { rejectWithValue }) => {
+    try {
+      return await serverApi.createProduct(token);
+    } catch (e) {
+      return rejectWithValue('Ошибка создания товара');
+    }
+  }
+);
+
 export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
@@ -83,10 +94,13 @@ export const productsSlice = createSlice({
         state.products = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getProductsThunk.pending), (state) => {
+      .addCase(createProductThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addMatcher(isAnyOf(getProductsThunk.pending, createProductThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getProductsThunk.rejected), (state, action) => {
+      .addMatcher(isAnyOf(getProductsThunk.rejected, createProductThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);
       });

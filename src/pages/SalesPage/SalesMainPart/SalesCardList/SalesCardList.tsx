@@ -8,11 +8,20 @@ import { makeProductCardData } from '../../../../utils/functions';
 const SalesCardList = () => {
   const products = useAppSelector(selectorProducts);
 
+  const onClick = (id: number) => {
+    console.log('onClick =', id);
+  };
+
   return (
     <div className={classes.container}>
       <ProductCard isAddProductCard />
       {products.map((product) => (
-        <ProductCard key={product.id} productCardData={makeProductCardData(product)} />
+        <ProductCard
+          key={product.id}
+          productCardData={makeProductCardData(product)}
+          onClick={onClick}
+          isManufacturerProductCard
+        />
       ))}
     </div>
   );

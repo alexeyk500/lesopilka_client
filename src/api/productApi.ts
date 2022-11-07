@@ -1,4 +1,4 @@
-import { instanceAxios } from './instanceAxios';
+import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { CategoryType, ProductType } from '../types/types';
 
 export const productApi = {
@@ -13,6 +13,11 @@ export const productApi = {
       query += `?mid=${manufacturerId}`;
     }
     const response = await instanceAxios.get<ProductType[]>(`/product/products/${query ? query : ''}`);
+    return response.data;
+  },
+
+  async createProduct(token: string) {
+    const response = await instanceAxios.post<ProductType>('/product', {}, setAuthHeader(token));
     return response.data;
   },
 };

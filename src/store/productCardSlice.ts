@@ -8,6 +8,7 @@ type newCardSliceType = {
 };
 
 const emptyCard = {
+  id: -1,
   categoryId: undefined,
   subCategoryId: undefined,
   productMaterialId: undefined,

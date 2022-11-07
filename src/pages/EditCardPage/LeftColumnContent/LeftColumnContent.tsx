@@ -56,6 +56,17 @@ const LeftColumnContent: React.FC = () => {
   }
 
   const productCardData: ProductCardDataType = {
+    id: productCard.id,
+    material: material ? material.title : '',
+    sort: sort ? sort.title : '',
+    subCategoryTile: subCategory ? subCategory.title : '',
+    image: productCard.images.length > 0 ? productCard.images[0] : undefined,
+    isSeptic: productCard.isSeptic,
+    width,
+    height,
+    caliber,
+    length,
+    price: productCard.price ? getPrice(productCard.price) : '',
     manufacturer: user?.manufacturer || {
       id: 0,
       inn: '',
@@ -70,16 +81,6 @@ const LeftColumnContent: React.FC = () => {
         office: '',
       },
     },
-    material: material ? material.title : '',
-    sort: sort ? sort.title : '',
-    subCategoryTile: subCategory ? subCategory.title : '',
-    image: productCard.images.length > 0 ? productCard.images[0] : undefined,
-    isSeptic: productCard.isSeptic,
-    width,
-    height,
-    caliber,
-    length,
-    price: productCard.price ? getPrice(productCard.price) : '',
   };
 
   return (

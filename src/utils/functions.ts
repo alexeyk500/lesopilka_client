@@ -82,7 +82,7 @@ export const getOptionTitle = (options: OptionsType[], optionId: number | undefi
   return undefined;
 };
 
-export const getPrice = (price: string | number| undefined) => {
+export const getPrice = (price: string | number | undefined) => {
   if (price) {
     const splitPrice = String((Math.round(Number(price) * 100) / 100).toFixed(2)).split('.');
     return `${splitPrice[0]}.${splitPrice[1]}`;
@@ -100,6 +100,7 @@ export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes: CategorySizeTyp
 
 export const makeProductCardData = (product: ProductType): ProductCardDataType => {
   return {
+    id: product.id,
     manufacturer: product.manufacturer,
     material: product.material ? product.material.title : '',
     sort: product.sort ? product.sort.title : '',
@@ -110,6 +111,6 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     height: getSizeBySizeType(SizeTypeEnum.height, product.sizes!),
     caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes!),
     length: getSizeBySizeType(SizeTypeEnum.length, product.sizes!),
-    price: getPrice(product.price ? product.price :undefined),
+    price: getPrice(product.price ? product.price : undefined),
   };
 };

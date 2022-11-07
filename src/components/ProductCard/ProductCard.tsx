@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
 import { useNavigate } from 'react-router-dom';
-import { ProductCardDataType } from '../../types/types';
+import { ProductCardDataType, ProductType } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
@@ -11,23 +11,41 @@ import wareHouseIco from './../../img/wareHouseIco.svg';
 import locationIco from './../../img/locationIco.svg';
 import rubleIco from './../../img/rubleIco.svg';
 import materialIco from './../../img/materialIco.svg';
+import { createProductThunk } from '../../store/productSlice';
+import { useAppDispatch } from '../../hooks/hooks';
 
 type PropsType = {
   productCardData?: ProductCardDataType;
   isAddProductCard?: boolean;
+  isManufacturerProductCard?: boolean;
+  onClick?: (id: number) => void;
 };
 
-const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData }) => {
+const ProductCard: React.FC<PropsType> = ({
+  isAddProductCard,
+  productCardData,
+  isManufacturerProductCard,
+  onClick,
+}) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const onClick = () => {
-    if (isAddProductCard) {
-      navigate('/edit_card');
+  const onClickHandler = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (isAddProductCard && token) {
+      dispatch(createProductThunk(token)).then((result) => {
+        const id = (result.payload as ProductType).id;
+        navigate(`/edit_card/${id}`);
+      });
+    } else {
+      if (onClick && productCardData) {
+        onClick(productCardData.id);
+      }
     }
   };
 
   return (
-    <div className={classes.container} onClick={onClick}>
+    <div className={classes.container} onClick={onClickHandler}>
       {isAddProductCard ? (
         <div className={classes.addProductCardContainer}>
           <img src={addCardButton} className={classes.addCardButton} alt="add card button" />
@@ -48,12 +66,14 @@ const ProductCard: React.FC<PropsType> = ({ isAddProductCard, productCardData })
           <div className={classes.descriptionContainer}>
             <div className={classes.rowContainerEnd}>
               <div className={classes.subCategoryTile}>{productCardData && productCardData.subCategoryTile}</div>
-              <div className={classes.btnGroup}>
-                <div className={classes.starIcoContainer}>
-                  <img src={starIco} className={classes.starIco} alt="no product" />
+              {!isManufacturerProductCard && (
+                <div className={classes.btnGroup}>
+                  <div className={classes.starIcoContainer}>
+                    <img src={starIco} className={classes.starIco} alt="no product" />
+                  </div>
+                  <img src={cartIco} className={classes.cartIco} alt="no product" />
                 </div>
-                <img src={cartIco} className={classes.cartIco} alt="no product" />
-              </div>
+              )}
             </div>
             <div className={classes.delimiter} />
 

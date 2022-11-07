@@ -5,7 +5,7 @@ import Preloader from '../../components/Preloader/Preloader';
 import Catalog from '../../components/Catalog/Catalog';
 import SalesMainPart from './SalesMainPart/SalesMainPart';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import {getProductsThunk, selectorProductsLoading} from '../../store/productSlice';
+import { getProductsThunk, selectorProductsLoading } from '../../store/productSlice';
 
 const SalesPage = () => {
   const dispatch = useAppDispatch();

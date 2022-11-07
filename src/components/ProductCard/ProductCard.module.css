@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   width: 268px;
-  height: 370px;
+  height: 364px;
   margin-right: 16px;
   margin-bottom: 16px;
   border-radius: 12px;
@@ -11,6 +11,7 @@
   cursor: pointer;
   color: var(--gray_color);
   background-color: var(--section_background);
+  font-size: 14px;
 }
 
 .addProductCardContainer {
@@ -104,16 +105,17 @@
 .delimiter {
   display: flex;
   width: 100%;
-  height: 1px;
   margin: 2px 0;
-  background-color: #c0c0c0;
+  border-bottom: 1px solid var(--gray_color_light)
 }
 
 .subCategoryTile {
   display: flex;
+  min-height: 18px;
   flex-grow: 1;
   font-size: 16px;
   font-weight: 600;
+  letter-spacing: 0.25px;
 }
 
 .rowContainer {
@@ -124,7 +126,7 @@
 }
 
 .dimensionsTile {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .dimensionsIcoContainer {
