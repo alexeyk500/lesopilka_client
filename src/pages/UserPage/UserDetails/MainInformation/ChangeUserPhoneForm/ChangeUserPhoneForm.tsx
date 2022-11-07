@@ -26,7 +26,6 @@ const ChangeUserPhoneForm: React.FC<PropsType> = ({ phone }) => {
               placeholder={'Введите телефон пользователя'}
               value={phoneValue}
               onChange={onChange}
-              required
             />
           </label>
         </div>

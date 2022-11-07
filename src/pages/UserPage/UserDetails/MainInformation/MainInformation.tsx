@@ -23,6 +23,12 @@ const MainInformation: React.FC = () => {
       if (token && phone) {
         dispatch(userUpdateThunk({ token, phone }));
       }
+      if (token && phone === undefined) {
+        dispatch(userUpdateThunk({ token, phone: null }));
+      }
+      if (token && phone === '') {
+        dispatch(userUpdateThunk({ token, phone: null }));
+      }
     }
   };
 
@@ -37,9 +43,9 @@ const MainInformation: React.FC = () => {
   };
 
   const onClickEditPhone = () => {
-    if (user && user.phone) {
+    if (user) {
       showPortalPopUp({
-        popUpContent: <ChangeUserPhoneForm phone={user.phone} />,
+        popUpContent: <ChangeUserPhoneForm phone={user.phone || ''} />,
         onClosePopUp: onClosePopUp,
         titleConfirmBtn: 'Сохранить',
       });

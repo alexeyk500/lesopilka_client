@@ -41,7 +41,7 @@ export const userApi = {
   async updateUser(
     token: string,
     name?: string,
-    phone?: string,
+    phone?: string | null,
     password?: string,
     searchRegionId?: number | null,
     searchLocationId?: number | null

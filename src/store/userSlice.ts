@@ -59,7 +59,7 @@ export const userUpdateThunk = createAsyncThunk<
   {
     token: string;
     name?: string;
-    phone?: string;
+    phone?: string | null;
     password?: string;
     searchRegionId?: number | null;
     searchLocationId?: number | null;
