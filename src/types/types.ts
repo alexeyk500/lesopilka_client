@@ -72,7 +72,7 @@ export type ProductCardDataType = {
   width: string | undefined;
   height: string | undefined;
   caliber: string | undefined;
-  length: string;
+  length: string | undefined;
   price: string;
 };
 
@@ -94,9 +94,9 @@ export type CategorySizeType = {
   id: number;
   type: string;
   value: string;
-  isCustomSize: boolean;
-  order: number;
-  categoryId: number;
+  isCustomSize?: boolean;
+  order?: number;
+  categoryId?: number;
 };
 
 export type ProductSortsType = {
@@ -119,11 +119,6 @@ export type LocationType = {
   title: string;
 };
 
-export type ProductType = {
-  id: number;
-  title: string;
-};
-
 export enum ProductsSortsEnum {
   priceASC = 'Цена по возрастанию',
   priceDESC = 'Цена по убыванию',
@@ -137,4 +132,20 @@ export type FilterValueType = {
 export type FilterType = {
   title: string;
   values: FilterValueType[];
+};
+
+export type ProductType = {
+  id: number;
+  code: string | undefined;
+  price: string | undefined;
+  isSeptic: boolean;
+  editionDate: string | undefined;
+  publicationDate: string | undefined;
+  description: string | undefined;
+  subCategory: OptionsType | undefined;
+  material: OptionsType | undefined;
+  sort: OptionsType | undefined;
+  sizes: CategorySizeType[] | undefined;
+  images: string[] | undefined;
+  manufacturer: ManufacturerType;
 };

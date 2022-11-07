@@ -13,12 +13,7 @@ import {
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { selectorUser } from '../../../store/userSlice';
-
-const getPrice = (price: string) => {
-  const priceInNumber = Number(price.replace(',', '.'));
-  const splitPrice = String((Math.round(priceInNumber * 100) / 100).toFixed(2)).split('.');
-  return `${splitPrice[0]},${splitPrice[1]}`;
-};
+import { getPrice } from '../../../utils/functions';
 
 const LeftColumnContent: React.FC = () => {
   const user = useAppSelector(selectorUser);

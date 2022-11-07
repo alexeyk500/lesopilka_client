@@ -1,12 +1,15 @@
 import { FilterType, ProductsSortsEnum, ProductType } from '../types/types';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { serverApi } from '../api/serverApi';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type ProductsSliceType = {
   products: ProductType[];
   priceFrom: string | undefined;
   priceTo: string | undefined;
   sorting: ProductsSortsEnum;
+  isLoading: boolean;
   filters: FilterType[];
 };
 
@@ -15,6 +18,7 @@ const initialState: ProductsSliceType = {
   priceFrom: undefined,
   priceTo: undefined,
   sorting: ProductsSortsEnum.priceASC,
+  isLoading: false,
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
@@ -27,6 +31,17 @@ const initialState: ProductsSliceType = {
     { title: 'septicId', values: [] },
   ],
 };
+
+export const getProductsThunk = createAsyncThunk<ProductType[], undefined, { rejectValue: string }>(
+  'user/getProductsThunk',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await serverApi.getProducts();
+    } catch (e) {
+      return rejectWithValue('Ошибка получения товаров');
+    }
+  }
+);
 
 export const productsSlice = createSlice({
   name: 'productsSlice',
@@ -62,13 +77,29 @@ export const productsSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getProductsThunk.fulfilled, (state, action) => {
+        state.products = action.payload;
+        state.isLoading = false;
+      })
+      .addMatcher(isAnyOf(getProductsThunk.pending), (state) => {
+        state.isLoading = true;
+      })
+      .addMatcher(isAnyOf(getProductsThunk.rejected), (state, action) => {
+        state.isLoading = false;
+        showErrorPopUp(action.payload!);
+      });
+  },
 });
 
 export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue } = productsSlice.actions;
 
+export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
 export const selectorPriceTo = (state: RootState) => state.products.priceTo;
 export const selectorSorting = (state: RootState) => state.products.sorting;
 export const selectorFilters = (state: RootState) => state.products.filters;
+export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
 
 export default productsSlice.reducer;

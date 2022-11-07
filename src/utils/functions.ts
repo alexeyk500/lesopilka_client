@@ -1,4 +1,11 @@
-import { FilterType, OptionsType } from '../types/types';
+import {
+  CategorySizeType,
+  FilterType,
+  OptionsType,
+  ProductCardDataType,
+  ProductType,
+  SizeTypeEnum,
+} from '../types/types';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
@@ -73,4 +80,36 @@ export const getOptionTitle = (options: OptionsType[], optionId: number | undefi
     }
   }
   return undefined;
+};
+
+export const getPrice = (price: string | number| undefined) => {
+  if (price) {
+    const splitPrice = String((Math.round(Number(price) * 100) / 100).toFixed(2)).split('.');
+    return `${splitPrice[0]}.${splitPrice[1]}`;
+  }
+  return '';
+};
+
+export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes: CategorySizeType[]) => {
+  const size = sizes.find((size) => size.type === sizeType);
+  if (size) {
+    return size.value;
+  }
+  return undefined;
+};
+
+export const makeProductCardData = (product: ProductType): ProductCardDataType => {
+  return {
+    manufacturer: product.manufacturer,
+    material: product.material ? product.material.title : '',
+    sort: product.sort ? product.sort.title : '',
+    subCategoryTile: product.subCategory?.title || '',
+    image: product.images?.[0],
+    isSeptic: product.isSeptic,
+    width: getSizeBySizeType(SizeTypeEnum.width, product.sizes!),
+    height: getSizeBySizeType(SizeTypeEnum.height, product.sizes!),
+    caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes!),
+    length: getSizeBySizeType(SizeTypeEnum.length, product.sizes!),
+    price: getPrice(product.price ? product.price :undefined),
+  };
 };
