@@ -23,6 +23,8 @@ const emptyEditCard: ProductCardType = {
   isSeptic: false,
   description: undefined,
   price: undefined,
+  editionDate: undefined,
+  publicationDate: undefined,
 };
 
 const fillProductCard = (productCard: ProductCardType, product: ProductType) => {
@@ -30,7 +32,8 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.categoryId = product.category?.id;
   productCard.subCategoryId = product.subCategory?.id;
   productCard.productMaterialId = product.material?.id;
-  // productCard.productCode = product.code
+  productCard.editionDate = product.editionDate;
+  productCard.publicationDate = product.publicationDate;
 };
 
 type ProductsSliceType = {

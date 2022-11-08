@@ -61,6 +61,8 @@ export type ProductCardType = {
   isSeptic: boolean;
   description: string | undefined;
   price: string | undefined;
+  editionDate: string | undefined;
+  publicationDate: string | undefined;
 };
 
 export type ProductCardDataType = {
@@ -76,6 +78,8 @@ export type ProductCardDataType = {
   caliber: string | undefined;
   length: string | undefined;
   price: string;
+  editionDate: string | undefined;
+  publicationDate: string | undefined;
 };
 
 export type ProductMaterialType = {

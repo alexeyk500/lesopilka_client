@@ -112,5 +112,21 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes!),
     length: getSizeBySizeType(SizeTypeEnum.length, product.sizes!),
     price: getPrice(product.price ? product.price : undefined),
+    editionDate: product.editionDate,
+    publicationDate: product.publicationDate,
   };
+};
+
+export const formatUTC = (utcData: string | undefined) => {
+  if (utcData) {
+    return new Date(utcData).toLocaleString('ru-Ru', {
+      month: 'long',
+      year: 'numeric',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+  }
+  return null;
 };

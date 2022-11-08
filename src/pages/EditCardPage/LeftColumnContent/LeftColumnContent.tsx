@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './LeftColumnContent.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../hooks/hooks';
-import { selectorProductCard } from '../../../store/productCardSlice';
 import { ProductCardDataType } from '../../../types/types';
 import {
   selectorCategorySizes,
@@ -11,62 +10,65 @@ import {
   selectorSubCategories,
 } from '../../../store/catalogSlice';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
-import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { selectorUser } from '../../../store/userSlice';
-import { getPrice } from '../../../utils/functions';
+import { formatUTC, getPrice } from '../../../utils/functions';
+import { selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
 
 const LeftColumnContent: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const productCard = useAppSelector(selectorProductCard);
+  const editCard = useAppSelector(selectorEditCard);
+  const isSaving = useAppSelector(selectorProductsSaving);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
   const allMaterials = useAppSelector(selectorProductMaterials);
   const allSorts = useAppSelector(selectorProductSorts);
 
-  const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === productCard.subCategoryId);
-  const material = allMaterials.find((material) => material.id === productCard.productMaterialId);
-  const sort = allSorts.find((sort) => sort.id === productCard.sortId);
+  const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === editCard.subCategoryId);
+  const material = allMaterials.find((material) => material.id === editCard.productMaterialId);
+  const sort = allSorts.find((sort) => sort.id === editCard.sortId);
 
   let width: string | undefined;
-  if (productCard.customWidth) {
-    width = productCard.customWidth;
+  if (editCard.customWidth) {
+    width = editCard.customWidth;
   } else {
-    width = allCategorySizes.find((categorySize) => categorySize.id === productCard.widthId)?.value || undefined;
+    width = allCategorySizes.find((categorySize) => categorySize.id === editCard.widthId)?.value || undefined;
   }
 
   let height: string | undefined;
-  if (productCard.customHeight) {
-    height = productCard.customHeight;
+  if (editCard.customHeight) {
+    height = editCard.customHeight;
   } else {
-    height = allCategorySizes.find((categorySize) => categorySize.id === productCard.heightId)?.value || undefined;
+    height = allCategorySizes.find((categorySize) => categorySize.id === editCard.heightId)?.value || undefined;
   }
 
   let caliber: string | undefined;
-  if (productCard.customCaliber) {
-    caliber = productCard.customCaliber;
+  if (editCard.customCaliber) {
+    caliber = editCard.customCaliber;
   } else {
-    caliber = allCategorySizes.find((categorySize) => categorySize.id === productCard.caliberId)?.value || undefined;
+    caliber = allCategorySizes.find((categorySize) => categorySize.id === editCard.caliberId)?.value || undefined;
   }
 
   let length;
-  if (productCard.customLength) {
-    length = productCard.customLength;
+  if (editCard.customLength) {
+    length = editCard.customLength;
   } else {
-    length = allCategorySizes.find((categorySize) => categorySize.id === productCard.lengthId)?.value || '';
+    length = allCategorySizes.find((categorySize) => categorySize.id === editCard.lengthId)?.value || '';
   }
 
   const productCardData: ProductCardDataType = {
-    id: productCard.id,
+    id: editCard.id,
     material: material ? material.title : '',
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
-    image: productCard.images.length > 0 ? productCard.images[0] : undefined,
-    isSeptic: productCard.isSeptic,
+    image: editCard.images.length > 0 ? editCard.images[0] : undefined,
+    isSeptic: editCard.isSeptic,
     width,
     height,
     caliber,
     length,
-    price: productCard.price ? getPrice(productCard.price) : '',
+    price: editCard.price ? getPrice(editCard.price) : '',
+    editionDate: editCard.editionDate,
+    publicationDate: editCard.publicationDate,
     manufacturer: user?.manufacturer || {
       id: 0,
       inn: '',
@@ -91,15 +93,13 @@ const LeftColumnContent: React.FC = () => {
       </div>
       <div className={classes.saveBtnSection}>
         <div className={classes.infoSaveContainer}>
-          <div className={classes.saveBtnTitle}>Сохранено:</div>
-          <div className={classes.saveBtnDate}>14 октября 2022 в 17:50</div>
-        </div>
-        <div className={classes.saveBtnContainer}>
-          <ButtonComponent title={'Сохранить'} onClick={() => {}} />
+          <div className={classes.title}>{isSaving ? 'Сохранение...' : 'Сохранено:'}</div>
+          <div className={classes.info}>{formatUTC(editCard.editionDate)}</div>
         </div>
       </div>
       <div className={classes.publicationContainer}>
         <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
+        <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
       </div>
     </>
   );

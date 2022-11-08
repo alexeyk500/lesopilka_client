@@ -26,6 +26,8 @@ const emptyCard = {
   isSeptic: false,
   description: undefined,
   price: undefined,
+  editionDate: undefined,
+  publicationDate: undefined,
 };
 
 const initialState: newCardSliceType = {
