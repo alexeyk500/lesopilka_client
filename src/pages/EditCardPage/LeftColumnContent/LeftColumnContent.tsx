@@ -89,7 +89,7 @@ const LeftColumnContent: React.FC = () => {
     <>
       <div className={classes.title}>Карточка Товара</div>
       <div className={classes.cardContainer}>
-        <ProductCard productCardData={productCardData} />
+        <ProductCard productCardData={productCardData} isManufacturerProductCard />
       </div>
       <div className={classes.saveBtnSection}>
         <div className={classes.infoSaveContainer}>

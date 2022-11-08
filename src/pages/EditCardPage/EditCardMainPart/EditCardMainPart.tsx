@@ -12,7 +12,7 @@ const EditCardMainPart: React.FC = () => {
   const crumbs: CrumbType[] = [
     { title: getUserName(user), route: '/' },
     { title: 'Продажи', route: '/sales' },
-    { title: 'Редактирование карточки товара' },
+    { title: 'Редактирование товара' },
   ];
 
   return (

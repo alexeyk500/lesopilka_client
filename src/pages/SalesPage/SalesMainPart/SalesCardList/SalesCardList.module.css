@@ -4,6 +4,8 @@
   height: 100%;
   padding-left: 8px;
   flex-wrap: wrap;
+  align-content: baseline;
+  gap: 16px;
   overflow-y: scroll;
   border-radius: 12px;
 }
