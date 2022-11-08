@@ -13,8 +13,11 @@ import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllips
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
 import { selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
+import ButtonComponent from "../../../components/commonComponents/ButtonComponent/ButtonComponent";
+import {useNavigate} from "react-router-dom";
 
 const LeftColumnContent: React.FC = () => {
+  const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
   const editCard = useAppSelector(selectorEditCard);
   const isSaving = useAppSelector(selectorProductsSaving);
@@ -85,6 +88,10 @@ const LeftColumnContent: React.FC = () => {
     },
   };
 
+  const onClickReadyBtn = () => {
+    navigate('/sales');
+  }
+
   return (
     <>
       <div className={classes.title}>Карточка Товара</div>
@@ -100,6 +107,9 @@ const LeftColumnContent: React.FC = () => {
       <div className={classes.publicationContainer}>
         <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
         <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
+      </div>
+      <div className={classes.btnReadyContainer}>
+        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn}/>
       </div>
     </>
   );
