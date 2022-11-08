@@ -1,9 +1,10 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CategoryType, ProductType } from '../types/types';
+import { ProductType } from '../types/types';
+import { UpdateProductDataType } from '../store/productSlice';
 
 export const productApi = {
-  async getProduct(id: number) {
-    const response = await instanceAxios.get<CategoryType[]>(`/product/${id}`);
+  async getProduct(id: string) {
+    const response = await instanceAxios.get<ProductType>(`/product/${id}`);
     return response.data;
   },
 
@@ -18,6 +19,12 @@ export const productApi = {
 
   async createProduct(token: string) {
     const response = await instanceAxios.post<ProductType>('/product', {}, setAuthHeader(token));
+    return response.data;
+  },
+
+  async updateProduct(token: string, updateData: UpdateProductDataType) {
+    console.log();
+    const response = await instanceAxios.put<ProductType>(`/product`, updateData, setAuthHeader(token));
     return response.data;
   },
 };

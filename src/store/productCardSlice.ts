@@ -37,15 +37,6 @@ export const productCardSlice = createSlice({
   name: 'newCardSlice',
   initialState,
   reducers: {
-    setProductCardCategoryId: (state, action) => {
-      state.productCard.categoryId = action.payload;
-    },
-    setProductCardSubCategoryId: (state, action) => {
-      state.productCard.subCategoryId = action.payload;
-    },
-    setProductCardProductMaterialId: (state, action) => {
-      state.productCard.productMaterialId = action.payload;
-    },
     setProductCardProductHeightId: (state, action) => {
       state.productCard.heightId = action.payload;
     },
@@ -98,9 +89,6 @@ export const productCardSlice = createSlice({
 });
 
 export const {
-  setProductCardCategoryId,
-  setProductCardSubCategoryId,
-  setProductCardProductMaterialId,
   setProductCardProductCustomHeight,
   setProductCardProductCustomWidth,
   setProductCardProductCustomLength,
@@ -120,6 +108,5 @@ export const {
 } = productCardSlice.actions;
 
 export const selectorProductCard = (state: RootState) => state.productCard.productCard;
-export const selectorIsLoadingProductCard = (state: RootState) => state.productCard.isLoading;
 
 export default productCardSlice.reducer;

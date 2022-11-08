@@ -1,8 +1,37 @@
-import { FilterType, ProductsSortsEnum, ProductType } from '../types/types';
+import { FilterType, ProductCardType, ProductsSortsEnum, ProductType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+
+const emptyEditCard: ProductCardType = {
+  id: -1,
+  categoryId: undefined,
+  subCategoryId: undefined,
+  productMaterialId: undefined,
+  productCode: undefined,
+  images: [],
+  heightId: undefined,
+  customHeight: undefined,
+  widthId: undefined,
+  customWidth: undefined,
+  lengthId: undefined,
+  customLength: undefined,
+  sortId: undefined,
+  caliberId: undefined,
+  customCaliber: undefined,
+  isSeptic: false,
+  description: undefined,
+  price: undefined,
+};
+
+const fillProductCard = (productCard: ProductCardType, product: ProductType) => {
+  productCard.id = product.id;
+  productCard.categoryId = product.category?.id;
+  productCard.subCategoryId = product.subCategory?.id;
+  productCard.productMaterialId = product.material?.id;
+  // productCard.productCode = product.code
+};
 
 type ProductsSliceType = {
   products: ProductType[];
@@ -10,6 +39,9 @@ type ProductsSliceType = {
   priceTo: string | undefined;
   sorting: ProductsSortsEnum;
   isLoading: boolean;
+  isSaving: boolean;
+  editCard: ProductCardType;
+  formEditCardCategoryId: number | undefined;
   filters: FilterType[];
 };
 
@@ -19,6 +51,9 @@ const initialState: ProductsSliceType = {
   priceTo: undefined,
   sorting: ProductsSortsEnum.priceASC,
   isLoading: false,
+  isSaving: false,
+  editCard: emptyEditCard,
+  formEditCardCategoryId: undefined,
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
@@ -32,32 +67,64 @@ const initialState: ProductsSliceType = {
   ],
 };
 
+export const getProductThunk = createAsyncThunk<ProductType, string, { rejectValue: string }>(
+  'product/getProductThunk',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await serverApi.getProduct(id);
+    } catch (e) {
+      return rejectWithValue(`Ошибка получения товара c id=${id}`);
+    }
+  }
+);
+
 export const getProductsThunk = createAsyncThunk<ProductType[], undefined, { rejectValue: string }>(
-  'user/getProductsThunk',
+  'product/getProductsThunk',
   async (_, { rejectWithValue }) => {
     try {
       return await serverApi.getProducts();
     } catch (e) {
-      return rejectWithValue('Ошибка получения товаров');
+      return rejectWithValue('Ошибка получения списка товаров');
     }
   }
 );
 
 export const createProductThunk = createAsyncThunk<ProductType, string, { rejectValue: string }>(
-  'user/createProductThunk',
+  'product/createProductThunk',
   async (token, { rejectWithValue }) => {
     try {
       return await serverApi.createProduct(token);
     } catch (e) {
-      return rejectWithValue('Ошибка создания товара');
+      return rejectWithValue('Ошибка создания нового товара');
     }
   }
 );
+
+export type UpdateProductDataType = {
+  productId: number;
+  subCategoryId?: number | null;
+  productMaterialId?: number | null;
+};
+
+export const updateProductThunk = createAsyncThunk<
+  ProductType,
+  { token: string; updateData: UpdateProductDataType },
+  { rejectValue: string }
+>('product/updateProductThunk', async ({ token, updateData }, { rejectWithValue }) => {
+  try {
+    return await serverApi.updateProduct(token, updateData);
+  } catch (e) {
+    return rejectWithValue(`Ошибка обновления полей товара c id=${updateData.productId}`);
+  }
+});
 
 export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
+    setFormEditCardCategoryId: (state, action) => {
+      state.formEditCardCategoryId = action.payload;
+    },
     setPriceFrom: (state, action) => {
       state.priceFrom = action.payload;
     },
@@ -97,6 +164,21 @@ export const productsSlice = createSlice({
       .addCase(createProductThunk.fulfilled, (state) => {
         state.isLoading = false;
       })
+      .addCase(getProductThunk.fulfilled, (state, action) => {
+        fillProductCard(state.editCard, action.payload);
+        state.isLoading = false;
+      })
+      .addCase(updateProductThunk.fulfilled, (state, action) => {
+        fillProductCard(state.editCard, action.payload);
+        state.isSaving = false;
+      })
+      .addCase(updateProductThunk.pending, (state) => {
+        state.isSaving = true;
+      })
+      .addCase(updateProductThunk.rejected, (state, action) => {
+        state.isSaving = false;
+        showErrorPopUp(action.payload!);
+      })
       .addMatcher(isAnyOf(getProductsThunk.pending, createProductThunk.pending), (state) => {
         state.isLoading = true;
       })
@@ -107,13 +189,17 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue } = productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, setFormEditCardCategoryId } =
+  productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
 export const selectorPriceTo = (state: RootState) => state.products.priceTo;
 export const selectorSorting = (state: RootState) => state.products.sorting;
+export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorFilters = (state: RootState) => state.products.filters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
+export const selectorProductsSaving = (state: RootState) => state.products.isSaving;
+export const selectorFormEditCardCategoryId = (state: RootState) => state.products.formEditCardCategoryId;
 
 export default productsSlice.reducer;

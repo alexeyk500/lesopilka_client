@@ -29,7 +29,6 @@ export const showPreloaderPopUp = (message: string, ref: React.MutableRefObject<
 };
 
 export const showConfirmPopUp = (message: string, onConfirm?: (result?: boolean | FormData) => void) => {
-  console.log('classes.confirmPopUpBtnGroup =', classes.confirmPopUpBtnGroup);
   showPortalPopUp({
     popUpContent: <InfoAndErrorMessageForm message={message} />,
     titleConfirmBtn: 'Подтвердить',

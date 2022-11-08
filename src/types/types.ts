@@ -144,6 +144,7 @@ export type ProductType = {
   editionDate: string | undefined;
   publicationDate: string | undefined;
   description: string | undefined;
+  category: OptionsType | undefined;
   subCategory: OptionsType | undefined;
   material: OptionsType | undefined;
   sort: OptionsType | undefined;

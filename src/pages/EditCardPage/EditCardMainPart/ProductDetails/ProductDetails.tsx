@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './ProductDetails.module.css';
 import { useAppSelector } from '../../../../hooks/hooks';
-import { selectorCatalogIsLoading } from '../../../../store/catalogSlice';
 import Preloader from '../../../../components/Preloader/Preloader';
 import ProductCatalogSection from './ProductCatalogSection/ProductCatalogSection';
 import ProductSizesSection from './ProductSizesSection/ProductSizesSection';
@@ -10,9 +9,10 @@ import ProductImagesSection from './ProductImagesSection/ProductImagesSection';
 import ProductDescription from './ProductDescription/ProductDescription';
 import ProductPriceSection from './ProductPriceSection/ProductPriceSection';
 import ProductSortAndSepticSection from './ProductSortAndSepticSection/ProductSortAndSepticSection';
+import { selectorProductsLoading } from '../../../../store/productSlice';
 
 const ProductDetails: React.FC = () => {
-  const isLoading = useAppSelector(selectorCatalogIsLoading);
+  const isLoading = useAppSelector(selectorProductsLoading);
 
   return (
     <div className={classes.container}>
