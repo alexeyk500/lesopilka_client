@@ -4,7 +4,7 @@ import ProductCard from '../../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorProducts } from '../../../../store/productSlice';
 import { makeProductCardData } from '../../../../utils/functions';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const SalesCardList = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const SalesCardList = () => {
 
   const onClick = (id: number) => {
     console.log('onClick =', id);
-    navigate(`/edit_card/${id}`)
+    navigate(`/edit_card/${id}`);
   };
 
   return (
