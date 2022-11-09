@@ -44,7 +44,6 @@ type ProductsSliceType = {
   isLoading: boolean;
   isSaving: boolean;
   editCard: ProductCardType;
-  formEditCardCategoryId: number | undefined;
   filters: FilterType[];
 };
 
@@ -56,7 +55,6 @@ const initialState: ProductsSliceType = {
   isLoading: false,
   isSaving: false,
   editCard: emptyEditCard,
-  formEditCardCategoryId: undefined,
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
@@ -125,9 +123,6 @@ export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
-    setFormEditCardCategoryId: (state, action) => {
-      state.formEditCardCategoryId = action.payload;
-    },
     setPriceFrom: (state, action) => {
       state.priceFrom = action.payload;
     },
@@ -192,8 +187,7 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, setFormEditCardCategoryId } =
-  productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
@@ -203,6 +197,5 @@ export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorFilters = (state: RootState) => state.products.filters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
 export const selectorProductsSaving = (state: RootState) => state.products.isSaving;
-export const selectorFormEditCardCategoryId = (state: RootState) => state.products.formEditCardCategoryId;
 
 export default productsSlice.reducer;

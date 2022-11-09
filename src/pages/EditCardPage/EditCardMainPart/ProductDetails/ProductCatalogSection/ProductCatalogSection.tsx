@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './ProductCatalogSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorCategories, selectorProductMaterials, selectorSubCategories } from '../../../../../store/catalogSlice';
@@ -7,12 +7,7 @@ import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageF
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { OptionsType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import {
-  selectorEditCard,
-  selectorFormEditCardCategoryId,
-  setFormEditCardCategoryId,
-  updateProductThunk,
-} from '../../../../../store/productSlice';
+import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 
 const getOptions = (optionsStore: OptionsType[]) => {
   const options: OptionsType[] = [];
@@ -27,10 +22,10 @@ const ProductCatalogSection: React.FC = () => {
   const categoriesRaw = useAppSelector(selectorCategories);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const productMaterialsRaw = useAppSelector(selectorProductMaterials);
-  const formEditCardCategoryId = useAppSelector(selectorFormEditCardCategoryId);
+  const [formCategoryId, setFormCategoryId] = useState<number | undefined>(undefined);
 
   const subCategoriesRaw = subCategoriesStore.filter(
-    (subCategory) => subCategory.categoryId === (editCard.categoryId ? editCard.categoryId : formEditCardCategoryId)
+    (subCategory) => subCategory.categoryId === (editCard.categoryId ? editCard.categoryId : formCategoryId)
   );
 
   const categories = getOptions(categoriesRaw);
@@ -38,8 +33,8 @@ const ProductCatalogSection: React.FC = () => {
   const productMaterials = getOptions(productMaterialsRaw);
 
   const selectedCategory = categories.find((category) => category.id === editCard.categoryId);
-  const formEditCardCategory = formEditCardCategoryId
-    ? categories.find((category) => category.id === formEditCardCategoryId)
+  const formEditCardCategory = formCategoryId
+    ? categories.find((category) => category.id === formCategoryId)
     : undefined;
 
   const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === editCard.subCategoryId);
@@ -52,7 +47,7 @@ const ProductCatalogSection: React.FC = () => {
       if (result) {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token && id) {
-          dispatch(setFormEditCardCategoryId(id));
+          setFormCategoryId(id);
           const updateData = {
             productId: editCard.id,
             subCategoryId: null,
@@ -72,7 +67,7 @@ const ProductCatalogSection: React.FC = () => {
         onConfirm
       );
     } else {
-      dispatch(setFormEditCardCategoryId(id));
+      setFormCategoryId(id);
     }
   };
 

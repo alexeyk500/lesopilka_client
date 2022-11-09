@@ -13,8 +13,8 @@ import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllips
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
 import { selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
-import ButtonComponent from "../../../components/commonComponents/ButtonComponent/ButtonComponent";
-import {useNavigate} from "react-router-dom";
+import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
+import { useNavigate } from 'react-router-dom';
 
 const LeftColumnContent: React.FC = () => {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const LeftColumnContent: React.FC = () => {
 
   const onClickReadyBtn = () => {
     navigate('/sales');
-  }
+  };
 
   return (
     <>
@@ -109,7 +109,7 @@ const LeftColumnContent: React.FC = () => {
         <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
       </div>
       <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn}/>
+        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
       </div>
     </>
   );
