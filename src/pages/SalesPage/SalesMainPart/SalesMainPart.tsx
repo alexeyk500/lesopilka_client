@@ -9,7 +9,7 @@ import { selectorUser } from '../../../store/userSlice';
 
 const SalesMainPart: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getUserName(user), route: '/' }, { title: 'Продажи' }];
+  const crumbs: CrumbType[] = [{ title: getUserName(user), route: '/' }, { title: 'Каталог Товаров' }];
 
   return (
     <div className={classes.container}>
