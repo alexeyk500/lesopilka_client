@@ -2,31 +2,34 @@ import React from 'react';
 import classes from './SectionSelector.module.css';
 import Selector from '../Selector/Selector';
 import { OptionsType } from '../../../types/types';
+import { regExpOnlyDigit } from '../../../utils/constants';
 
 type PropsType = {
   options: OptionsType[];
   onChangeSelector: (id: number) => void;
   title?: string;
   selectedOption?: OptionsType;
-  customSize?: string;
+  isCustomSize?: boolean;
+  customSizeValue?: string;
   onChangeCustomSize?: (value: string | undefined) => void;
 };
-
-const onlyDigitRegExp = /^[0-9\b]+$/;
 
 const SectionSelector: React.FC<PropsType> = ({
   title,
   options,
   selectedOption,
   onChangeSelector,
-  customSize,
+  customSizeValue,
   onChangeCustomSize,
+  isCustomSize,
 }) => {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '' || onlyDigitRegExp.test(e.target.value)) {
+    if (e.target.value === '' || regExpOnlyDigit.test(e.target.value)) {
       onChangeCustomSize && onChangeCustomSize(e.currentTarget.value ? e.currentTarget.value : undefined);
     }
   };
+
+  const customOption = options.find((option) => option.id === -1);
 
   return (
     <div className={classes.selectorGroupContainer}>
@@ -34,14 +37,19 @@ const SectionSelector: React.FC<PropsType> = ({
       <div className={classes.selectorContainer}>
         <Selector
           options={options}
-          selectedOption={selectedOption}
+          selectedOption={isCustomSize ? customOption : selectedOption}
           customClassName={classes.selector}
           onChange={onChangeSelector}
         />
       </div>
-      {selectedOption && selectedOption.id === -1 && (
+      {isCustomSize && (
         <div className={classes.customSizeInputContainer}>
-          <input className={classes.customSizeInput} value={customSize || ''} onChange={onChangeInput} type="text" />
+          <input
+            className={classes.customSizeInput}
+            value={customSizeValue || ''}
+            onChange={onChangeInput}
+            type="text"
+          />
           {'мм'}
         </div>
       )}

@@ -90,8 +90,8 @@ export const getPrice = (price: string | number | undefined) => {
   return '';
 };
 
-export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes: CategorySizeType[]) => {
-  const size = sizes.find((size) => size.type === sizeType);
+export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes?: CategorySizeType[]) => {
+  const size = sizes?.find((size) => size.type === sizeType);
   if (size) {
     return size.value;
   }
@@ -107,10 +107,10 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     subCategoryTile: product.subCategory?.title || '',
     image: product.images?.[0],
     isSeptic: product.isSeptic,
-    width: getSizeBySizeType(SizeTypeEnum.width, product.sizes!),
-    height: getSizeBySizeType(SizeTypeEnum.height, product.sizes!),
-    caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes!),
-    length: getSizeBySizeType(SizeTypeEnum.length, product.sizes!),
+    width: getSizeBySizeType(SizeTypeEnum.width, product.sizes),
+    height: getSizeBySizeType(SizeTypeEnum.height, product.sizes),
+    caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes),
+    length: getSizeBySizeType(SizeTypeEnum.length, product.sizes),
     price: getPrice(product.price ? product.price : undefined),
     editionDate: product.editionDate,
     publicationDate: product.publicationDate,

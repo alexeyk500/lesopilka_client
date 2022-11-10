@@ -11,7 +11,6 @@ const SalesCardList = () => {
   const products = useAppSelector(selectorProducts);
 
   const onClick = (id: number) => {
-    console.log('onClick =', id);
     navigate(`/edit_card/${id}`);
   };
 

@@ -1,15 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './ProductSizesSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import {
-  selectorProductCard,
   setProductCardProductCaliberId,
-  setProductCardProductCustomCaliber,
-  setProductCardProductCustomHeight,
-  setProductCardProductCustomLength,
-  setProductCardProductCustomWidth,
-  setProductCardProductHeightId,
   setProductCardProductLengthId,
   setProductCardProductWidthId,
 } from '../../../../../store/productCardSlice';
@@ -17,19 +11,20 @@ import { selectorCategorySizes } from '../../../../../store/catalogSlice';
 import { CategorySizeType, OptionsType, SizeTypeEnum, ProductCardType } from '../../../../../types/types';
 import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
+import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
 
 export const getSizesSectionIndicator = (productCard: ProductCardType) => {
   if (productCard.categoryId === 6) {
     const result =
-      ((productCard.caliberId && productCard.caliberId > 0) ||
-        (productCard.caliberId === -1 && productCard.customCaliber)) &&
-      ((productCard.lengthId && productCard.lengthId > 0) || (productCard.lengthId === -1 && productCard.customLength));
+      ((productCard.caliberId && productCard.caliberId > 0) || productCard.customCaliberValue) &&
+      ((productCard.lengthId && productCard.lengthId > 0) || productCard.customLengthValue);
     return Boolean(result);
   }
   const result =
-    ((productCard.heightId && productCard.heightId > 0) || (productCard.heightId === -1 && productCard.customHeight)) &&
-    ((productCard.widthId && productCard.widthId > 0) || (productCard.widthId === -1 && productCard.customWidth)) &&
-    ((productCard.lengthId && productCard.lengthId > 0) || (productCard.lengthId === -1 && productCard.customLength));
+    (productCard.heightId || productCard.customHeightValue) &&
+    ((productCard.widthId && productCard.widthId > 0) || productCard.customWidthValue) &&
+    ((productCard.lengthId && productCard.lengthId > 0) || productCard.customLengthValue);
   return Boolean(result);
 };
 
@@ -50,80 +45,223 @@ const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefine
 
 const ProductSizesSection = () => {
   const dispatch = useAppDispatch();
-  const productCard = useAppSelector(selectorProductCard);
+  const editCard = useAppSelector(selectorEditCard);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
-  const heightSizes = getSizeOptions(allCategorySizes, productCard.categoryId, SizeTypeEnum.height);
-  const widthSizes = getSizeOptions(allCategorySizes, productCard.categoryId, SizeTypeEnum.width);
-  const lengthSizes = getSizeOptions(allCategorySizes, productCard.categoryId, SizeTypeEnum.length);
-  const caliberSizes = getSizeOptions(allCategorySizes, productCard.categoryId, SizeTypeEnum.caliber);
+  const [isOpenCustomHeight, setIsOpenCustomHeight] = useState<boolean>(false);
+  const [customHeightValue, setCustomHeightValue] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (editCard.heightId) {
+      setIsOpenCustomHeight(false);
+    } else {
+      if (editCard.customHeightValue) {
+        setIsOpenCustomHeight(true);
+      } else {
+        if (isOpenCustomHeight) {
+          setIsOpenCustomHeight(true);
+        } else {
+          setIsOpenCustomHeight(false);
+        }
+      }
+    }
+    setCustomHeightValue(editCard.customHeightValue);
+  }, [editCard, isOpenCustomHeight]);
 
-  const selectedHeightId = heightSizes.find((heightSize) => heightSize.id === productCard.heightId);
-  const selectedWidthId = widthSizes.find((widthSize) => widthSize.id === productCard.widthId);
-  const selectedLengthId = lengthSizes.find((lengthSize) => lengthSize.id === productCard.lengthId);
-  const selectedCaliberId = caliberSizes.find((caliberSizes) => caliberSizes.id === productCard.caliberId);
+  const [isOpenCustomWidth, setIsOpenCustomWidth] = useState<boolean>(false);
+  const [customWidthValue, setCustomWidthValue] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (editCard.widthId) {
+      setIsOpenCustomWidth(false);
+    } else {
+      if (editCard.customWidthValue) {
+        setIsOpenCustomWidth(true);
+      } else {
+        if (isOpenCustomWidth) {
+          setIsOpenCustomWidth(true);
+        } else {
+          setIsOpenCustomWidth(false);
+        }
+      }
+    }
+    setCustomWidthValue(editCard.customWidthValue);
+  }, [editCard, isOpenCustomWidth]);
 
-  const onChangeWidthSelector = (id: number) => {
-    dispatch(setProductCardProductWidthId(id));
-    productCard.customWidth && dispatch(setProductCardProductCustomWidth(undefined));
-  };
+  const [customLength, setCustomLength] = useState<string | undefined>(undefined);
+  const [customCaliber, setCustomCaliber] = useState<string | undefined>(undefined);
+
+  const heightSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.height);
+  const widthSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.width);
+  const lengthSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.length);
+  const caliberSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.caliber);
+
+  const selectedHeightId = heightSizes.find((heightSize) => heightSize.id === editCard.heightId);
+  const selectedWidthId = widthSizes.find((widthSize) => widthSize.id === editCard.widthId);
+  const selectedLengthId = lengthSizes.find((lengthSize) => lengthSize.id === editCard.lengthId);
+  const selectedCaliberId = caliberSizes.find((caliberSizes) => caliberSizes.id === editCard.caliberId);
+
+  const debounceUpdateCustomSize = UseDebouncedFunction(
+    (updateData) => {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token && updateData) {
+        console.log('request to BackEnd -', updateData);
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+    },
+    1000,
+    true
+  );
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearEditCard());
+    };
+  }, [dispatch]);
 
   const onChangeHeightSelector = (id: number) => {
-    dispatch(setProductCardProductHeightId(id));
-    productCard.customHeight && dispatch(setProductCardProductCustomHeight(undefined));
+    if (id > 0) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          categorySizeId: id,
+        };
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+      setIsOpenCustomHeight(false);
+      setCustomHeightValue(undefined);
+    }
+    if (id === -1) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          resetCategorySizeType: SizeTypeEnum.height,
+        };
+        dispatch(updateProductThunk({ token, updateData })).then(() => {
+          setIsOpenCustomHeight(true);
+        });
+      }
+    }
   };
 
-  const onChangeLengthSelector = (id: number) => {
-    dispatch(setProductCardProductLengthId(id));
-    productCard.customLength && dispatch(setProductCardProductCustomLength(undefined));
-  };
-
-  const onChangeCaliberSelector = (id: number) => {
-    dispatch(setProductCardProductCaliberId(id));
-    productCard.customCaliber && dispatch(setProductCardProductCustomCaliber(undefined));
+  const onChangeWidthSelector = (id: number) => {
+    if (id > 0) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          categorySizeId: id,
+        };
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+      setIsOpenCustomWidth(false);
+      setCustomWidthValue(undefined);
+    }
+    if (id === -1) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          resetCategorySizeType: SizeTypeEnum.width,
+        };
+        dispatch(updateProductThunk({ token, updateData })).then(() => {
+          setIsOpenCustomWidth(true);
+        });
+      }
+    }
   };
 
   const onChangeCustomHeight = (value: string | undefined) => {
-    dispatch(setProductCardProductCustomHeight(value));
+    setCustomHeightValue(value);
+    let updateData;
+    if (value) {
+      updateData = {
+        productId: editCard.id,
+        customSizeType: SizeTypeEnum.height,
+        customSizeValue: value,
+      };
+    } else {
+      updateData = {
+        productId: editCard.id,
+        resetCategorySizeType: SizeTypeEnum.height,
+      };
+    }
+    debounceUpdateCustomSize(updateData);
   };
 
   const onChangeCustomWidth = (value: string | undefined) => {
-    dispatch(setProductCardProductCustomWidth(value));
+    setCustomWidthValue(value);
+    let updateData;
+    if (value) {
+      updateData = {
+        productId: editCard.id,
+        customSizeType: SizeTypeEnum.width,
+        customSizeValue: value,
+      };
+    } else {
+      updateData = {
+        productId: editCard.id,
+        resetCategorySizeType: SizeTypeEnum.width,
+      };
+    }
+    debounceUpdateCustomSize(updateData);
   };
 
-  const onChangeCustomLength = (value: string | undefined) => {
-    dispatch(setProductCardProductCustomLength(value));
-  };
+  // const onChangeWidthSelector = (id: number) => {
+  //   dispatch(setProductCardProductWidthId(id));
+  //   // editCard.customWidth && dispatch(setProductCardProductCustomWidth(undefined));
+  // };
+  //
+  // const onChangeLengthSelector = (id: number) => {
+  //   dispatch(setProductCardProductLengthId(id));
+  //   // editCard.customLength && dispatch(setProductCardProductCustomLength(undefined));
+  // };
+  //
+  // const onChangeCaliberSelector = (id: number) => {
+  //   dispatch(setProductCardProductCaliberId(id));
+  //   // editCard.customCaliber && dispatch(setProductCardProductCustomCaliber(undefined));
+  // };
 
-  const onChangeCustomCaliber = (value: string | undefined) => {
-    dispatch(setProductCardProductCustomCaliber(value));
-  };
+  // const onChangeCustomWidth = (value: string | undefined) => {
+  //   dispatch(setProductCardProductCustomWidth(value));
+  // };
+  //
+  // const onChangeCustomLength = (value: string | undefined) => {
+  //   dispatch(setProductCardProductCustomLength(value));
+  // };
+  //
+  // const onChangeCustomCaliber = (value: string | undefined) => {
+  //   dispatch(setProductCardProductCustomCaliber(value));
+  // };
+
+  console.log('editCard =', editCard, 'isOpenCustomWidth =', isOpenCustomWidth);
 
   return (
-    <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(productCard)} blurCondition={false}>
+    <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(editCard)} blurCondition={false}>
       <div
         className={classNames(classes.rowContainer, {
-          [classes.rowContainerSlim]:
-            productCard.widthId === -1 || productCard.heightId === -1 || productCard.lengthId === -1,
+          [classes.rowContainerSlim]: editCard.widthId === -1 || editCard.heightId === -1 || editCard.lengthId === -1,
         })}
       >
-        {productCard.categoryId === 6 ? (
-          <SectionSelector
-            title={'Диаметр'}
-            options={caliberSizes}
-            selectedOption={selectedCaliberId}
-            onChangeSelector={onChangeCaliberSelector}
-            customSize={productCard.customCaliber}
-            onChangeCustomSize={onChangeCustomCaliber}
-          />
+        {editCard.categoryId === 6 ? (
+          <></>
         ) : (
+          // <SectionSelector
+          //   title={'Диаметр'}
+          //   options={caliberSizes}
+          //   selectedOption={selectedCaliberId}
+          //   onChangeSelector={onChangeCaliberSelector}
+          //   customSize={editCard.customCaliberValue}
+          //   onChangeCustomSize={onChangeCustomCaliber}
+          // />
           <>
             <SectionSelector
               title={'Толщина'}
               options={heightSizes}
               selectedOption={selectedHeightId}
               onChangeSelector={onChangeHeightSelector}
-              customSize={productCard.customHeight}
+              isCustomSize={isOpenCustomHeight}
+              customSizeValue={customHeightValue}
               onChangeCustomSize={onChangeCustomHeight}
             />
             <SectionSelector
@@ -131,19 +269,21 @@ const ProductSizesSection = () => {
               options={widthSizes}
               selectedOption={selectedWidthId}
               onChangeSelector={onChangeWidthSelector}
-              customSize={productCard.customWidth}
+              isCustomSize={isOpenCustomWidth}
+              customSizeValue={customWidthValue}
               onChangeCustomSize={onChangeCustomWidth}
             />
           </>
         )}
-        <SectionSelector
-          title={'Длинна'}
-          options={lengthSizes}
-          selectedOption={selectedLengthId}
-          onChangeSelector={onChangeLengthSelector}
-          customSize={productCard.customLength}
-          onChangeCustomSize={onChangeCustomLength}
-        />
+        <></>
+        {/*<SectionSelector*/}
+        {/*  title={'Длинна'}*/}
+        {/*  options={lengthSizes}*/}
+        {/*  selectedOption={selectedLengthId}*/}
+        {/*  onChangeSelector={onChangeLengthSelector}*/}
+        {/*  customSize={editCard.customLengthValue}*/}
+        {/*  onChangeCustomSize={onChangeCustomLength}*/}
+        {/*/>*/}
       </div>
     </SectionContainer>
   );

@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-export default function UseDebouncedFunction<F extends (...args: any) => ReturnType<F>>(
+export default function UseDebouncedFunction<F extends (args: any) => ReturnType<F>>(
   callback: F,
   delay = 250,
   cleanUp = false
@@ -18,7 +18,7 @@ export default function UseDebouncedFunction<F extends (...args: any) => ReturnT
 
   return (args: any) => {
     clearTimer();
-    timeoutRef.current = setTimeout(() => callback(...args), delay);
+    timeoutRef.current = setTimeout(() => callback(args), delay);
   };
 }
 

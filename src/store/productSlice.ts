@@ -1,4 +1,4 @@
-import { FilterType, ProductCardType, ProductsSortsEnum, ProductType } from '../types/types';
+import { FilterType, ProductCardType, ProductsSortsEnum, ProductType, SizeTypeEnum } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
@@ -12,14 +12,14 @@ const emptyEditCard: ProductCardType = {
   productCode: undefined,
   images: [],
   heightId: undefined,
-  customHeight: undefined,
+  customHeightValue: undefined,
   widthId: undefined,
-  customWidth: undefined,
+  customWidthValue: undefined,
   lengthId: undefined,
-  customLength: undefined,
+  customLengthValue: undefined,
   sortId: undefined,
   caliberId: undefined,
-  customCaliber: undefined,
+  customCaliberValue: undefined,
   isSeptic: false,
   description: undefined,
   price: undefined,
@@ -34,6 +34,30 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.productMaterialId = product.material?.id;
   productCard.editionDate = product.editionDate;
   productCard.publicationDate = product.publicationDate;
+
+  const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
+  productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
+  productCard.customHeightValue = product.sizes?.find(
+    (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
+  )?.value;
+
+  const widthId = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.id;
+  productCard.widthId = widthId && widthId > 0 ? widthId : undefined;
+  productCard.customWidthValue = product.sizes?.find(
+    (size) => size.type === SizeTypeEnum.width && size.isCustomSize === true
+  )?.value;
+
+  const lengthId = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.id;
+  productCard.lengthId = lengthId && lengthId > 0 ? lengthId : undefined;
+  productCard.customLengthValue = product.sizes?.find(
+    (size) => size.type === SizeTypeEnum.length && size.isCustomSize === true
+  )?.value;
+
+  const caliberId = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.id;
+  productCard.caliberId = caliberId && caliberId > 0 ? caliberId : undefined;
+  productCard.customCaliberValue = product.sizes?.find(
+    (size) => size.type === SizeTypeEnum.caliber && size.isCustomSize === true
+  )?.value;
 };
 
 type ProductsSliceType = {
@@ -105,6 +129,7 @@ export type UpdateProductDataType = {
   productId: number;
   subCategoryId?: number | null;
   productMaterialId?: number | null;
+  categorySizeId?: number;
 };
 
 export const updateProductThunk = createAsyncThunk<
@@ -152,6 +177,9 @@ export const productsSlice = createSlice({
         }
       }
     },
+    clearEditCard: (state) => {
+      state.editCard = emptyEditCard;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -163,10 +191,12 @@ export const productsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getProductThunk.fulfilled, (state, action) => {
+        console.log('getProductThunk action.payload =', action.payload);
         fillProductCard(state.editCard, action.payload);
         state.isLoading = false;
       })
       .addCase(updateProductThunk.fulfilled, (state, action) => {
+        console.log('updateProductThunk action.payload =', action.payload);
         fillProductCard(state.editCard, action.payload);
         state.isSaving = false;
       })
@@ -187,7 +217,7 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue } = productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;

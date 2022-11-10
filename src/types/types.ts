@@ -50,13 +50,13 @@ export type ProductCardType = {
   productCode: string | undefined;
   images: string[];
   heightId: number | undefined;
-  customHeight: string | undefined;
+  customHeightValue: string | undefined;
   widthId: number | undefined;
-  customWidth: string | undefined;
+  customWidthValue: string | undefined;
   lengthId: number | undefined;
-  customLength: string | undefined;
+  customLengthValue: string | undefined;
   caliberId: number | undefined;
-  customCaliber: string | undefined;
+  customCaliberValue: string | undefined;
   sortId: number | undefined;
   isSeptic: boolean;
   description: string | undefined;

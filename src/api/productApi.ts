@@ -23,7 +23,6 @@ export const productApi = {
   },
 
   async updateProduct(token: string, updateData: UpdateProductDataType) {
-    console.log();
     const response = await instanceAxios.put<ProductType>(`/product`, updateData, setAuthHeader(token));
     return response.data;
   },

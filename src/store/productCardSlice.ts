@@ -15,14 +15,14 @@ const emptyCard = {
   productCode: undefined,
   images: [],
   heightId: undefined,
-  customHeight: undefined,
+  customHeightValue: undefined,
   widthId: undefined,
-  customWidth: undefined,
+  customWidthValue: undefined,
   lengthId: undefined,
-  customLength: undefined,
+  customLengthValue: undefined,
   sortId: undefined,
   caliberId: undefined,
-  customCaliber: undefined,
+  customCaliberValue: undefined,
   isSeptic: false,
   description: undefined,
   price: undefined,
@@ -42,33 +42,33 @@ export const productCardSlice = createSlice({
     setProductCardProductHeightId: (state, action) => {
       state.productCard.heightId = action.payload;
     },
-    setProductCardProductCustomHeight: (state, action) => {
-      state.productCard.customHeight = action.payload;
-    },
+    // setProductCardProductCustomHeight: (state, action) => {
+    //   state.productCard.customHeight = action.payload;
+    // },
     setProductCardProductWidthId: (state, action) => {
       state.productCard.widthId = action.payload;
     },
-    setProductCardProductCustomWidth: (state, action) => {
-      state.productCard.customWidth = action.payload;
-    },
+    // setProductCardProductCustomWidth: (state, action) => {
+    //   state.productCard.customWidth = action.payload;
+    // },
     setProductCardProductLengthId: (state, action) => {
       state.productCard.lengthId = action.payload;
     },
-    setProductCardProductCustomLength: (state, action) => {
-      state.productCard.customLength = action.payload;
-    },
+    // setProductCardProductCustomLength: (state, action) => {
+    //   state.productCard.customLength = action.payload;
+    // },
     setProductCardProductCaliberId: (state, action) => {
       state.productCard.caliberId = action.payload;
     },
-    setProductCardProductCustomCaliber: (state, action) => {
-      state.productCard.customCaliber = action.payload;
-    },
+    // setProductCardProductCustomCaliber: (state, action) => {
+    //   state.productCard.customCaliber = action.payload;
+    // },
     setProductCode: (state, action) => {
       state.productCard.productCode = action.payload;
     },
-    clearProductCard: (state) => {
-      state.productCard = { ...emptyCard };
-    },
+    // clearProductCard: (state) => {
+    //   state.productCard = { ...emptyCard };
+    // },
     addImageToProductCardImages: (state, action) => {
       state.productCard.images.push(action.payload);
     },
@@ -91,16 +91,16 @@ export const productCardSlice = createSlice({
 });
 
 export const {
-  setProductCardProductCustomHeight,
-  setProductCardProductCustomWidth,
-  setProductCardProductCustomLength,
-  setProductCardProductCustomCaliber,
+  // setProductCardProductCustomHeight,
+  // setProductCardProductCustomWidth,
+  // setProductCardProductCustomLength,
+  // setProductCardProductCustomCaliber,
   setProductCardProductHeightId,
   setProductCardProductWidthId,
   setProductCardProductLengthId,
   setProductCardProductCaliberId,
   setProductCode,
-  clearProductCard,
+  // clearProductCard,
   addImageToProductCardImages,
   deleteImageFromProductCardImages,
   setProductCardSortId,
