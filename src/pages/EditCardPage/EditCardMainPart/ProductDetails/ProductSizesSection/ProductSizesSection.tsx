@@ -86,7 +86,25 @@ const ProductSizesSection = () => {
     setCustomWidthValue(editCard.customWidthValue);
   }, [editCard, isOpenCustomWidth]);
 
-  const [customLength, setCustomLength] = useState<string | undefined>(undefined);
+  const [isOpenCustomLength, setIsOpenCustomLength] = useState<boolean>(false);
+  const [customLengthValue, setCustomLengthValue] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (editCard.lengthId) {
+      setIsOpenCustomLength(false);
+    } else {
+      if (editCard.customLengthValue) {
+        setIsOpenCustomLength(true);
+      } else {
+        if (isOpenCustomLength) {
+          setIsOpenCustomLength(true);
+        } else {
+          setIsOpenCustomLength(false);
+        }
+      }
+    }
+    setCustomLengthValue(editCard.customLengthValue);
+  }, [editCard, isOpenCustomLength]);
+
   const [customCaliber, setCustomCaliber] = useState<string | undefined>(undefined);
 
   const heightSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.height);
@@ -171,6 +189,33 @@ const ProductSizesSection = () => {
     }
   };
 
+  const onChangeLengthSelector = (id: number) => {
+    if (id > 0) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          categorySizeId: id,
+        };
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+      setIsOpenCustomLength(false);
+      setCustomLengthValue(undefined);
+    }
+    if (id === -1) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          resetCategorySizeType: SizeTypeEnum.length,
+        };
+        dispatch(updateProductThunk({ token, updateData })).then(() => {
+          setIsOpenCustomLength(true);
+        });
+      }
+    }
+  };
+
   const onChangeCustomHeight = (value: string | undefined) => {
     setCustomHeightValue(value);
     let updateData;
@@ -207,6 +252,24 @@ const ProductSizesSection = () => {
     debounceUpdateCustomSize(updateData);
   };
 
+  const onChangeCustomLength = (value: string | undefined) => {
+    setCustomLengthValue(value);
+    let updateData;
+    if (value) {
+      updateData = {
+        productId: editCard.id,
+        customSizeType: SizeTypeEnum.length,
+        customSizeValue: value,
+      };
+    } else {
+      updateData = {
+        productId: editCard.id,
+        resetCategorySizeType: SizeTypeEnum.length,
+      };
+    }
+    debounceUpdateCustomSize(updateData);
+  };
+
   // const onChangeWidthSelector = (id: number) => {
   //   dispatch(setProductCardProductWidthId(id));
   //   // editCard.customWidth && dispatch(setProductCardProductCustomWidth(undefined));
@@ -233,8 +296,6 @@ const ProductSizesSection = () => {
   // const onChangeCustomCaliber = (value: string | undefined) => {
   //   dispatch(setProductCardProductCustomCaliber(value));
   // };
-
-  console.log('editCard =', editCard, 'isOpenCustomWidth =', isOpenCustomWidth);
 
   return (
     <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(editCard)} blurCondition={false}>
@@ -275,15 +336,15 @@ const ProductSizesSection = () => {
             />
           </>
         )}
-        <></>
-        {/*<SectionSelector*/}
-        {/*  title={'Длинна'}*/}
-        {/*  options={lengthSizes}*/}
-        {/*  selectedOption={selectedLengthId}*/}
-        {/*  onChangeSelector={onChangeLengthSelector}*/}
-        {/*  customSize={editCard.customLengthValue}*/}
-        {/*  onChangeCustomSize={onChangeCustomLength}*/}
-        {/*/>*/}
+        <SectionSelector
+          title={'Длинна'}
+          options={lengthSizes}
+          selectedOption={selectedLengthId}
+          onChangeSelector={onChangeLengthSelector}
+          isCustomSize={isOpenCustomLength}
+          customSizeValue={customLengthValue}
+          onChangeCustomSize={onChangeCustomLength}
+        />
       </div>
     </SectionContainer>
   );

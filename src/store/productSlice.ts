@@ -191,12 +191,10 @@ export const productsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getProductThunk.fulfilled, (state, action) => {
-        console.log('getProductThunk action.payload =', action.payload);
         fillProductCard(state.editCard, action.payload);
         state.isLoading = false;
       })
       .addCase(updateProductThunk.fulfilled, (state, action) => {
-        console.log('updateProductThunk action.payload =', action.payload);
         fillProductCard(state.editCard, action.payload);
         state.isSaving = false;
       })
