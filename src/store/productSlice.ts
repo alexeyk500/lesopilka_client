@@ -34,6 +34,8 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.productMaterialId = product.material?.id;
   productCard.editionDate = product.editionDate;
   productCard.publicationDate = product.publicationDate;
+  productCard.sortId = product.sort?.id;
+  productCard.isSeptic = product.isSeptic
 
   const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
   productCard.heightId = heightId && heightId > 0 ? heightId : undefined;

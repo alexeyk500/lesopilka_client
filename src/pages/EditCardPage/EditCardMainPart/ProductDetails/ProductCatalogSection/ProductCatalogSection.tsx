@@ -7,7 +7,7 @@ import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageF
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { OptionsType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import {clearEditCard, selectorEditCard, updateProductThunk} from '../../../../../store/productSlice';
+import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 
 const getOptions = (optionsStore: OptionsType[]) => {
   const options: OptionsType[] = [];
