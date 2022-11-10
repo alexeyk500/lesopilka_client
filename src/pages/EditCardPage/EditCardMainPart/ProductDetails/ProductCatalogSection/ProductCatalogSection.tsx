@@ -7,7 +7,7 @@ import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageF
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { OptionsType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import {clearEditCard, selectorEditCard, updateProductThunk} from '../../../../../store/productSlice';
 
 const getOptions = (optionsStore: OptionsType[]) => {
   const options: OptionsType[] = [];
@@ -45,13 +45,24 @@ const ProductCatalogSection: React.FC = () => {
   const onChangeCategorySelector = (id: number) => {
     const onConfirm = (result: OnClosePopUpResultType) => {
       if (result) {
+        dispatch(clearEditCard());
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token && id) {
           setFormCategoryId(id);
           const updateData = {
             productId: editCard.id,
+            code: null,
+            price: null,
             subCategoryId: null,
             productMaterialId: null,
+            productSortId: null,
+            customHeight: null,
+            customWidth: null,
+            customLength: null,
+            customCaliber: null,
+            isSeptic: null,
+            publicationDate: null,
+            clearCategorySizes: true,
           };
           dispatch(updateProductThunk({ token, updateData }));
         }

@@ -2,11 +2,6 @@ import React, { useEffect, useState } from 'react';
 import classes from './ProductSizesSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import {
-  setProductCardProductCaliberId,
-  setProductCardProductLengthId,
-  setProductCardProductWidthId,
-} from '../../../../../store/productCardSlice';
 import { selectorCategorySizes } from '../../../../../store/catalogSlice';
 import { CategorySizeType, OptionsType, SizeTypeEnum, ProductCardType } from '../../../../../types/types';
 import classNames from 'classnames';
@@ -105,7 +100,24 @@ const ProductSizesSection = () => {
     setCustomLengthValue(editCard.customLengthValue);
   }, [editCard, isOpenCustomLength]);
 
-  const [customCaliber, setCustomCaliber] = useState<string | undefined>(undefined);
+  const [isOpenCustomCaliber, setIsOpenCustomCaliber] = useState<boolean>(false);
+  const [customCaliberValue, setCustomCaliberValue] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (editCard.caliberId) {
+      setIsOpenCustomCaliber(false);
+    } else {
+      if (editCard.customCaliberValue) {
+        setIsOpenCustomCaliber(true);
+      } else {
+        if (isOpenCustomCaliber) {
+          setIsOpenCustomCaliber(true);
+        } else {
+          setIsOpenCustomCaliber(false);
+        }
+      }
+    }
+    setCustomCaliberValue(editCard.customCaliberValue);
+  }, [editCard, isOpenCustomCaliber]);
 
   const heightSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.height);
   const widthSizes = getSizeOptions(allCategorySizes, editCard.categoryId, SizeTypeEnum.width);
@@ -216,6 +228,33 @@ const ProductSizesSection = () => {
     }
   };
 
+  const onChangeCaliberSelector = (id: number) => {
+    if (id > 0) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          categorySizeId: id,
+        };
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+      setIsOpenCustomCaliber(false);
+      setCustomCaliberValue(undefined);
+    }
+    if (id === -1) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        const updateData = {
+          productId: editCard.id,
+          resetCategorySizeType: SizeTypeEnum.caliber,
+        };
+        dispatch(updateProductThunk({ token, updateData })).then(() => {
+          setIsOpenCustomCaliber(true);
+        });
+      }
+    }
+  };
+
   const onChangeCustomHeight = (value: string | undefined) => {
     setCustomHeightValue(value);
     let updateData;
@@ -270,32 +309,23 @@ const ProductSizesSection = () => {
     debounceUpdateCustomSize(updateData);
   };
 
-  // const onChangeWidthSelector = (id: number) => {
-  //   dispatch(setProductCardProductWidthId(id));
-  //   // editCard.customWidth && dispatch(setProductCardProductCustomWidth(undefined));
-  // };
-  //
-  // const onChangeLengthSelector = (id: number) => {
-  //   dispatch(setProductCardProductLengthId(id));
-  //   // editCard.customLength && dispatch(setProductCardProductCustomLength(undefined));
-  // };
-  //
-  // const onChangeCaliberSelector = (id: number) => {
-  //   dispatch(setProductCardProductCaliberId(id));
-  //   // editCard.customCaliber && dispatch(setProductCardProductCustomCaliber(undefined));
-  // };
-
-  // const onChangeCustomWidth = (value: string | undefined) => {
-  //   dispatch(setProductCardProductCustomWidth(value));
-  // };
-  //
-  // const onChangeCustomLength = (value: string | undefined) => {
-  //   dispatch(setProductCardProductCustomLength(value));
-  // };
-  //
-  // const onChangeCustomCaliber = (value: string | undefined) => {
-  //   dispatch(setProductCardProductCustomCaliber(value));
-  // };
+  const onChangeCustomCaliber = (value: string | undefined) => {
+    setCustomCaliberValue(value);
+    let updateData;
+    if (value) {
+      updateData = {
+        productId: editCard.id,
+        customSizeType: SizeTypeEnum.caliber,
+        customSizeValue: value,
+      };
+    } else {
+      updateData = {
+        productId: editCard.id,
+        resetCategorySizeType: SizeTypeEnum.caliber,
+      };
+    }
+    debounceUpdateCustomSize(updateData);
+  };
 
   return (
     <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(editCard)} blurCondition={false}>
@@ -305,16 +335,16 @@ const ProductSizesSection = () => {
         })}
       >
         {editCard.categoryId === 6 ? (
-          <></>
+          <SectionSelector
+            title={'Диаметр'}
+            options={caliberSizes}
+            selectedOption={selectedCaliberId}
+            onChangeSelector={onChangeCaliberSelector}
+            isCustomSize={isOpenCustomCaliber}
+            customSizeValue={customCaliberValue}
+            onChangeCustomSize={onChangeCustomCaliber}
+          />
         ) : (
-          // <SectionSelector
-          //   title={'Диаметр'}
-          //   options={caliberSizes}
-          //   selectedOption={selectedCaliberId}
-          //   onChangeSelector={onChangeCaliberSelector}
-          //   customSize={editCard.customCaliberValue}
-          //   onChangeCustomSize={onChangeCustomCaliber}
-          // />
           <>
             <SectionSelector
               title={'Толщина'}
