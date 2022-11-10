@@ -5,7 +5,7 @@ import { selectorProductSorts } from '../../../../../store/catalogSlice';
 import classes from './ProductSortAndSepticSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import {selectorEditCard, updateProductThunk} from "../../../../../store/productSlice";
+import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 
 const getSortOptions = (sorts: OptionsType[]) => {
   const options: OptionsType[] = [];
@@ -42,7 +42,7 @@ const ProductSortAndSepticSection = () => {
     if (token) {
       const updateData = {
         productId: editCard.id,
-        isSeptic: id > 0 ?true :null,
+        isSeptic: id > 0 ? true : null,
       };
       dispatch(updateProductThunk({ token, updateData }));
     }
