@@ -2,30 +2,31 @@ import React from 'react';
 import classes from './ImageCard.module.css';
 import addImgButton from '../../../../../../../img/addImageButton.svg';
 import { useAppDispatch } from '../../../../../../../hooks/hooks';
-import {
-  addImageToProductCardImages,
-  deleteImageFromProductCardImages,
-} from '../../../../../../../store/productCardSlice';
 import redRoundDeleteIco from './../../../../../../../img/redRoundDeleteIco.svg';
+import { uploadPictureToProductThunk } from '../../../../../../../store/productSlice';
 
 type PropsType = {
+  productId?: number;
   imageUrl?: string;
   isAddImageCard?: boolean;
 };
 
-const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard }) => {
+const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard, productId }) => {
   const dispatch = useAppDispatch();
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target && event.target.files && event.target.files[0]) {
-      const blobUrl = URL.createObjectURL(event.target.files[0]);
-      dispatch(addImageToProductCardImages(blobUrl));
+    if (productId && event.target && event.target.files && event.target.files[0]) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      const img = event.target.files[0];
+      if (token && img) {
+        dispatch(uploadPictureToProductThunk({ token, productId, img }));
+      }
     }
   };
 
   const onClickDelete = () => {
     if (imageUrl) {
-      dispatch(deleteImageFromProductCardImages(imageUrl));
+      // dispatch(deleteImageFromProductCardImages(imageUrl));
     }
   };
 

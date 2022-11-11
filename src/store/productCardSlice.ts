@@ -70,10 +70,10 @@ export const productCardSlice = createSlice({
       state.productCard.productCode = action.payload;
     },
     addImageToProductCardImages: (state, action) => {
-      state.productCard.images.push(action.payload);
+      state.productCard.images?.push(action.payload);
     },
     deleteImageFromProductCardImages: (state, action) => {
-      state.productCard.images = state.productCard.images.filter((image) => image !== action.payload);
+      state.productCard.images = state.productCard.images?.filter((image) => image !== action.payload);
     },
     setProductCardSortId: (state, action) => {
       state.productCard.sortId = action.payload;

@@ -1,18 +1,19 @@
 import React from 'react';
 import classes from './ImagesList.module.css';
 import ImageCard from './ImageCard/ImageCard';
-import { useAppSelector } from '../../../../../../hooks/hooks';
-import { selectorProductCard } from '../../../../../../store/productCardSlice';
 
-const ImagesList: React.FC = () => {
-  const productCard = useAppSelector(selectorProductCard);
+type PropsType = {
+  productId: number;
+  images?: string[];
+};
 
+const ImagesList: React.FC<PropsType> = ({ productId, images }) => {
   return (
     <div className={classes.container}>
-      {productCard.images.map((imageUrl, ind) => {
-        return <ImageCard key={ind} imageUrl={imageUrl} />;
+      {images?.map((imageUrl, ind) => {
+        return <ImageCard key={ind} productId={productId} imageUrl={imageUrl} />;
       })}
-      {productCard.images.length <= 2 && <ImageCard isAddImageCard />}
+      {images && images.length <= 2 && <ImageCard productId={productId} isAddImageCard />}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { ProductType } from '../types/types';
 import { UpdateProductDataType } from '../store/productSlice';
 
 export const productApi = {
-  async getProduct(id: string) {
+  async getProduct(id: number) {
     const response = await instanceAxios.get<ProductType>(`/product/${id}`);
     return response.data;
   },
@@ -24,6 +24,24 @@ export const productApi = {
 
   async updateProduct(token: string, updateData: UpdateProductDataType) {
     const response = await instanceAxios.put<ProductType>(`/product`, updateData, setAuthHeader(token));
+    return response.data;
+  },
+
+  async uploadPictureToProduct(token: string, productId: number, img: File) {
+    const formData = new FormData();
+    formData.append('productId', String(productId));
+    formData.append('img', img);
+    const response = await instanceAxios.post<ProductType>(`/picture`, formData, {
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  },
+
+  async deletePicture(token: string, fileName: string) {
+    const response = await instanceAxios.delete<ProductType>(`/picture`, {
+      data: fileName,
+      headers: { Authorization: `Bearer ${token}` },
+    });
     return response.data;
   },
 };

@@ -63,7 +63,7 @@ const LeftColumnContent: React.FC = () => {
     material: material ? material.title : '',
     sort: sort ? sort.title : '',
     subCategoryTile: subCategory ? subCategory.title : '',
-    image: editCard.images.length > 0 ? editCard.images[0] : undefined,
+    image: editCard.images ? (editCard.images.length > 0 ? editCard.images[0] : undefined) : undefined,
     isSeptic: editCard.isSeptic,
     width,
     height,

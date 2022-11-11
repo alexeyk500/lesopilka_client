@@ -48,7 +48,7 @@ export type ProductCardType = {
   subCategoryId: number | undefined;
   productMaterialId: number | undefined;
   productCode: string | undefined;
-  images: string[];
+  images: string[] | undefined;
   heightId: number | undefined;
   customHeightValue: string | undefined;
   widthId: number | undefined;

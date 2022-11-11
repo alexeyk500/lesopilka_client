@@ -36,6 +36,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.publicationDate = product.publicationDate;
   productCard.sortId = product.sort?.id;
   productCard.isSeptic = product.isSeptic;
+  productCard.images = product.images;
 
   const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
   productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
@@ -94,7 +95,7 @@ const initialState: ProductsSliceType = {
   ],
 };
 
-export const getProductThunk = createAsyncThunk<ProductType, string, { rejectValue: string }>(
+export const getProductThunk = createAsyncThunk<ProductType, number, { rejectValue: string }>(
   'product/getProductThunk',
   async (id, { rejectWithValue }) => {
     try {
@@ -143,6 +144,19 @@ export const updateProductThunk = createAsyncThunk<
     return await serverApi.updateProduct(token, updateData);
   } catch (e) {
     return rejectWithValue(`Ошибка обновления полей товара c id=${updateData.productId}`);
+  }
+});
+
+export const uploadPictureToProductThunk = createAsyncThunk<
+  ProductType,
+  { token: string; productId: number; img: File },
+  { rejectValue: string }
+>('product/uploadPictureToProductThunk', async ({ token, productId, img }, { rejectWithValue }) => {
+  try {
+    await serverApi.uploadPictureToProduct(token, productId, img);
+    return await serverApi.getProduct(productId);
+  } catch (e) {
+    return rejectWithValue('Ошибка загрузки изображения для товара');
   }
 });
 
@@ -196,19 +210,19 @@ export const productsSlice = createSlice({
         fillProductCard(state.editCard, action.payload);
         state.isLoading = false;
       })
-      .addCase(updateProductThunk.fulfilled, (state, action) => {
+      .addMatcher(isAnyOf(updateProductThunk.fulfilled, uploadPictureToProductThunk.fulfilled), (state, action) => {
         fillProductCard(state.editCard, action.payload);
         state.isSaving = false;
       })
-      .addCase(updateProductThunk.pending, (state) => {
-        state.isSaving = true;
-      })
-      .addCase(updateProductThunk.rejected, (state, action) => {
-        state.isSaving = false;
-        showErrorPopUp(action.payload!);
-      })
       .addMatcher(isAnyOf(getProductsThunk.pending, createProductThunk.pending), (state) => {
         state.isLoading = true;
+      })
+      .addMatcher(isAnyOf(updateProductThunk.pending, uploadPictureToProductThunk.pending), (state) => {
+        state.isSaving = true;
+      })
+      .addMatcher(isAnyOf(updateProductThunk.rejected, uploadPictureToProductThunk.rejected), (state, action) => {
+        state.isSaving = false;
+        showErrorPopUp(action.payload!);
       })
       .addMatcher(isAnyOf(getProductsThunk.rejected, createProductThunk.rejected), (state, action) => {
         state.isLoading = false;

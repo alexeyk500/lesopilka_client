@@ -12,7 +12,8 @@ const EditCardPage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    id && dispatch(getProductThunk(id));
+    const productId = Number(id);
+    productId && dispatch(getProductThunk(productId));
   }, [dispatch, id]);
 
   return (
