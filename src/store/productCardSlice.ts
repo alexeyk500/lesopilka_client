@@ -42,30 +42,6 @@ export const productCardSlice = createSlice({
     setProductCardProductHeightId: (state, action) => {
       state.productCard.heightId = action.payload;
     },
-    // setProductCardProductCustomHeight: (state, action) => {
-    //   state.productCard.customHeight = action.payload;
-    // },
-    // setProductCardProductWidthId: (state, action) => {
-    //   state.productCard.widthId = action.payload;
-    // },
-    // setProductCardProductCustomWidth: (state, action) => {
-    //   state.productCard.customWidth = action.payload;
-    // },
-    // setProductCardProductLengthId: (state, action) => {
-    //   state.productCard.lengthId = action.payload;
-    // },
-    // setProductCardProductCustomLength: (state, action) => {
-    //   state.productCard.customLength = action.payload;
-    // },
-    // setProductCardProductCaliberId: (state, action) => {
-    //   state.productCard.caliberId = action.payload;
-    // },
-    // setProductCardProductCustomCaliber: (state, action) => {
-    //   state.productCard.customCaliber = action.payload;
-    // },
-    // clearProductCard: (state) => {
-    //   state.productCard = { ...emptyCard };
-    // },
     setProductCode: (state, action) => {
       state.productCard.productCode = action.payload;
     },
@@ -90,24 +66,8 @@ export const productCardSlice = createSlice({
   },
 });
 
-export const {
-  // setProductCardProductCustomHeight,
-  // setProductCardProductCustomWidth,
-  // setProductCardProductCustomLength,
-  // setProductCardProductCustomCaliber,
-  // setProductCardProductHeightId,
-  // setProductCardProductWidthId,
-  // setProductCardProductLengthId,
-  // setProductCardProductCaliberId,
-  // clearProductCard,
-  setProductCode,
-  addImageToProductCardImages,
-  deleteImageFromProductCardImages,
-  setProductCardSortId,
-  setProductCardIsSeptic,
-  setProductDescription,
-  setProductPrice,
-} = productCardSlice.actions;
+export const { setProductCode, setProductCardSortId, setProductCardIsSeptic, setProductDescription, setProductPrice } =
+  productCardSlice.actions;
 
 export const selectorProductCard = (state: RootState) => state.productCard.productCard;
 

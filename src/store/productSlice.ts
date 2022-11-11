@@ -71,6 +71,7 @@ type ProductsSliceType = {
   isLoading: boolean;
   isSaving: boolean;
   editCard: ProductCardType;
+  catalogSearchParams:  URLSearchParams | undefined;
   filters: FilterType[];
 };
 
@@ -82,6 +83,7 @@ const initialState: ProductsSliceType = {
   isLoading: false,
   isSaving: false,
   editCard: emptyEditCard,
+  catalogSearchParams: undefined,
   filters: [
     { title: 'categoryId', values: [] },
     { title: 'subCategoryId', values: [] },
@@ -106,11 +108,11 @@ export const getProductThunk = createAsyncThunk<ProductType, number, { rejectVal
   }
 );
 
-export const getProductsThunk = createAsyncThunk<ProductType[], undefined, { rejectValue: string }>(
+export const getProductsThunk = createAsyncThunk<ProductType[], URLSearchParams | undefined, { rejectValue: string }>(
   'product/getProductsThunk',
-  async (_, { rejectWithValue }) => {
+  async (urlSearchParams, { rejectWithValue }) => {
     try {
-      return await serverApi.getProducts();
+      return await serverApi.getProducts(urlSearchParams);
     } catch (e: any) {
       return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
     }
@@ -208,7 +210,11 @@ export const productsSlice = createSlice({
     },
     clearEditCard: (state) => {
       state.editCard = emptyEditCard;
+      state.catalogSearchParams = undefined;
     },
+    setCatalogSearchParams: (state, action) => {
+      state.catalogSearchParams = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -257,13 +263,14 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard } = productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard, setCatalogSearchParams } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
 export const selectorPriceTo = (state: RootState) => state.products.priceTo;
 export const selectorSorting = (state: RootState) => state.products.sorting;
 export const selectorEditCard = (state: RootState) => state.products.editCard;
+export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
 export const selectorFilters = (state: RootState) => state.products.filters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
 export const selectorProductsSaving = (state: RootState) => state.products.isSaving;

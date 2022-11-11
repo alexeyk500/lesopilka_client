@@ -5,16 +5,20 @@ import SalesSection from './SalesSection/SalesSection';
 import PersonalSection from './PersonalSection/PersonalSection';
 import FavoritesSection from './FavoritesSection/FavoritesSection';
 import ReferenceSection from './ReferenceSection/ReferenceSection';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { selectorUser } from '../../../../store/userSlice';
 
 type PropsType = {
   closeMenuContent: () => void;
 };
 
 const MenuContent: React.FC<PropsType> = ({ closeMenuContent }) => {
+  const user = useAppSelector(selectorUser);
+
   return (
     <div className={classes.container}>
       <PurchasesSection closeMenuContent={closeMenuContent} />
-      <SalesSection closeMenuContent={closeMenuContent} />
+      {user?.manufacturer?.id && <SalesSection closeMenuContent={closeMenuContent} />}
       <FavoritesSection />
       <PersonalSection closeMenuContent={closeMenuContent} />
       <ReferenceSection />

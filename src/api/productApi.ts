@@ -9,12 +9,8 @@ export const productApi = {
     return response.data;
   },
 
-  async getProducts(manufacturerId?: number) {
-    let query: string | undefined;
-    if (manufacturerId) {
-      query += `?mid=${manufacturerId}`;
-    }
-    const response = await instanceAxios.get<ProductType[]>(`/product/products/${query ? query : ''}`);
+  async getProducts(urlSearchParams: URLSearchParams | undefined) {
+    const response = await instanceAxios.get<ProductType[]>(`/product/products/?${urlSearchParams}`);
     return response.data;
   },
 

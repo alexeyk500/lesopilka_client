@@ -13,9 +13,11 @@ import ConfirmSendingPasswordRecoveryCodeForm from './ConfirmSendingPasswordReco
 import EnterCodeForgotPasswordForm from './EnterCodeForgotPasswordForm/EnterCodeForgotPasswordForm';
 import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import classNames from 'classnames';
+import {useNavigate} from "react-router-dom";
 
 const LoginButton: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
   const preloaderPopUpRef = useRef<PopupRef | null>(null);
 
@@ -247,6 +249,7 @@ const LoginButton: React.FC = () => {
   const onClosePopUpLogout = (result?: boolean | FormData | undefined) => {
     if (result) {
       logoutUser();
+      navigate('/');
     }
   };
 

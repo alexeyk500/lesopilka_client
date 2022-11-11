@@ -6,6 +6,8 @@ import ordersIco from '../../../../../img/ordersIco.svg';
 import idCardIco from '../../../../../img/idCardIco.svg';
 import documentsIco from '../../../../../img/documentsIco.svg';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../../../../hooks/hooks';
+import { selectorUser } from '../../../../../store/userSlice';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -13,9 +15,10 @@ type PropsType = {
 
 const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
+  const user = useAppSelector(selectorUser);
 
   const onClickCatalog = () => {
-    navigate('/sales');
+    navigate(`/sales/?mid=${user?.manufacturer?.id}`);
     closeMenuContent();
   };
 
