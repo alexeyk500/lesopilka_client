@@ -23,10 +23,7 @@ const MainInformation: React.FC = () => {
       if (token && phone) {
         dispatch(userUpdateThunk({ token, phone }));
       }
-      if (token && phone === undefined) {
-        dispatch(userUpdateThunk({ token, phone: null }));
-      }
-      if (token && phone === '') {
+      if (token && user && user.phone && phone === '') {
         dispatch(userUpdateThunk({ token, phone: null }));
       }
     }
