@@ -160,6 +160,19 @@ export const uploadPictureToProductThunk = createAsyncThunk<
   }
 });
 
+export const deleteProductPictureThunk = createAsyncThunk<
+  ProductType,
+  { token: string; productId: number; fileName: string },
+  { rejectValue: string }
+>('product/deleteProductPictureThunk', async ({ token, productId, fileName }, { rejectWithValue }) => {
+  try {
+    await serverApi.deletePicture(token, fileName);
+    return await serverApi.getProduct(productId);
+  } catch (e) {
+    return rejectWithValue('Ошибка удаления изображения для товара');
+  }
+});
+
 export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
@@ -210,24 +223,37 @@ export const productsSlice = createSlice({
         fillProductCard(state.editCard, action.payload);
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(updateProductThunk.fulfilled, uploadPictureToProductThunk.fulfilled), (state, action) => {
-        fillProductCard(state.editCard, action.payload);
-        state.isSaving = false;
-      })
+      .addMatcher(
+        isAnyOf(
+          updateProductThunk.fulfilled,
+          uploadPictureToProductThunk.fulfilled,
+          deleteProductPictureThunk.fulfilled
+        ),
+        (state, action) => {
+          fillProductCard(state.editCard, action.payload);
+          state.isSaving = false;
+        }
+      )
       .addMatcher(isAnyOf(getProductsThunk.pending, createProductThunk.pending), (state) => {
         state.isLoading = true;
-      })
-      .addMatcher(isAnyOf(updateProductThunk.pending, uploadPictureToProductThunk.pending), (state) => {
-        state.isSaving = true;
-      })
-      .addMatcher(isAnyOf(updateProductThunk.rejected, uploadPictureToProductThunk.rejected), (state, action) => {
-        state.isSaving = false;
-        showErrorPopUp(action.payload!);
       })
       .addMatcher(isAnyOf(getProductsThunk.rejected, createProductThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);
-      });
+      })
+      .addMatcher(
+        isAnyOf(updateProductThunk.pending, uploadPictureToProductThunk.pending, deleteProductPictureThunk.pending),
+        (state) => {
+          state.isSaving = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(updateProductThunk.rejected, uploadPictureToProductThunk.rejected, deleteProductPictureThunk.rejected),
+        (state, action) => {
+          state.isSaving = false;
+          showErrorPopUp(action.payload!);
+        }
+      );
   },
 });
 

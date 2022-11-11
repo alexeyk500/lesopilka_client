@@ -18,3 +18,8 @@ export type CreateManufacturerType = {
   addressId: number;
   approved: boolean;
 };
+
+export type DeletePictureType = {
+  fileName: string;
+  result: number;
+};

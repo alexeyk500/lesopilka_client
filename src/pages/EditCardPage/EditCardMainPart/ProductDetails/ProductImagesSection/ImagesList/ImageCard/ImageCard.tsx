@@ -3,7 +3,7 @@ import classes from './ImageCard.module.css';
 import addImgButton from '../../../../../../../img/addImageButton.svg';
 import { useAppDispatch } from '../../../../../../../hooks/hooks';
 import redRoundDeleteIco from './../../../../../../../img/redRoundDeleteIco.svg';
-import { uploadPictureToProductThunk } from '../../../../../../../store/productSlice';
+import { deleteProductPictureThunk, uploadPictureToProductThunk } from '../../../../../../../store/productSlice';
 
 type PropsType = {
   productId?: number;
@@ -25,8 +25,12 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard, productId })
   };
 
   const onClickDelete = () => {
-    if (imageUrl) {
-      // dispatch(deleteImageFromProductCardImages(imageUrl));
+    if (productId && imageUrl) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      const fileName = imageUrl.split('/').pop();
+      if (token && fileName) {
+        dispatch(deleteProductPictureThunk({ token, productId, fileName }));
+      }
     }
   };
 

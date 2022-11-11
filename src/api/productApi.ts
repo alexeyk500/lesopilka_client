@@ -1,6 +1,7 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { ProductType } from '../types/types';
 import { UpdateProductDataType } from '../store/productSlice';
+import { DeletePictureType } from './serverResponseTypes';
 
 export const productApi = {
   async getProduct(id: number) {
@@ -38,8 +39,8 @@ export const productApi = {
   },
 
   async deletePicture(token: string, fileName: string) {
-    const response = await instanceAxios.delete<ProductType>(`/picture`, {
-      data: fileName,
+    const response = await instanceAxios.delete<DeletePictureType>(`/picture`, {
+      data: { fileName },
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
