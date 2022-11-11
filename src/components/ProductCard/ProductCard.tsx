@@ -34,8 +34,11 @@ const ProductCard: React.FC<PropsType> = ({
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (isAddProductCard && token) {
       dispatch(createProductThunk(token)).then((result) => {
-        const id = (result.payload as ProductType).id;
-        navigate(`/edit_card/${id}`);
+        console.log('result =', result);
+        if ((result as { type: string }).type.includes('fulfilled')) {
+          const id = (result.payload as ProductType).id;
+          navigate(`/edit_card/${id}`);
+        }
       });
     } else {
       if (onClick && productCardData) {

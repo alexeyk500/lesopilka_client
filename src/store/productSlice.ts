@@ -100,8 +100,8 @@ export const getProductThunk = createAsyncThunk<ProductType, number, { rejectVal
   async (id, { rejectWithValue }) => {
     try {
       return await serverApi.getProduct(id);
-    } catch (e) {
-      return rejectWithValue(`Ошибка получения товара c id=${id}`);
+    } catch (e: any) {
+      return rejectWithValue(`Ошибка получения товара c id=${id}\n` + e.response?.data?.message);
     }
   }
 );
@@ -111,8 +111,8 @@ export const getProductsThunk = createAsyncThunk<ProductType[], undefined, { rej
   async (_, { rejectWithValue }) => {
     try {
       return await serverApi.getProducts();
-    } catch (e) {
-      return rejectWithValue('Ошибка получения списка товаров');
+    } catch (e: any) {
+      return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
     }
   }
 );
@@ -122,8 +122,8 @@ export const createProductThunk = createAsyncThunk<ProductType, string, { reject
   async (token, { rejectWithValue }) => {
     try {
       return await serverApi.createProduct(token);
-    } catch (e) {
-      return rejectWithValue('Ошибка создания нового товара');
+    } catch (e: any) {
+      return rejectWithValue('Ошибка создания нового товара\n' + e.response?.data?.message);
     }
   }
 );
@@ -142,8 +142,8 @@ export const updateProductThunk = createAsyncThunk<
 >('product/updateProductThunk', async ({ token, updateData }, { rejectWithValue }) => {
   try {
     return await serverApi.updateProduct(token, updateData);
-  } catch (e) {
-    return rejectWithValue(`Ошибка обновления полей товара c id=${updateData.productId}`);
+  } catch (e: any) {
+    return rejectWithValue(`Ошибка обновления полей товара c id=${updateData.productId}\n` + e.response?.data?.message);
   }
 });
 
@@ -155,8 +155,8 @@ export const uploadPictureToProductThunk = createAsyncThunk<
   try {
     await serverApi.uploadPictureToProduct(token, productId, img);
     return await serverApi.getProduct(productId);
-  } catch (e) {
-    return rejectWithValue('Ошибка загрузки изображения для товара');
+  } catch (e: any) {
+    return rejectWithValue('Ошибка загрузки изображения для товара\n' + e.response?.data?.message);
   }
 });
 
@@ -168,8 +168,8 @@ export const deleteProductPictureThunk = createAsyncThunk<
   try {
     await serverApi.deletePicture(token, fileName);
     return await serverApi.getProduct(productId);
-  } catch (e) {
-    return rejectWithValue('Ошибка удаления изображения для товара');
+  } catch (e: any) {
+    return rejectWithValue('Ошибка удаления изображения для товара\n' + e.response?.data?.message);
   }
 });
 
