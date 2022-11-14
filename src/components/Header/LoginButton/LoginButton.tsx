@@ -13,7 +13,7 @@ import ConfirmSendingPasswordRecoveryCodeForm from './ConfirmSendingPasswordReco
 import EnterCodeForgotPasswordForm from './EnterCodeForgotPasswordForm/EnterCodeForgotPasswordForm';
 import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import classNames from 'classnames';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const LoginButton: React.FC = () => {
   const dispatch = useAppDispatch();

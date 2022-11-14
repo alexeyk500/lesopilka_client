@@ -71,7 +71,7 @@ type ProductsSliceType = {
   isLoading: boolean;
   isSaving: boolean;
   editCard: ProductCardType;
-  catalogSearchParams:  URLSearchParams | undefined;
+  catalogSearchParams: URLSearchParams | undefined;
   filters: FilterType[];
 };
 
@@ -214,7 +214,7 @@ export const productsSlice = createSlice({
     },
     setCatalogSearchParams: (state, action) => {
       state.catalogSearchParams = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -263,7 +263,8 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard, setCatalogSearchParams } = productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard, setCatalogSearchParams } =
+  productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;

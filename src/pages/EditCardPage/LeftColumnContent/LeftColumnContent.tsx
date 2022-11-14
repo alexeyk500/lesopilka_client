@@ -12,7 +12,7 @@ import {
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
-import {selectorCatalogSearchParams, selectorEditCard, selectorProductsSaving} from '../../../store/productSlice';
+import { selectorCatalogSearchParams, selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
 import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const LeftColumnContent: React.FC = () => {
   const allCategorySizes = useAppSelector(selectorCategorySizes);
   const allMaterials = useAppSelector(selectorProductMaterials);
   const allSorts = useAppSelector(selectorProductSorts);
-  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams)
+  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === editCard.subCategoryId);
   const material = allMaterials.find((material) => material.id === editCard.productMaterialId);
