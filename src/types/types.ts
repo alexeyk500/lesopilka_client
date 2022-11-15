@@ -156,3 +156,14 @@ export type ProductType = {
   images: string[] | undefined;
   manufacturer: ManufacturerType;
 };
+
+export enum QueryEnum {
+  CatalogCategory = 'cid',
+  CatalogSubCategory = 'scid',
+  HeightSizeId = 'hsid',
+  WeightSizeId = 'wsid',
+  CaliberSizeId = 'csid',
+  LengthSizeId = 'lsid',
+  SortId = 'psid',
+  Septic = 'sep',
+}

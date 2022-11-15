@@ -1,18 +1,17 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import classes from './FilterSelectors.module.css';
 import FilterSelectorItem from './FilterSelectorItem/FilterSelectorItem';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   selectorCategories,
   selectorCategorySizes,
   selectorProductSorts,
   selectorSubCategories,
 } from '../../../store/catalogSlice';
-import { selectorFilters } from '../../../store/productSlice';
-import { getValueFromFilter } from '../../../utils/functions';
-import { CategorySizeType, SizeTypeEnum } from '../../../types/types';
-import { BREVNO_CATEGORY_ID } from '../../../utils/constants';
-import { SEPTIC_OPTIONS } from '../../../utils/constants';
+import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
+import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
+import { useSearchParams } from 'react-router-dom';
+import { getProductsThunk } from '../../../store/productSlice';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -25,47 +24,116 @@ const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefine
 };
 
 const FilterSelectors: React.FC = () => {
-  const filters = useAppSelector(selectorFilters);
+  const dispatch = useAppDispatch();
   const categories = useAppSelector(selectorCategories);
   const sorts = useAppSelector(selectorProductSorts);
   const subCategoriesState = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
-  const categoryId = getValueFromFilter(filters, 'categoryId');
-  const subCategories = subCategoriesState.filter((subCategory) => subCategory.categoryId === categoryId);
-  const heightSizes =
-    categoryId && typeof categoryId === 'number'
-      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.height)
-      : [];
-  const widthSizes =
-    categoryId && typeof categoryId === 'number'
-      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.width)
-      : [];
-  const lengthSizes =
-    categoryId && typeof categoryId === 'number'
-      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.length)
-      : [];
-  const caliberSizes =
-    categoryId && typeof categoryId === 'number'
-      ? getSizeOptions(allCategorySizes, categoryId, SizeTypeEnum.caliber)
-      : [];
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    searchParams.forEach((value, key) => {
+      if (key === QueryEnum.CatalogCategory) {
+        setSelectedCategoryId(Number(value));
+      }
+    });
+  }, [searchParams]);
+
+  const subCategories = useMemo(() => {
+    return subCategoriesState.filter((subCategory) => subCategory.categoryId === selectedCategoryId);
+  }, [selectedCategoryId, subCategoriesState]);
+
+  const heightSizes = useMemo(() => {
+    if (selectedCategoryId) {
+      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.height);
+    }
+    return [];
+  }, [selectedCategoryId, allCategorySizes]);
+
+  const widthSizes = useMemo(() => {
+    if (selectedCategoryId) {
+      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.width);
+    }
+    return [];
+  }, [selectedCategoryId, allCategorySizes]);
+
+  const lengthSizes = useMemo(() => {
+    if (selectedCategoryId) {
+      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.length);
+    }
+    return [];
+  }, [selectedCategoryId, allCategorySizes]);
+
+  const caliberSizes = useMemo(() => {
+    if (selectedCategoryId) {
+      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.caliber);
+    }
+    return [];
+  }, [selectedCategoryId, allCategorySizes]);
+
+  const updateProductsBySearchParams = () => {
+    dispatch(getProductsThunk(searchParams));
+  };
 
   return (
     <div className={classes.container}>
-      <FilterSelectorItem title={'Раздел каталога'} filterTitle={'categoryId'} options={categories} isExpand />
-      <FilterSelectorItem title={'Пиломатериал'} filterTitle={'subCategoryId'} options={subCategories} isExpand />
-      {categoryId !== BREVNO_CATEGORY_ID && (
-        <FilterSelectorItem title={'Толщина'} filterTitle={'heightId'} options={heightSizes} />
+      <FilterSelectorItem
+        title={'Раздел каталога'}
+        queryType={QueryEnum.CatalogCategory}
+        options={categories}
+        onSelect={updateProductsBySearchParams}
+        isExpand={true}
+      />
+      <FilterSelectorItem
+        title={'Пиломатериал'}
+        queryType={QueryEnum.CatalogSubCategory}
+        options={subCategories}
+        onSelect={updateProductsBySearchParams}
+        isExpand={true}
+      />
+      {selectedCategoryId !== BREVNO_CATEGORY_ID ? (
+        <>
+          <FilterSelectorItem
+            title={'Толщина'}
+            queryType={QueryEnum.HeightSizeId}
+            options={heightSizes}
+            onSelect={updateProductsBySearchParams}
+          />
+          <FilterSelectorItem
+            title={'Толщина'}
+            queryType={QueryEnum.WeightSizeId}
+            options={widthSizes}
+            onSelect={updateProductsBySearchParams}
+          />
+        </>
+      ) : (
+        <FilterSelectorItem
+          title={'Диаметр'}
+          queryType={QueryEnum.CaliberSizeId}
+          options={caliberSizes}
+          onSelect={updateProductsBySearchParams}
+        />
       )}
-      {categoryId !== BREVNO_CATEGORY_ID && (
-        <FilterSelectorItem title={'Ширина'} filterTitle={'widthId'} options={widthSizes} />
-      )}
-      {categoryId === BREVNO_CATEGORY_ID && (
-        <FilterSelectorItem title={'Диаметр'} filterTitle={'caliberId'} options={caliberSizes} />
-      )}
-      <FilterSelectorItem title={'Длинна'} filterTitle={'lengthId'} options={lengthSizes} />
-      <FilterSelectorItem title={'Сорт'} filterTitle={'sortId'} options={sorts} />
-      <FilterSelectorItem title={'Антисептик'} filterTitle={'septicId'} options={SEPTIC_OPTIONS} />
+      <FilterSelectorItem
+        title={'Длинна'}
+        queryType={QueryEnum.LengthSizeId}
+        options={lengthSizes}
+        onSelect={updateProductsBySearchParams}
+      />
+      <FilterSelectorItem
+        title={'Сорт'}
+        queryType={QueryEnum.SortId}
+        options={sorts}
+        onSelect={updateProductsBySearchParams}
+      />
+      <FilterSelectorItem
+        title={'Антисептик'}
+        queryType={QueryEnum.Septic}
+        options={SEPTIC_OPTIONS}
+        onSelect={updateProductsBySearchParams}
+      />
     </div>
   );
 };

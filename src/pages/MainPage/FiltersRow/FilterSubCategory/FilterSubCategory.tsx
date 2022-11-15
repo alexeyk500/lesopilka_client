@@ -1,28 +1,40 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorFilters, setFiltersValue } from '../../../../store/productSlice';
+import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
-import { getOptionTitle, getValueFromFilter } from '../../../../utils/functions';
+import { getOptionTitle } from '../../../../utils/functions';
+import { useSearchParams } from 'react-router-dom';
+import { QueryEnum } from '../../../../types/types';
 
 const FilterSubCategory: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector(selectorFilters);
   const subCategories = useAppSelector(selectorSubCategories);
 
-  const getCategoryTitle = useCallback(() => {
-    const subCategoryId = getValueFromFilter(filters, 'subCategoryId');
-    if (typeof subCategoryId == 'number') {
-      return getOptionTitle(subCategories, subCategoryId);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    let valueToSet: number | undefined = undefined;
+    searchParams.forEach((value, key) => {
+      if (key === QueryEnum.CatalogSubCategory && Number(value)) {
+        valueToSet = Number(value);
+      }
+      setSelectedSubCategoryId(valueToSet);
+    });
+  }, [searchParams]);
+
+  const getSubCategoryTitle = useCallback(() => {
+    if (selectedSubCategoryId) {
+      return getOptionTitle(subCategories, selectedSubCategoryId);
     }
     return undefined;
-  }, [filters, subCategories]);
+  }, [subCategories, selectedSubCategoryId]);
 
-  const categoryTitle = getCategoryTitle();
-  const title = 'Тип: ' + getCategoryTitle();
+  const categoryTitle = getSubCategoryTitle();
+  const title = 'Тип: ' + categoryTitle;
 
   const resetCategoryFilter = () => {
-    dispatch(setFiltersValue({ title: 'subCategoryId', value: undefined }));
+    searchParams.delete(QueryEnum.CatalogSubCategory);
+    setSearchParams(searchParams);
   };
 
   return (

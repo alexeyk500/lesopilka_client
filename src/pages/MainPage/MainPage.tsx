@@ -1,34 +1,39 @@
 import React, { useEffect } from 'react';
 import classes from './MainPage.module.css';
 import Catalog from '../../components/Catalog/Catalog';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import Preloader from '../../components/Preloader/Preloader';
+import { useAppDispatch } from '../../hooks/hooks';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import { getProductsThunk, selectorFilters, selectorProductsLoading } from '../../store/productSlice';
-import { getValueFromFilter } from '../../utils/functions';
+import { getProductsThunk } from '../../store/productSlice';
 import FilterSelectors from './FilterSelectors/FilterSelectors';
 import MainPageMainPart from './MainPageMainPart/MainPageMainPart';
+import { useSearchParams } from 'react-router-dom';
+import { QueryEnum } from '../../types/types';
 
 const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector(selectorProductsLoading);
-  const filters = useAppSelector(selectorFilters);
-  const categoryId = getValueFromFilter(filters, 'categoryId');
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const onClickCatalogCategory = (id: number) => {
+    if (id) {
+      setSearchParams({ [QueryEnum.CatalogCategory]: id.toString() }, { replace: true });
+    }
+  };
 
   useEffect(() => {
-    dispatch(getProductsThunk());
-  }, [dispatch]);
+    dispatch(getProductsThunk(searchParams));
+  }, [dispatch, searchParams]);
 
   return (
     <div className={classes.container}>
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <>
-          <LeftColumn>{categoryId ? <FilterSelectors /> : <Catalog />}</LeftColumn>
-          <MainPageMainPart />
-        </>
-      )}
+      <LeftColumn>
+        {searchParams.toString().includes(QueryEnum.CatalogCategory) ? (
+          <FilterSelectors />
+        ) : (
+          <Catalog onClickCatalogCategory={onClickCatalogCategory} />
+        )}
+      </LeftColumn>
+      <MainPageMainPart />
     </div>
   );
 };

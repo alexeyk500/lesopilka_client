@@ -4,7 +4,11 @@ import CatalogItem from './CatalogItem/CatalogItem';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorCategories } from '../../store/catalogSlice';
 
-const Catalog: React.FC = () => {
+type PropsType = {
+  onClickCatalogCategory?: (id: number) => void;
+};
+
+const Catalog: React.FC<PropsType> = ({ onClickCatalogCategory }) => {
   const categories = useAppSelector(selectorCategories);
 
   return (
@@ -12,7 +16,7 @@ const Catalog: React.FC = () => {
       <div className={classes.title}>Каталог</div>
       <div className={classes.scrollContainer}>
         {categories.map((category) => {
-          return <CatalogItem key={category.id} category={category} />;
+          return <CatalogItem key={category.id} category={category} onClick={onClickCatalogCategory} />;
         })}
       </div>
     </>

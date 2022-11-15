@@ -7,9 +7,9 @@ import FiltersResult from './FiltersResult/FiltersResult';
 const SelectRow: React.FC = () => {
   return (
     <div className={classes.container}>
-      <FiltersResult />
       <PriceRange />
       <SelectSortDirection />
+      <FiltersResult />
     </div>
   );
 };

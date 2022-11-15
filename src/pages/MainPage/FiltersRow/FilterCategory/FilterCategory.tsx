@@ -1,27 +1,37 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorFilters, setFiltersValue } from '../../../../store/productSlice';
+import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorCategories } from '../../../../store/catalogSlice';
-import { getOptionTitle, getValueFromFilter } from '../../../../utils/functions';
+import { getOptionTitle } from '../../../../utils/functions';
+import { useSearchParams } from 'react-router-dom';
+import { QueryEnum } from '../../../../types/types';
 
 const FilterCategory: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector(selectorFilters);
   const categories = useAppSelector(selectorCategories);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    searchParams.forEach((value, key) => {
+      if (key === QueryEnum.CatalogCategory) {
+        setSelectedCategoryId(Number(value));
+      }
+    });
+  }, [searchParams]);
 
   const getCategoryTitle = useCallback(() => {
-    const categoryId = getValueFromFilter(filters, 'categoryId');
-    if (typeof categoryId == 'number') {
-      return getOptionTitle(categories, categoryId);
+    if (selectedCategoryId) {
+      return getOptionTitle(categories, selectedCategoryId);
     }
     return undefined;
-  }, [filters, categories]);
+  }, [categories, selectedCategoryId]);
+
   const categoryTitle = getCategoryTitle();
   const title = 'Раздел: ' + categoryTitle;
+
   const resetCategoryFilter = () => {
-    dispatch(setFiltersValue({ title: 'subCategoryId', value: undefined }));
-    dispatch(setFiltersValue({ title: 'categoryId', value: undefined }));
+    searchParams.delete(QueryEnum.CatalogCategory);
+    setSearchParams(searchParams);
   };
 
   return (

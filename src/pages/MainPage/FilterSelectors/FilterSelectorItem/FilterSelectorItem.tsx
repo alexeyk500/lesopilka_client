@@ -1,34 +1,42 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './FilterSelectorItem.module.css';
 import FilterSelector from '../../../../components/commonComponents/FilterSelector/FilterSelector';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorFilters, setFiltersValue } from '../../../../store/productSlice';
-import { getValueFromFilter } from '../../../../utils/functions';
-import { OptionsType } from '../../../../types/types';
+import { OptionsType, QueryEnum } from '../../../../types/types';
+import { useSearchParams } from 'react-router-dom';
 
 type PropsType = {
   title: string;
   options: OptionsType[];
-  filterTitle: string;
+  queryType?: QueryEnum;
   isExpand?: boolean;
+  onSelect?: (id: number | undefined) => void;
 };
 
-const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle, isExpand }) => {
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector(selectorFilters);
+const FilterSelectorItem: React.FC<PropsType> = ({ title, options, queryType, isExpand, onSelect }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedOptionId, setSelectedOptionId] = useState<number | undefined>(undefined);
 
-  const getOptionId = useCallback(() => {
-    const optionId = getValueFromFilter(filters, filterTitle);
-    if (typeof optionId == 'number') {
-      return optionId;
+  useEffect(() => {
+    let valueToSet: number | undefined = undefined;
+    searchParams.forEach((value, key) => {
+      if (key === queryType && Number(value)) {
+        valueToSet =Number(value);
+      }
+      setSelectedOptionId(valueToSet);
+    });
+  }, [searchParams, queryType]);
+
+  const onSelectHandler = (id: number | undefined) => {
+    if (id && id > 0) {
+      searchParams.set(queryType as QueryEnum, id.toString());
+      setSearchParams(searchParams);
     }
-    return undefined;
-  }, [filters, filterTitle]);
-
-  const selectedCategoryId = getOptionId();
-
-  const onSelect = (id: number | undefined) => {
-    dispatch(setFiltersValue({ title: filterTitle, value: id }));
+    if (id === undefined) {
+      setSelectedOptionId(undefined);
+      searchParams.delete(queryType as QueryEnum);
+      setSearchParams(searchParams);
+    }
+    onSelect && onSelect(id);
   };
 
   return (
@@ -36,8 +44,8 @@ const FilterSelectorItem: React.FC<PropsType> = ({ title, options, filterTitle, 
       <FilterSelector
         title={title}
         options={options}
-        selectedOptionId={selectedCategoryId}
-        onSelect={onSelect}
+        selectedOptionId={selectedOptionId}
+        onSelect={onSelectHandler}
         isExpand={isExpand}
       />
     </div>

@@ -132,7 +132,6 @@ export const catalogSlice = createSlice({
   },
 });
 
-export const selectorCatalogIsLoading = (state: RootState) => state.catalog.isLoading;
 export const selectorCategories = (state: RootState) => state.catalog.categories;
 export const selectorSubCategories = (state: RootState) => state.catalog.subCategories;
 export const selectorProductMaterials = (state: RootState) => state.catalog.productMaterials;
