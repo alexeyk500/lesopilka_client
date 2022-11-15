@@ -72,7 +72,7 @@ type ProductsSliceType = {
   isSaving: boolean;
   editCard: ProductCardType;
   catalogSearchParams: URLSearchParams | undefined;
-  queryFilters: string[];
+  queryFilters: Array<string | undefined>;
 };
 
 const initialState: ProductsSliceType = {
@@ -185,12 +185,15 @@ export const productsSlice = createSlice({
     setCatalogSearchParams: (state, action) => {
       state.catalogSearchParams = action.payload;
     },
-    updateQueryFilter: (state, action) => {
+    updateQueryFilters: (state, action) => {
       const searchParams = new URLSearchParams(action.payload);
       const cid = Number(searchParams.get(QueryEnum.CatalogSubCategory));
       if (cid && cid > 0) {
         state.queryFilters[cid] = action.payload;
       }
+    },
+    clearQueryFiltersByScid: (state, action) => {
+      state.queryFilters[action.payload] = undefined;
     },
   },
   extraReducers: (builder) => {
@@ -240,8 +243,15 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilter } =
-  productsSlice.actions;
+export const {
+  setPriceFrom,
+  setPriceTo,
+  setSorting,
+  clearEditCard,
+  setCatalogSearchParams,
+  updateQueryFilters,
+  clearQueryFiltersByScid,
+} = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
