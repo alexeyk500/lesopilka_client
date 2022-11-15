@@ -20,7 +20,7 @@ const FilterSelectorItem: React.FC<PropsType> = ({ title, options, queryType, is
     let valueToSet: number | undefined = undefined;
     searchParams.forEach((value, key) => {
       if (key === queryType && Number(value)) {
-        valueToSet =Number(value);
+        valueToSet = Number(value);
       }
       setSelectedOptionId(valueToSet);
     });

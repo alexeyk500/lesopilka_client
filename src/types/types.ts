@@ -130,15 +130,15 @@ export enum ProductsSortsEnum {
   priceDESC = 'Цена по убыванию',
 }
 
-export type FilterValueType = {
-  key: number;
-  value: number | boolean | undefined;
-};
+// export type FilterValueType = {
+//   key: number;
+//   value: number | boolean | undefined;
+// };
 
-export type FilterType = {
-  title: string;
-  values: FilterValueType[];
-};
+// export type FilterType = {
+//   cid: string;
+//   query: string;
+// };
 
 export type ProductType = {
   id: number;

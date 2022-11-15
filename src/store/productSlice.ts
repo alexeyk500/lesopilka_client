@@ -1,4 +1,4 @@
-import { FilterType, ProductCardType, ProductsSortsEnum, ProductType, SizeTypeEnum } from '../types/types';
+import { ProductCardType, ProductsSortsEnum, ProductType, QueryEnum, SizeTypeEnum } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
@@ -72,7 +72,7 @@ type ProductsSliceType = {
   isSaving: boolean;
   editCard: ProductCardType;
   catalogSearchParams: URLSearchParams | undefined;
-  filters: FilterType[];
+  queryFilters: string[];
 };
 
 const initialState: ProductsSliceType = {
@@ -84,16 +84,7 @@ const initialState: ProductsSliceType = {
   isSaving: false,
   editCard: emptyEditCard,
   catalogSearchParams: undefined,
-  filters: [
-    { title: 'categoryId', values: [] },
-    { title: 'subCategoryId', values: [] },
-    { title: 'heightId', values: [] },
-    { title: 'widthId', values: [] },
-    { title: 'lengthId', values: [] },
-    { title: 'caliberId', values: [] },
-    { title: 'sortId', values: [] },
-    { title: 'septicId', values: [] },
-  ],
+  queryFilters: [],
 };
 
 export const getProductThunk = createAsyncThunk<ProductType, number, { rejectValue: string }>(
@@ -187,32 +178,19 @@ export const productsSlice = createSlice({
     setSorting: (state, action) => {
       state.sorting = action.payload;
     },
-    setFiltersValue: (state, action) => {
-      const filterIndex = state.filters.findIndex((filter) => action.payload.title === filter.title);
-      if (filterIndex > -1) {
-        if (action.payload.title === 'categoryId') {
-          state.filters[0].values = [{ key: 0, value: action.payload.value }];
-        } else {
-          const categoryId = state.filters[0].values?.[0]?.value;
-          if (typeof categoryId === 'number') {
-            const keyIndex = state.filters[filterIndex].values.findIndex(
-              (filterValue) => filterValue.key === categoryId
-            );
-            if (keyIndex > -1) {
-              state.filters[filterIndex].values[keyIndex].value = action.payload.value;
-            } else {
-              state.filters[filterIndex].values.push({ key: categoryId, value: action.payload.value });
-            }
-          }
-        }
-      }
-    },
     clearEditCard: (state) => {
       state.editCard = emptyEditCard;
       state.catalogSearchParams = undefined;
     },
     setCatalogSearchParams: (state, action) => {
       state.catalogSearchParams = action.payload;
+    },
+    updateQueryFilter: (state, action) => {
+      const searchParams = new URLSearchParams(action.payload);
+      const cid = Number(searchParams.get(QueryEnum.CatalogSubCategory));
+      if (cid && cid > 0) {
+        state.queryFilters[cid] = action.payload;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -262,7 +240,7 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, setFiltersValue, clearEditCard, setCatalogSearchParams } =
+export const { setPriceFrom, setPriceTo, setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilter } =
   productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
@@ -271,7 +249,7 @@ export const selectorPriceTo = (state: RootState) => state.products.priceTo;
 export const selectorSorting = (state: RootState) => state.products.sorting;
 export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
-export const selectorFilters = (state: RootState) => state.products.filters;
+export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
 export const selectorProductsSaving = (state: RootState) => state.products.isSaving;
 

@@ -1,11 +1,4 @@
-import {
-  CategorySizeType,
-  FilterType,
-  OptionsType,
-  ProductCardDataType,
-  ProductType,
-  SizeTypeEnum,
-} from '../types/types';
+import { CategorySizeType, OptionsType, ProductCardDataType, ProductType, SizeTypeEnum } from '../types/types';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
@@ -54,23 +47,23 @@ export const getInputFormData = (form: HTMLFormElement, name: string): string =>
   return '';
 };
 
-export const getValueFromFilter = (filters: FilterType[], title: string) => {
-  const index = filters.findIndex((filter) => filter.title === title);
-  if (index > -1) {
-    if (title === 'categoryId') {
-      return filters[0].values?.[0]?.value;
-    } else {
-      const categoryId = filters[0].values?.[0]?.value;
-      if (typeof categoryId === 'number') {
-        const keyIndex = filters[index].values.findIndex((filterValue) => filterValue.key === categoryId);
-        if (keyIndex > -1) {
-          return filters[index].values?.[keyIndex]?.value;
-        }
-      }
-    }
-  }
-  return undefined;
-};
+// export const getValueFromFilter = (filters: FilterType[], title: string) => {
+//   const index = filters.findIndex((filter) => filter.title === title);
+//   if (index > -1) {
+//     if (title === 'categoryId') {
+//       return filters[0].values?.[0]?.value;
+//     } else {
+//       const categoryId = filters[0].values?.[0]?.value;
+//       if (typeof categoryId === 'number') {
+//         const keyIndex = filters[index].values.findIndex((filterValue) => filterValue.key === categoryId);
+//         if (keyIndex > -1) {
+//           return filters[index].values?.[keyIndex]?.value;
+//         }
+//       }
+//     }
+//   }
+//   return undefined;
+// };
 
 export const getOptionTitle = (options: OptionsType[], optionId: number | undefined) => {
   if (optionId) {

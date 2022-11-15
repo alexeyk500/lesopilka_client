@@ -4,22 +4,26 @@ import FilterSearch from './FilterSearch/FilterSearch';
 import FilterCategory from './FilterCategory/FilterCategory';
 import FilterSubCategory from './FilterSubCategory/FilterSubCategory';
 import FilterSize from './FilterSize/FilterSize';
-import { SizeTypeEnum } from '../../../types/types';
-import FilterSort from './FilterSort/FilterSort';
-import FilterSeptic from './FilterSeptic/FilterSeptic';
+import { QueryEnum } from '../../../types/types';
+import FilterOption from './FilterOption/FilterOption';
+import { useAppSelector } from '../../../hooks/hooks';
+import { selectorProductSorts } from '../../../store/catalogSlice';
+import { SEPTIC_OPTIONS } from '../../../utils/constants';
 
 const FiltersRow: React.FC = () => {
+  const sortsOptions = useAppSelector(selectorProductSorts);
+
   return (
     <div className={classes.container}>
       <FilterSearch />
       <FilterCategory />
       <FilterSubCategory />
-      <FilterSize sizeType={SizeTypeEnum.height} />
-      <FilterSize sizeType={SizeTypeEnum.width} />
-      <FilterSize sizeType={SizeTypeEnum.caliber} />
-      <FilterSize sizeType={SizeTypeEnum.length} />
-      <FilterSort />
-      <FilterSeptic />
+      <FilterSize queryEnumSize={QueryEnum.HeightSizeId} />
+      <FilterSize queryEnumSize={QueryEnum.WeightSizeId} />
+      <FilterSize queryEnumSize={QueryEnum.CaliberSizeId} />
+      <FilterSize queryEnumSize={QueryEnum.LengthSizeId} />
+      <FilterOption options={sortsOptions} queryEnum={QueryEnum.SortId} />
+      <FilterOption options={SEPTIC_OPTIONS} queryEnum={QueryEnum.Septic} />
     </div>
   );
 };

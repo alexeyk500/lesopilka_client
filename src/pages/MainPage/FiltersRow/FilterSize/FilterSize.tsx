@@ -1,73 +1,60 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorFilters, setFiltersValue } from '../../../../store/productSlice';
+import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorCategorySizes } from '../../../../store/catalogSlice';
-import { getOptionTitle, getValueFromFilter } from '../../../../utils/functions';
-import { CategorySizeType, SizeTypeEnum } from '../../../../types/types';
+import { QueryEnum } from '../../../../types/types';
+import { useSearchParams } from 'react-router-dom';
 
-const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
+const getSizeTitle = (queryEnumSize: QueryEnum, sizeValue: string) => {
   const sizeTitle =
-    sizeType === SizeTypeEnum.height
+    queryEnumSize === QueryEnum.HeightSizeId
       ? 'Толщина:'
-      : sizeType === SizeTypeEnum.width
+      : queryEnumSize === QueryEnum.WeightSizeId
       ? 'Ширина:'
-      : sizeType === SizeTypeEnum.length
+      : queryEnumSize === QueryEnum.LengthSizeId
       ? 'Длинна:'
-      : sizeType === SizeTypeEnum.caliber
+      : queryEnumSize === QueryEnum.CaliberSizeId
       ? 'Диаметр:'
       : undefined;
-  const filteredSizes = sizes.filter(
-    (categorySize) =>
-      categorySize.categoryId === categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
-  );
-  return filteredSizes.map((size) => {
-    return { id: size.id, title: `${sizeTitle} ${size.value} мм` };
-  });
+  if (sizeTitle) {
+    return `${sizeTitle} ${sizeValue} мм`;
+  }
+  return undefined;
 };
 
 type PropsType = {
-  sizeType: SizeTypeEnum;
+  queryEnumSize: QueryEnum;
 };
 
-const FilterSize: React.FC<PropsType> = ({ sizeType }) => {
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector(selectorFilters);
+const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
   const allCategorySizes = useAppSelector(selectorCategorySizes);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedSizeTile, setSelectedSizeTitle] = useState<string | undefined>(undefined);
 
-  const categoryId = getValueFromFilter(filters, 'categoryId');
-  const filterSizeType =
-    sizeType === SizeTypeEnum.height
-      ? 'heightId'
-      : sizeType === SizeTypeEnum.width
-      ? 'widthId'
-      : sizeType === SizeTypeEnum.length
-      ? 'lengthId'
-      : sizeType === SizeTypeEnum.caliber
-      ? 'caliberId'
-      : undefined;
-
-  const getSizeTitle = useCallback(() => {
-    if (filterSizeType) {
-      const sizeId = getValueFromFilter(filters, filterSizeType);
-      if (typeof sizeId == 'number') {
-        const sizesOptions =
-          categoryId && typeof categoryId === 'number' ? getSizeOptions(allCategorySizes, categoryId, sizeType) : [];
-        return getOptionTitle(sizesOptions, sizeId);
+  useEffect(() => {
+    const sizeId = Number(searchParams.get(queryEnumSize));
+    if (allCategorySizes && sizeId) {
+      const size = allCategorySizes.find((curSize) => curSize.id === sizeId);
+      if (size) {
+        const title = getSizeTitle(queryEnumSize, size.value);
+        if (title) {
+          setSelectedSizeTitle(title);
+        }
       }
+    } else {
+      setSelectedSizeTitle(undefined);
     }
-    return undefined;
-  }, [filters, allCategorySizes, filterSizeType, categoryId, sizeType]);
-  const sizeTitle = getSizeTitle();
+  }, [searchParams, allCategorySizes, queryEnumSize]);
 
   const resetCategoryFilter = () => {
-    dispatch(setFiltersValue({ title: filterSizeType, value: undefined }));
+    searchParams.delete(queryEnumSize);
+    setSearchParams(searchParams);
   };
 
   return (
     <>
-      {sizeTitle && (
-        <ButtonComponent title={sizeTitle || ''} buttonType={ButtonType.FILTER} onClick={resetCategoryFilter} />
+      {selectedSizeTile && (
+        <ButtonComponent title={selectedSizeTile || ''} buttonType={ButtonType.FILTER} onClick={resetCategoryFilter} />
       )}
     </>
   );

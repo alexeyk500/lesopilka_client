@@ -11,7 +11,7 @@ import {
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
 import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
-import { getProductsThunk } from '../../../store/productSlice';
+import { getProductsThunk, selectorQueryFilters, updateQueryFilter } from '../../../store/productSlice';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -29,6 +29,7 @@ const FilterSelectors: React.FC = () => {
   const sorts = useAppSelector(selectorProductSorts);
   const subCategoriesState = useAppSelector(selectorSubCategories);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
+  const queryFilters = useAppSelector(selectorQueryFilters);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
@@ -74,7 +75,27 @@ const FilterSelectors: React.FC = () => {
   }, [selectedCategoryId, allCategorySizes]);
 
   const updateProductsBySearchParams = () => {
+    // console.log(searchParams.toString())
+    // dispatch(updateQueryFilter(searchParams.toString()));
+    // dispatch(getProductsThunk(searchParams));
+  };
+
+  useEffect(() => {
+    console.log('SearchParams changed', searchParams.toString());
     dispatch(getProductsThunk(searchParams));
+  }, [dispatch, searchParams]);
+
+  const onChangeCatalogSubCategory = (id: number | undefined) => {
+    // const currentSearchParams = searchParams.toString()
+    // const cid = Number(searchParams.get(QueryEnum.CatalogSubCategory))
+    // if (cid && cid > 0) {
+    //   const filterSearchParamsStr = queryFilters[cid] || '';
+    //   const filterSearchParams = new URLSearchParams(filterSearchParamsStr);
+    //   dispatch(getProductsThunk(filterSearchParams));
+    // } else {
+    //   dispatch(getProductsThunk(searchParams));
+    // }
+    // dispatch(updateQueryFilter(currentSearchParams.toString()));
   };
 
   return (
@@ -90,7 +111,7 @@ const FilterSelectors: React.FC = () => {
         title={'Пиломатериал'}
         queryType={QueryEnum.CatalogSubCategory}
         options={subCategories}
-        onSelect={updateProductsBySearchParams}
+        onSelect={onChangeCatalogSubCategory}
         isExpand={true}
       />
       {selectedCategoryId !== BREVNO_CATEGORY_ID ? (
@@ -102,7 +123,7 @@ const FilterSelectors: React.FC = () => {
             onSelect={updateProductsBySearchParams}
           />
           <FilterSelectorItem
-            title={'Толщина'}
+            title={'Ширина'}
             queryType={QueryEnum.WeightSizeId}
             options={widthSizes}
             onSelect={updateProductsBySearchParams}
