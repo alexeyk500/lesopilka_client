@@ -187,13 +187,19 @@ export const productsSlice = createSlice({
     },
     updateQueryFilters: (state, action) => {
       const searchParams = new URLSearchParams(action.payload);
-      const cid = Number(searchParams.get(QueryEnum.CatalogSubCategory));
+      const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
       if (cid && cid > 0) {
         state.queryFilters[cid] = action.payload;
+      } else {
+        state.queryFilters[0] = action.payload;
       }
     },
-    clearQueryFiltersByScid: (state, action) => {
-      state.queryFilters[action.payload] = undefined;
+    resetQueryFilters: (state, action) => {
+      const searchParams = new URLSearchParams(action.payload);
+      const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
+      if (cid && cid > 0) {
+        state.queryFilters[cid] = undefined;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -250,7 +256,7 @@ export const {
   clearEditCard,
   setCatalogSearchParams,
   updateQueryFilters,
-  clearQueryFiltersByScid,
+  resetQueryFilters,
 } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;

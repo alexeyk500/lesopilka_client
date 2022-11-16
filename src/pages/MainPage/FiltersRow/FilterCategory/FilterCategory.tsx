@@ -1,21 +1,25 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppSelector } from '../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorCategories } from '../../../../store/catalogSlice';
 import { getOptionTitle } from '../../../../utils/functions';
 import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../../../types/types';
+import { updateQueryFilters } from '../../../../store/productSlice';
 
 const FilterCategory: React.FC = () => {
+  const dispatch = useAppDispatch();
   const categories = useAppSelector(selectorCategories);
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
+    let valueToSet: number | undefined = undefined;
     searchParams.forEach((value, key) => {
-      if (key === QueryEnum.CatalogCategory) {
-        setSelectedCategoryId(Number(value));
+      if (key === QueryEnum.CatalogCategory && Number(value)) {
+        valueToSet = Number(value);
       }
+      setSelectedCategoryId(valueToSet);
     });
   }, [searchParams]);
 
@@ -31,6 +35,7 @@ const FilterCategory: React.FC = () => {
 
   const resetCategoryFilter = () => {
     searchParams.delete(QueryEnum.CatalogCategory);
+    dispatch(updateQueryFilters(searchParams.toString()));
     setSearchParams(searchParams);
   };
 

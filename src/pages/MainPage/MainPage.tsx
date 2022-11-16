@@ -13,6 +13,7 @@ const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const isSearchParams = !!searchParams.toString().length;
 
   const onClickCatalogCategory = (id: number) => {
     if (id) {
@@ -27,11 +28,7 @@ const MainPage: React.FC = () => {
   return (
     <div className={classes.container}>
       <LeftColumn>
-        {searchParams.toString().includes(QueryEnum.CatalogCategory) ? (
-          <FilterSelectors />
-        ) : (
-          <Catalog onClickCatalogCategory={onClickCatalogCategory} />
-        )}
+        {isSearchParams ? <FilterSelectors /> : <Catalog onClickCatalogCategory={onClickCatalogCategory} />}
       </LeftColumn>
       <MainPageMainPart />
     </div>

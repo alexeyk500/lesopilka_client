@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppSelector } from '../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
 import { getOptionTitle } from '../../../../utils/functions';
 import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../../../types/types';
+import { updateQueryFilters } from '../../../../store/productSlice';
 
 const FilterSubCategory: React.FC = () => {
+  const dispatch = useAppDispatch();
   const subCategories = useAppSelector(selectorSubCategories);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<number | undefined>(undefined);
 
@@ -34,6 +35,7 @@ const FilterSubCategory: React.FC = () => {
 
   const resetCategoryFilter = () => {
     searchParams.delete(QueryEnum.CatalogSubCategory);
+    dispatch(updateQueryFilters(searchParams.toString()));
     setSearchParams(searchParams);
   };
 

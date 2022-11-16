@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import classes from './FilterSelectors.module.css';
 import FilterSelectorItem from './FilterSelectorItem/FilterSelectorItem';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
@@ -11,7 +11,7 @@ import {
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
 import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
-import {getProductsThunk, selectorQueryFilters, updateQueryFilters} from '../../../store/productSlice';
+import { getProductsThunk, selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -33,7 +33,6 @@ const FilterSelectors: React.FC = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | undefined>(undefined);
-  const [filterChanged, setFilterChanged] = useState<QueryEnum | undefined>(undefined);
 
   useEffect(() => {
     searchParams.forEach((value, key) => {
@@ -75,54 +74,33 @@ const FilterSelectors: React.FC = () => {
     return [];
   }, [selectedCategoryId, allCategorySizes]);
 
-  const sendQueryToQueryFilter = () => {
-    console.log('sendQueryToQueryFilter searchParams =', searchParams.toString());
-    dispatch(updateQueryFilters(searchParams.toString()));
-    // dispatch(sendQueryToQueryFilter()
-    // console.log(searchParams.toString())
-    // dispatch(getProductsThunk(searchParams));
-  };
-
-  // useEffect(() => {
-  //   console.log('SearchParams changed', searchParams.toString());
-  //   const scid = Number(searchParams.get(QueryEnum.CatalogSubCategory));
-  //   console.log('scid =', scid);
-  //   if (scid) {
-  //     const queryFromFilter = queryFilters[scid];
-  //     if (queryFromFilter) {
-  //       console.log('queryFromFilter =', queryFromFilter);
-  //       const newSearchParams = new URLSearchParams(queryFromFilter);
-  //       console.log('will clearQueryFiltersByScid and setSearchParams');
-  //       dispatch(clearQueryFiltersByScid(scid));
-  //       setSearchParams(newSearchParams);
-  //     } else {
-  //       console.log('will update filter and getProductsThunk 1111');
-  //       dispatch(updateQueryFilters(searchParams.toString()));
-  //       dispatch(getProductsThunk(searchParams));
-  //     }
-  //   } else {
-  //     console.log('will update filter and getProductsThunk 2222');
-  //     dispatch(updateQueryFilters(searchParams.toString()));
-  //     dispatch(getProductsThunk(searchParams));
-  //   }
-  // }, [dispatch, searchParams, queryFilters, setSearchParams]);
-
   useEffect(() => {
-    console.log('SearchParams changed', searchParams.toString());
-    console.log('filterCidOrScidChangedRef.current =', filterCidOrScidChangedRef.current);
-    if (filterCidOrScidChangedRef.current) {
-      console.log('filterCidOrScidChangedRef.current 22222 =', filterCidOrScidChangedRef.current);
-      setFilterChanged(undefined);
+    if (filterChangedRef.current) {
+      if (filterChangedRef.current === QueryEnum.CatalogCategory) {
+        const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
+        if (cid > 0) {
+          const queryFromQueryFilters = queryFilters[cid];
+          if (queryFromQueryFilters) {
+            setSearchParams(queryFromQueryFilters);
+          } else {
+            setSearchParams(`?cid=${cid}`);
+          }
+        }
+      } else {
+        dispatch(updateQueryFilters(searchParams.toString()));
+      }
+      setWhatFilterChangedRef(undefined);
     } else {
+      console.log('will getProductsThunk(searchParams) = ', searchParams.toString());
       dispatch(getProductsThunk(searchParams));
     }
-  }, [dispatch, searchParams, filterChanged]);
+  }, [dispatch, searchParams, queryFilters, setSearchParams]);
 
-  const filterCidOrScidChangedRef = useRef<QueryEnum | undefined>(undefined)
+  const filterChangedRef = useRef<QueryEnum | undefined>(undefined);
 
   const setWhatFilterChangedRef = (value: QueryEnum | undefined) => {
-    filterCidOrScidChangedRef.current = value
-  }
+    filterChangedRef.current = value;
+  };
 
   return (
     <div className={classes.container}>
@@ -131,7 +109,7 @@ const FilterSelectors: React.FC = () => {
         queryType={QueryEnum.CatalogCategory}
         options={categories}
         onSelect={() => {
-          setWhatFilterChangedRef(QueryEnum.CatalogCategory)
+          setWhatFilterChangedRef(QueryEnum.CatalogCategory);
         }}
         isExpand={true}
       />
@@ -150,13 +128,17 @@ const FilterSelectors: React.FC = () => {
             title={'Толщина'}
             queryType={QueryEnum.HeightSizeId}
             options={heightSizes}
-            onSelect={sendQueryToQueryFilter}
+            onSelect={() => {
+              setWhatFilterChangedRef(QueryEnum.HeightSizeId);
+            }}
           />
           <FilterSelectorItem
             title={'Ширина'}
             queryType={QueryEnum.WeightSizeId}
             options={widthSizes}
-            onSelect={sendQueryToQueryFilter}
+            onSelect={() => {
+              setWhatFilterChangedRef(QueryEnum.WeightSizeId);
+            }}
           />
         </>
       ) : (
@@ -164,26 +146,34 @@ const FilterSelectors: React.FC = () => {
           title={'Диаметр'}
           queryType={QueryEnum.CaliberSizeId}
           options={caliberSizes}
-          onSelect={sendQueryToQueryFilter}
+          onSelect={() => {
+            setWhatFilterChangedRef(QueryEnum.CaliberSizeId);
+          }}
         />
       )}
       <FilterSelectorItem
         title={'Длинна'}
         queryType={QueryEnum.LengthSizeId}
         options={lengthSizes}
-        onSelect={sendQueryToQueryFilter}
+        onSelect={() => {
+          setWhatFilterChangedRef(QueryEnum.LengthSizeId);
+        }}
       />
       <FilterSelectorItem
         title={'Сорт'}
         queryType={QueryEnum.SortId}
         options={sorts}
-        onSelect={sendQueryToQueryFilter}
+        onSelect={() => {
+          setWhatFilterChangedRef(QueryEnum.SortId);
+        }}
       />
       <FilterSelectorItem
         title={'Антисептик'}
         queryType={QueryEnum.Septic}
         options={SEPTIC_OPTIONS}
-        onSelect={sendQueryToQueryFilter}
+        onSelect={() => {
+          setWhatFilterChangedRef(QueryEnum.Septic);
+        }}
       />
     </div>
   );
