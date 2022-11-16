@@ -3,12 +3,10 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 8px 0;
-  padding: 4px 8px 4px 8px;
+  margin-top: 8px;
+  padding: 0 16px;
   border-radius: 12px;
   color: var(--gray_color);
-  background-color: var(--section_background);
-  box-shadow: var(--box_shadow);
   flex-wrap: wrap;
 }
 

@@ -3,11 +3,11 @@
   justify-content: flex-end;
   align-items: center;
   width: 268px;
-  margin-right: 32px;
+  /*margin-right: 32px;*/
 }
 
 .result {
-  margin-right: 16px;
+  /*margin-right: 16px;*/
   font-size: 14px;
   font-weight: 600;
 }

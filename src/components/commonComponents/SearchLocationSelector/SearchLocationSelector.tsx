@@ -20,6 +20,8 @@ import {
   userUpdateThunk,
 } from '../../../store/userSlice';
 import { getOptionsWithFirstEmptyOption } from '../../../utils/functions';
+import { useSearchParams } from 'react-router-dom';
+import { QueryEnum } from '../../../types/types';
 
 const SearchLocationSelector: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +37,34 @@ const SearchLocationSelector: React.FC = () => {
 
   const regionsOptions = getOptionsWithFirstEmptyOption(regions);
   const searchLocationsOptions = getOptionsWithFirstEmptyOption(searchLocationsByRegionId);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    let isNeedToUpdateSearchParams = false;
+    const querySearchRegionId = Number(searchParams.get(QueryEnum.SearchRegionId));
+    const querySearchLocationId = Number(searchParams.get(QueryEnum.SearchLocationId));
+    if (querySearchRegionId !== searchRegionId) {
+      if (searchRegionId) {
+        searchParams.set(QueryEnum.SearchRegionId, searchRegionId.toString());
+      } else {
+        searchParams.delete(QueryEnum.SearchRegionId);
+      }
+      isNeedToUpdateSearchParams = true;
+    }
+    if (querySearchLocationId !== searchLocationId) {
+      if (searchLocationId) {
+        searchParams.delete(QueryEnum.SearchRegionId);
+        searchParams.set(QueryEnum.SearchLocationId, searchLocationId.toString());
+      } else {
+        searchParams.delete(QueryEnum.SearchLocationId);
+      }
+      isNeedToUpdateSearchParams = true;
+    }
+    if (isNeedToUpdateSearchParams) {
+      setSearchParams(searchParams);
+    }
+  }, [searchRegionId, searchLocationId, searchParams, setSearchParams]);
 
   useEffect(() => {
     dispatch(getRegionsThunk());

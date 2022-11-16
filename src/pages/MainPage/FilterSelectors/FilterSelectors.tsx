@@ -11,7 +11,7 @@ import {
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
 import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
-import { getProductsThunk, selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
+import { selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -94,7 +94,7 @@ const FilterSelectors: React.FC = () => {
       }
       setWhatFilterChangedRef(undefined);
     } else {
-      dispatch(getProductsThunk(searchParams));
+      // dispatch(getProductsThunk(searchParams));
     }
   }, [dispatch, searchParams, queryFilters, setSearchParams]);
 
