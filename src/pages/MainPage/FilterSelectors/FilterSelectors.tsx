@@ -82,8 +82,11 @@ const FilterSelectors: React.FC = () => {
           const queryFromQueryFilters = queryFilters[cid];
           if (queryFromQueryFilters) {
             setSearchParams(queryFromQueryFilters);
-          } else {
-            setSearchParams(`?cid=${cid}`);
+          }
+        } else {
+          const queryFromQueryFilters = queryFilters[0];
+          if (queryFromQueryFilters) {
+            setSearchParams(queryFromQueryFilters);
           }
         }
       } else {

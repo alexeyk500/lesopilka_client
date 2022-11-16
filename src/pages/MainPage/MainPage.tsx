@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classes from './MainPage.module.css';
 import Catalog from '../../components/Catalog/Catalog';
-import { useAppDispatch } from '../../hooks/hooks';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import { getProductsThunk } from '../../store/productSlice';
 import FilterSelectors from './FilterSelectors/FilterSelectors';
 import MainPageMainPart from './MainPageMainPart/MainPageMainPart';
 import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../types/types';
 
 const MainPage: React.FC = () => {
-  const dispatch = useAppDispatch();
-
   const [searchParams, setSearchParams] = useSearchParams();
   const isSearchParams = !!searchParams.toString().length;
 
@@ -20,10 +16,6 @@ const MainPage: React.FC = () => {
       setSearchParams({ [QueryEnum.CatalogCategory]: id.toString() }, { replace: true });
     }
   };
-
-  useEffect(() => {
-    dispatch(getProductsThunk(searchParams));
-  }, [dispatch, searchParams]);
 
   return (
     <div className={classes.container}>

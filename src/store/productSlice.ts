@@ -194,13 +194,13 @@ export const productsSlice = createSlice({
         state.queryFilters[0] = action.payload;
       }
     },
-    resetQueryFilters: (state, action) => {
-      const searchParams = new URLSearchParams(action.payload);
-      const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
-      if (cid && cid > 0) {
-        state.queryFilters[cid] = undefined;
-      }
-    },
+    // resetQueryFilters: (state, action) => {
+    //   const searchParams = new URLSearchParams(action.payload);
+    //   const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
+    //   if (cid && cid > 0) {
+    //     state.queryFilters[cid] = undefined;
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -249,15 +249,8 @@ export const productsSlice = createSlice({
   },
 });
 
-export const {
-  setPriceFrom,
-  setPriceTo,
-  setSorting,
-  clearEditCard,
-  setCatalogSearchParams,
-  updateQueryFilters,
-  resetQueryFilters,
-} = productsSlice.actions;
+export const { setPriceFrom, setPriceTo, setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilters } =
+  productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;

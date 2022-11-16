@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './FiltersRow.module.css';
 import FilterSearch from './FilterSearch/FilterSearch';
-import FilterCategory from './FilterCategory/FilterCategory';
 import FilterSize from './FilterSize/FilterSize';
 import { QueryEnum } from '../../../types/types';
 import FilterOption from './FilterOption/FilterOption';
@@ -17,7 +16,6 @@ const FiltersRow: React.FC = () => {
   return (
     <div className={classes.container}>
       <FilterSearch />
-      <FilterCategory />
       <FilterOption preTitle={'Раздел: '} options={categories} queryEnum={QueryEnum.CatalogCategory} />
       <FilterOption preTitle={'Пиломатериал: '} options={subCategories} queryEnum={QueryEnum.CatalogSubCategory} />
       <FilterSize queryEnumSize={QueryEnum.HeightSizeId} />
