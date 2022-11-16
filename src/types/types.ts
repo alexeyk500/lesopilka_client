@@ -130,16 +130,6 @@ export enum ProductsSortsEnum {
   priceDESC = 'Цена по убыванию',
 }
 
-// export type FilterValueType = {
-//   key: number;
-//   value: number | boolean | undefined;
-// };
-
-// export type FilterType = {
-//   cid: string;
-//   query: string;
-// };
-
 export type ProductType = {
   id: number;
   code: string | undefined;
@@ -166,4 +156,6 @@ export enum QueryEnum {
   LengthSizeId = 'lsid',
   SortId = 'psid',
   Septic = 'sep',
+  SearchRegionId = 'srid',
+  SearchLocationId = 'slid',
 }

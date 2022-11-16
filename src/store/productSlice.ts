@@ -194,13 +194,6 @@ export const productsSlice = createSlice({
         state.queryFilters[0] = action.payload;
       }
     },
-    // resetQueryFilters: (state, action) => {
-    //   const searchParams = new URLSearchParams(action.payload);
-    //   const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
-    //   if (cid && cid > 0) {
-    //     state.queryFilters[cid] = undefined;
-    //   }
-    // },
   },
   extraReducers: (builder) => {
     builder

@@ -142,6 +142,9 @@ export const userSlice = createSlice({
           showErrorPopUp(action.payload);
         }
       })
+      .addCase(userLoginByTokenThunk.rejected, (state) => {
+        userSlice.caseReducers.resetUser(state);
+      })
       .addCase(userCheckPasswordThunk.rejected, (state, action) => {
         if (action.payload) {
           showErrorPopUp(action.payload);
