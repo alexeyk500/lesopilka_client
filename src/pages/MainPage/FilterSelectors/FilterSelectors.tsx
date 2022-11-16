@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import classes from './FilterSelectors.module.css';
 import FilterSelectorItem from './FilterSelectorItem/FilterSelectorItem';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
@@ -11,7 +11,7 @@ import {
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
 import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
-import { getProductsThunk, selectorQueryFilters } from '../../../store/productSlice';
+import {getProductsThunk, selectorQueryFilters, updateQueryFilters} from '../../../store/productSlice';
 
 const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
@@ -77,9 +77,9 @@ const FilterSelectors: React.FC = () => {
 
   const sendQueryToQueryFilter = () => {
     console.log('sendQueryToQueryFilter searchParams =', searchParams.toString());
+    dispatch(updateQueryFilters(searchParams.toString()));
     // dispatch(sendQueryToQueryFilter()
     // console.log(searchParams.toString())
-    // dispatch(updateQueryFilter(searchParams.toString()));
     // dispatch(getProductsThunk(searchParams));
   };
 
@@ -109,13 +109,20 @@ const FilterSelectors: React.FC = () => {
 
   useEffect(() => {
     console.log('SearchParams changed', searchParams.toString());
-    console.log('filterChanged =', filterChanged);
-    if (filterChanged) {
+    console.log('filterCidOrScidChangedRef.current =', filterCidOrScidChangedRef.current);
+    if (filterCidOrScidChangedRef.current) {
+      console.log('filterCidOrScidChangedRef.current 22222 =', filterCidOrScidChangedRef.current);
       setFilterChanged(undefined);
     } else {
       dispatch(getProductsThunk(searchParams));
     }
   }, [dispatch, searchParams, filterChanged]);
+
+  const filterCidOrScidChangedRef = useRef<QueryEnum | undefined>(undefined)
+
+  const setWhatFilterChangedRef = (value: QueryEnum | undefined) => {
+    filterCidOrScidChangedRef.current = value
+  }
 
   return (
     <div className={classes.container}>
@@ -124,7 +131,7 @@ const FilterSelectors: React.FC = () => {
         queryType={QueryEnum.CatalogCategory}
         options={categories}
         onSelect={() => {
-          setFilterChanged(QueryEnum.CatalogCategory);
+          setWhatFilterChangedRef(QueryEnum.CatalogCategory)
         }}
         isExpand={true}
       />
@@ -133,7 +140,7 @@ const FilterSelectors: React.FC = () => {
         queryType={QueryEnum.CatalogSubCategory}
         options={subCategories}
         onSelect={() => {
-          setFilterChanged(QueryEnum.CatalogSubCategory);
+          setWhatFilterChangedRef(QueryEnum.CatalogSubCategory);
         }}
         isExpand={true}
       />
@@ -143,9 +150,7 @@ const FilterSelectors: React.FC = () => {
             title={'Толщина'}
             queryType={QueryEnum.HeightSizeId}
             options={heightSizes}
-            onSelect={() => {
-              setFilterChanged(QueryEnum.HeightSizeId);
-            }}
+            onSelect={sendQueryToQueryFilter}
           />
           <FilterSelectorItem
             title={'Ширина'}
