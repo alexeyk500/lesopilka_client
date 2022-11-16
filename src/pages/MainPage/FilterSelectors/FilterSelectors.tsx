@@ -94,7 +94,6 @@ const FilterSelectors: React.FC = () => {
       }
       setWhatFilterChangedRef(undefined);
     } else {
-      console.log('will getProductsThunk(searchParams) = ', searchParams.toString());
       dispatch(getProductsThunk(searchParams));
     }
   }, [dispatch, searchParams, queryFilters, setSearchParams]);

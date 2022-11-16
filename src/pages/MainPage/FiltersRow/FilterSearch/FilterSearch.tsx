@@ -63,7 +63,6 @@ const FilterSearch: React.FC = () => {
   const resetSearch = () => {
     if (searchLocationId) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      console.log('resetSearch searchLocationId token =', token)
       if (token) {
         dispatch(userUpdateThunk({ token, searchLocationId: null }));
       } else {
@@ -72,7 +71,6 @@ const FilterSearch: React.FC = () => {
     } else {
       if (searchRegionId) {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-        console.log('resetSearch searchRegionId token =', token)
         if (token) {
           dispatch(userUpdateThunk({ token, searchRegionId: null }));
         } else {
