@@ -9,7 +9,7 @@ import {
   selectorSubCategories,
 } from '../../../store/catalogSlice';
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
-import { BREVNO_CATEGORY_ID, SEPTIC_OPTIONS } from '../../../utils/constants';
+import { CALIBER_PRODUCT_CATEGORIES, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
 import { selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
 
@@ -124,7 +124,16 @@ const FilterSelectors: React.FC = () => {
         }}
         isExpand={true}
       />
-      {selectedCategoryId !== BREVNO_CATEGORY_ID ? (
+      {selectedCategoryId && CALIBER_PRODUCT_CATEGORIES.includes(selectedCategoryId) ? (
+        <FilterSelectorItem
+          title={'Диаметр'}
+          queryType={QueryEnum.CaliberSizeId}
+          options={caliberSizes}
+          onSelect={() => {
+            setWhatFilterChangedRef(QueryEnum.CaliberSizeId);
+          }}
+        />
+      ) : (
         <>
           <FilterSelectorItem
             title={'Толщина'}
@@ -143,15 +152,6 @@ const FilterSelectors: React.FC = () => {
             }}
           />
         </>
-      ) : (
-        <FilterSelectorItem
-          title={'Диаметр'}
-          queryType={QueryEnum.CaliberSizeId}
-          options={caliberSizes}
-          onSelect={() => {
-            setWhatFilterChangedRef(QueryEnum.CaliberSizeId);
-          }}
-        />
       )}
       <FilterSelectorItem
         title={'Длинна'}

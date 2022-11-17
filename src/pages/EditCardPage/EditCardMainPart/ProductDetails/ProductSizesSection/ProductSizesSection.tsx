@@ -8,9 +8,10 @@ import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
+import { CALIBER_PRODUCT_CATEGORIES } from '../../../../../utils/constants';
 
 export const getSizesSectionIndicator = (productCard: ProductCardType) => {
-  if (productCard.categoryId === 6) {
+  if (productCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(productCard.categoryId)) {
     const result =
       ((productCard.caliberId && productCard.caliberId > 0) || productCard.customCaliberValue) &&
       ((productCard.lengthId && productCard.lengthId > 0) || productCard.customLengthValue);
@@ -133,7 +134,6 @@ const ProductSizesSection = () => {
     (updateData) => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && updateData) {
-        console.log('request to BackEnd -', updateData);
         dispatch(updateProductThunk({ token, updateData }));
       }
     },
@@ -334,7 +334,7 @@ const ProductSizesSection = () => {
           [classes.rowContainerSlim]: editCard.widthId === -1 || editCard.heightId === -1 || editCard.lengthId === -1,
         })}
       >
-        {editCard.categoryId === 6 ? (
+        {editCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(editCard.categoryId) ? (
           <SectionSelector
             title={'Диаметр'}
             options={caliberSizes}
