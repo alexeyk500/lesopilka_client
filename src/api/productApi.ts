@@ -24,6 +24,11 @@ export const productApi = {
     return response.data;
   },
 
+  async updateProductDescription(token: string, updateData: UpdateProductDataType) {
+    const response = await instanceAxios.put<ProductType>(`/product/description`, updateData, setAuthHeader(token));
+    return response.data;
+  },
+
   async uploadPictureToProduct(token: string, productId: number, img: File) {
     const formData = new FormData();
     formData.append('productId', String(productId));

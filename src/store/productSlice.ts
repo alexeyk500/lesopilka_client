@@ -37,6 +37,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.sortId = product.sort?.id;
   productCard.isSeptic = product.isSeptic;
   productCard.images = product.images;
+  productCard.description = product.description;
 
   const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
   productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
@@ -124,7 +125,8 @@ export type UpdateProductDataType = {
   productId: number;
   subCategoryId?: number | null;
   productMaterialId?: number | null;
-  categorySizeId?: number;
+  categorySizeId?: number | null;
+  description?: string | null;
 };
 
 export const updateProductThunk = createAsyncThunk<
@@ -136,6 +138,20 @@ export const updateProductThunk = createAsyncThunk<
     return await serverApi.updateProduct(token, updateData);
   } catch (e: any) {
     return rejectWithValue(`Ошибка обновления полей товара c id=${updateData.productId}\n` + e.response?.data?.message);
+  }
+});
+
+export const updateProductDescriptionThunk = createAsyncThunk<
+  ProductType,
+  { token: string; updateData: UpdateProductDataType },
+  { rejectValue: string }
+>('product/updateProductDescriptionThunk', async ({ token, updateData }, { rejectWithValue }) => {
+  try {
+    return await serverApi.updateProductDescription(token, updateData);
+  } catch (e: any) {
+    return rejectWithValue(
+      `Ошибка обновления описания товара c id=${updateData.productId}\n` + e.response?.data?.message
+    );
   }
 });
 
@@ -212,7 +228,8 @@ export const productsSlice = createSlice({
         isAnyOf(
           updateProductThunk.fulfilled,
           uploadPictureToProductThunk.fulfilled,
-          deleteProductPictureThunk.fulfilled
+          deleteProductPictureThunk.fulfilled,
+          updateProductDescriptionThunk.fulfilled
         ),
         (state, action) => {
           fillProductCard(state.editCard, action.payload);
@@ -227,13 +244,23 @@ export const productsSlice = createSlice({
         showErrorPopUp(action.payload!);
       })
       .addMatcher(
-        isAnyOf(updateProductThunk.pending, uploadPictureToProductThunk.pending, deleteProductPictureThunk.pending),
+        isAnyOf(
+          updateProductThunk.pending,
+          uploadPictureToProductThunk.pending,
+          deleteProductPictureThunk.pending,
+          updateProductDescriptionThunk.pending
+        ),
         (state) => {
           state.isSaving = true;
         }
       )
       .addMatcher(
-        isAnyOf(updateProductThunk.rejected, uploadPictureToProductThunk.rejected, deleteProductPictureThunk.rejected),
+        isAnyOf(
+          updateProductThunk.rejected,
+          uploadPictureToProductThunk.rejected,
+          deleteProductPictureThunk.rejected,
+          updateProductDescriptionThunk.rejected
+        ),
         (state, action) => {
           state.isSaving = false;
           showErrorPopUp(action.payload!);

@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
-import { CALIBER_PRODUCT_CATEGORIES } from '../../../../../utils/constants';
+import { CALIBER_PRODUCT_CATEGORIES, DEBOUNCE_TIME } from '../../../../../utils/constants';
 
 export const getSizesSectionIndicator = (productCard: ProductCardType) => {
   if (productCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(productCard.categoryId)) {
@@ -137,7 +137,7 @@ const ProductSizesSection = () => {
         dispatch(updateProductThunk({ token, updateData }));
       }
     },
-    1000,
+    DEBOUNCE_TIME,
     true
   );
 
