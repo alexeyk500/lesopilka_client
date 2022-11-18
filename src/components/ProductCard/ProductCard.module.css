@@ -10,6 +10,7 @@
   color: var(--gray_color);
   background-color: var(--section_background);
   font-size: 14px;
+  margin-bottom: 6px;
 }
 
 .addProductCardContainer {

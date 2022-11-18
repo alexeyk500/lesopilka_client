@@ -5,7 +5,8 @@
   padding-left: 8px;
   flex-wrap: wrap;
   align-content: baseline;
-  gap: 17px;
+  column-gap: 17px;
+  row-gap: 11px;
   overflow-y: scroll;
   border-radius: 12px;
 }
