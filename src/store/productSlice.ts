@@ -39,6 +39,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.images = product.images;
   productCard.description = product.description;
   productCard.productCode = product.code;
+  productCard.price = product.price;
 
   const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
   productCard.heightId = heightId && heightId > 0 ? heightId : undefined;

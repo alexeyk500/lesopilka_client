@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import {selectorEditCard, updateProductThunk} from "../../../../../store/productSlice";
-import UseDebouncedFunction from "../../../../../hooks/UseDebounceFunction";
-import {DEBOUNCE_TIME} from "../../../../../utils/constants";
+import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
+import { DEBOUNCE_TIME } from '../../../../../utils/constants';
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
@@ -13,20 +13,15 @@ const ProductCodeSection = () => {
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const newCode = event.currentTarget.value ? event.currentTarget.value : undefined;
-    setCode(newCode);
-    let updateData;
     if (newCode) {
-      updateData = {
-        productId: editCard.id,
-        code: newCode,
-      };
+      setCode(newCode);
+      const updateData = { productId: editCard.id, code: newCode };
+      debounceUpdateCode(updateData);
     } else {
-      updateData = {
-        productId: editCard.id,
-        code: null,
-      };
+      setCode('');
+      const updateData = { productId: editCard.id, code: null };
+      debounceUpdateCode(updateData);
     }
-    debounceUpdateCode(updateData);
   };
 
   useEffect(() => {
