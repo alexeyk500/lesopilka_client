@@ -1,22 +1,54 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { selectorProductCard, setProductCode } from '../../../../../store/productCardSlice';
 import SectionContainer from '../SectionContainer/SectionContainer';
+import {selectorEditCard, updateProductThunk} from "../../../../../store/productSlice";
+import UseDebouncedFunction from "../../../../../hooks/UseDebounceFunction";
+import {DEBOUNCE_TIME} from "../../../../../utils/constants";
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorProductCard);
+  const editCard = useAppSelector(selectorEditCard);
+  const [code, setCode] = useState<string | undefined>(undefined);
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    dispatch(setProductCode(event.currentTarget.value ? event.currentTarget.value : undefined));
+    const newCode = event.currentTarget.value ? event.currentTarget.value : undefined;
+    setCode(newCode);
+    let updateData;
+    if (newCode) {
+      updateData = {
+        productId: editCard.id,
+        code: newCode,
+      };
+    } else {
+      updateData = {
+        productId: editCard.id,
+        code: null,
+      };
+    }
+    debounceUpdateCode(updateData);
   };
+
+  useEffect(() => {
+    setCode(editCard.productCode);
+  }, [editCard.productCode]);
+
+  const debounceUpdateCode = UseDebouncedFunction(
+    (updateData) => {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token && updateData) {
+        dispatch(updateProductThunk({ token, updateData }));
+      }
+    },
+    DEBOUNCE_TIME,
+    true
+  );
 
   return (
     <SectionContainer title={'Артикул'} completeCondition={!!editCard.productCode} blurCondition={false}>
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>
-        <input className={classes.customSizeInput} value={editCard.productCode} onChange={onChangeInput} type="text" />
+        <input className={classes.customSizeInput} value={code} onChange={onChangeInput} type="text" />
       </div>
     </SectionContainer>
   );
