@@ -9,10 +9,12 @@ type UserSliceType = {
   user?: UserType;
   appSearchRegionId?: number;
   appSearchLocationId?: number;
+  isLoading?: boolean;
 };
 
 const initialState: UserSliceType = {
   user: undefined,
+  isLoading: false,
 };
 
 export const userLoginByPasswordThunk = createAsyncThunk<
@@ -137,36 +139,49 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(userLoginByPasswordThunk.rejected, (state, action) => {
+        state.isLoading = false;
         userSlice.caseReducers.resetUser(state);
         if (action.payload && action.payload !== 'Токен отсутствует или невалиден') {
           showErrorPopUp(action.payload);
         }
       })
       .addCase(userLoginByTokenThunk.rejected, (state) => {
+        state.isLoading = false;
         userSlice.caseReducers.resetUser(state);
       })
       .addCase(userCheckPasswordThunk.rejected, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           showErrorPopUp(action.payload);
         }
       })
       .addCase(userCreateManufacturerThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
         if (action.payload) {
           showConfirmPopUp(`Поставщик \n${action.payload.title}\n успешно создан`);
         }
       })
       .addMatcher(isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected), (state, action) => {
+        state.isLoading = false;
         showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка в userSlice');
       })
       .addMatcher(
         isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled, userUpdateThunk.fulfilled),
         (state, action) => {
+          state.isLoading = false;
           state.user = action.payload.user;
           state.appSearchRegionId = undefined;
           state.appSearchLocationId = undefined;
           localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
         }
-      );
+      )
+      .addMatcher(
+        isAnyOf(userLoginByPasswordThunk.pending, userLoginByTokenThunk.pending, userUpdateThunk.pending),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+
   },
 });
 
@@ -175,5 +190,6 @@ export const { resetUser, setAppSearchRegionId, setAppSearchLocationId } = userS
 export const selectorUser = (state: RootState) => state.user.user;
 export const selectorAppSearchRegionId = (state: RootState) => state.user.appSearchRegionId;
 export const selectorAppSearchLocationId = (state: RootState) => state.user.appSearchLocationId;
+export const selectorUserIsLoading = (state: RootState) => state.user.isLoading;
 
 export default userSlice.reducer;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import MainPage from '../../pages/MainPage/MainPage';
+import MainPageOld from '../../pages/MainPageOld/MainPageOld';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
 import SalesPage from '../../pages/SalesPage/SalesPage';
 import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
+import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 
 type RouteType = {
   path: string;
@@ -13,13 +14,15 @@ type RouteType = {
 };
 
 const publicRoutes: RouteType[] = [
-  { path: '/', element: <MainPage /> },
+  // { path: '/', element: <MainPageOld /> },
+  { path: '/', element: <UnitedPage /> },
   { path: '/success_registration', element: <SuccessRegistrationPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
   { path: '/user', element: <UserPage /> },
   { path: '/sales', element: <SalesPage /> },
+  { path: '/manufacturer', element: <UnitedPage /> },
   { path: '/edit_card/:id', element: <EditCardPage /> },
   { path: '/manufacturer_registration', element: <ManufacturerRegistrationPage /> },
 ];

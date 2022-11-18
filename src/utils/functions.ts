@@ -5,6 +5,7 @@ import {
   ProductType,
   QueryEnum,
   SizeTypeEnum,
+  UserType,
 } from '../types/types';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
@@ -54,8 +55,17 @@ export const getInputFormData = (form: HTMLFormElement, name: string): string =>
   return '';
 };
 
-export const isSearchParamsExceptSridAndSlid = (searchParams: URLSearchParams) => {
+export const isFiltersSearchParams = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
+  searchParamsClone.delete(QueryEnum.ManufacturerId);
+  searchParamsClone.delete(QueryEnum.SearchRegionId);
+  searchParamsClone.delete(QueryEnum.SearchLocationId);
+  return !!searchParamsClone.toString().length;
+};
+
+export const checkFiltersSearchParams = (searchParams: URLSearchParams) => {
+  const searchParamsClone = new URLSearchParams(searchParams.toString());
+  searchParamsClone.delete(QueryEnum.ManufacturerId);
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
   return !!searchParamsClone.toString().length;
@@ -118,4 +128,22 @@ export const formatUTC = (utcData: string | undefined) => {
     });
   }
   return null;
+};
+
+export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, searchLocationId?: number) => {
+  const searchParams = new URLSearchParams();
+  if (user?.manufacturer?.id) {
+    searchParams.set(QueryEnum.ManufacturerId, user.manufacturer.id.toString());
+  }
+  if (searchRegionId) {
+    searchParams.set(QueryEnum.SearchRegionId, searchRegionId.toString());
+  }
+  if (searchLocationId) {
+    searchParams.set(QueryEnum.SearchLocationId, searchLocationId.toString());
+  }
+  const searchParamsStr = searchParams.toString();
+  if (!!searchParamsStr.length) {
+    return `?${searchParamsStr}`;
+  }
+  return '';
 };

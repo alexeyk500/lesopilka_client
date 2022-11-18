@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import MainPage from '../MainPage/MainPage';
+import MainPageOld from '../MainPageOld/MainPageOld';
 import { showPortalPopUp } from '../../components/PortalPopUp/PortalPopUp';
 import { useNavigate } from 'react-router-dom';
 import SuccessRegistrationMessageForm from './SuccessRegistrationMessageForm/SuccessRegistrationMessageForm';
@@ -22,7 +22,7 @@ const SuccessRegistrationPage: React.FC = () => {
   }, []);
   return (
     <>
-      <MainPage />
+      <MainPageOld />
     </>
   );
 };

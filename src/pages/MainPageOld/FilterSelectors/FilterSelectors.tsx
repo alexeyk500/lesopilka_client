@@ -93,8 +93,6 @@ const FilterSelectors: React.FC = () => {
         dispatch(updateQueryFilters(searchParams.toString()));
       }
       setWhatFilterChangedRef(undefined);
-    } else {
-      // dispatch(getProductsThunk(searchParams));
     }
   }, [dispatch, searchParams, queryFilters, setSearchParams]);
 

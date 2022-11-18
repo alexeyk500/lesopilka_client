@@ -54,7 +54,6 @@ const SearchLocationSelector: React.FC = () => {
     }
     if (querySearchLocationId !== searchLocationId) {
       if (searchLocationId) {
-        searchParams.delete(QueryEnum.SearchRegionId);
         searchParams.set(QueryEnum.SearchLocationId, searchLocationId.toString());
       } else {
         searchParams.delete(QueryEnum.SearchLocationId);

@@ -158,4 +158,5 @@ export enum QueryEnum {
   Septic = 'sep',
   SearchRegionId = 'srid',
   SearchLocationId = 'slid',
+  ManufacturerId = 'mid',
 }

@@ -7,7 +7,10 @@ import idCardIco from '../../../../../img/idCardIco.svg';
 import documentsIco from '../../../../../img/documentsIco.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
-import { selectorUser } from '../../../../../store/userSlice';
+import { selectorAppSearchLocationId, selectorAppSearchRegionId, selectorUser } from '../../../../../store/userSlice';
+import { QueryEnum } from '../../../../../types/types';
+import { makeFirstSearchParams } from '../../../../../utils/functions';
+import { selectorRegions, selectorSearchLocationsByRegionId } from '../../../../../store/addressSlice';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -16,9 +19,20 @@ type PropsType = {
 const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
+  const appSearchRegionId = useAppSelector(selectorAppSearchRegionId);
+  const appSearchRLocationId = useAppSelector(selectorAppSearchLocationId);
+
+  const searchRegionId = user ? user?.searchRegion?.id : appSearchRegionId;
+  const searchLocationId = user ? user?.searchLocation?.id : appSearchRLocationId;
 
   const onClickCatalog = () => {
     navigate(`/sales/?mid=${user?.manufacturer?.id}`);
+    closeMenuContent();
+  };
+
+  const onClickPrice = () => {
+    const searchParamsStr = makeFirstSearchParams(user, searchRegionId, searchLocationId);
+    navigate(`/manufacturer${searchParamsStr}`);
     closeMenuContent();
   };
 
@@ -29,9 +43,9 @@ const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
         Каталог
       </button>
-      <button className={classes.menuButton}>
-        <img src={priceIco} className={classes.ico} alt="cart button" />
-        Прайс
+      <button className={classes.menuButton} onClick={onClickPrice}>
+        <img src={priceIco} className={classes.ico} alt="price button" />
+        Прайс-UP
       </button>
       <button className={classes.menuButton}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />

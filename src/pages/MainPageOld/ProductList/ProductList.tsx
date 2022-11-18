@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { isSearchParamsExceptSridAndSlid, makeProductCardData } from '../../../utils/functions';
+import { isFiltersSearchParams, makeProductCardData } from '../../../utils/functions';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorProducts, selectorProductsLoading } from '../../../store/productSlice';
 import Preloader from '../../../components/Preloader/Preloader';
@@ -13,7 +13,7 @@ const ProductList = () => {
   const isLoading = useAppSelector(selectorProductsLoading);
 
   const [searchParams] = useSearchParams();
-  const isSearchParams = isSearchParamsExceptSridAndSlid(searchParams);
+  const isSearchParams = isFiltersSearchParams(searchParams);
 
   return (
     <div className={classes.container}>
