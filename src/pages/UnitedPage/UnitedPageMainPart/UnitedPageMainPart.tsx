@@ -1,11 +1,11 @@
 import React from 'react';
-import classes from './MainPageMainPart.module.css';
+import classes from './UnitedPageMainPart.module.css';
 import FiltersRow from '../FiltersRow/FiltersRow';
 import ProductList from '../ProductList/ProductList';
 import { useSearchParams } from 'react-router-dom';
 import { isFiltersSearchParams } from '../../../utils/functions';
 
-const MainPageMainPart = () => {
+const UnitedPageMainPart = () => {
   const [searchParams] = useSearchParams();
   const isSearchParams = isFiltersSearchParams(searchParams);
 
@@ -19,4 +19,4 @@ const MainPageMainPart = () => {
   );
 };
 
-export default MainPageMainPart;
+export default UnitedPageMainPart;

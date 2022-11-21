@@ -15,5 +15,9 @@ export default function useUpdatePlaceSearchParams(searchParams: URLSearchParams
   } else {
     searchParams.set(QueryEnum.SearchLocationId, '');
   }
+  if (searchParams.get(QueryEnum.ManufacturerId)) {
+    searchParams.delete(QueryEnum.SearchRegionId);
+    searchParams.delete(QueryEnum.SearchLocationId);
+  }
   return searchParams;
 }

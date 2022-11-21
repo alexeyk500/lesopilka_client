@@ -5,9 +5,9 @@ import { getProductsThunk, selectorProductsLoading } from '../../store/productSl
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../types/types';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import FilterSelectors from '../MainPageOld/FilterSelectors/FilterSelectors';
+import FilterSelectors from './FilterSelectors/FilterSelectors';
 import Catalog from '../../components/Catalog/Catalog';
-import MainPageMainPart from '../MainPageOld/MainPageMainPart/MainPageMainPart';
+import UnitedPageMainPart from './UnitedPageMainPart/UnitedPageMainPart';
 import { checkIsOnlyPlaceFiltersInSearchParams } from '../../utils/functions';
 import Preloader from '../../components/Preloader/Preloader';
 
@@ -17,10 +17,10 @@ const UnitedPage: React.FC = () => {
   const isLoading = useAppSelector(selectorProductsLoading);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isManufacturerPage = location.pathname.includes('sales');
+  const isSalesPage = location.pathname.includes('sales');
   const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
 
-  console.log('isManufacturerPage =', isManufacturerPage);
+  console.log('isSalesPage =', isSalesPage);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
@@ -51,7 +51,7 @@ const UnitedPage: React.FC = () => {
               <FilterSelectors />
             </LeftColumn>
           )}
-          <MainPageMainPart />
+          <UnitedPageMainPart />
         </>
       )}
     </div>

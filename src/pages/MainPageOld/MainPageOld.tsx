@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import classes from './MainPageOld.module.css';
 import Catalog from '../../components/Catalog/Catalog';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import FilterSelectors from './FilterSelectors/FilterSelectors';
-import MainPageMainPart from './MainPageMainPart/MainPageMainPart';
+import FilterSelectors from '../UnitedPage/FilterSelectors/FilterSelectors';
+import UnitedPageMainPart from '../UnitedPage/UnitedPageMainPart/UnitedPageMainPart';
 import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../types/types';
 import { isFiltersSearchParams } from '../../utils/functions';
@@ -31,7 +31,7 @@ const MainPageOld: React.FC = () => {
       <LeftColumn>
         {isSearchParams ? <FilterSelectors /> : <Catalog onClickCatalogCategory={onClickCatalogCategory} />}
       </LeftColumn>
-      <MainPageMainPart />
+      <UnitedPageMainPart />
     </div>
   );
 };

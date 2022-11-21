@@ -5,7 +5,6 @@ const FiltersResult: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.result}>Найдено 56 товаров</div>
-      {/*<div className={classes.pagination}>{'< 1 2 ... 7 8 >'}</div>*/}
     </div>
   );
 };
