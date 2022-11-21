@@ -3,8 +3,8 @@ import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
-import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
+import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ const ProductCodeSection = () => {
     setCode(editCard.productCode);
   }, [editCard.productCode]);
 
-  const debounceUpdateCode = UseDebouncedFunction(
+  const debounceUpdateCode = useDebouncedFunction(
     (updateData) => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && updateData) {

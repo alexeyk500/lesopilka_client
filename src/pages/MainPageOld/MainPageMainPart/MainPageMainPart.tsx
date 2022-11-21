@@ -12,7 +12,7 @@ const MainPageMainPart = () => {
   return (
     <div className={classes.container}>
       <div className={classes.filtersRowContainer}>{isSearchParams && <FiltersRow />}</div>
-      <div className={classes.filtersRowContainer}>
+      <div className={classes.filtersProductListContainer}>
         <ProductList />
       </div>
     </div>

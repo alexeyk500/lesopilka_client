@@ -78,6 +78,7 @@ const FilterSelectors: React.FC = () => {
     if (filterChangedRef.current) {
       if (filterChangedRef.current === QueryEnum.CatalogCategory) {
         const cid = Number(searchParams.get(QueryEnum.CatalogCategory));
+        console.log('cid =', cid);
         if (cid > 0) {
           const queryFromQueryFilters = queryFilters[cid];
           if (queryFromQueryFilters) {

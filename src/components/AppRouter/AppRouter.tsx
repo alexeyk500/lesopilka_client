@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import MainPageOld from '../../pages/MainPageOld/MainPageOld';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
 import SalesPage from '../../pages/SalesPage/SalesPage';
@@ -14,7 +13,6 @@ type RouteType = {
 };
 
 const publicRoutes: RouteType[] = [
-  // { path: '/', element: <MainPageOld /> },
   { path: '/', element: <UnitedPage /> },
   { path: '/success_registration', element: <SuccessRegistrationPage /> },
 ];

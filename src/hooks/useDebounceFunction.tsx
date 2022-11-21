@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-export default function UseDebouncedFunction<F extends (args: any) => ReturnType<F>>(
+export default function useDebouncedFunction<F extends (args: any) => ReturnType<F>>(
   callback: F,
   delay = 250,
   cleanUp = false

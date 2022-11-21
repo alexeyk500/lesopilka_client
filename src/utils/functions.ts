@@ -57,18 +57,18 @@ export const getInputFormData = (form: HTMLFormElement, name: string): string =>
 
 export const isFiltersSearchParams = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
-  searchParamsClone.delete(QueryEnum.ManufacturerId);
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
   return !!searchParamsClone.toString().length;
 };
 
-export const checkFiltersSearchParams = (searchParams: URLSearchParams) => {
+export const checkIsOnlyPlaceFiltersInSearchParams = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
-  searchParamsClone.delete(QueryEnum.ManufacturerId);
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
-  return !!searchParamsClone.toString().length;
+  if (searchParamsClone.toString().length === 0) {
+    return true;
+  }
 };
 
 export const getOptionTitle = (options: OptionsType[], optionId: number | undefined) => {

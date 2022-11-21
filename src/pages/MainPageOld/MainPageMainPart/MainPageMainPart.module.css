@@ -11,3 +11,9 @@
   flex-direction: column;
   padding: 8px 4px 2px 8px;
 }
+
+.filtersProductListContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px 2px 8px;
+}

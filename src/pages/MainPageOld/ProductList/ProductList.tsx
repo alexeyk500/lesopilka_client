@@ -1,12 +1,17 @@
 import React from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { isFiltersSearchParams, makeProductCardData } from '../../../utils/functions';
+import {
+  checkIsOnlyPlaceFiltersInSearchParams,
+  isFiltersSearchParams,
+  makeProductCardData,
+} from '../../../utils/functions';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorProducts, selectorProductsLoading } from '../../../store/productSlice';
 import Preloader from '../../../components/Preloader/Preloader';
 import SelectRow from '../SelectRow/SelectRow';
 import { useSearchParams } from 'react-router-dom';
+import classNames from 'classnames';
 
 const ProductList = () => {
   const products = useAppSelector(selectorProducts);
@@ -15,8 +20,10 @@ const ProductList = () => {
   const [searchParams] = useSearchParams();
   const isSearchParams = isFiltersSearchParams(searchParams);
 
+  const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
+
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, { [classes.containerLong]: isOnlyPlaceFilters })}>
       <div className={classes.filtersRowContainer}>{isSearchParams && <SelectRow />}</div>
       <div className={classes.scrollContainer}>
         {isLoading ? (

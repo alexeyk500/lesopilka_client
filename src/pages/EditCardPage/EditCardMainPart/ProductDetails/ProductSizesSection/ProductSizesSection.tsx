@@ -7,8 +7,8 @@ import { CategorySizeType, OptionsType, SizeTypeEnum, ProductCardType } from '..
 import classNames from 'classnames';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
-import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
 import { CALIBER_PRODUCT_CATEGORIES, DEBOUNCE_TIME } from '../../../../../utils/constants';
+import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
 
 export const getSizesSectionIndicator = (productCard: ProductCardType) => {
   if (productCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(productCard.categoryId)) {
@@ -130,7 +130,7 @@ const ProductSizesSection = () => {
   const selectedLengthId = lengthSizes.find((lengthSize) => lengthSize.id === editCard.lengthId);
   const selectedCaliberId = caliberSizes.find((caliberSizes) => caliberSizes.id === editCard.caliberId);
 
-  const debounceUpdateCustomSize = UseDebouncedFunction(
+  const debounceUpdateCustomSize = useDebouncedFunction(
     (updateData) => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && updateData) {

@@ -4,7 +4,7 @@ import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ProductPriceSection.module.css';
 import { DEBOUNCE_TIME, regExpForPrice } from '../../../../../utils/constants';
 import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
-import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
+import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
 
 const ProductPriceSection: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ const ProductPriceSection: React.FC = () => {
     setPrice(editCard.price);
   }, [editCard.price]);
 
-  const debounceUpdateCode = UseDebouncedFunction(
+  const debounceUpdateCode = useDebouncedFunction(
     (updateData) => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && updateData) {

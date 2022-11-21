@@ -1,13 +1,6 @@
-.title {
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 32px;
-}
-
-.scrollContainer {
+.container {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
-  overflow-y: scroll;
 }

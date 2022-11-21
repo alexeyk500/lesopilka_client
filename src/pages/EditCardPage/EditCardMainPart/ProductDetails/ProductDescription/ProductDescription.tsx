@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ProductDescription.module.css';
-import UseDebouncedFunction from '../../../../../hooks/UseDebounceFunction';
 import { selectorEditCard, updateProductDescriptionThunk } from '../../../../../store/productSlice';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
+import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
 
 const ProductDescription: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,7 +33,7 @@ const ProductDescription: React.FC = () => {
     setDescription(editCard.description);
   }, [editCard.description]);
 
-  const debounceUpdateDescription = UseDebouncedFunction(
+  const debounceUpdateDescription = useDebouncedFunction(
     (updateData) => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && updateData) {

@@ -12,8 +12,9 @@ import {
   selectorSearchLocationsByRegionId,
 } from '../../../store/addressSlice';
 import {
-  selectorAppSearchLocationId,
-  selectorAppSearchRegionId,
+  selectorIsUserChecked,
+  selectorSearchLocationId,
+  selectorSearchRegionId,
   selectorUser,
   setAppSearchLocationId,
   setAppSearchRegionId,
@@ -21,49 +22,30 @@ import {
 } from '../../../store/userSlice';
 import { getOptionsWithFirstEmptyOption } from '../../../utils/functions';
 import { useSearchParams } from 'react-router-dom';
-import { QueryEnum } from '../../../types/types';
+import useUpdatePlaceSearchParams from '../../../hooks/useUpdatePlaceSearchParams';
 
 const SearchLocationSelector: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectorUser);
   const regions = useAppSelector(selectorRegions);
-  const appSearchRegionId = useAppSelector(selectorAppSearchRegionId);
-  const appSearchRLocationId = useAppSelector(selectorAppSearchLocationId);
   const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
-
-  const searchRegionId = user ? user?.searchRegion?.id : appSearchRegionId;
-  const searchLocationId = user ? user?.searchLocation?.id : appSearchRLocationId;
 
   const regionsOptions = getOptionsWithFirstEmptyOption(regions);
   const searchLocationsOptions = getOptionsWithFirstEmptyOption(searchLocationsByRegionId);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const isUserChecked = useAppSelector(selectorIsUserChecked);
+  const searchRegionId = useAppSelector(selectorSearchRegionId);
+  const searchLocationId = useAppSelector(selectorSearchLocationId);
+  const newSearchParams = useUpdatePlaceSearchParams(searchParams);
+
   useEffect(() => {
-    let isNeedToUpdateSearchParams = false;
-    const querySearchRegionId = Number(searchParams.get(QueryEnum.SearchRegionId));
-    const querySearchLocationId = Number(searchParams.get(QueryEnum.SearchLocationId));
-    if (querySearchRegionId !== searchRegionId) {
-      if (searchRegionId) {
-        searchParams.set(QueryEnum.SearchRegionId, searchRegionId.toString());
-      } else {
-        searchParams.delete(QueryEnum.SearchRegionId);
-      }
-      isNeedToUpdateSearchParams = true;
+    if (isUserChecked) {
+      setSearchParams(newSearchParams);
     }
-    if (querySearchLocationId !== searchLocationId) {
-      if (searchLocationId) {
-        searchParams.set(QueryEnum.SearchLocationId, searchLocationId.toString());
-      } else {
-        searchParams.delete(QueryEnum.SearchLocationId);
-      }
-      isNeedToUpdateSearchParams = true;
-    }
-    if (isNeedToUpdateSearchParams) {
-      setSearchParams(searchParams);
-    }
-  }, [searchRegionId, searchLocationId, searchParams, setSearchParams]);
+  }, [isUserChecked, searchRegionId, searchLocationId, setSearchParams, newSearchParams]);
 
   useEffect(() => {
     dispatch(getRegionsThunk());

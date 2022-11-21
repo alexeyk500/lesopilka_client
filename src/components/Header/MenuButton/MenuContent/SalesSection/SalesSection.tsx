@@ -8,9 +8,7 @@ import documentsIco from '../../../../../img/documentsIco.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorAppSearchLocationId, selectorAppSearchRegionId, selectorUser } from '../../../../../store/userSlice';
-import { QueryEnum } from '../../../../../types/types';
 import { makeFirstSearchParams } from '../../../../../utils/functions';
-import { selectorRegions, selectorSearchLocationsByRegionId } from '../../../../../store/addressSlice';
 
 type PropsType = {
   closeMenuContent: () => void;

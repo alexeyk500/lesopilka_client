@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   width: 224px;
-  margin: 8px 0;
+  margin-bottom: 16px;
   padding: 12px;
   border-radius: 12px;
   box-shadow: var(--box_shadow_dark);

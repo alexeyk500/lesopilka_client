@@ -7,6 +7,7 @@ import { serverApi } from '../api/serverApi';
 
 type UserSliceType = {
   user?: UserType;
+  isUserChecked?: boolean;
   appSearchRegionId?: number;
   appSearchLocationId?: number;
   isLoading?: boolean;
@@ -14,6 +15,7 @@ type UserSliceType = {
 
 const initialState: UserSliceType = {
   user: undefined,
+  isUserChecked: false,
   isLoading: false,
 };
 
@@ -139,15 +141,17 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(userLoginByPasswordThunk.rejected, (state, action) => {
-        state.isLoading = false;
         userSlice.caseReducers.resetUser(state);
         if (action.payload && action.payload !== 'Токен отсутствует или невалиден') {
           showErrorPopUp(action.payload);
         }
+        state.isLoading = false;
+        state.isUserChecked = true;
       })
       .addCase(userLoginByTokenThunk.rejected, (state) => {
-        state.isLoading = false;
         userSlice.caseReducers.resetUser(state);
+        state.isLoading = false;
+        state.isUserChecked = true;
       })
       .addCase(userCheckPasswordThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -168,11 +172,12 @@ export const userSlice = createSlice({
       .addMatcher(
         isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled, userUpdateThunk.fulfilled),
         (state, action) => {
-          state.isLoading = false;
           state.user = action.payload.user;
           state.appSearchRegionId = undefined;
           state.appSearchLocationId = undefined;
           localStorage.setItem(process.env.REACT_APP_APP_ACCESS_TOKEN!, action.payload.token);
+          state.isLoading = false;
+          state.isUserChecked = true;
         }
       )
       .addMatcher(
@@ -180,8 +185,7 @@ export const userSlice = createSlice({
         (state) => {
           state.isLoading = true;
         }
-      )
-
+      );
   },
 });
 
@@ -191,5 +195,12 @@ export const selectorUser = (state: RootState) => state.user.user;
 export const selectorAppSearchRegionId = (state: RootState) => state.user.appSearchRegionId;
 export const selectorAppSearchLocationId = (state: RootState) => state.user.appSearchLocationId;
 export const selectorUserIsLoading = (state: RootState) => state.user.isLoading;
+export const selectorIsUserChecked = (state: RootState) => state.user.isUserChecked;
+
+export const selectorSearchRegionId = (state: RootState) =>
+  state.user.user?.searchRegion?.id ? state.user.user.searchRegion.id : state.user.appSearchRegionId;
+
+export const selectorSearchLocationId = (state: RootState) =>
+  state.user.user?.searchLocation?.id ? state.user.user.searchLocation.id : state.user.appSearchLocationId;
 
 export default userSlice.reducer;
