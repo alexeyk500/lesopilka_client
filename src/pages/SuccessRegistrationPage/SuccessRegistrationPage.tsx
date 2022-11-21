@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import MainPageOld from '../MainPageOld/MainPageOld';
 import { showPortalPopUp } from '../../components/PortalPopUp/PortalPopUp';
 import { useNavigate } from 'react-router-dom';
 import SuccessRegistrationMessageForm from './SuccessRegistrationMessageForm/SuccessRegistrationMessageForm';
+import UnitedPage from '../UnitedPage/UnitedPage';
 
 const SuccessRegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const SuccessRegistrationPage: React.FC = () => {
   }, []);
   return (
     <>
-      <MainPageOld />
+      <UnitedPage />
     </>
   );
 };
