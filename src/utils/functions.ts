@@ -71,6 +71,14 @@ export const checkIsOnlyPlaceFiltersInSearchParams = (searchParams: URLSearchPar
   }
 };
 
+export const checkIsOnlyManufacturerFiltersInSearchParams = (searchParams: URLSearchParams) => {
+  const searchParamsClone = new URLSearchParams(searchParams.toString());
+  searchParamsClone.delete(QueryEnum.ManufacturerId);
+  if (searchParamsClone.toString().length === 0) {
+    return true;
+  }
+};
+
 export const getOptionTitle = (options: OptionsType[], optionId: number | undefined) => {
   if (optionId) {
     const option = options.find((option) => option.id === optionId);

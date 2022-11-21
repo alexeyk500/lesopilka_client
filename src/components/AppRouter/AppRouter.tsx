@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import UserPage from '../../pages/UserPage/UserPage';
 import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/SuccessRegistrationPage';
-import SalesPage from '../../pages/SalesPage/SalesPage';
 import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
 import UnitedPage from '../../pages/UnitedPage/UnitedPage';
@@ -19,8 +18,7 @@ const publicRoutes: RouteType[] = [
 
 const protectedRoutes: RouteType[] = [
   { path: '/user', element: <UserPage /> },
-  { path: '/sales', element: <SalesPage /> },
-  { path: '/manufacturer', element: <UnitedPage /> },
+  { path: '/sales', element: <UnitedPage /> },
   { path: '/edit_card/:id', element: <EditCardPage /> },
   { path: '/manufacturer_registration', element: <ManufacturerRegistrationPage /> },
 ];

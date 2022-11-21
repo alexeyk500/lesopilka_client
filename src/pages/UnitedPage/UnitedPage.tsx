@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classes from './UnitedPage.module.css';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getProductsThunk, selectorProductsLoading } from '../../store/productSlice';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../types/types';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import FilterSelectors from './FilterSelectors/FilterSelectors';
@@ -12,15 +12,11 @@ import { checkIsOnlyPlaceFiltersInSearchParams } from '../../utils/functions';
 import Preloader from '../../components/Preloader/Preloader';
 
 const UnitedPage: React.FC = () => {
-  const location = useLocation();
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectorProductsLoading);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isSalesPage = location.pathname.includes('sales');
   const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
-
-  console.log('isSalesPage =', isSalesPage);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
