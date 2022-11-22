@@ -1,8 +1,7 @@
 import React from 'react';
 import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
-import { useNavigate } from 'react-router-dom';
-import { ProductCardDataType, ProductType } from '../../types/types';
+import { ProductCardDataType } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
@@ -11,14 +10,12 @@ import wareHouseIco from './../../img/wareHouseIco.svg';
 import locationIco from './../../img/locationIco.svg';
 import rubleIco from './../../img/rubleIco.svg';
 import materialIco from './../../img/materialIco.svg';
-import { createProductThunk } from '../../store/productSlice';
-import { useAppDispatch } from '../../hooks/hooks';
 
 type PropsType = {
   productCardData?: ProductCardDataType;
   isAddProductCard?: boolean;
   isManufacturerProductCard?: boolean;
-  onClick?: (id: number) => void;
+  onClick?: (id: number | undefined) => void;
 };
 
 const ProductCard: React.FC<PropsType> = ({
@@ -27,22 +24,9 @@ const ProductCard: React.FC<PropsType> = ({
   isManufacturerProductCard,
   onClick,
 }) => {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
   const onClickHandler = () => {
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (isAddProductCard && token) {
-      dispatch(createProductThunk(token)).then((result) => {
-        if ((result as { type: string }).type.includes('fulfilled')) {
-          const id = (result.payload as ProductType).id;
-          navigate(`/edit_card/${id}`);
-        }
-      });
-    } else {
-      if (onClick && productCardData) {
-        onClick(productCardData.id);
-      }
+    if (onClick) {
+      onClick(productCardData?.id);
     }
   };
 

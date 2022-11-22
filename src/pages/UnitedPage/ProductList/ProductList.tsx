@@ -3,27 +3,57 @@ import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import {
   checkIsOnlyPlaceFiltersInSearchParams,
+  checkIsSalesPage,
   isFiltersSearchParams,
   makeProductCardData,
 } from '../../../utils/functions';
-import { useAppSelector } from '../../../hooks/hooks';
-import { selectorProducts, selectorProductsLoading } from '../../../store/productSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import {
+  createProductThunk,
+  selectorProducts,
+  selectorProductsLoading,
+  setCatalogSearchParams,
+} from '../../../store/productSlice';
 import Preloader from '../../../components/Preloader/Preloader';
 import SelectRow from '../SelectRow/SelectRow';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
+import { ProductType } from '../../../types/types';
 
 const ProductList = () => {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const products = useAppSelector(selectorProducts);
   const isLoading = useAppSelector(selectorProductsLoading);
 
-  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const isSalesPage = checkIsSalesPage(location);
   const isSearchParams = isFiltersSearchParams(searchParams);
-
-  const isSalesPage = location.pathname.includes('sales');
-
   const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
+
+  const onClickAddProductCard = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (token) {
+      dispatch(createProductThunk(token)).then((result) => {
+        if ((result as { type: string }).type.includes('fulfilled')) {
+          const id = (result.payload as ProductType).id;
+          dispatch(setCatalogSearchParams(searchParams.toString()));
+          navigate(`/edit_card/${id}`);
+        }
+      });
+    }
+  };
+
+  const onClick = (id: number | undefined) => {
+    if (isSalesPage && id) {
+      dispatch(setCatalogSearchParams(searchParams.toString()));
+      navigate(`/edit_card/${id}`);
+    } else {
+      console.log('will show card details');
+    }
+  };
 
   return (
     <div
@@ -40,9 +70,14 @@ const ProductList = () => {
           </div>
         ) : (
           <>
-            {isSalesPage && <ProductCard isAddProductCard />}
+            {isSalesPage && <ProductCard isAddProductCard onClick={onClickAddProductCard} />}
             {products.map((product) => (
-              <ProductCard key={product.id} productCardData={makeProductCardData(product)} isManufacturerProductCard />
+              <ProductCard
+                key={product.id}
+                productCardData={makeProductCardData(product)}
+                onClick={onClick}
+                isManufacturerProductCard={isSalesPage}
+              />
             ))}
           </>
         )}

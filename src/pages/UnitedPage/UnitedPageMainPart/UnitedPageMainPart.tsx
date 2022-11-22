@@ -11,7 +11,6 @@ import { CrumbType } from '../../../types/types';
 import { getUserName } from '../../UserPage/UserPage';
 
 const UnitedPageMainPart = () => {
-
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);

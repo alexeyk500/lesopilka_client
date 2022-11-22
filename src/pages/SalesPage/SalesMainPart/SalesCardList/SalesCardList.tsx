@@ -12,10 +12,12 @@ const SalesCardList = () => {
   const [searchParams] = useSearchParams();
   const products = useAppSelector(selectorProducts);
 
-  const onClick = (id: number) => {
-    navigate(`/edit_card/${id}`);
-    console.log('searchParams =', searchParams.toString());
-    dispatch(setCatalogSearchParams(searchParams.toString()));
+  const onClick = (id: number | undefined) => {
+    if (id) {
+      navigate(`/edit_card/${id}`);
+      console.log('searchParams =', searchParams.toString());
+      dispatch(setCatalogSearchParams(searchParams.toString()));
+    }
   };
 
   return (

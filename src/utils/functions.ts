@@ -66,6 +66,7 @@ export const checkIsOnlyPlaceFiltersInSearchParams = (searchParams: URLSearchPar
   const searchParamsClone = new URLSearchParams(searchParams.toString());
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
+  searchParamsClone.delete(QueryEnum.ManufacturerId);
   if (searchParamsClone.toString().length === 0) {
     return true;
   }
@@ -155,3 +156,5 @@ export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, 
   }
   return '';
 };
+
+export const checkIsSalesPage = (location: { pathname: string }) => location?.pathname?.includes('sales');

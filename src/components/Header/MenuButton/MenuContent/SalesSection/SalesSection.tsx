@@ -31,7 +31,7 @@ const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       </button>
       <button className={classes.menuButton}>
         <img src={priceIco} className={classes.ico} alt="price button" />
-        Прайс-UP
+        Прайс
       </button>
       <button className={classes.menuButton}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />
