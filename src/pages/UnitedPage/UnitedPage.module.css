@@ -1,5 +1,5 @@
 .container {
   display: flex;
-  height: calc(100vh - 56px);
+  height: calc(100vh - 54px);
   padding: 0 6px 0 8px;
 }
