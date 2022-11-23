@@ -8,9 +8,11 @@ type PropsType = {
 
 const LeftColumn: React.FC<PropsType> = ({ title, children }) => {
   return (
-    <div className={classes.container}>
-      <div className={classes.title}>{title}</div>
-      <div className={classes.scrollContainer}>{children}</div>
+    <div className={classes.wrapper}>
+      <div className={classes.container}>
+        <div className={classes.title}>{title}</div>
+        <div className={classes.scrollContainer}>{children}</div>
+      </div>
     </div>
   );
 };

@@ -32,15 +32,17 @@ const UnitedPageMainPart = () => {
             <BreadCrumbs crumbs={crumbs} />
           </div>
           <div className={classes.filtersRowContainer}>
-            {!checkIsOnlyManufacturerFilters && isSearchParams && <FiltersRow isSalesPage />}
+            {!checkIsOnlyManufacturerFilters && <FiltersRow isSalesPage />}
           </div>
         </>
       ) : (
-        <div className={classes.filtersRowContainer}>{isSearchParams && <FiltersRow />}</div>
+        isSearchParams && (
+          <div className={classes.filtersRowContainer}>
+            <FiltersRow />
+          </div>
+        )
       )}
-      <div className={classes.filtersProductListContainer}>
-        <ProductList />
-      </div>
+      <ProductList />
     </div>
   );
 };
