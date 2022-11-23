@@ -6,11 +6,16 @@ import useClickOutsideElement from '../../../hooks/useClickOutsideElement';
 
 const MenuButton: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const exceptionRef = useRef<HTMLButtonElement>(null);
   const [isShowMenu, setIsShowMenu] = useState(false);
 
-  useClickOutsideElement(ref, () => {
-    setIsShowMenu(false);
-  });
+  useClickOutsideElement(
+    ref,
+    () => {
+      setIsShowMenu(false);
+    },
+    exceptionRef
+  );
 
   const onClick = async () => {
     setIsShowMenu((prev) => !prev);
@@ -18,7 +23,7 @@ const MenuButton: React.FC = () => {
 
   return (
     <>
-      <button className={classes.container} onClick={onClick}>
+      <button ref={exceptionRef} className={classes.container} onClick={onClick}>
         <img src={menuButton} alt="menu button" />
       </button>
       {isShowMenu && <MenuContent ref={ref} closeMenuContent={onClick} />}

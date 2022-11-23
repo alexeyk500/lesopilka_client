@@ -1,6 +1,6 @@
 .container {
   position: absolute;
-  top: 64px;
+  top: 66px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
