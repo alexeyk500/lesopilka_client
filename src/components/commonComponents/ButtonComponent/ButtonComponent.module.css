@@ -17,6 +17,11 @@
   background-color: var(--blue_color);
 }
 
+.red {
+  color: #FFFFFF;
+  background-color: var(--red_color);
+}
+
 .secondary {
   color: var(--blue_color);
   background-color: #FFFFFF;

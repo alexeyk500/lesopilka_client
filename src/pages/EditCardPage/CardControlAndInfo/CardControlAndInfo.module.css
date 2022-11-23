@@ -1,3 +1,18 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topPartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .title {
   margin-top: 6px;
   font-size: 22px;
@@ -5,7 +20,7 @@
 }
 
 .cardContainer {
-  margin-top: -12px;
+  margin-top: -22px;
   scale: 0.85
 }
 
@@ -52,6 +67,10 @@
 
 .btnReadyContainer {
   margin-top: 32px;
+}
+
+.btnDeleteContainer {
+  margin-bottom: 32px;
 }
 
 

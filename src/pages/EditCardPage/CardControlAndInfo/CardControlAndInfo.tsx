@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './LeftColumnContent.module.css';
+import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppSelector } from '../../../hooks/hooks';
 import { ProductCardDataType } from '../../../types/types';
@@ -13,10 +13,10 @@ import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllips
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
 import { selectorCatalogSearchParams, selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
-import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
+import ButtonComponent, {ButtonType} from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 
-const LeftColumnContent: React.FC = () => {
+const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
   const editCard = useAppSelector(selectorEditCard);
@@ -97,27 +97,36 @@ const LeftColumnContent: React.FC = () => {
     }
   };
 
+  const onClickDeleteBtn = () => {
+    console.log('onClickDeleteBtn')
+  }
+
   return (
-    <>
-      <div className={classes.title}>Карточка Товара</div>
-      <div className={classes.cardContainer}>
-        <ProductCard productCardData={productCardData} isManufacturerProductCard />
-      </div>
-      <div className={classes.saveBtnSection}>
-        <div className={classes.infoSaveContainer}>
-          <div className={classes.title}>{isSaving ? 'Сохранение...' : 'Сохранено:'}</div>
-          <div className={classes.info}>{formatUTC(editCard.editionDate)}</div>
+    <div className={classes.container}>
+      <div className={classes.topPartContainer}>
+        <div className={classes.cardContainer}>
+          <ProductCard productCardData={productCardData} isManufacturerProductCard />
+        </div>
+        <div className={classes.saveBtnSection}>
+          <div className={classes.infoSaveContainer}>
+            <div className={classes.title}>{isSaving ? 'Сохранение...' : 'Сохранено:'}</div>
+            <div className={classes.info}>{formatUTC(editCard.editionDate)}</div>
+          </div>
+        </div>
+        <div className={classes.publicationContainer}>
+          <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
+          <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
+        </div>
+        <div className={classes.btnReadyContainer}>
+          <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
         </div>
       </div>
-      <div className={classes.publicationContainer}>
-        <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
-        <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
+      <div className={classes.btnDeleteContainer}>
+        <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED} onClick={onClickDeleteBtn} />
       </div>
-      <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
-      </div>
-    </>
+    </div>
+
   );
 };
 
-export default LeftColumnContent;
+export default CardControlAndInfo;
