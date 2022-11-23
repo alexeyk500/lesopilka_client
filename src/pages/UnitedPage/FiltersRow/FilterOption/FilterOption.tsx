@@ -9,9 +9,10 @@ type PropsType = {
   options: OptionsType[];
   queryEnum: QueryEnum;
   preTitle?: string;
+  resetAdditionQueryEnum?: QueryEnum;
 };
 
-const FilterOption: React.FC<PropsType> = ({ options, queryEnum, preTitle }) => {
+const FilterOption: React.FC<PropsType> = ({ options, queryEnum, preTitle, resetAdditionQueryEnum }) => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedOption, setSelectedOption] = useState<OptionsType | undefined>(undefined);
@@ -30,6 +31,7 @@ const FilterOption: React.FC<PropsType> = ({ options, queryEnum, preTitle }) => 
 
   const resetCategoryFilter = () => {
     searchParams.delete(queryEnum);
+    resetAdditionQueryEnum && searchParams.delete(resetAdditionQueryEnum);
     dispatch(updateQueryFilters(searchParams.toString()));
     setSearchParams(searchParams);
   };

@@ -43,7 +43,7 @@ const ProductCodeSection = () => {
     <SectionContainer title={'Артикул'} completeCondition={!!editCard.productCode} blurCondition={false}>
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>
-        <input className={classes.customSizeInput} value={code} onChange={onChangeInput} type="text" />
+        <input className={classes.customSizeInput} value={code || ''} onChange={onChangeInput} type="text" />
       </div>
     </SectionContainer>
   );

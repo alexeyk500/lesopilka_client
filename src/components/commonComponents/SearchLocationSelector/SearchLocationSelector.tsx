@@ -23,12 +23,14 @@ import {
 import { getOptionsWithFirstEmptyOption } from '../../../utils/functions';
 import { useSearchParams } from 'react-router-dom';
 import useUpdatePlaceSearchParams from '../../../hooks/useUpdatePlaceSearchParams';
+import useClickOutsideElement from '../../../hooks/useClickOutsideElement';
 
 const SearchLocationSelector: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectorUser);
   const regions = useAppSelector(selectorRegions);
+  const isLoading = useAppSelector(selectorAddressSliceIsLoading);
   const searchLocationsByRegionId = useAppSelector(selectorSearchLocationsByRegionId);
 
   const regionsOptions = getOptionsWithFirstEmptyOption(regions);
@@ -40,6 +42,8 @@ const SearchLocationSelector: React.FC = () => {
   const searchRegionId = useAppSelector(selectorSearchRegionId);
   const searchLocationId = useAppSelector(selectorSearchLocationId);
   const newSearchParams = useUpdatePlaceSearchParams(searchParams);
+
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isUserChecked) {
@@ -81,24 +85,14 @@ const SearchLocationSelector: React.FC = () => {
   };
 
   const [expand, setExpand] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const isLoading = useAppSelector(selectorAddressSliceIsLoading);
 
   const onClickExpand = () => {
     setExpand((prev) => !prev);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (event && event.target && ref.current && !ref.current.contains(event.target as HTMLElement)) {
-        setExpand(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
+  useClickOutsideElement(ref, () => {
+    setExpand(false);
+  });
 
   const getSelectedRegionOption = useCallback(() => {
     if (searchRegionId && searchRegionId > 0) {

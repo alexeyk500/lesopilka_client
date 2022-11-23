@@ -12,11 +12,11 @@ type PropsType = {
   closeMenuContent: () => void;
 };
 
-const MenuContent: React.FC<PropsType> = ({ closeMenuContent }) => {
+const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuContent }, ref) => {
   const user = useAppSelector(selectorUser);
 
   return (
-    <div className={classes.container}>
+    <div ref={ref} className={classes.container}>
       <PurchasesSection closeMenuContent={closeMenuContent} />
       {user?.manufacturer?.id && <SalesSection closeMenuContent={closeMenuContent} />}
       <FavoritesSection />
@@ -24,6 +24,6 @@ const MenuContent: React.FC<PropsType> = ({ closeMenuContent }) => {
       <ReferenceSection />
     </div>
   );
-};
+});
 
 export default MenuContent;

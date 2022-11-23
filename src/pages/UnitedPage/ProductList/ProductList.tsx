@@ -48,10 +48,14 @@ const ProductList = () => {
 
   const onClick = (id: number | undefined) => {
     if (isSalesPage && id) {
-      dispatch(setCatalogSearchParams(searchParams.toString()));
-      navigate(`/edit_card/${id}`);
+      if (id) {
+        dispatch(setCatalogSearchParams(searchParams.toString()));
+        navigate(`/edit_card/${id}`);
+      }
     } else {
-      console.log('will show card details');
+      if (id) {
+        console.log('will show details card with id=', id);
+      }
     }
   };
 

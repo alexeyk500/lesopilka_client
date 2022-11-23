@@ -8,15 +8,24 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { selectorCategories, selectorProductSorts, selectorSubCategories } from '../../../store/catalogSlice';
 import { SEPTIC_OPTIONS } from '../../../utils/constants';
 
-const FiltersRow: React.FC = () => {
+type PropsType = {
+  isSalesPage?: boolean;
+};
+
+const FiltersRow: React.FC<PropsType> = ({ isSalesPage }) => {
   const sortsOptions = useAppSelector(selectorProductSorts);
   const categories = useAppSelector(selectorCategories);
   const subCategories = useAppSelector(selectorSubCategories);
 
   return (
     <div className={classes.container}>
-      <FilterSearch />
-      <FilterOption preTitle={'Раздел: '} options={categories} queryEnum={QueryEnum.CatalogCategory} />
+      {!isSalesPage && <FilterSearch />}
+      <FilterOption
+        preTitle={'Раздел: '}
+        options={categories}
+        queryEnum={QueryEnum.CatalogCategory}
+        resetAdditionQueryEnum={QueryEnum.CatalogSubCategory}
+      />
       <FilterOption preTitle={'Пиломатериал: '} options={subCategories} queryEnum={QueryEnum.CatalogSubCategory} />
       <FilterSize queryEnumSize={QueryEnum.HeightSizeId} />
       <FilterSize queryEnumSize={QueryEnum.WeightSizeId} />

@@ -35,6 +35,7 @@
 
 .scrollContainer {
   display: flex;
+  height: 100%;
   padding: 4px 8px 12px 8px;
   flex-wrap: wrap;
   align-content: baseline;

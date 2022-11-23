@@ -46,7 +46,7 @@ const ProductPriceSection: React.FC = () => {
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите стоимость одной единицы товара в рублях</div>
         <div className={classes.inputContainer}>
-          <input className={classes.customSizeInput} value={price} onChange={onChangeInput} type="text" />
+          <input className={classes.customSizeInput} value={price || ''} onChange={onChangeInput} type="text" />
           {'руб'}
         </div>
       </div>
