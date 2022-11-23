@@ -1,13 +1,11 @@
 .container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
-  width: 268px;
-  /*margin-right: 32px;*/
+  width: 180px;
 }
 
 .result {
-  /*margin-right: 16px;*/
   font-size: 14px;
   font-weight: 600;
 }
