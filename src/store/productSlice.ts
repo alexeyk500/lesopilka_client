@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { DeleteResultType } from '../api/serverResponseTypes';
 
 const emptyEditCard: ProductCardType = {
   id: -1,
@@ -179,7 +180,19 @@ export const deleteProductPictureThunk = createAsyncThunk<
     await serverApi.deletePicture(token, fileName);
     return await serverApi.getProduct(productId);
   } catch (e: any) {
-    return rejectWithValue('Ошибка удаления изображения для товара\n' + e.response?.data?.message);
+    return rejectWithValue(`Ошибка удаления изображения для товара ${productId}\n` + e.response?.data?.message);
+  }
+});
+
+export const deleteProductThunk = createAsyncThunk<
+  DeleteResultType,
+  { token: string; productId: number },
+  { rejectValue: string }
+>('product/deleteProductThunk', async ({ token, productId }, { rejectWithValue }) => {
+  try {
+    return await serverApi.deleteProduct(token, productId);
+  } catch (e: any) {
+    return rejectWithValue(`Ошибка удаления товара ${productId}\n` + e.response?.data?.message);
   }
 });
 

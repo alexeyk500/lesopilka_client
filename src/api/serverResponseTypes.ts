@@ -19,7 +19,7 @@ export type CreateManufacturerType = {
   approved: boolean;
 };
 
-export type DeletePictureType = {
+export type DeleteResultType = {
   fileName: string;
   result: number;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { ProductCardDataType } from '../../../types/types';
 import {
   selectorCategorySizes,
@@ -12,7 +12,12 @@ import {
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
-import { selectorCatalogSearchParams, selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
+import {
+  deleteProductThunk,
+  selectorCatalogSearchParams,
+  selectorEditCard,
+  selectorProductsSaving,
+} from '../../../store/productSlice';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
@@ -20,6 +25,7 @@ import DeleteCardForm from '../DeleteCardForm/DeleteCardForm';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const editCard = useAppSelector(selectorEditCard);
   const isSaving = useAppSelector(selectorProductsSaving);
@@ -91,17 +97,30 @@ const CardControlAndInfo: React.FC = () => {
     },
   };
 
-  const onClickReadyBtn = () => {
+  const returnToCatalog = () => {
     if (catalogSearchParams) {
       navigate(`/sales/?${catalogSearchParams}`);
     } else {
-      user?.manufacturer?.id && navigate(`/sales/?mid=${user?.manufacturer?.id}`);
+      if (user?.manufacturer?.id) {
+        user?.manufacturer?.id && navigate(`/sales/?mid=${user?.manufacturer?.id}`);
+      } else {
+        navigate(`/`);
+      }
     }
+  };
+
+  const onClickReadyBtn = () => {
+    returnToCatalog();
   };
 
   const onCloseDeleteCardPopUp = (result?: boolean | FormData) => {
     if (result) {
-      console.log('will delete');
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token) {
+        dispatch(deleteProductThunk({ token, productId: editCard.id })).then(() => {
+          returnToCatalog();
+        });
+      }
     }
   };
 
