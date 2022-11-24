@@ -6,7 +6,7 @@ export enum ButtonType {
   DEFAULT,
   SECONDARY,
   FILTER,
-  RED
+  RED,
 }
 
 type PropsType = React.ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  /*width: 30vw;*/
+  min-width: 300px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  margin-top: 8px;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: 0.33px;
+  color: var(--blue_color);
+  white-space: pre-line;
+}
+
+.cardContainer {
+  margin-top: -16px;
+  scale: 0.85
+}

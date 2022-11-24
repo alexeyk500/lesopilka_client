@@ -16,6 +16,7 @@ type PropsType = {
   customBottomBtnTwo?: React.ReactNode;
   customClassBottomBtnGroup?: string;
   withoutButtons?: boolean;
+  isDeletePopUp?: boolean;
 };
 
 export interface PopupRef {
@@ -36,6 +37,7 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
       customBottomBtnTwo,
       customClassBottomBtnGroup,
       withoutButtons,
+      isDeletePopUp,
     },
     ref
   ) => {
@@ -106,7 +108,11 @@ const PortalPopUp = React.forwardRef<PopupRef, PropsType>(
                 [customClassBtnGroup]: customClassBottomBtnGroup,
               })}
             >
-              <ButtonComponent title={titleConfirmBtn ? titleConfirmBtn : 'Подтвердить'} type="submit" />
+              <ButtonComponent
+                title={titleConfirmBtn ? titleConfirmBtn : 'Подтвердить'}
+                buttonType={isDeletePopUp ? ButtonType.RED : ButtonType.DEFAULT}
+                type="submit"
+              />
               {!hideCancelBottomBtn && !oneCenterConfirmBtn && (
                 <ButtonComponent title="Отмена" buttonType={ButtonType.SECONDARY} type="reset" />
               )}
@@ -133,6 +139,7 @@ export const showPortalPopUp = ({
   customClassBottomBtnGroup,
   ref,
   withoutButtons,
+  isDeletePopUp,
 }: {
   popUpContent: React.ReactNode;
   onClosePopUp?: (result?: boolean | FormData) => void;
@@ -144,6 +151,7 @@ export const showPortalPopUp = ({
   customClassBottomBtnGroup?: string;
   ref?: React.MutableRefObject<PopupRef | null>;
   withoutButtons?: boolean;
+  isDeletePopUp?: boolean;
 }) => {
   const div = document.createElement('div');
   div.id = 'popup' + new Date().getTime();
@@ -152,9 +160,10 @@ export const showPortalPopUp = ({
   const popUpRoot = createRoot(popUpContainer);
   popUpRoot.render(
     <PortalPopUp
-      popUpContent={popUpContent}
+      ref={ref}
       divId={div.id}
       popUpRoot={popUpRoot}
+      popUpContent={popUpContent}
       onClosePopUp={onClosePopUp}
       titleConfirmBtn={titleConfirmBtn}
       oneCenterConfirmBtn={oneCenterConfirmBtn}
@@ -163,7 +172,7 @@ export const showPortalPopUp = ({
       customBottomBtnTwo={customBottomBtnTwo}
       customClassBottomBtnGroup={customClassBottomBtnGroup}
       withoutButtons={withoutButtons}
-      ref={ref}
+      isDeletePopUp={isDeletePopUp}
     />
   );
 };

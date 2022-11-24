@@ -13,8 +13,10 @@ import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllips
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getPrice } from '../../../utils/functions';
 import { selectorCatalogSearchParams, selectorEditCard, selectorProductsSaving } from '../../../store/productSlice';
-import ButtonComponent, {ButtonType} from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
+import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
+import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
+import DeleteCardForm from '../DeleteCardForm/DeleteCardForm';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -97,9 +99,21 @@ const CardControlAndInfo: React.FC = () => {
     }
   };
 
+  const onCloseDeleteCardPopUp = (result?: boolean | FormData) => {
+    if (result) {
+      console.log('will delete');
+    }
+  };
+
   const onClickDeleteBtn = () => {
-    console.log('onClickDeleteBtn')
-  }
+    showPortalPopUp({
+      popUpContent: <DeleteCardForm productCardData={productCardData} />,
+      onClosePopUp: onCloseDeleteCardPopUp,
+      titleConfirmBtn: 'Удалить',
+      customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
+      isDeletePopUp: true,
+    });
+  };
 
   return (
     <div className={classes.container}>
@@ -125,7 +139,6 @@ const CardControlAndInfo: React.FC = () => {
         <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED} onClick={onClickDeleteBtn} />
       </div>
     </div>
-
   );
 };
 
