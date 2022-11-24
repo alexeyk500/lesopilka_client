@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  /*width: 30vw;*/
   min-width: 300px;
   flex-direction: column;
   align-items: center;
@@ -20,6 +19,6 @@
 }
 
 .cardContainer {
-  margin-top: -16px;
+  margin-top: -12px;
   scale: 0.85
 }
