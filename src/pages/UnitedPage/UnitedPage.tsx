@@ -18,7 +18,6 @@ const UnitedPage: React.FC = () => {
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
-      console.log('searchParams =', searchParams.toString());
       dispatch(getProductsThunk(searchParams));
     }
   }, [dispatch, searchParams]);
