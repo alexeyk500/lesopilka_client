@@ -1,0 +1,36 @@
+.container {
+  position: absolute;
+  display: flex;
+  top: 0;
+  left:0;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,0.2);
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 465px;
+  background-color: var(--section_background);
+  border-radius: 12px;
+  box-shadow: 6px 8px 25px rgba(102, 126, 234, 0.2);
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 4px 16px;
+  color: var(--gray_color);
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px solid var(--gray_color_light)
+}

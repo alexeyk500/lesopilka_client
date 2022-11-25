@@ -11,7 +11,7 @@ import {
 } from '../../../store/catalogSlice';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
-import { formatUTC, getPrice } from '../../../utils/functions';
+import { formatUTC, formatPrice } from '../../../utils/functions';
 import {
   deleteProductThunk,
   selectorCatalogSearchParams,
@@ -78,7 +78,7 @@ const CardControlAndInfo: React.FC = () => {
     height,
     caliber,
     length,
-    price: editCard.price ? getPrice(editCard.price) : '',
+    price: editCard.price ? formatPrice(editCard.price) : '',
     editionDate: editCard.editionDate,
     publicationDate: editCard.publicationDate,
     manufacturer: user?.manufacturer || {

@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.topRowContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.info {
+  display: flex;
+  margin-top: -4px;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.33px;
+}
+
+.infoItem + .infoItem {
+  margin-left: 8px;
+}
+
+.infoManufacturer {
+  display: flex;
+  margin-top: 2px;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.33px;
+}
+
+.btnGroup {
+  display: flex;
+  align-items: center;
+}
+
+.starIco {
+  margin-top: 2px;
+  height: 25px;
+  margin-right: 16px;
+}
+
+.starIco:hover {
+  cursor: pointer;
+}
+
+.cartIco {
+  height: 24px;
+}
+
+.cartIco:hover {
+  cursor: pointer;
+}

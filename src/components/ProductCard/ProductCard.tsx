@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
-import { ProductCardDataType } from '../../types/types';
+import { ProductCardDataType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
@@ -55,9 +55,9 @@ const ProductCard: React.FC<PropsType> = ({
               {!isManufacturerProductCard && (
                 <div className={classes.btnGroup}>
                   <div className={classes.starIcoContainer}>
-                    <img src={starIco} className={classes.starIco} alt="no product" />
+                    <img src={starIco} className={classes.starIco} alt="favorite" />
                   </div>
-                  <img src={cartIco} className={classes.cartIco} alt="no product" />
+                  <img src={cartIco} className={classes.cartIco} alt="to cart" />
                 </div>
               )}
             </div>
@@ -99,7 +99,9 @@ const ProductCard: React.FC<PropsType> = ({
                   )}
                 </div>
               </div>
-              {productCardData && productCardData.isSeptic ? <div className={classes.isSeptic}>Септирован</div> : null}
+              {productCardData && productCardData.isSeptic ? (
+                <div className={classes.isSeptic}>{SepticEnum.septic}</div>
+              ) : null}
             </div>
             <div className={classes.delimiter} />
             <div className={classes.rowContainer}>

@@ -160,3 +160,8 @@ export enum QueryEnum {
   SearchLocationId = 'slid',
   ManufacturerId = 'mid',
 }
+
+export enum SepticEnum {
+  septic = 'Септирован',
+  noSeptic = 'Не септирован',
+}

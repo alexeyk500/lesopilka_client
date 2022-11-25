@@ -5,6 +5,7 @@ import { checkIsSalesPage, isFiltersSearchParams, makeProductCardData } from '..
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   createProductThunk,
+  getProductThunk,
   selectorProducts,
   selectorProductsLoading,
   setCatalogSearchParams,
@@ -13,6 +14,8 @@ import Preloader from '../../../components/Preloader/Preloader';
 import SelectRow from '../SelectRow/SelectRow';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductType } from '../../../types/types';
+import { showDetailProductCardPopUp } from '../../../components/DetailProductCard/DetailProductCard';
+import { isFulfilled } from '@reduxjs/toolkit';
 
 const ProductList = () => {
   const location = useLocation();
@@ -40,14 +43,18 @@ const ProductList = () => {
   };
 
   const onClick = (id: number | undefined) => {
-    if (isSalesPage && id) {
+    if (isSalesPage) {
       if (id) {
         dispatch(setCatalogSearchParams(searchParams.toString()));
         navigate(`/edit_card/${id}`);
       }
     } else {
       if (id) {
-        console.log('will show details card with id=', id);
+        dispatch(getProductThunk(id)).then((result) => {
+          if (isFulfilled(result)) {
+            showDetailProductCardPopUp(result.payload);
+          }
+        });
       }
     }
   };

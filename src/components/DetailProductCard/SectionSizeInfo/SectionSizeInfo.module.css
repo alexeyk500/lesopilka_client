@@ -1,0 +1,42 @@
+.container {
+  margin-top: 4px;
+  display: flex;
+}
+
+.dimensionColumn {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.calculatedColumn {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.calculatedInfoContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoRow {
+  display: flex;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.33px;
+}
+
+.sizeTitle {
+  width: 55px;
+  margin-right: 12px;
+}
+
+.sizeTitleCalculated {
+  width: 102px;
+  margin-right: 4px;
+}
+
+.topStar {
+  font-size: 12px;
+}

@@ -90,12 +90,131 @@ export const getOptionTitle = (options: OptionsType[], optionId: number | undefi
   return undefined;
 };
 
-export const getPrice = (price: string | number | undefined) => {
+export const formatPrice = (price: string | number | undefined) => {
   if (price) {
     const splitPrice = String((Math.round(Number(price) * 100) / 100).toFixed(2)).split('.');
     return `${splitPrice[0]}.${splitPrice[1]}`;
   }
   return '';
+};
+
+export const getWeight = (volume: string | number | undefined) => {
+  const volumeNumber = Number(volume);
+  if (!volumeNumber) {
+    return undefined;
+  }
+  const weight = 1500 * volumeNumber;
+  if (weight < 10) {
+    return weight.toFixed(1);
+  }
+  return weight.toFixed(0);
+};
+
+export const getSquare = ({
+  width,
+  length,
+}: {
+  width: string | number | undefined;
+  length: string | number | undefined;
+}) => {
+  const widthNumber = Number(width);
+  const lengthNumber = Number(length);
+  if (!widthNumber || !lengthNumber) {
+    return undefined;
+  }
+  return ((widthNumber * lengthNumber) / 1000000).toFixed(2);
+};
+
+export const getPriceForSquareMeter = ({
+  width,
+  length,
+  price,
+}: {
+  width: string | undefined;
+  length: string | undefined;
+  price: string | undefined;
+}) => {
+  const square = getSquare({ width, length });
+  const squareNumber = Number(square);
+  const priceNumber = Number(price);
+  if (!squareNumber || !priceNumber) {
+    return undefined;
+  }
+  return ((1 / squareNumber) * priceNumber).toFixed(2);
+};
+
+export const getVolume = ({
+  height,
+  width,
+  length,
+}: {
+  height: string | undefined;
+  width: string | undefined;
+  length: string | undefined;
+}) => {
+  const heightNumber = Number(height);
+  const widthNumber = Number(width);
+  const lengthNumber = Number(length);
+  if (!heightNumber || !widthNumber || !lengthNumber) {
+    return undefined;
+  }
+  return ((widthNumber * lengthNumber * heightNumber) / 1000000000).toFixed(2);
+};
+
+export const getPriceForCubicMeter = ({
+  height,
+  width,
+  length,
+  price,
+}: {
+  height: string | undefined;
+  width: string | undefined;
+  length: string | undefined;
+  price: string | undefined;
+}) => {
+  const volume = getVolume({ height, width, length });
+  const volumeNumber = Number(volume);
+  const priceNumber = Number(price);
+  if (!volumeNumber || !priceNumber) {
+    return undefined;
+  }
+  return ((1 / volumeNumber) * priceNumber).toFixed(2);
+};
+
+export const getVolumeCaliber = ({ caliber, length }: { caliber: string | undefined; length: string | undefined }) => {
+  const caliberNumber = Number(caliber);
+  const lengthNumber = Number(length);
+  if (!caliberNumber || !lengthNumber) {
+    return undefined;
+  }
+  // (hмм*Π*dмм2/4)/1 000 000 000
+  return ((lengthNumber * Math.PI * (caliberNumber * caliberNumber)) / 4 / 1000000000).toFixed(2);
+};
+
+export const getPriceForCubicMeterCaliber = ({
+  caliber,
+  length,
+  price,
+}: {
+  caliber: string | undefined;
+  length: string | undefined;
+  price: string | undefined;
+}) => {
+  const volumeCaliber = getVolumeCaliber({ caliber, length });
+  const volumeCaliberNumber = Number(volumeCaliber);
+  const priceNumber = Number(price);
+  if (!volumeCaliberNumber || !priceNumber) {
+    return undefined;
+  }
+  return ((1 / volumeCaliberNumber) * priceNumber).toFixed(2);
+};
+
+export const getSizesValue = (product: ProductType) => {
+  const height = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.value;
+  const width = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.value;
+  const length = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.value;
+  const caliber = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.value;
+  return { height, width, length, caliber };
 };
 
 export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes?: CategorySizeType[]) => {
@@ -119,7 +238,7 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     height: getSizeBySizeType(SizeTypeEnum.height, product.sizes),
     caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes),
     length: getSizeBySizeType(SizeTypeEnum.length, product.sizes),
-    price: getPrice(product.price ? product.price : undefined),
+    price: formatPrice(product.price ? product.price : undefined),
     editionDate: product.editionDate,
     publicationDate: product.publicationDate,
   };

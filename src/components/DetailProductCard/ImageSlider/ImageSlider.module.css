@@ -1,0 +1,51 @@
+.container {
+  position: relative;
+  display: flex;
+  height: 349px;
+  justify-content: center;
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+}
+
+.btnClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+.btnLeft {
+  position: absolute;
+  top: 152px;
+  left: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+.btnRight {
+  position: absolute;
+  top: 152px;
+  right: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: inherit;
+}
+
+.imageContainer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0
+}
+

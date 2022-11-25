@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  margin-top: 2px;
+}
+
+.infoRow {
+  margin-top: 2px;
+  display: flex;
+  font-size: 14px;
+  letter-spacing: 0.33px;
+}
+
+.sizeTitle {
+  width: 110px;
+  margin-right: 2px;
+}
+
+.topStar {
+  margin-left: 2px;
+  font-size: 10px;
+}
+
+.topStarDefinition {
+  display: flex;
+  margin-right: 2px;
+  font-size: 12px;
+}
+
+.twoColumnContainer {
+  display: flex;
+}
+.pricesContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 260px;
+}
+
+.definitionTitle {
+  display: flex;
+  font-size: 10px;
+  width: 175px;
+  white-space: break-spaces;
+}
+
+.definitionContainer {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-start;
+  margin-left: 16px;
+  justify-content: flex-end;
+}
