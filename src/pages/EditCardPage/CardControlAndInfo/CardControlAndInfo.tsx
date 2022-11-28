@@ -39,33 +39,38 @@ const CardControlAndInfo: React.FC = () => {
   const material = allMaterials.find((material) => material.id === editCard.productMaterialId);
   const sort = allSorts.find((sort) => sort.id === editCard.sortId);
 
-  let width: string | undefined;
-  if (editCard.customWidthValue) {
-    width = editCard.customWidthValue;
-  } else {
-    width = allCategorySizes.find((categorySize) => categorySize.id === editCard.widthId)?.value || undefined;
-  }
+  // let width: string | undefined;
+  // if (editCard.customWidthValue) {
+  //   width = editCard.customWidthValue;
+  // } else {
+  //   width = allCategorySizes.find((categorySize) => categorySize.id === editCard.widthId)?.value || undefined;
+  // }
 
-  let height: string | undefined;
-  if (editCard.customHeightValue) {
-    height = editCard.customHeightValue;
-  } else {
-    height = allCategorySizes.find((categorySize) => categorySize.id === editCard.heightId)?.value || undefined;
-  }
+  // let height: string | undefined;
+  // if (editCard.customHeightValue) {
+  //   height = editCard.customHeightValue;
+  // } else {
+  //   height = allCategorySizes.find((categorySize) => categorySize.id === editCard.heightId)?.value || undefined;
+  // }
 
-  let caliber: string | undefined;
-  if (editCard.customCaliberValue) {
-    caliber = editCard.customCaliberValue;
-  } else {
-    caliber = allCategorySizes.find((categorySize) => categorySize.id === editCard.caliberId)?.value || undefined;
-  }
+  // let caliber: string | undefined;
+  // if (editCard.customCaliberValue) {
+  //   caliber = editCard.customCaliberValue;
+  // } else {
+  //   caliber = allCategorySizes.find((categorySize) => categorySize.id === editCard.caliberId)?.value || undefined;
+  // }
 
-  let length;
-  if (editCard.customLengthValue) {
-    length = editCard.customLengthValue;
-  } else {
-    length = allCategorySizes.find((categorySize) => categorySize.id === editCard.lengthId)?.value || '';
-  }
+  // let length;
+  // if (editCard.customLengthValue) {
+  //   length = editCard.customLengthValue;
+  // } else {
+  //   length = allCategorySizes.find((categorySize) => categorySize.id === editCard.lengthId)?.value || '';
+  // }
+
+  const height = editCard.height
+  const width = editCard.width
+  const length = editCard.length
+  const caliber = editCard.caliber
 
   const productCardData: ProductCardDataType = {
     id: editCard.id,

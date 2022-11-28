@@ -211,10 +211,10 @@ export const getPriceForCubicMeterCaliber = ({
 };
 
 export const getSizesValue = (product: ProductType) => {
-  const height = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.value;
-  const width = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.value;
-  const length = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.value;
-  const caliber = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.value;
+  const height = product.height;
+  const width = product.width;
+  const length = product.length;
+  const caliber = product.caliber;
   return { height, width, length, caliber };
 };
 
@@ -234,11 +234,11 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     sort: product.sort ? product.sort.title : '',
     subCategoryTile: product.subCategory?.title || '',
     image: product.images?.[0],
-    isSeptic: product.isSeptic,
-    width: getSizeBySizeType(SizeTypeEnum.width, product.sizes),
-    height: getSizeBySizeType(SizeTypeEnum.height, product.sizes),
-    caliber: getSizeBySizeType(SizeTypeEnum.caliber, product.sizes),
-    length: getSizeBySizeType(SizeTypeEnum.length, product.sizes),
+    isSeptic: product.isSeptic ?product.isSeptic :false,
+    height: product.height,
+    width: product.width,
+    caliber: product.caliber,
+    length: product.length,
     price: formatPrice(product.price ? product.price : undefined),
     editionDate: product.editionDate,
     publicationDate: product.publicationDate,

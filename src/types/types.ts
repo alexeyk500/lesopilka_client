@@ -49,14 +49,10 @@ export type ProductCardType = {
   productMaterialId: number | undefined;
   productCode: string | undefined;
   images: string[] | undefined;
-  heightId: number | undefined;
-  customHeightValue: string | undefined;
-  widthId: number | undefined;
-  customWidthValue: string | undefined;
-  lengthId: number | undefined;
-  customLengthValue: string | undefined;
-  caliberId: number | undefined;
-  customCaliberValue: string | undefined;
+  height: string | undefined;
+  width: string | undefined;
+  length: string | undefined;
+  caliber: string | undefined;
   sortId: number | undefined;
   isSeptic: boolean;
   description: string | undefined;
@@ -132,19 +128,22 @@ export enum ProductsSortsEnum {
 
 export type ProductType = {
   id: number;
-  code: string | undefined;
-  price: string | undefined;
-  isSeptic: boolean;
-  editionDate: string | undefined;
-  publicationDate: string | undefined;
-  description: string | undefined;
-  category: OptionsType | undefined;
-  subCategory: OptionsType | undefined;
-  material: OptionsType | undefined;
-  sort: OptionsType | undefined;
-  sizes: CategorySizeType[] | undefined;
-  images: string[] | undefined;
   manufacturer: ManufacturerType;
+  code?: string;
+  price?: string;
+  isSeptic?: boolean;
+  editionDate?: string;
+  publicationDate?: string;
+  description?: string;
+  height?: string;
+  width?: string;
+  length?: string;
+  caliber?: string;
+  images?: string[];
+  category?: OptionsType;
+  subCategory?: OptionsType;
+  material?: OptionsType;
+  sort?: OptionsType;
 };
 
 export enum QueryEnum {

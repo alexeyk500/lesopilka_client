@@ -12,15 +12,11 @@ const emptyEditCard: ProductCardType = {
   productMaterialId: undefined,
   productCode: undefined,
   images: [],
-  heightId: undefined,
-  customHeightValue: undefined,
-  widthId: undefined,
-  customWidthValue: undefined,
-  lengthId: undefined,
-  customLengthValue: undefined,
+  height: undefined,
+  width: undefined,
+  length: undefined,
+  caliber: undefined,
   sortId: undefined,
-  caliberId: undefined,
-  customCaliberValue: undefined,
   isSeptic: false,
   description: undefined,
   price: undefined,
@@ -36,35 +32,45 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.editionDate = product.editionDate;
   productCard.publicationDate = product.publicationDate;
   productCard.sortId = product.sort?.id;
-  productCard.isSeptic = product.isSeptic;
+  productCard.isSeptic = product.isSeptic ?product.isSeptic :false;
   productCard.images = product.images;
   productCard.description = product.description;
   productCard.productCode = product.code;
   productCard.price = product.price;
+  productCard.height = product.height;
+  productCard.width = product.width;
+  productCard.length = product.length;
+  productCard.caliber = product.caliber;
 
-  const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
-  productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
-  productCard.customHeightValue = product.sizes?.find(
-    (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
-  )?.value;
+  // const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
+  // productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
+  // productCard.customHeightValue = product.sizes?.find(
+  //   (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
+  // )?.value;
 
-  const widthId = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.id;
-  productCard.widthId = widthId && widthId > 0 ? widthId : undefined;
-  productCard.customWidthValue = product.sizes?.find(
-    (size) => size.type === SizeTypeEnum.width && size.isCustomSize === true
-  )?.value;
-
-  const lengthId = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.id;
-  productCard.lengthId = lengthId && lengthId > 0 ? lengthId : undefined;
-  productCard.customLengthValue = product.sizes?.find(
-    (size) => size.type === SizeTypeEnum.length && size.isCustomSize === true
-  )?.value;
-
-  const caliberId = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.id;
-  productCard.caliberId = caliberId && caliberId > 0 ? caliberId : undefined;
-  productCard.customCaliberValue = product.sizes?.find(
-    (size) => size.type === SizeTypeEnum.caliber && size.isCustomSize === true
-  )?.value;
+  // const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
+  // productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
+  // productCard.customHeightValue = product.sizes?.find(
+  //   (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
+  // )?.value;
+  //
+  // const widthId = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.id;
+  // productCard.widthId = widthId && widthId > 0 ? widthId : undefined;
+  // productCard.customWidthValue = product.sizes?.find(
+  //   (size) => size.type === SizeTypeEnum.width && size.isCustomSize === true
+  // )?.value;
+  //
+  // const lengthId = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.id;
+  // productCard.lengthId = lengthId && lengthId > 0 ? lengthId : undefined;
+  // productCard.customLengthValue = product.sizes?.find(
+  //   (size) => size.type === SizeTypeEnum.length && size.isCustomSize === true
+  // )?.value;
+  //
+  // const caliberId = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.id;
+  // productCard.caliberId = caliberId && caliberId > 0 ? caliberId : undefined;
+  // productCard.customCaliberValue = product.sizes?.find(
+  //   (size) => size.type === SizeTypeEnum.caliber && size.isCustomSize === true
+  // )?.value;
 };
 
 type ProductsSliceType = {

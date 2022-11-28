@@ -14,15 +14,11 @@ const emptyCard = {
   productMaterialId: undefined,
   productCode: undefined,
   images: [],
-  heightId: undefined,
-  customHeightValue: undefined,
-  widthId: undefined,
-  customWidthValue: undefined,
-  lengthId: undefined,
-  customLengthValue: undefined,
+  height: undefined,
+  width: undefined,
+  length: undefined,
+  caliber: undefined,
   sortId: undefined,
-  caliberId: undefined,
-  customCaliberValue: undefined,
   isSeptic: false,
   description: undefined,
   price: undefined,
@@ -39,8 +35,8 @@ export const productCardSlice = createSlice({
   name: 'newCardSlice',
   initialState,
   reducers: {
-    setProductCardProductHeightId: (state, action) => {
-      state.productCard.heightId = action.payload;
+    setProductCardProductHeight: (state, action) => {
+      state.productCard.height = action.payload;
     },
     setProductCode: (state, action) => {
       state.productCard.productCode = action.payload;
