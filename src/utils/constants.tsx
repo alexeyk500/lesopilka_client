@@ -10,3 +10,5 @@ export const SEPTIC_OPTIONS = [
   { id: 1, title: 'Не септирован' },
   { id: 2, title: 'Антисептирован' },
 ];
+
+export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;

@@ -7,6 +7,7 @@ import {
   SizeTypeEnum,
   UserType,
 } from '../types/types';
+import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
@@ -103,7 +104,7 @@ export const getWeight = (volume: string | number | undefined) => {
   if (!volumeNumber) {
     return undefined;
   }
-  const weight = 1500 * volumeNumber;
+  const weight = WEIGHT_ONE_CUBIC_METER_OF_WOOD * volumeNumber;
   if (weight < 10) {
     return weight.toFixed(1);
   }
