@@ -234,7 +234,7 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     sort: product.sort ? product.sort.title : '',
     subCategoryTile: product.subCategory?.title || '',
     image: product.images?.[0],
-    isSeptic: product.isSeptic ?product.isSeptic :false,
+    isSeptic: product.isSeptic ? product.isSeptic : false,
     height: product.height,
     width: product.width,
     caliber: product.caliber,

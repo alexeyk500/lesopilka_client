@@ -6,7 +6,6 @@ import {
   getPriceForCubicMeter,
   getPriceForCubicMeterCaliber,
   getPriceForSquareMeter,
-  getSizesValue,
 } from '../../../utils/functions';
 
 type PropsType = {
@@ -15,10 +14,10 @@ type PropsType = {
 
 const SectionPriceInfo: React.FC<PropsType> = ({ product }) => {
   const price = formatPrice(product.price);
-  const height = product.height
-  const width = product.width
-  const length = product.length
-  const caliber = product.caliber
+  const height = product.height;
+  const width = product.width;
+  const length = product.length;
+  const caliber = product.caliber;
 
   const priceForSquareMeter = formatPrice(getPriceForSquareMeter({ width, length, price }));
   const priceForCubicMeter = formatPrice(getPriceForCubicMeter({ height, width, length, price }));

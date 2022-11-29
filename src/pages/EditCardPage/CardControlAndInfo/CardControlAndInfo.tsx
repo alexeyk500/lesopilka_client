@@ -3,12 +3,7 @@ import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { ProductCardDataType } from '../../../types/types';
-import {
-  selectorCategorySizes,
-  selectorProductMaterials,
-  selectorProductSorts,
-  selectorSubCategories,
-} from '../../../store/catalogSlice';
+import { selectorProductMaterials, selectorProductSorts, selectorSubCategories } from '../../../store/catalogSlice';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, formatPrice } from '../../../utils/functions';
@@ -30,7 +25,6 @@ const CardControlAndInfo: React.FC = () => {
   const editCard = useAppSelector(selectorEditCard);
   const isSaving = useAppSelector(selectorProductsSaving);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
-  const allCategorySizes = useAppSelector(selectorCategorySizes);
   const allMaterials = useAppSelector(selectorProductMaterials);
   const allSorts = useAppSelector(selectorProductSorts);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
@@ -39,39 +33,6 @@ const CardControlAndInfo: React.FC = () => {
   const material = allMaterials.find((material) => material.id === editCard.productMaterialId);
   const sort = allSorts.find((sort) => sort.id === editCard.sortId);
 
-  // let width: string | undefined;
-  // if (editCard.customWidthValue) {
-  //   width = editCard.customWidthValue;
-  // } else {
-  //   width = allCategorySizes.find((categorySize) => categorySize.id === editCard.widthId)?.value || undefined;
-  // }
-
-  // let height: string | undefined;
-  // if (editCard.customHeightValue) {
-  //   height = editCard.customHeightValue;
-  // } else {
-  //   height = allCategorySizes.find((categorySize) => categorySize.id === editCard.heightId)?.value || undefined;
-  // }
-
-  // let caliber: string | undefined;
-  // if (editCard.customCaliberValue) {
-  //   caliber = editCard.customCaliberValue;
-  // } else {
-  //   caliber = allCategorySizes.find((categorySize) => categorySize.id === editCard.caliberId)?.value || undefined;
-  // }
-
-  // let length;
-  // if (editCard.customLengthValue) {
-  //   length = editCard.customLengthValue;
-  // } else {
-  //   length = allCategorySizes.find((categorySize) => categorySize.id === editCard.lengthId)?.value || '';
-  // }
-
-  const height = editCard.height
-  const width = editCard.width
-  const length = editCard.length
-  const caliber = editCard.caliber
-
   const productCardData: ProductCardDataType = {
     id: editCard.id,
     material: material ? material.title : '',
@@ -79,10 +40,10 @@ const CardControlAndInfo: React.FC = () => {
     subCategoryTile: subCategory ? subCategory.title : '',
     image: editCard.images ? (editCard.images.length > 0 ? editCard.images[0] : undefined) : undefined,
     isSeptic: editCard.isSeptic,
-    width,
-    height,
-    caliber,
-    length,
+    height: editCard.height,
+    width: editCard.width,
+    caliber: editCard.caliber,
+    length: editCard.length,
     price: editCard.price ? formatPrice(editCard.price) : '',
     editionDate: editCard.editionDate,
     publicationDate: editCard.publicationDate,

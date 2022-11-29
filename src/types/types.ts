@@ -2,6 +2,7 @@ export type OptionsType = {
   id: number | undefined;
   title: string;
   key?: string;
+  value?: string;
 };
 
 export type ManufacturerType = {

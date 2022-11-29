@@ -9,8 +9,8 @@ type PropsType = {
   onChangeSelector: (id: number) => void;
   title?: string;
   selectedOption?: OptionsType;
-  isCustomSize?: boolean;
-  customSizeValue?: string;
+  showCustomSizeInput?: boolean;
+  customSizeInputValue?: string;
   onChangeCustomSize?: (value: string | undefined) => void;
 };
 
@@ -19,9 +19,9 @@ const SectionSelector: React.FC<PropsType> = ({
   options,
   selectedOption,
   onChangeSelector,
-  customSizeValue,
+  customSizeInputValue,
   onChangeCustomSize,
-  isCustomSize,
+  showCustomSizeInput,
 }) => {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || regExpOnlyDigit.test(e.target.value)) {
@@ -29,24 +29,22 @@ const SectionSelector: React.FC<PropsType> = ({
     }
   };
 
-  const customOption = options.find((option) => option.id === -1);
-
   return (
     <div className={classes.selectorGroupContainer}>
       {title && <div className={classes.title}>{title}</div>}
       <div className={classes.selectorContainer}>
         <Selector
           options={options}
-          selectedOption={isCustomSize ? customOption : selectedOption}
+          selectedOption={selectedOption}
           customClassName={classes.selector}
           onChange={onChangeSelector}
         />
       </div>
-      {isCustomSize && (
+      {showCustomSizeInput && (
         <div className={classes.customSizeInputContainer}>
           <input
             className={classes.customSizeInput}
-            value={customSizeValue || ''}
+            value={customSizeInputValue || ''}
             onChange={onChangeInput}
             type="text"
           />

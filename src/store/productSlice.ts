@@ -1,4 +1,4 @@
-import { ProductCardType, ProductsSortsEnum, ProductType, QueryEnum, SizeTypeEnum } from '../types/types';
+import { ProductCardType, ProductsSortsEnum, ProductType, QueryEnum } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
@@ -32,7 +32,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.editionDate = product.editionDate;
   productCard.publicationDate = product.publicationDate;
   productCard.sortId = product.sort?.id;
-  productCard.isSeptic = product.isSeptic ?product.isSeptic :false;
+  productCard.isSeptic = product.isSeptic ? product.isSeptic : false;
   productCard.images = product.images;
   productCard.description = product.description;
   productCard.productCode = product.code;

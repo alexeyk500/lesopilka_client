@@ -30,8 +30,6 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product }) =
     }
   }, [divId, popUpRoot]);
 
-  console.log('product =', product);
-
   return (
     <div className={classes.container}>
       <div ref={refContent} className={classes.content}>

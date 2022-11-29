@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SectionSelector from '../../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { CategorySizeType, OptionsType, SizeTypeEnum } from '../../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
@@ -13,12 +13,12 @@ const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefine
       categorySize.categoryId === categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
   );
   const optionsFromSizes = filteredSizes.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
+    return { id: size.id, title: `${size.value} мм`, value: size.value };
   });
   const options: OptionsType[] = [];
-  options.push({ id: 0, title: '' });
+  options.push({ id: 0, title: '', value: '0' });
   options.push(...optionsFromSizes);
-  options.push({ id: -1, title: 'Другой размер' });
+  options.push({ id: -1, title: 'Другой размер', value: '-1' });
   return options;
 };
 
@@ -32,7 +32,8 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
   const editCard = useAppSelector(selectorEditCard);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
-  const [isOpenCustomInput, setIsOpenCustomInput] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<OptionsType | undefined>(undefined);
+  const [isShowCustomSizeInput, setIsShowCustomSizeInput] = useState<boolean>(false);
   const [customInputValue, setCustomInputValue] = useState<string | undefined>(undefined);
 
   const debounceUpdateCustomSize = useDebouncedFunction(
@@ -46,51 +47,69 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
     true
   );
 
-  const options: OptionsType[] = getSizeOptions(allCategorySizes, editCard.categoryId, sizeType);
-  let selectedOptionId: OptionsType | undefined;
-  // if (sizeType === SizeTypeEnum.height) {
-  //   selectedOptionId = options.find((size) => size.id === editCard.heightId);
-  // } else if (sizeType === SizeTypeEnum.width) {
-  //   selectedOptionId = options.find((size) => size.id === editCard.widthId);
-  // } else if (sizeType === SizeTypeEnum.length) {
-  //   selectedOptionId = options.find((size) => size.id === editCard.lengthId);
-  // } else if (sizeType === SizeTypeEnum.caliber) {
-  //   selectedOptionId = options.find((size) => size.id === editCard.caliberId);
-  // }
-
-  // useEffect(() => {
-  //   if (editCard.height) {
-  //     setIsOpenCustomInput(false);
-  //   } else {
-  //
-  //       if (isOpenCustomInput) {
-  //         setIsOpenCustomInput(true);
-  //       } else {
-  //         setIsOpenCustomInput(false);
-  //       }
-  //   }
-  //   setCustomInputValue(editCard.customHeightValue);
-  // }, [editCard, isOpenCustomInput]);
-
-  const onChangeSelector = (id: number) => {
-    if (id > 0) {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      const categorySize = allCategorySizes.find((size) => size.id === id);
-      if (token && categorySize) {
-        const updateData = {
-          productId: editCard.id,
-          sizeType,
-          sizeValue: categorySize.value,
-        };
-        dispatch(updateProductThunk({ token, updateData }));
+  useEffect(() => {
+    const options = getSizeOptions(allCategorySizes, editCard.categoryId, sizeType);
+    if (isShowCustomSizeInput) {
+      const customOption = options.find((option) => option.id === -1);
+      if (customOption) {
+        customOption.value = editCard[sizeType];
       }
-      setIsOpenCustomInput(false);
-      setCustomInputValue(undefined);
+      setSelectedOption(customOption);
+    } else {
+      const foundOption = options.find((option) => option.value === editCard[sizeType]);
+      if (foundOption) {
+        setSelectedOption(foundOption);
+      } else if (editCard[sizeType]) {
+        const customOption = options.find((option) => option.id === -1);
+        if (customOption) {
+          customOption.value = editCard[sizeType];
+        }
+        setSelectedOption(customOption);
+        setCustomInputValue(editCard[sizeType]);
+        setIsShowCustomSizeInput(true);
+      }
     }
-    if (id === -1) {
-      setIsOpenCustomInput(true);
-    }
-  };
+  }, [editCard, isShowCustomSizeInput, allCategorySizes, sizeType, setSelectedOption, setCustomInputValue]);
+
+  const onChangeSelector = useCallback(
+    (id: number) => {
+      if (id > 0) {
+        const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+        const categorySize = allCategorySizes.find((size) => size.id === id);
+        if (token && categorySize) {
+          const updateData = {
+            productId: editCard.id,
+            sizeType,
+            sizeValue: categorySize.value,
+          };
+          dispatch(updateProductThunk({ token, updateData })).then(() => {
+            setIsShowCustomSizeInput(false);
+          });
+        }
+      }
+      if (id === -1) {
+        const options = getSizeOptions(allCategorySizes, editCard.categoryId, sizeType);
+        const customOption = options.find((option) => option.id === -1);
+        if (customOption) {
+          customOption.value = undefined;
+        }
+        setSelectedOption(customOption);
+        const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+        if (token) {
+          const updateData = {
+            productId: editCard.id,
+            sizeType,
+            sizeValue: null,
+          };
+          dispatch(updateProductThunk({ token, updateData })).then(() => {
+            setCustomInputValue(undefined);
+            setIsShowCustomSizeInput(true);
+          });
+        }
+      }
+    },
+    [allCategorySizes, dispatch, editCard, sizeType]
+  );
 
   const onChangeCustomValue = (value: string | undefined) => {
     setCustomInputValue(value);
@@ -105,11 +124,11 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
   return (
     <SectionSelector
       title={title}
-      options={options}
-      selectedOption={selectedOptionId}
+      options={getSizeOptions(allCategorySizes, editCard.categoryId, sizeType)}
+      selectedOption={selectedOption}
       onChangeSelector={onChangeSelector}
-      isCustomSize={isOpenCustomInput}
-      customSizeValue={customInputValue}
+      showCustomSizeInput={isShowCustomSizeInput}
+      customSizeInputValue={customInputValue}
       onChangeCustomSize={onChangeCustomValue}
     />
   );

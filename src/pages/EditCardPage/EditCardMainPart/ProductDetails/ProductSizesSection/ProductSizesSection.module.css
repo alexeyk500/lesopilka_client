@@ -1,9 +1,5 @@
 .rowContainer {
   display: flex;
   align-items: flex-start;
-  padding: 8px 0;
-}
-
-.rowContainerSlim {
-  padding-bottom: 0;
+  padding-top: 8px;
 }
