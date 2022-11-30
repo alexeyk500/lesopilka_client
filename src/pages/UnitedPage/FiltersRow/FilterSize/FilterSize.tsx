@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppSelector } from '../../../../hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../../../hooks/hooks';
 import { selectorCategorySizes } from '../../../../store/catalogSlice';
 import { QueryEnum, QueryToSizeEnum } from '../../../../types/types';
 import { useSearchParams } from 'react-router-dom';
+import {updateQueryFilters} from "../../../../store/productSlice";
 
 const getSizeTitle = (queryEnumSize: QueryEnum, sizeValue: string) => {
   const sizeTitle =
@@ -27,6 +28,7 @@ type PropsType = {
 };
 
 const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
+  const dispatch = useAppDispatch();
   const allCategorySizes = useAppSelector(selectorCategorySizes);
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedSizeTile, setSelectedSizeTitle] = useState<string | undefined>(undefined);
@@ -56,6 +58,7 @@ const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
 
   const resetCategoryFilter = () => {
     searchParams.delete(queryEnumSize);
+    dispatch(updateQueryFilters(searchParams.toString()));
     setSearchParams(searchParams);
   };
 
