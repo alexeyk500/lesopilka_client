@@ -21,6 +21,7 @@
   width: 24px;
   margin-right: 4px;
   margin-bottom: 2px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -29,6 +30,7 @@
   display: flex;
   text-align: left;
   width: 90px;
+  font-size: 16px;
   font-weight: 500;
   padding-right: 4px;
   border: none;

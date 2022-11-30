@@ -278,29 +278,3 @@ export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, 
 };
 
 export const checkIsSalesPage = (location: { pathname: string }) => location?.pathname?.includes('sales');
-
-export const getMinMaxProductPrice = (products: ProductType[]) => {
-  let minPrice: string | undefined;
-  let maxPrice: string | undefined;
-  products.forEach((product) => {
-    if (product.price) {
-      if (minPrice) {
-        if (product.price < minPrice) {
-          minPrice = product.price;
-        }
-      } else {
-        minPrice = product.price;
-      }
-    }
-    if (product.price) {
-      if (maxPrice) {
-        if (product.price > maxPrice) {
-          maxPrice = product.price;
-        }
-      } else {
-        maxPrice = product.price;
-      }
-    }
-  });
-  return { minPrice, maxPrice };
-};
