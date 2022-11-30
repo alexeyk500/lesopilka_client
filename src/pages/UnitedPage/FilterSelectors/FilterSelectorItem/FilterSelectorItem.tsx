@@ -57,8 +57,6 @@ const FilterSelectorItem: React.FC<PropsType> = ({ title, options, queryType, is
     onSelect && onSelect(id);
   };
 
-  console.log('options =', options);
-
   return (
     <div className={classes.container}>
       <FilterSelector

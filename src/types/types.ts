@@ -161,6 +161,13 @@ export enum QueryEnum {
   ManufacturerId = 'mid',
 }
 
+export enum QueryToSizeEnum {
+  sh = 'height',
+  sw = 'weight',
+  sc = 'caliber',
+  sl = 'length',
+}
+
 export enum SepticEnum {
   septic = 'Септирован',
   noSeptic = 'Не септирован',

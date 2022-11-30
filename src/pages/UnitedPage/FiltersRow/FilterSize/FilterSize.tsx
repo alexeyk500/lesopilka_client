@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorCategorySizes } from '../../../../store/catalogSlice';
-import { QueryEnum } from '../../../../types/types';
+import { QueryEnum, QueryToSizeEnum } from '../../../../types/types';
 import { useSearchParams } from 'react-router-dom';
-import { updateQueryFilters } from '../../../../store/productSlice';
 
 const getSizeTitle = (queryEnumSize: QueryEnum, sizeValue: string) => {
   const sizeTitle =
@@ -28,15 +27,22 @@ type PropsType = {
 };
 
 const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
-  const dispatch = useAppDispatch();
   const allCategorySizes = useAppSelector(selectorCategorySizes);
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedSizeTile, setSelectedSizeTitle] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    const sizeId = Number(searchParams.get(queryEnumSize));
-    if (allCategorySizes && sizeId) {
-      const size = allCategorySizes.find((curSize) => curSize.id === sizeId);
+    const sizeValue = searchParams.get(queryEnumSize);
+    if (
+      sizeValue &&
+      (queryEnumSize === QueryEnum.SizeHeight ||
+        queryEnumSize === QueryEnum.SizeWeight ||
+        queryEnumSize === QueryEnum.SizeLength ||
+        queryEnumSize === QueryEnum.SizeCaliber)
+    ) {
+      const size = allCategorySizes.find(
+        (curSize) => curSize.value.toString() === sizeValue && curSize.type === QueryToSizeEnum[queryEnumSize]
+      );
       if (size) {
         const title = getSizeTitle(queryEnumSize, size.value);
         if (title) {
@@ -50,7 +56,6 @@ const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
 
   const resetCategoryFilter = () => {
     searchParams.delete(queryEnumSize);
-    dispatch(updateQueryFilters(searchParams.toString()));
     setSearchParams(searchParams);
   };
 
