@@ -1,8 +1,7 @@
 .container {
   display: flex;
   align-items: center;
-  font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   flex-wrap: wrap;
 }
 
@@ -30,8 +29,6 @@
   display: flex;
   text-align: left;
   width: 90px;
-  font-size: 16px;
-  font-weight: 500;
   padding-right: 4px;
   border: none;
   outline: none;

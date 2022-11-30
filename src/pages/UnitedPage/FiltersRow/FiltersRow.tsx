@@ -7,6 +7,7 @@ import FilterOption from './FilterOption/FilterOption';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorCategories, selectorProductSorts, selectorSubCategories } from '../../../store/catalogSlice';
 import { SEPTIC_OPTIONS } from '../../../utils/constants';
+import FilterPrice from './FilterPrice/FilterPrice';
 
 type PropsType = {
   isSalesPage?: boolean;
@@ -33,6 +34,8 @@ const FiltersRow: React.FC<PropsType> = ({ isSalesPage }) => {
       <FilterSize queryEnumSize={QueryEnum.SizeLength} />
       <FilterOption options={sortsOptions} queryEnum={QueryEnum.SortId} />
       <FilterOption options={SEPTIC_OPTIONS} queryEnum={QueryEnum.Septic} />
+      <FilterPrice queryEnum={QueryEnum.PriceFrom} />
+      <FilterPrice queryEnum={QueryEnum.PriceTo} />
     </div>
   );
 };
