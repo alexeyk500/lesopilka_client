@@ -70,14 +70,19 @@ const ProductList = () => {
         ) : (
           <>
             {isSalesPage && <ProductCard isAddProductCard onClick={onClickAddProductCard} />}
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                productCardData={makeProductCardData(product)}
-                onClick={onClick}
-                isManufacturerProductCard={isSalesPage}
-              />
-            ))}
+            {products.length > 0
+              ? products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  productCardData={makeProductCardData(product)}
+                  onClick={onClick}
+                  isManufacturerProductCard={isSalesPage}
+                />
+              ))
+              : <div className={classes.noProductsContainer}>
+                {'Товары c такими параметрами не найдены,\nпопробуйте изменить параметры поиска.'}
+                </div>
+            }
           </>
         )}
       </div>
