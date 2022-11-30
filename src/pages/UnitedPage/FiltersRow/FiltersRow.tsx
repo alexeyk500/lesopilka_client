@@ -27,10 +27,10 @@ const FiltersRow: React.FC<PropsType> = ({ isSalesPage }) => {
         resetAdditionQueryEnum={QueryEnum.CatalogSubCategory}
       />
       <FilterOption preTitle={'Пиломатериал: '} options={subCategories} queryEnum={QueryEnum.CatalogSubCategory} />
-      <FilterSize queryEnumSize={QueryEnum.HeightSizeId} />
-      <FilterSize queryEnumSize={QueryEnum.WeightSizeId} />
-      <FilterSize queryEnumSize={QueryEnum.CaliberSizeId} />
-      <FilterSize queryEnumSize={QueryEnum.LengthSizeId} />
+      <FilterSize queryEnumSize={QueryEnum.SizeHeight} />
+      <FilterSize queryEnumSize={QueryEnum.SizeWeight} />
+      <FilterSize queryEnumSize={QueryEnum.SizeCaliber} />
+      <FilterSize queryEnumSize={QueryEnum.SizeLength} />
       <FilterOption options={sortsOptions} queryEnum={QueryEnum.SortId} />
       <FilterOption options={SEPTIC_OPTIONS} queryEnum={QueryEnum.Septic} />
     </div>

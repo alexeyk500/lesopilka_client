@@ -13,13 +13,13 @@ import { CALIBER_PRODUCT_CATEGORIES, SEPTIC_OPTIONS } from '../../../utils/const
 import { useSearchParams } from 'react-router-dom';
 import { selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
 
-const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
+const getFilterSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefined, sizeType: SizeTypeEnum) => {
   const filteredSizes = sizes.filter(
     (categorySize) =>
       categorySize.categoryId === categoryId && !categorySize.isCustomSize && categorySize.type === sizeType
   );
   return filteredSizes.map((size) => {
-    return { id: size.id, title: `${size.value} мм` };
+    return { id: size.id, title: `${size.value} мм`, value: size.value };
   });
 };
 
@@ -48,28 +48,28 @@ const FilterSelectors: React.FC = () => {
 
   const heightSizes = useMemo(() => {
     if (selectedCategoryId) {
-      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.height);
+      return getFilterSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.height);
     }
     return [];
   }, [selectedCategoryId, allCategorySizes]);
 
   const widthSizes = useMemo(() => {
     if (selectedCategoryId) {
-      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.width);
+      return getFilterSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.width);
     }
     return [];
   }, [selectedCategoryId, allCategorySizes]);
 
   const lengthSizes = useMemo(() => {
     if (selectedCategoryId) {
-      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.length);
+      return getFilterSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.length);
     }
     return [];
   }, [selectedCategoryId, allCategorySizes]);
 
   const caliberSizes = useMemo(() => {
     if (selectedCategoryId) {
-      return getSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.caliber);
+      return getFilterSizeOptions(allCategorySizes, selectedCategoryId, SizeTypeEnum.caliber);
     }
     return [];
   }, [selectedCategoryId, allCategorySizes]);
@@ -126,39 +126,43 @@ const FilterSelectors: React.FC = () => {
       {selectedCategoryId && CALIBER_PRODUCT_CATEGORIES.includes(selectedCategoryId) ? (
         <FilterSelectorItem
           title={'Диаметр'}
-          queryType={QueryEnum.CaliberSizeId}
+          queryType={QueryEnum.SizeCaliber}
           options={caliberSizes}
           onSelect={() => {
-            setWhatFilterChangedRef(QueryEnum.CaliberSizeId);
+            setWhatFilterChangedRef(QueryEnum.SizeCaliber);
           }}
+          isSizeSelector
         />
       ) : (
         <>
           <FilterSelectorItem
             title={'Толщина'}
-            queryType={QueryEnum.HeightSizeId}
+            queryType={QueryEnum.SizeHeight}
             options={heightSizes}
             onSelect={() => {
-              setWhatFilterChangedRef(QueryEnum.HeightSizeId);
+              setWhatFilterChangedRef(QueryEnum.SizeHeight);
             }}
+            isSizeSelector
           />
           <FilterSelectorItem
             title={'Ширина'}
-            queryType={QueryEnum.WeightSizeId}
+            queryType={QueryEnum.SizeWeight}
             options={widthSizes}
             onSelect={() => {
-              setWhatFilterChangedRef(QueryEnum.WeightSizeId);
+              setWhatFilterChangedRef(QueryEnum.SizeWeight);
             }}
+            isSizeSelector
           />
         </>
       )}
       <FilterSelectorItem
         title={'Длинна'}
-        queryType={QueryEnum.LengthSizeId}
+        queryType={QueryEnum.SizeLength}
         options={lengthSizes}
         onSelect={() => {
-          setWhatFilterChangedRef(QueryEnum.LengthSizeId);
+          setWhatFilterChangedRef(QueryEnum.SizeLength);
         }}
+        isSizeSelector
       />
       <FilterSelectorItem
         title={'Сорт'}

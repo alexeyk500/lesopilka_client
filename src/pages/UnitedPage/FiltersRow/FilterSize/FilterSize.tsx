@@ -8,13 +8,13 @@ import { updateQueryFilters } from '../../../../store/productSlice';
 
 const getSizeTitle = (queryEnumSize: QueryEnum, sizeValue: string) => {
   const sizeTitle =
-    queryEnumSize === QueryEnum.HeightSizeId
+    queryEnumSize === QueryEnum.SizeHeight
       ? 'Толщина:'
-      : queryEnumSize === QueryEnum.WeightSizeId
+      : queryEnumSize === QueryEnum.SizeWeight
       ? 'Ширина:'
-      : queryEnumSize === QueryEnum.LengthSizeId
+      : queryEnumSize === QueryEnum.SizeLength
       ? 'Длинна:'
-      : queryEnumSize === QueryEnum.CaliberSizeId
+      : queryEnumSize === QueryEnum.SizeCaliber
       ? 'Диаметр:'
       : undefined;
   if (sizeTitle) {
