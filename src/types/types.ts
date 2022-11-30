@@ -159,6 +159,8 @@ export enum QueryEnum {
   SearchRegionId = 'srid',
   SearchLocationId = 'slid',
   ManufacturerId = 'mid',
+  PriceFrom = 'pf',
+  PriceTo = 'pt',
 }
 
 export enum QueryToSizeEnum {

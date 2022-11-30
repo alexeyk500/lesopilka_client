@@ -41,42 +41,10 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.width = product.width;
   productCard.length = product.length;
   productCard.caliber = product.caliber;
-
-  // const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
-  // productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
-  // productCard.customHeightValue = product.sizes?.find(
-  //   (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
-  // )?.value;
-
-  // const heightId = product.sizes?.find((size) => size.type === SizeTypeEnum.height)?.id;
-  // productCard.heightId = heightId && heightId > 0 ? heightId : undefined;
-  // productCard.customHeightValue = product.sizes?.find(
-  //   (size) => size.type === SizeTypeEnum.height && size.isCustomSize === true
-  // )?.value;
-  //
-  // const widthId = product.sizes?.find((size) => size.type === SizeTypeEnum.width)?.id;
-  // productCard.widthId = widthId && widthId > 0 ? widthId : undefined;
-  // productCard.customWidthValue = product.sizes?.find(
-  //   (size) => size.type === SizeTypeEnum.width && size.isCustomSize === true
-  // )?.value;
-  //
-  // const lengthId = product.sizes?.find((size) => size.type === SizeTypeEnum.length)?.id;
-  // productCard.lengthId = lengthId && lengthId > 0 ? lengthId : undefined;
-  // productCard.customLengthValue = product.sizes?.find(
-  //   (size) => size.type === SizeTypeEnum.length && size.isCustomSize === true
-  // )?.value;
-  //
-  // const caliberId = product.sizes?.find((size) => size.type === SizeTypeEnum.caliber)?.id;
-  // productCard.caliberId = caliberId && caliberId > 0 ? caliberId : undefined;
-  // productCard.customCaliberValue = product.sizes?.find(
-  //   (size) => size.type === SizeTypeEnum.caliber && size.isCustomSize === true
-  // )?.value;
 };
 
 type ProductsSliceType = {
   products: ProductType[];
-  priceFrom: string | undefined;
-  priceTo: string | undefined;
   sorting: ProductsSortsEnum;
   isLoading: boolean;
   isSaving: boolean;
@@ -87,8 +55,6 @@ type ProductsSliceType = {
 
 const initialState: ProductsSliceType = {
   products: [],
-  priceFrom: undefined,
-  priceTo: undefined,
   sorting: ProductsSortsEnum.priceASC,
   isLoading: false,
   isSaving: false,
@@ -206,12 +172,6 @@ export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
-    setPriceFrom: (state, action) => {
-      state.priceFrom = action.payload;
-    },
-    setPriceTo: (state, action) => {
-      state.priceTo = action.payload;
-    },
     setSorting: (state, action) => {
       state.sorting = action.payload;
     },
@@ -290,12 +250,9 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setPriceFrom, setPriceTo, setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilters } =
-  productsSlice.actions;
+export const { setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
-export const selectorPriceFrom = (state: RootState) => state.products.priceFrom;
-export const selectorPriceTo = (state: RootState) => state.products.priceTo;
 export const selectorSorting = (state: RootState) => state.products.sorting;
 export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;

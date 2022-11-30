@@ -1,20 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './PriceRange.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorPriceFrom, selectorPriceTo, setPriceFrom, setPriceTo } from '../../../../store/productSlice';
-import { regExpForPrice } from '../../../../utils/constants';
+import { DEBOUNCE_TIME, regExpForPrice } from '../../../../utils/constants';
+import { useSearchParams } from 'react-router-dom';
+import { QueryEnum } from '../../../../types/types';
+import useDebouncedFunction from '../../../../hooks/useDebounceFunction';
 
 const PriceRange: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const priceFrom = useAppSelector(selectorPriceFrom);
-  const priceTo = useAppSelector(selectorPriceTo);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [priceFrom, setPriceFrom] = useState<string | undefined>(undefined);
+  const [priceTo, setPriceTo] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    searchParams.forEach((value, key) => {
+      if (key === QueryEnum.PriceFrom) {
+        setPriceFrom(value);
+      }
+      if (key === QueryEnum.PriceTo) {
+        setPriceTo(value);
+      }
+    });
+  }, [searchParams]);
+
+  const debounceUpdateSearchParams = useDebouncedFunction(
+    (updateData: UpdateSearchParamsType) => {
+      if (updateData.value) {
+        searchParams.append(updateData.name, updateData.value);
+      } else {
+        searchParams.delete(updateData.name);
+      }
+      setSearchParams(searchParams);
+    },
+    DEBOUNCE_TIME,
+    true
+  );
+
+  type UpdateSearchParamsType = {
+    name: string;
+    value: string | undefined;
+  };
 
   const onChangePriceFrom = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '' || regExpForPrice.test(event.target.value)) {
       if (event.target.value === '') {
-        dispatch(setPriceFrom(undefined));
+        setPriceFrom(undefined);
+        debounceUpdateSearchParams({ name: QueryEnum.PriceFrom, value: undefined });
       } else {
-        dispatch(setPriceFrom(event.currentTarget.value));
+        setPriceFrom(event.currentTarget.value);
+        debounceUpdateSearchParams({ name: QueryEnum.PriceFrom, value: event.currentTarget.value });
       }
     }
   };
@@ -22,9 +55,11 @@ const PriceRange: React.FC = () => {
   const onChangePriceTo = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '' || regExpForPrice.test(event.target.value)) {
       if (event.target.value === '') {
-        dispatch(setPriceTo(undefined));
+        setPriceTo(undefined);
+        debounceUpdateSearchParams({ name: QueryEnum.PriceTo, value: undefined });
       } else {
-        dispatch(setPriceTo(event.currentTarget.value));
+        setPriceTo(event.currentTarget.value);
+        debounceUpdateSearchParams({ name: QueryEnum.PriceTo, value: event.currentTarget.value });
       }
     }
   };

@@ -27,14 +27,14 @@
 .inputPrice {
   height: 24px;
   display: flex;
-  text-align: right;
+  text-align: left;
   width: 90px;
-  font-weight: 600;
+  font-weight: 500;
   padding-right: 4px;
   border: none;
   outline: none;
   align-items: center;
-  color: var(--gray_color);
+  color: var(--dark_blue_color);
 }
 
 .priceFrom {
