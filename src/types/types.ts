@@ -122,11 +122,6 @@ export type LocationType = {
   title: string;
 };
 
-export enum ProductsSortsEnum {
-  priceASC = 'Цена по возрастанию',
-  priceDESC = 'Цена по убыванию',
-}
-
 export type ProductType = {
   id: number;
   manufacturer: ManufacturerType;
@@ -161,6 +156,7 @@ export enum QueryEnum {
   ManufacturerId = 'mid',
   PriceFrom = 'pf',
   PriceTo = 'pt',
+  SortDirection = 'sd',
 }
 
 export enum QueryToSizeEnum {
@@ -173,4 +169,14 @@ export enum QueryToSizeEnum {
 export enum SepticEnum {
   septic = 'Септирован',
   noSeptic = 'Не септирован',
+}
+
+export enum SortDirectionEnum {
+  PriceASC = 'pa',
+  PriceDESC = 'pd',
+}
+
+export enum SortDirectionTitleEnum {
+  pa = 'Цена по возрастанию',
+  pd = 'Цена по убыванию',
 }

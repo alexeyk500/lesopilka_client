@@ -1,26 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './SelectSortDirection.module.css';
-import { ProductsSortsEnum } from '../../../../types/types';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorSorting, setSorting } from '../../../../store/productSlice';
+import { QueryEnum, SortDirectionEnum, SortDirectionTitleEnum } from '../../../../types/types';
+import { useSearchParams } from 'react-router-dom';
 
-const options = Object.entries(ProductsSortsEnum).map(([key, value]) => ({ key, value }));
+const options = Object.entries(SortDirectionEnum).map(([key, value]) => ({ key, value }));
 
 const SelectSortDirection = () => {
-  const dispatch = useAppDispatch();
-  const sorting = useAppSelector(selectorSorting);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [sortDirection, setSortDirection] = useState<SortDirectionEnum | undefined>(SortDirectionEnum.PriceASC);
+
+  useEffect(() => {
+    const sortDirectionQuery = searchParams.get(QueryEnum.SortDirection);
+    if (!sortDirectionQuery) {
+      const queryValue = options.find((option) => option.value === sortDirection)?.value;
+      searchParams.append(QueryEnum.SortDirection, queryValue as string);
+      setSearchParams(searchParams);
+    }
+  }, [searchParams, sortDirection, setSearchParams]);
 
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setSorting(e.currentTarget.value));
+    setSortDirection(e.currentTarget.value as SortDirectionEnum);
+    searchParams.delete(QueryEnum.SortDirection);
+    const queryValue = options.find((option) => option.key === e.currentTarget.value)?.value;
+    if (queryValue) {
+      searchParams.append(QueryEnum.SortDirection, queryValue);
+    }
+    setSearchParams(searchParams);
   };
 
   return (
     <div className={classes.container}>
-      <select value={sorting} className={classes.select} onChange={onChange}>
+      <select value={sortDirection} className={classes.select} onChange={onChange}>
         {options.map((option) => {
           return (
             <option key={option.key} value={option.key}>
-              {option.value}
+              {SortDirectionTitleEnum[option.value]}
             </option>
           );
         })}

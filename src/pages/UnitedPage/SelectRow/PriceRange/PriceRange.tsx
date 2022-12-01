@@ -13,8 +13,8 @@ const PriceRange: React.FC = () => {
   useEffect(() => {
     const priceFromValue = searchParams.get(QueryEnum.PriceFrom);
     const priceToValue = searchParams.get(QueryEnum.PriceTo);
-    setPriceFrom(priceFromValue ?priceFromValue :undefined);
-    setPriceTo(priceToValue ?priceToValue :undefined);
+    setPriceFrom(priceFromValue ? priceFromValue : undefined);
+    setPriceTo(priceToValue ? priceToValue : undefined);
   }, [searchParams]);
 
   const debounceUpdateSearchParams = useDebouncedFunction(

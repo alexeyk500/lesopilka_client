@@ -1,4 +1,4 @@
-import { ProductCardType, ProductsSortsEnum, ProductType, QueryEnum } from '../types/types';
+import { ProductCardType, ProductType, QueryEnum } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
@@ -45,7 +45,6 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
 
 type ProductsSliceType = {
   products: ProductType[];
-  sorting: ProductsSortsEnum;
   isLoading: boolean;
   isSaving: boolean;
   editCard: ProductCardType;
@@ -55,7 +54,6 @@ type ProductsSliceType = {
 
 const initialState: ProductsSliceType = {
   products: [],
-  sorting: ProductsSortsEnum.priceASC,
   isLoading: false,
   isSaving: false,
   editCard: emptyEditCard,
@@ -172,9 +170,6 @@ export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
-    setSorting: (state, action) => {
-      state.sorting = action.payload;
-    },
     clearEditCard: (state) => {
       state.editCard = emptyEditCard;
       state.catalogSearchParams = undefined;
@@ -250,10 +245,9 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { setSorting, clearEditCard, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
+export const { clearEditCard, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
-export const selectorSorting = (state: RootState) => state.products.sorting;
 export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
 export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
