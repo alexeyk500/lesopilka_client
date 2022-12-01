@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import classes from './UnitedPage.module.css';
-import { useAppDispatch } from '../../hooks/hooks';
-import { getProductsThunk } from '../../store/productSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { getProductsThunk, selectorCurrentPage } from '../../store/productSlice';
 import { useSearchParams } from 'react-router-dom';
 import { QueryEnum } from '../../types/types';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
@@ -12,9 +12,18 @@ import { checkIsOnlyPlaceFiltersInSearchParams } from '../../utils/functions';
 
 const UnitedPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const currentPage = useAppSelector(selectorCurrentPage);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
+
+  useEffect(() => {
+    const currentPageValue = searchParams.get(QueryEnum.CurrentPage);
+    if (!currentPageValue) {
+      searchParams.set(QueryEnum.CurrentPage, currentPage.toString());
+      setSearchParams(searchParams);
+    }
+  }, [currentPage, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {

@@ -12,3 +12,5 @@ export const SEPTIC_OPTIONS = [
 ];
 
 export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;
+
+export const PRODUCTS_PAGE_SIZE = 16;

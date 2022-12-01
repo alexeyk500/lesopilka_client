@@ -1,4 +1,4 @@
-import { UserType } from '../types/types';
+import { ProductType, UserType } from '../types/types';
 
 export type SendConfirmationEmailServerType = {
   message: string;
@@ -22,4 +22,11 @@ export type CreateManufacturerType = {
 export type DeleteResultType = {
   fileName: string;
   result: number;
+};
+
+export type GetProductsServerType = {
+  products: ProductType[];
+  pageSize: number;
+  totalPages: number;
+  currentPage: number;
 };

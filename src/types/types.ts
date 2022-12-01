@@ -157,6 +157,7 @@ export enum QueryEnum {
   PriceFrom = 'pf',
   PriceTo = 'pt',
   SortDirection = 'sd',
+  CurrentPage = 'page',
 }
 
 export enum QueryToSizeEnum {

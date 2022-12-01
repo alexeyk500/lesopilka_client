@@ -10,6 +10,11 @@
   margin-right: 24px;
 }
 
+.title {
+  font-weight: 500;
+  color: var(--dark_blue_color);
+}
+
 .titleSelector {
   display: flex;
   margin-bottom: 4px;

@@ -1,7 +1,7 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { ProductType } from '../types/types';
 import { UpdateProductDataType } from '../store/productSlice';
-import { DeleteResultType } from './serverResponseTypes';
+import { DeleteResultType, GetProductsServerType } from './serverResponseTypes';
 
 export const productApi = {
   async getProduct(id: number) {
@@ -10,7 +10,7 @@ export const productApi = {
   },
 
   async getProducts(urlSearchParams: URLSearchParams | undefined) {
-    const response = await instanceAxios.get<ProductType[]>(`/product/products/?${urlSearchParams}`);
+    const response = await instanceAxios.get<GetProductsServerType>(`/product/products/?${urlSearchParams}`);
     return response.data;
   },
 

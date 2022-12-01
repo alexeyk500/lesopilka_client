@@ -3,7 +3,8 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { DeleteResultType } from '../api/serverResponseTypes';
+import { DeleteResultType, GetProductsServerType } from '../api/serverResponseTypes';
+import { PRODUCTS_PAGE_SIZE } from '../utils/constants';
 
 const emptyEditCard: ProductCardType = {
   id: -1,
@@ -45,15 +46,21 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
 
 type ProductsSliceType = {
   products: ProductType[];
+  pageSize: number;
+  totalPages?: number;
+  currentPage: number;
   isLoading: boolean;
   isSaving: boolean;
-  editCard: ProductCardType;
+  editCard: ProductCardType; // todo переделать на editProduct
   catalogSearchParams: URLSearchParams | undefined;
   queryFilters: Array<string | undefined>;
 };
 
 const initialState: ProductsSliceType = {
   products: [],
+  pageSize: PRODUCTS_PAGE_SIZE,
+  totalPages: undefined,
+  currentPage: 0,
   isLoading: false,
   isSaving: false,
   editCard: emptyEditCard,
@@ -72,16 +79,17 @@ export const getProductThunk = createAsyncThunk<ProductType, number, { rejectVal
   }
 );
 
-export const getProductsThunk = createAsyncThunk<ProductType[], URLSearchParams | undefined, { rejectValue: string }>(
-  'product/getProductsThunk',
-  async (urlSearchParams, { rejectWithValue }) => {
-    try {
-      return await serverApi.getProducts(urlSearchParams);
-    } catch (e: any) {
-      return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
-    }
+export const getProductsThunk = createAsyncThunk<
+  GetProductsServerType,
+  URLSearchParams | undefined,
+  { rejectValue: string }
+>('product/getProductsThunk', async (urlSearchParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.getProducts(urlSearchParams);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
   }
-);
+});
 
 export const createProductThunk = createAsyncThunk<ProductType, string, { rejectValue: string }>(
   'product/createProductThunk',
@@ -190,7 +198,10 @@ export const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProductsThunk.fulfilled, (state, action) => {
-        state.products = action.payload;
+        state.products = action.payload.products;
+        state.pageSize = action.payload.pageSize;
+        state.totalPages = action.payload.totalPages;
+        state.currentPage = action.payload.currentPage;
         state.isLoading = false;
       })
       .addCase(createProductThunk.fulfilled, (state) => {
@@ -248,6 +259,8 @@ export const productsSlice = createSlice({
 export const { clearEditCard, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
+export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
+
 export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
 export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
