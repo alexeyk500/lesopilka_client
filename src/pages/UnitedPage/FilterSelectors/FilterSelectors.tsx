@@ -146,10 +146,10 @@ const FilterSelectors: React.FC = () => {
           />
           <FilterSelectorItem
             title={'Ширина'}
-            queryType={QueryEnum.SizeWeight}
+            queryType={QueryEnum.SizeWidth}
             options={widthSizes}
             onSelect={() => {
-              setWhatFilterChangedRef(QueryEnum.SizeWeight);
+              setWhatFilterChangedRef(QueryEnum.SizeWidth);
             }}
             isSizeSelector
           />

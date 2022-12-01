@@ -10,7 +10,7 @@ const getSizeTitle = (queryEnumSize: QueryEnum, sizeValue: string) => {
   const sizeTitle =
     queryEnumSize === QueryEnum.SizeHeight
       ? 'Толщина:'
-      : queryEnumSize === QueryEnum.SizeWeight
+      : queryEnumSize === QueryEnum.SizeWidth
       ? 'Ширина:'
       : queryEnumSize === QueryEnum.SizeLength
       ? 'Длинна:'
@@ -38,7 +38,7 @@ const FilterSize: React.FC<PropsType> = ({ queryEnumSize }) => {
     if (
       sizeValue &&
       (queryEnumSize === QueryEnum.SizeHeight ||
-        queryEnumSize === QueryEnum.SizeWeight ||
+        queryEnumSize === QueryEnum.SizeWidth ||
         queryEnumSize === QueryEnum.SizeLength ||
         queryEnumSize === QueryEnum.SizeCaliber)
     ) {

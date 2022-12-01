@@ -29,7 +29,7 @@ const FiltersRow: React.FC<PropsType> = ({ isSalesPage }) => {
       />
       <FilterOption preTitle={'Пиломатериал: '} options={subCategories} queryEnum={QueryEnum.CatalogSubCategory} />
       <FilterSize queryEnumSize={QueryEnum.SizeHeight} />
-      <FilterSize queryEnumSize={QueryEnum.SizeWeight} />
+      <FilterSize queryEnumSize={QueryEnum.SizeWidth} />
       <FilterSize queryEnumSize={QueryEnum.SizeCaliber} />
       <FilterSize queryEnumSize={QueryEnum.SizeLength} />
       <FilterOption options={sortsOptions} queryEnum={QueryEnum.SortId} />

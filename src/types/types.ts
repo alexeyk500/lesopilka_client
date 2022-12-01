@@ -146,7 +146,7 @@ export enum QueryEnum {
   CatalogCategory = 'cid',
   CatalogSubCategory = 'scid',
   SizeHeight = 'sh',
-  SizeWeight = 'sw',
+  SizeWidth = 'sw',
   SizeCaliber = 'sc',
   SizeLength = 'sl',
   SortId = 'psid',
@@ -161,7 +161,7 @@ export enum QueryEnum {
 
 export enum QueryToSizeEnum {
   sh = 'height',
-  sw = 'weight',
+  sw = 'width',
   sc = 'caliber',
   sl = 'length',
 }

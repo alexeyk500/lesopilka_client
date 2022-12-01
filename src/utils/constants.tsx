@@ -8,7 +8,7 @@ export const regExpOnlyDigit = /^[0-9\b]+$/;
 
 export const SEPTIC_OPTIONS = [
   { id: 1, title: 'Не септирован' },
-  { id: 2, title: 'Антисептирован' },
+  { id: 2, title: 'Cептирован' },
 ];
 
 export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;
