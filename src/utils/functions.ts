@@ -63,22 +63,28 @@ export const isFiltersSearchParams = (searchParams: URLSearchParams) => {
   return !!searchParamsClone.toString().length;
 };
 
-export const checkIsOnlyPlaceFiltersInSearchParams = (searchParams: URLSearchParams) => {
+export const checkIsShowFilterSelectors = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
   searchParamsClone.delete(QueryEnum.ManufacturerId);
-  if (searchParamsClone.toString().length === 0) {
-    return true;
-  }
+  searchParamsClone.delete(QueryEnum.SortDirection);
+  return searchParamsClone.toString().length > 0;
 };
 
-export const checkIsOnlyManufacturerFiltersInSearchParams = (searchParams: URLSearchParams) => {
+export const checkIsShowFiltersRow = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
-  searchParamsClone.delete(QueryEnum.ManufacturerId);
-  if (searchParamsClone.toString().length === 0) {
-    return true;
+  const searchRegionId = searchParamsClone.get(QueryEnum.SearchRegionId);
+  if (!searchRegionId) {
+    searchParamsClone.delete(QueryEnum.SearchRegionId);
   }
+  const searchLocationId = searchParamsClone.get(QueryEnum.SearchLocationId);
+  if (!searchLocationId) {
+    searchParamsClone.delete(QueryEnum.SearchLocationId);
+  }
+  searchParamsClone.delete(QueryEnum.ManufacturerId);
+  searchParamsClone.delete(QueryEnum.SortDirection);
+  return searchParamsClone.toString().length > 0;
 };
 
 export const getOptionTitle = (options: OptionsType[], optionId: number | undefined) => {

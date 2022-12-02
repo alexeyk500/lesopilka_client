@@ -72,8 +72,9 @@ const ProductList = () => {
     let currentPage = currentPageStore;
     if (totalPagesStore && totalPagesStore > currentPage + 1) {
       const newCurrentPage = currentPage + 1;
-      searchParams.set(QueryEnum.CurrentPage, newCurrentPage.toString());
-      dispatch(addProductsThunk(searchParams));
+      const searchParamsClone = new URLSearchParams(searchParams.toString());
+      searchParamsClone.set(QueryEnum.CurrentPage, newCurrentPage.toString());
+      dispatch(addProductsThunk(searchParamsClone));
     }
   }, [dispatch, currentPageStore, searchParams, totalPagesStore]);
 

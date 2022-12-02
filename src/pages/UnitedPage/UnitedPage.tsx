@@ -8,13 +8,13 @@ import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import FilterSelectors from './FilterSelectors/FilterSelectors';
 import Catalog from '../../components/Catalog/Catalog';
 import UnitedPageMainPart from './UnitedPageMainPart/UnitedPageMainPart';
-import { checkIsOnlyPlaceFiltersInSearchParams } from '../../utils/functions';
+import { checkIsShowFilterSelectors } from '../../utils/functions';
 
 const UnitedPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
+  const isShowFilterSelectors = checkIsShowFilterSelectors(searchParams);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
@@ -31,13 +31,13 @@ const UnitedPage: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      {isOnlyPlaceFilters ? (
-        <LeftColumn title={'Каталог'}>
-          <Catalog onClickCatalogCategory={onClickCatalogCategory} />
-        </LeftColumn>
-      ) : (
+      {isShowFilterSelectors ? (
         <LeftColumn title={'Фильтры поиска'}>
           <FilterSelectors />
+        </LeftColumn>
+      ) : (
+        <LeftColumn title={'Каталог'}>
+          <Catalog onClickCatalogCategory={onClickCatalogCategory} />
         </LeftColumn>
       )}
       <UnitedPageMainPart />
