@@ -5,7 +5,7 @@ import { selectorCategories, selectorProductMaterials, selectorSubCategories } f
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
-import { OptionsType } from '../../../../../types/types';
+import { EditCardSectionsEnum, OptionsType, ProductCardType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 
@@ -14,6 +14,10 @@ const getOptions = (optionsStore: OptionsType[]) => {
   options.push({ id: 0, title: '' });
   options.push(...optionsStore);
   return options;
+};
+
+export const checkCatalogSection = (editCard: ProductCardType) => {
+  return !!editCard.categoryId && !!editCard.subCategoryId && !!editCard.productMaterialId;
 };
 
 const ProductCatalogSection: React.FC = () => {
@@ -104,11 +108,10 @@ const ProductCatalogSection: React.FC = () => {
     }
   };
 
+  const isCompleteCatalogSection = checkCatalogSection(editCard);
+
   return (
-    <SectionContainer
-      title={'Пиломатериал'}
-      completeCondition={!!editCard.categoryId && !!editCard.subCategoryId && !!editCard.productMaterialId}
-    >
+    <SectionContainer title={EditCardSectionsEnum.lumber} completeCondition={isCompleteCatalogSection}>
       <div className={classes.rowContainer}>
         <SectionSelector
           title={'Раздел Каталога'}

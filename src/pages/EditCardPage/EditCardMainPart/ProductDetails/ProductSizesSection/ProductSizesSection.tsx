@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import classes from './ProductSizesSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { SizeTypeEnum, ProductCardType } from '../../../../../types/types';
+import { SizeTypeEnum, ProductCardType, EditCardSectionsEnum } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import { clearEditCard, selectorEditCard } from '../../../../../store/productSlice';
 import { CALIBER_PRODUCT_CATEGORIES } from '../../../../../utils/constants';
 import SizeSelector from './SizeSelector/SizeSelector';
 
-export const getSizesSectionIndicator = (productCard: ProductCardType) => {
+export const checkSizesSection = (productCard: ProductCardType) => {
   if (productCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(productCard.categoryId)) {
     const result =
       productCard.caliber && Number(productCard.caliber) > 0 && productCard.length && Number(productCard.length) > 0;
@@ -34,7 +34,11 @@ const ProductSizesSection = () => {
   }, [dispatch]);
 
   return (
-    <SectionContainer title={'Размеры'} completeCondition={getSizesSectionIndicator(editCard)} blurCondition={false}>
+    <SectionContainer
+      title={EditCardSectionsEnum.sizes}
+      completeCondition={checkSizesSection(editCard)}
+      blurCondition={false}
+    >
       <div className={classes.rowContainer}>
         {editCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(editCard.categoryId) ? (
           <SizeSelector title={'Диаметр'} sizeType={SizeTypeEnum.caliber} />

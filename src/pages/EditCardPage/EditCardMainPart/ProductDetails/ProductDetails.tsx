@@ -25,9 +25,9 @@ const ProductDetails: React.FC = () => {
           <ProductCatalogSection />
           <ProductSizesSection />
           <ProductSortAndSepticSection />
-          <ProductCodeSection />
           <ProductImagesSection />
           <ProductDescription />
+          <ProductCodeSection />
           <ProductPriceSection />
         </div>
       )}

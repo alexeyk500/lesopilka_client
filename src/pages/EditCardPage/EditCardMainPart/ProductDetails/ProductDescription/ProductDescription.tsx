@@ -5,6 +5,11 @@ import classes from './ProductDescription.module.css';
 import { selectorEditCard, updateProductDescriptionThunk } from '../../../../../store/productSlice';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
+import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+
+export const checkDescriptionSection = (editCard: ProductCardType) => {
+  return !!editCard.description?.length;
+};
 
 const ProductDescription: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -44,8 +49,14 @@ const ProductDescription: React.FC = () => {
     true
   );
 
+  const isCompleteDescriptionSection = checkDescriptionSection(editCard);
+
   return (
-    <SectionContainer title={'Описание'} completeCondition={!!editCard.description?.length} blurCondition={false}>
+    <SectionContainer
+      title={EditCardSectionsEnum.description}
+      completeCondition={isCompleteDescriptionSection}
+      blurCondition={false}
+    >
       <div className={classes.contentContainer}>
         <div className={classes.title}>Добавьте дополнительную информацию о товаре до 1000 символов</div>
         <textarea className={classes.customSizeInput} value={description} onChange={onChangeInput} />

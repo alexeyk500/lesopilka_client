@@ -1,5 +1,5 @@
 import React from 'react';
-import { OptionsType } from '../../../../../types/types';
+import { EditCardSectionsEnum, OptionsType, ProductCardType, SepticEnum } from '../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorProductSorts } from '../../../../../store/catalogSlice';
 import classes from './ProductSortAndSepticSection.module.css';
@@ -14,9 +14,13 @@ const getSortOptions = (sorts: OptionsType[]) => {
   return options;
 };
 
+export const checkSortAndSepticSection = (editCard: ProductCardType) => {
+  return !!editCard.sortId;
+};
+
 const antisepticOptions = [
-  { id: 0, title: 'Нет' },
-  { id: 1, title: 'Обработан' },
+  { id: 0, title: SepticEnum.noSeptic },
+  { id: 1, title: SepticEnum.septic },
 ];
 
 const ProductSortAndSepticSection = () => {
@@ -48,8 +52,14 @@ const ProductSortAndSepticSection = () => {
     }
   };
 
+  const isSortAndSepticSection = checkSortAndSepticSection(editCard);
+
   return (
-    <SectionContainer title={'Сорт и Антисептик'} completeCondition={!!editCard.sortId} blurCondition={false}>
+    <SectionContainer
+      title={EditCardSectionsEnum.sortAndSeptic}
+      completeCondition={isSortAndSepticSection}
+      blurCondition={false}
+    >
       <div className={classes.rowContainer}>
         <SectionSelector
           title={'Сорт пиломатериала'}

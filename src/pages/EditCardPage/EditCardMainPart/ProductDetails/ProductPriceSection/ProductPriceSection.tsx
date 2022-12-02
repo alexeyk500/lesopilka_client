@@ -5,6 +5,11 @@ import classes from './ProductPriceSection.module.css';
 import { DEBOUNCE_TIME, regExpForPrice } from '../../../../../utils/constants';
 import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
+import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+
+export const checkPriceSection = (editCard: ProductCardType) => {
+  return !!editCard.price;
+};
 
 const ProductPriceSection: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -41,8 +46,14 @@ const ProductPriceSection: React.FC = () => {
     true
   );
 
+  const isCompletePriceSection = checkPriceSection(editCard);
+
   return (
-    <SectionContainer title={'Цена'} completeCondition={!!editCard.price} blurCondition={false}>
+    <SectionContainer
+      title={EditCardSectionsEnum.price}
+      completeCondition={isCompletePriceSection}
+      blurCondition={false}
+    >
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите стоимость одной единицы товара в рублях</div>
         <div className={classes.inputContainer}>

@@ -57,7 +57,12 @@
   font-weight: 600;
 }
 
+.sectionTitle {
+  font-weight: 600;
+}
+
 .info {
+  height: 14px;
   margin-top: 2px;
   font-size: 12px;
 }
@@ -76,6 +81,32 @@
 
 .btnDeleteContainer {
   margin-bottom: 32px;
+}
+
+.publishPopUp {
+  display: flex;
+  margin: 64px 96px 64px 96px;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--blue_color);
+  justify-content: center;
+  text-align: center;
+  white-space: pre;
+}
+
+.fillSectionPopUp {
+  display: flex;
+  margin: 16px 32px 16px 32px;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--blue_color);
+  justify-content: center;
+  text-align: center;
+  white-space: pre;
+}
+
+.customClassBottomBtnGroupLogout {
+  padding: 0 64px 0 64px;
 }
 
 

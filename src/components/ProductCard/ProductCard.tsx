@@ -33,16 +33,11 @@ const ProductCard: React.FC<PropsType> = ({
     }
   };
 
-  console.log('productCardData =', productCardData);
-
   const isDraftProductCard = !productCardData?.publicationDate && !isAddProductCard && !isPreview;
 
   return (
-    <div className={classes.wrapper}>
-      <div
-        className={classNames(classes.container, { [classes.notPublished]: isDraftProductCard })}
-        onClick={onClickHandler}
-      >
+    <div className={classes.wrapper} onClick={onClickHandler}>
+      <div className={classNames(classes.container, { [classes.notPublished]: isDraftProductCard })}>
         {isAddProductCard ? (
           <div className={classes.addProductCardContainer}>
             <img src={addCardButton} className={classes.addCardButton} alt="add card button" />

@@ -5,6 +5,11 @@ import SectionContainer from '../SectionContainer/SectionContainer';
 import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
+import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+
+export const checkCodeSection = (editCard: ProductCardType) => {
+  return !!editCard.productCode?.length;
+};
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
@@ -39,8 +44,10 @@ const ProductCodeSection = () => {
     true
   );
 
+  const isCompleteCodeSection = checkCodeSection(editCard);
+
   return (
-    <SectionContainer title={'Артикул'} completeCondition={!!editCard.productCode} blurCondition={false}>
+    <SectionContainer title={EditCardSectionsEnum.code} completeCondition={isCompleteCodeSection} blurCondition={false}>
       <div className={classes.contentContainer}>
         <div className={classes.title}>Укажите артикул товара согласно своей внутренней системы учета</div>
         <input className={classes.customSizeInput} value={code || ''} onChange={onChangeInput} type="text" />

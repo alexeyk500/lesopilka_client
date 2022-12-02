@@ -2,21 +2,30 @@ import React from 'react';
 import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { ProductCardDataType } from '../../../types/types';
+import { EditCardSectionsEnum, ProductCardDataType } from '../../../types/types';
 import { selectorProductMaterials, selectorProductSorts, selectorSubCategories } from '../../../store/catalogSlice';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
-import { formatUTC, formatPrice } from '../../../utils/functions';
+import { formatUTC, formatPrice, getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import {
   deleteProductThunk,
   selectorCatalogSearchParams,
   selectorEditCard,
   selectorProductsSaving,
+  updateProductThunk,
 } from '../../../store/productSlice';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
 import DeleteCardForm from '../DeleteCardForm/DeleteCardForm';
+import classNames from 'classnames';
+import { checkCatalogSection } from '../EditCardMainPart/ProductDetails/ProductCatalogSection/ProductCatalogSection';
+import { checkSizesSection } from '../EditCardMainPart/ProductDetails/ProductSizesSection/ProductSizesSection';
+import { checkSortAndSepticSection } from '../EditCardMainPart/ProductDetails/ProductSortAndSepticSection/ProductSortAndSepticSection';
+import { checkImagesSection } from '../EditCardMainPart/ProductDetails/ProductImagesSection/ProductImagesSection';
+import { checkDescriptionSection } from '../EditCardMainPart/ProductDetails/ProductDescription/ProductDescription';
+import { checkCodeSection } from '../EditCardMainPart/ProductDetails/ProductCodeSection/ProductCodeSection';
+import { checkPriceSection } from '../EditCardMainPart/ProductDetails/ProductPriceSection/ProductPriceSection';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -63,16 +72,24 @@ const CardControlAndInfo: React.FC = () => {
     },
   };
 
+  const getInfoPopUp = (sectionTitle: string) => {
+    return showPortalPopUp({
+      popUpContent: (
+        <div className={classNames(classes.fillSectionPopUp)}>
+          {'Заполните раздел '}
+          <span className={classes.sectionTitle}>{`"${sectionTitle}"`}</span>
+          {' в карточке товара'}
+        </div>
+      ),
+      titleConfirmBtn: 'Понятно',
+      oneCenterConfirmBtn: true,
+      customClassBottomBtnGroup: classes.oneCenterBtn,
+    });
+  };
+
   const returnToCatalog = () => {
-    if (catalogSearchParams) {
-      navigate(`/manufacturer/?${catalogSearchParams}`);
-    } else {
-      if (user?.manufacturer?.id) {
-        user?.manufacturer?.id && navigate(`/manufacturer/?mid=${user?.manufacturer?.id}`);
-      } else {
-        navigate(`/`);
-      }
-    }
+    const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
+    navigate(getBackwardRoute);
   };
 
   const onClickReadyBtn = () => {
@@ -100,6 +117,93 @@ const CardControlAndInfo: React.FC = () => {
     });
   };
 
+  const checkConditions = () => {
+    const isCompleteCatalogSection = checkCatalogSection(editCard);
+    if (!isCompleteCatalogSection) {
+      getInfoPopUp(EditCardSectionsEnum.lumber);
+      return false;
+    }
+    const isCompleteSizesSection = checkSizesSection(editCard);
+    if (!isCompleteSizesSection) {
+      getInfoPopUp(EditCardSectionsEnum.sizes);
+      return false;
+    }
+    const isCompleteSortAndSepticSection = checkSortAndSepticSection(editCard);
+    if (!isCompleteSortAndSepticSection) {
+      getInfoPopUp(EditCardSectionsEnum.sortAndSeptic);
+      return false;
+    }
+    const isCompleteCheckImagesSection = checkImagesSection(editCard);
+    if (!isCompleteCheckImagesSection) {
+      getInfoPopUp(EditCardSectionsEnum.images);
+      return false;
+    }
+    const isCompleteDescriptionSection = checkDescriptionSection(editCard);
+    if (!isCompleteDescriptionSection) {
+      getInfoPopUp(EditCardSectionsEnum.description);
+      return false;
+    }
+    const isCompleteCodeSection = checkCodeSection(editCard);
+    if (!isCompleteCodeSection) {
+      getInfoPopUp(EditCardSectionsEnum.code);
+      return false;
+    }
+    const isCompletePriceSection = checkPriceSection(editCard);
+    if (!isCompletePriceSection) {
+      getInfoPopUp(EditCardSectionsEnum.price);
+      return false;
+    }
+    return true;
+  };
+
+  const onClosePopUpUnPublish = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    const publicationDate = null;
+    if (token) {
+      const updateData = {
+        productId: editCard.id,
+        publicationDate,
+      };
+      dispatch(updateProductThunk({ token, updateData }));
+    }
+  };
+
+  const onClosePopUpPublish = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    const publicationDate = new Date().toISOString();
+    if (token && publicationDate) {
+      const updateData = {
+        productId: editCard.id,
+        publicationDate,
+      };
+      dispatch(updateProductThunk({ token, updateData }));
+    }
+  };
+
+  const onSelectHandler = (isChecked?: boolean) => {
+    if (isChecked) {
+      showPortalPopUp({
+        popUpContent: <div className={classNames(classes.publishPopUp)}>{`Снять карточку с публикации?`}</div>,
+        titleConfirmBtn: 'Снять',
+        onClosePopUp: (result) => {
+          result && onClosePopUpUnPublish();
+        },
+      });
+    } else {
+      const isConditionsChecked = checkConditions();
+      if (isConditionsChecked) {
+        showPortalPopUp({
+          popUpContent: <div className={classNames(classes.publishPopUp)}>{`Опубликовать карточку?`}</div>,
+          titleConfirmBtn: 'Публикация',
+          customClassBottomBtnGroup: classes.customClassBottomBtnGroupLogout,
+          onClosePopUp: (result) => {
+            result && onClosePopUpPublish();
+          },
+        });
+      }
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.topPartContainer}>
@@ -113,7 +217,11 @@ const CardControlAndInfo: React.FC = () => {
           </div>
         </div>
         <div className={classes.publicationContainer}>
-          <CheckBoxEllipse title={'Опубликовано:'} checked={false} onSelect={() => {}} />
+          <CheckBoxEllipse
+            title={!!editCard.publicationDate ? 'Опубликовано:' : 'Опубликовать:'}
+            checked={!!editCard.publicationDate}
+            onSelect={onSelectHandler}
+          />
           <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
         </div>
         <div className={classes.btnReadyContainer}>

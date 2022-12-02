@@ -186,3 +186,13 @@ export enum SortDirectionTitleEnum {
   pa = 'Цена по возрастанию',
   pd = 'Цена по убыванию',
 }
+
+export enum EditCardSectionsEnum {
+  lumber = 'Пиломатериал',
+  sizes = 'Размеры',
+  sortAndSeptic = 'Сорт и Антисептик',
+  images = 'Фото',
+  description = 'Описание',
+  code = 'Артикул',
+  price = 'Цена',
+}

@@ -5,7 +5,6 @@
   border-radius: 12px;
   box-shadow: var(--box_shadow);
   overflow: hidden;
-  cursor: pointer;
   color: var(--gray_color);
   background-color: var(--section_background);
   font-size: 14px;
@@ -184,13 +183,13 @@
   font-size: 14px;
 }
 
+.wrapper {
+  position: relative;
+  cursor: pointer;
+}
 
 .notPublished {
   opacity: 0.7;
-}
-
-.wrapper {
-  position: relative;
 }
 
 .draft {

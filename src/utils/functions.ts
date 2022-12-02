@@ -284,3 +284,15 @@ export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, 
 };
 
 export const checkIsManufacturerPage = (location: { pathname: string }) => location?.pathname?.includes('manufacturer');
+
+export const getBackwardRouteToManufacturerCatalog = (
+  userManufacturerId?: number,
+  catalogSearchParams?: URLSearchParams
+) => {
+  if (catalogSearchParams) {
+    return `/manufacturer/?${catalogSearchParams}`;
+  } else if (userManufacturerId) {
+    return `/manufacturer/?mid=${userManufacturerId}`;
+  }
+  return `/`;
+};
