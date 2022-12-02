@@ -70,17 +70,10 @@ const ProductList = () => {
 
   const getMoreProducts = useCallback(() => {
     let currentPage = currentPageStore;
-    // const currentPageValue = searchParams.get(QueryEnum.CurrentPage);
-    // if (currentPageValue && Number.parseInt(currentPageValue)) {
-    //   currentPage = Number.parseInt(currentPageValue);
-    // }
-    // console.log('currentPage =', currentPage, '   totalPagesStore =', totalPagesStore);
     if (totalPagesStore && totalPagesStore > currentPage + 1) {
       const newCurrentPage = currentPage + 1;
       searchParams.set(QueryEnum.CurrentPage, newCurrentPage.toString());
-      console.log('searchParams =', searchParams.toString());
       dispatch(addProductsThunk(searchParams));
-      // setSearchParams(searchParams);
     }
   }, [dispatch, currentPageStore, searchParams, totalPagesStore]);
 

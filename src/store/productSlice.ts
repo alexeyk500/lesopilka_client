@@ -215,7 +215,7 @@ export const productsSlice = createSlice({
     builder
       .addCase(getProductsThunk.fulfilled, (state, action) => {
         state.products = action.payload.products;
-        state.totalProducts = action.payload.totalProducts
+        state.totalProducts = action.payload.totalProducts;
         state.pageSize = action.payload.pageSize;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
@@ -230,7 +230,7 @@ export const productsSlice = createSlice({
       })
       .addCase(addProductsThunk.fulfilled, (state, action) => {
         state.products = [...state.products, ...action.payload.products];
-        state.totalProducts = action.payload.totalProducts
+        state.totalProducts = action.payload.totalProducts;
         state.pageSize = action.payload.pageSize;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;

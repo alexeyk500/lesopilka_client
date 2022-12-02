@@ -2,7 +2,6 @@ export const DEBOUNCE_TIME = 1000;
 export const CALIBER_PRODUCT_CATEGORIES = [6];
 
 export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
-// export const regExpForPrice = /^\d*[.,]?(?:\d{1,2})?$/
 
 export const regExpOnlyDigit = /^[0-9\b]+$/;
 

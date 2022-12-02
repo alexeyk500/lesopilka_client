@@ -12,23 +12,9 @@ import { checkIsOnlyPlaceFiltersInSearchParams } from '../../utils/functions';
 
 const UnitedPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  // const currentPage = useAppSelector(selectorCurrentPage);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const isOnlyPlaceFilters = checkIsOnlyPlaceFiltersInSearchParams(searchParams);
-
-  // useEffect(() => {
-  //   searchParams.set(QueryEnum.CurrentPage, '0');
-  //   setSearchParams(searchParams);
-  // }, []);
-
-  // useEffect(() => {
-  //   const currentPageValue = searchParams.get(QueryEnum.CurrentPage);
-  //   if (!currentPageValue) {
-  //     searchParams.set(QueryEnum.CurrentPage, currentPage.toString());
-  //     setSearchParams(searchParams);
-  //   }
-  // }, [currentPage, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
