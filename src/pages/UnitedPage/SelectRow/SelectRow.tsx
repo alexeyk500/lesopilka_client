@@ -8,7 +8,9 @@ const SelectRow: React.FC = () => {
   return (
     <div className={classes.container}>
       <FiltersResult />
-      <PriceRange />
+      <div className={classes.priceRangeContainer}>
+        <PriceRange />
+      </div>
       <SelectSortDirection />
     </div>
   );
