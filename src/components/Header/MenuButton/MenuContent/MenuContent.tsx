@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './MenuContent.module.css';
 import PurchasesSection from './PurchasesSection/PurchasesSection';
-import SalesSection from './SalesSection/SalesSection';
+import ManufacturerSection from './ManufacturerSection/ManufacturerSection';
 import PersonalSection from './PersonalSection/PersonalSection';
 import FavoritesSection from './FavoritesSection/FavoritesSection';
 import ReferenceSection from './ReferenceSection/ReferenceSection';
@@ -18,7 +18,7 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
   return (
     <div ref={ref} className={classes.container}>
       <PurchasesSection closeMenuContent={closeMenuContent} />
-      {user?.manufacturer?.id && <SalesSection closeMenuContent={closeMenuContent} />}
+      {user?.manufacturer?.id && <ManufacturerSection closeMenuContent={closeMenuContent} />}
       <FavoritesSection />
       <PersonalSection closeMenuContent={closeMenuContent} />
       <ReferenceSection />

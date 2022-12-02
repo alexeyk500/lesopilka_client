@@ -2,25 +2,31 @@ import React, { useEffect } from 'react';
 import classes from './UnitedPage.module.css';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getProductsThunk } from '../../store/productSlice';
-import { useSearchParams } from 'react-router-dom';
-import { QueryEnum } from '../../types/types';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { PageTypeEnum, QueryEnum } from '../../types/types';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import FilterSelectors from './FilterSelectors/FilterSelectors';
 import Catalog from '../../components/Catalog/Catalog';
 import UnitedPageMainPart from './UnitedPageMainPart/UnitedPageMainPart';
-import { checkIsShowFilterSelectors } from '../../utils/functions';
+import { checkIsManufacturerPage, checkIsShowFilterSelectors } from '../../utils/functions';
 
 const UnitedPage: React.FC = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const isManufacturerPage = checkIsManufacturerPage(location);
   const isShowFilterSelectors = checkIsShowFilterSelectors(searchParams);
 
   useEffect(() => {
     if (!!searchParams.toString().length) {
-      dispatch(getProductsThunk(searchParams));
+      const searchParamsClone = new URLSearchParams(searchParams.toString());
+      if (isManufacturerPage) {
+        searchParamsClone.append(QueryEnum.PageType, PageTypeEnum.manufacturerPage);
+      }
+      dispatch(getProductsThunk(searchParamsClone));
     }
-  }, [dispatch, searchParams]);
+  }, [dispatch, searchParams, isManufacturerPage]);
 
   const onClickCatalogCategory = (id: number) => {
     if (id) {

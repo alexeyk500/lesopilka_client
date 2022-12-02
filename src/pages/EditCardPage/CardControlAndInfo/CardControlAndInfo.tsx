@@ -65,10 +65,10 @@ const CardControlAndInfo: React.FC = () => {
 
   const returnToCatalog = () => {
     if (catalogSearchParams) {
-      navigate(`/sales/?${catalogSearchParams}`);
+      navigate(`/manufacturer/?${catalogSearchParams}`);
     } else {
       if (user?.manufacturer?.id) {
-        user?.manufacturer?.id && navigate(`/sales/?mid=${user?.manufacturer?.id}`);
+        user?.manufacturer?.id && navigate(`/manufacturer/?mid=${user?.manufacturer?.id}`);
       } else {
         navigate(`/`);
       }
@@ -104,7 +104,7 @@ const CardControlAndInfo: React.FC = () => {
     <div className={classes.container}>
       <div className={classes.topPartContainer}>
         <div className={classes.cardContainer}>
-          <ProductCard productCardData={productCardData} isManufacturerProductCard />
+          <ProductCard productCardData={productCardData} isManufacturerProductCard isPreview />
         </div>
         <div className={classes.saveBtnSection}>
           <div className={classes.infoSaveContainer}>

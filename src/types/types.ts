@@ -158,6 +158,11 @@ export enum QueryEnum {
   PriceTo = 'pt',
   SortDirection = 'sd',
   CurrentPage = 'page',
+  PageType = 'top',
+}
+
+export enum PageTypeEnum {
+  manufacturerPage = 'mp',
 }
 
 export enum QueryToSizeEnum {

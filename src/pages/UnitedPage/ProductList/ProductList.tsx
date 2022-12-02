@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { checkIsSalesPage, isFiltersSearchParams, makeProductCardData } from '../../../utils/functions';
+import { checkIsManufacturerPage, isFiltersSearchParams, makeProductCardData } from '../../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   addProductsThunk,
@@ -33,7 +33,7 @@ const ProductList = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isSalesPage = checkIsSalesPage(location);
+  const isSalesPage = checkIsManufacturerPage(location);
   const isSearchParams = isFiltersSearchParams(searchParams);
 
   const onClickAddProductCard = () => {

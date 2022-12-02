@@ -13,18 +13,18 @@ type PropsType = {
   closeMenuContent: () => void;
 };
 
-const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
+const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
 
   const onClickCatalog = () => {
-    navigate(`/sales/?mid=${user?.manufacturer?.id}`);
+    navigate(`/manufacturer/?mid=${user?.manufacturer?.id}`);
     closeMenuContent();
   };
 
   return (
     <div className={classes.section}>
-      Продажи
+      Производство
       <button className={classes.menuButton} onClick={onClickCatalog}>
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
         Каталог
@@ -49,4 +49,4 @@ const SalesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   );
 };
 
-export default SalesSection;
+export default ManufacturerSection;

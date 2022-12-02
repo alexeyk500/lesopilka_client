@@ -283,4 +283,4 @@ export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, 
   return '';
 };
 
-export const checkIsSalesPage = (location: { pathname: string }) => location?.pathname?.includes('sales');
+export const checkIsManufacturerPage = (location: { pathname: string }) => location?.pathname?.includes('manufacturer');
