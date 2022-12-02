@@ -51,6 +51,7 @@ type ProductsSliceType = {
   currentPage: number;
   isLoading: boolean;
   isSaving: boolean;
+  isAddingProducts: boolean;
   editCard: ProductCardType; // todo переделать на editProduct
   catalogSearchParams: URLSearchParams | undefined;
   queryFilters: Array<string | undefined>;
@@ -63,6 +64,7 @@ const initialState: ProductsSliceType = {
   currentPage: 0,
   isLoading: false,
   isSaving: false,
+  isAddingProducts: false,
   editCard: emptyEditCard,
   catalogSearchParams: undefined,
   queryFilters: [],
@@ -84,6 +86,18 @@ export const getProductsThunk = createAsyncThunk<
   URLSearchParams | undefined,
   { rejectValue: string }
 >('product/getProductsThunk', async (urlSearchParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.getProducts(urlSearchParams);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
+  }
+});
+
+export const addProductsThunk = createAsyncThunk<
+  GetProductsServerType,
+  URLSearchParams | undefined,
+  { rejectValue: string }
+>('product/addProductsThunk', async (urlSearchParams, { rejectWithValue }) => {
   try {
     return await serverApi.getProducts(urlSearchParams);
   } catch (e: any) {
@@ -211,6 +225,19 @@ export const productsSlice = createSlice({
         fillProductCard(state.editCard, action.payload);
         state.isLoading = false;
       })
+      .addCase(addProductsThunk.fulfilled, (state, action) => {
+        state.products = [...state.products, ...action.payload.products];
+        state.pageSize = action.payload.pageSize;
+        state.totalPages = action.payload.totalPages;
+        state.currentPage = action.payload.currentPage;
+        state.isAddingProducts = false;
+      })
+      .addCase(addProductsThunk.pending, (state) => {
+        state.isAddingProducts = true;
+      })
+      .addCase(addProductsThunk.rejected, (state) => {
+        state.isAddingProducts = false;
+      })
       .addMatcher(
         isAnyOf(
           updateProductThunk.fulfilled,
@@ -226,10 +253,13 @@ export const productsSlice = createSlice({
       .addMatcher(isAnyOf(getProductsThunk.pending, createProductThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getProductsThunk.rejected, createProductThunk.rejected), (state, action) => {
-        state.isLoading = false;
-        showErrorPopUp(action.payload!);
-      })
+      .addMatcher(
+        isAnyOf(getProductsThunk.rejected, createProductThunk.rejected, addProductsThunk.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          showErrorPopUp(action.payload!);
+        }
+      )
       .addMatcher(
         isAnyOf(
           updateProductThunk.pending,
@@ -260,7 +290,7 @@ export const { clearEditCard, setCatalogSearchParams, updateQueryFilters } = pro
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
-
+export const selectorTotalPages = (state: RootState) => state.products.totalPages;
 export const selectorEditCard = (state: RootState) => state.products.editCard;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
 export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
