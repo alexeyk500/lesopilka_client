@@ -49,3 +49,9 @@
   text-align: center;
   color: var(--red_color);
 }
+
+.isAddingProductsTitle {
+  display: flex;
+  font-weight: 600;
+  color: var(--dark_blue_color);
+}

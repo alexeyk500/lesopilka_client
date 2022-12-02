@@ -46,6 +46,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
 
 type ProductsSliceType = {
   products: ProductType[];
+  totalProducts?: number;
   pageSize: number;
   totalPages?: number;
   currentPage: number;
@@ -59,6 +60,7 @@ type ProductsSliceType = {
 
 const initialState: ProductsSliceType = {
   products: [],
+  totalProducts: undefined,
   pageSize: PRODUCTS_PAGE_SIZE,
   totalPages: undefined,
   currentPage: 0,
@@ -213,6 +215,7 @@ export const productsSlice = createSlice({
     builder
       .addCase(getProductsThunk.fulfilled, (state, action) => {
         state.products = action.payload.products;
+        state.totalProducts = action.payload.totalProducts
         state.pageSize = action.payload.pageSize;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
@@ -227,6 +230,7 @@ export const productsSlice = createSlice({
       })
       .addCase(addProductsThunk.fulfilled, (state, action) => {
         state.products = [...state.products, ...action.payload.products];
+        state.totalProducts = action.payload.totalProducts
         state.pageSize = action.payload.pageSize;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
@@ -296,5 +300,7 @@ export const selectorCatalogSearchParams = (state: RootState) => state.products.
 export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;
 export const selectorProductsSaving = (state: RootState) => state.products.isSaving;
+export const selectorProductsAdding = (state: RootState) => state.products.isAddingProducts;
+export const selectorTotalProducts = (state: RootState) => state.products.totalProducts;
 
 export default productsSlice.reducer;

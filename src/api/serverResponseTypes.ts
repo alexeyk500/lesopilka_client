@@ -26,6 +26,7 @@ export type DeleteResultType = {
 
 export type GetProductsServerType = {
   products: ProductType[];
+  totalProducts: number;
   pageSize: number;
   totalPages: number;
   currentPage: number;
