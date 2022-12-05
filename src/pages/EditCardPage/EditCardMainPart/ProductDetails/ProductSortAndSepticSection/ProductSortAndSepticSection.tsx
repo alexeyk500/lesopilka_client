@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditCardSectionsEnum, OptionsType, ProductCardType, SepticEnum } from '../../../../../types/types';
+import { DriedEnum, EditCardSectionsEnum, OptionsType, ProductCardType, SepticEnum } from '../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorProductSorts } from '../../../../../store/catalogSlice';
 import classes from './ProductSortAndSepticSection.module.css';
@@ -23,6 +23,11 @@ const antisepticOptions = [
   { id: 1, title: SepticEnum.septic },
 ];
 
+const driedOptions = [
+  { id: 0, title: DriedEnum.noDried },
+  { id: 1, title: DriedEnum.dried },
+];
+
 const ProductSortAndSepticSection = () => {
   const dispatch = useAppDispatch();
   const editCard = useAppSelector(selectorEditCard);
@@ -36,6 +41,17 @@ const ProductSortAndSepticSection = () => {
       const updateData = {
         productId: editCard.id,
         productSortId: id,
+      };
+      dispatch(updateProductThunk({ token, updateData }));
+    }
+  };
+
+  const onChangeDriedSelector = (id: number) => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (token) {
+      const updateData = {
+        productId: editCard.id,
+        isDried: id > 0 ? true : null,
       };
       dispatch(updateProductThunk({ token, updateData }));
     }
@@ -66,6 +82,12 @@ const ProductSortAndSepticSection = () => {
           options={sortsOption}
           selectedOption={selectedSortId}
           onChangeSelector={onChangeSortSelector}
+        />
+        <SectionSelector
+          title={'Влажность пиломатериала'}
+          options={driedOptions}
+          selectedOption={editCard.isDried ? driedOptions[1] : driedOptions[0]}
+          onChangeSelector={onChangeDriedSelector}
         />
         <SectionSelector
           title={'Обработка Антисептиком'}

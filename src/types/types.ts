@@ -56,6 +56,7 @@ export type ProductCardType = {
   caliber: string | undefined;
   sortId: number | undefined;
   isSeptic: boolean;
+  isDried: boolean;
   description: string | undefined;
   price: string | undefined;
   editionDate: string | undefined;
@@ -69,6 +70,7 @@ export type ProductCardDataType = {
   material: string;
   sort: string;
   isSeptic: boolean;
+  isDried: boolean;
   image: string | undefined;
   width: string | undefined;
   height: string | undefined;
@@ -128,6 +130,7 @@ export type ProductType = {
   code?: string;
   price?: string;
   isSeptic?: boolean;
+  isDried?: boolean;
   editionDate?: string;
   publicationDate?: string;
   description?: string;
@@ -175,6 +178,11 @@ export enum QueryToSizeEnum {
 export enum SepticEnum {
   septic = 'Септирован',
   noSeptic = 'Не септирован',
+}
+
+export enum DriedEnum {
+  noDried = 'Естественная',
+  dried = 'Сухой',
 }
 
 export enum SortDirectionEnum {

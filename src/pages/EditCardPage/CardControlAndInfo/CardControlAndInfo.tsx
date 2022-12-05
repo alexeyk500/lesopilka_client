@@ -49,6 +49,7 @@ const CardControlAndInfo: React.FC = () => {
     subCategoryTile: subCategory ? subCategory.title : '',
     image: editCard.images ? (editCard.images.length > 0 ? editCard.images[0] : undefined) : undefined,
     isSeptic: editCard.isSeptic,
+    isDried: editCard.isDried,
     height: editCard.height,
     width: editCard.width,
     caliber: editCard.caliber,

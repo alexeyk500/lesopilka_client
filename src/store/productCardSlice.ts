@@ -20,6 +20,7 @@ const emptyCard = {
   caliber: undefined,
   sortId: undefined,
   isSeptic: false,
+  isDried: false,
   description: undefined,
   price: undefined,
   editionDate: undefined,

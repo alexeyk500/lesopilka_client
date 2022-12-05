@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
-import { ProductCardDataType, SepticEnum } from '../../types/types';
+import { DriedEnum, ProductCardDataType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
@@ -105,9 +105,20 @@ const ProductCard: React.FC<PropsType> = ({
                     )}
                   </div>
                 </div>
-                {productCardData && productCardData.isSeptic ? (
-                  <div className={classes.isSeptic}>{SepticEnum.septic}</div>
-                ) : null}
+                <div>
+                  {productCardData?.isSeptic && !productCardData?.isDried ? (
+                    <div className={classes.isSeptic}>{SepticEnum.septic}</div>
+                  ) : null}
+                  {productCardData?.isDried && !productCardData?.isSeptic ? (
+                    <div className={classes.isDried}>{DriedEnum.dried}</div>
+                  ) : null}
+                  {productCardData?.isDried && productCardData?.isSeptic ? (
+                    <>
+                      <div className={classes.doubleRow}>{SepticEnum.septic}</div>
+                      <div className={classes.doubleRow}>{DriedEnum.dried}</div>
+                    </>
+                  ) : null}
+                </div>
               </div>
               <div className={classes.delimiter} />
               <div className={classes.rowContainer}>

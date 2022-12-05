@@ -178,9 +178,27 @@
   height: 20px;
 }
 
+.additionalInfo {
+  display: flex;
+  flex-shrink: 0;
+  width: 85px;
+}
+
 .isSeptic {
   display: flex;
   font-size: 14px;
+}
+
+.isDried {
+  display: flex;
+  font-size: 14px;
+}
+
+.doubleRow {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 10px;
+  color: #101010;
 }
 
 .wrapper {

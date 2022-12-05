@@ -19,6 +19,7 @@ const emptyEditCard: ProductCardType = {
   caliber: undefined,
   sortId: undefined,
   isSeptic: false,
+  isDried: false,
   description: undefined,
   price: undefined,
   editionDate: undefined,
@@ -34,6 +35,7 @@ const fillProductCard = (productCard: ProductCardType, product: ProductType) => 
   productCard.publicationDate = product.publicationDate;
   productCard.sortId = product.sort?.id;
   productCard.isSeptic = product.isSeptic ? product.isSeptic : false;
+  productCard.isDried = product.isDried ? product.isDried : false;
   productCard.images = product.images;
   productCard.description = product.description;
   productCard.productCode = product.code;

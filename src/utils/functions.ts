@@ -241,6 +241,7 @@ export const makeProductCardData = (product: ProductType): ProductCardDataType =
     subCategoryTile: product.subCategory?.title || '',
     image: product.images?.[0],
     isSeptic: product.isSeptic ? product.isSeptic : false,
+    isDried: product.isDried ? product.isDried : false,
     height: product.height,
     width: product.width,
     caliber: product.caliber,
