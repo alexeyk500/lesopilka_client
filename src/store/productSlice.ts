@@ -1,4 +1,4 @@
-import { ProductCardType, ProductType, QueryEnum } from '../types/types';
+import { ProductType, QueryEnum } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
@@ -6,44 +6,25 @@ import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErr
 import { DeleteResultType, GetProductsServerType } from '../api/serverResponseTypes';
 import { PRODUCTS_PAGE_SIZE } from '../utils/constants';
 
-const emptyEditCard: ProductCardType = {
+const emptyProduct: ProductType = {
   id: -1,
-  categoryId: undefined,
-  subCategoryId: undefined,
-  productMaterialId: undefined,
-  productCode: undefined,
-  images: [],
+  manufacturer: undefined,
+  code: undefined,
+  price: undefined,
+  isSeptic: undefined,
+  isDried: undefined,
+  editionDate: undefined,
+  publicationDate: undefined,
+  description: undefined,
   height: undefined,
   width: undefined,
   length: undefined,
   caliber: undefined,
-  sortId: undefined,
-  isSeptic: false,
-  isDried: false,
-  description: undefined,
-  price: undefined,
-  editionDate: undefined,
-  publicationDate: undefined,
-};
-
-const fillProductCard = (productCard: ProductCardType, product: ProductType) => {
-  productCard.id = product.id;
-  productCard.categoryId = product.category?.id;
-  productCard.subCategoryId = product.subCategory?.id;
-  productCard.productMaterialId = product.material?.id;
-  productCard.editionDate = product.editionDate;
-  productCard.publicationDate = product.publicationDate;
-  productCard.sortId = product.sort?.id;
-  productCard.isSeptic = product.isSeptic ? product.isSeptic : false;
-  productCard.isDried = product.isDried ? product.isDried : false;
-  productCard.images = product.images;
-  productCard.description = product.description;
-  productCard.productCode = product.code;
-  productCard.price = product.price;
-  productCard.height = product.height;
-  productCard.width = product.width;
-  productCard.length = product.length;
-  productCard.caliber = product.caliber;
+  images: undefined,
+  category: undefined,
+  subCategory: undefined,
+  material: undefined,
+  sort: undefined,
 };
 
 type ProductsSliceType = {
@@ -55,7 +36,7 @@ type ProductsSliceType = {
   isLoading: boolean;
   isSaving: boolean;
   isAddingProducts: boolean;
-  editCard: ProductCardType; // todo переделать на editProduct
+  editProduct: ProductType;
   catalogSearchParams: URLSearchParams | undefined;
   queryFilters: Array<string | undefined>;
 };
@@ -69,7 +50,7 @@ const initialState: ProductsSliceType = {
   isLoading: false,
   isSaving: false,
   isAddingProducts: false,
-  editCard: emptyEditCard,
+  editProduct: emptyProduct,
   catalogSearchParams: undefined,
   queryFilters: [],
 };
@@ -196,8 +177,8 @@ export const productsSlice = createSlice({
   name: 'productsSlice',
   initialState,
   reducers: {
-    clearEditCard: (state) => {
-      state.editCard = emptyEditCard;
+    clearEditProduct: (state) => {
+      state.editProduct = emptyProduct;
       state.catalogSearchParams = undefined;
     },
     setCatalogSearchParams: (state, action) => {
@@ -227,7 +208,7 @@ export const productsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getProductThunk.fulfilled, (state, action) => {
-        fillProductCard(state.editCard, action.payload);
+        state.editProduct = action.payload;
         state.isLoading = false;
       })
       .addCase(addProductsThunk.fulfilled, (state, action) => {
@@ -252,7 +233,7 @@ export const productsSlice = createSlice({
           updateProductDescriptionThunk.fulfilled
         ),
         (state, action) => {
-          fillProductCard(state.editCard, action.payload);
+          state.editProduct = action.payload;
           state.isSaving = false;
         }
       )
@@ -292,12 +273,12 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { clearEditCard, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
+export const { clearEditProduct, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
 export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
 export const selectorTotalPages = (state: RootState) => state.products.totalPages;
-export const selectorEditCard = (state: RootState) => state.products.editCard;
+export const selectorEditProduct = (state: RootState) => state.products.editProduct;
 export const selectorCatalogSearchParams = (state: RootState) => state.products.catalogSearchParams;
 export const selectorQueryFilters = (state: RootState) => state.products.queryFilters;
 export const selectorProductsLoading = (state: RootState) => state.products.isLoading;

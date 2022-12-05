@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { checkIsManufacturerPage, isFiltersSearchParams, makeProductCardData } from '../../../utils/functions';
+import { checkIsManufacturerPage, isFiltersSearchParams } from '../../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   addProductsThunk,
@@ -43,7 +43,7 @@ const ProductList = () => {
         if ((result as { type: string }).type.includes('fulfilled')) {
           const id = (result.payload as ProductType).id;
           dispatch(setCatalogSearchParams(searchParams.toString()));
-          navigate(`/edit_card/${id}`);
+          navigate(`/edit_product/${id}`);
         }
       });
     }
@@ -53,7 +53,7 @@ const ProductList = () => {
     if (isSalesPage) {
       if (id) {
         dispatch(setCatalogSearchParams(searchParams.toString()));
-        navigate(`/edit_card/${id}`);
+        navigate(`/edit_product/${id}`);
       }
     } else {
       if (id) {
@@ -116,7 +116,7 @@ const ProductList = () => {
                     <div ref={lastProductRef} key={index + 'div'}>
                       <ProductCard
                         key={product.id}
-                        productCardData={makeProductCardData(product)}
+                        product={product}
                         onClick={onClick}
                         isManufacturerProductCard={isSalesPage}
                       />
@@ -126,7 +126,7 @@ const ProductList = () => {
                   return (
                     <ProductCard
                       key={product.id}
-                      productCardData={makeProductCardData(product)}
+                      product={product}
                       onClick={onClick}
                       isManufacturerProductCard={isSalesPage}
                     />

@@ -63,23 +63,23 @@ export type ProductCardType = {
   publicationDate: string | undefined;
 };
 
-export type ProductCardDataType = {
-  id: number;
-  manufacturer: ManufacturerType;
-  subCategoryTile: string;
-  material: string;
-  sort: string;
-  isSeptic: boolean;
-  isDried: boolean;
-  image: string | undefined;
-  width: string | undefined;
-  height: string | undefined;
-  caliber: string | undefined;
-  length: string | undefined;
-  price: string;
-  editionDate: string | undefined;
-  publicationDate: string | undefined;
-};
+// export type ProductCardDataType = {
+//   id: number;
+//   manufacturer: ManufacturerType;
+//   subCategoryTile: string;
+//   material: string;
+//   sort: string;
+//   isSeptic: boolean;
+//   isDried: boolean;
+//   image: string | undefined;
+//   width: string | undefined;
+//   height: string | undefined;
+//   caliber: string | undefined;
+//   length: string | undefined;
+//   price: string;
+//   editionDate: string | undefined;
+//   publicationDate: string | undefined;
+// };
 
 export type ProductMaterialType = {
   id: number;
@@ -126,7 +126,7 @@ export type LocationType = {
 
 export type ProductType = {
   id: number;
-  manufacturer: ManufacturerType;
+  manufacturer?: ManufacturerType;
   code?: string;
   price?: string;
   isSeptic?: boolean;
@@ -181,8 +181,8 @@ export enum SepticEnum {
 }
 
 export enum DriedEnum {
-  noDried = 'Естественная',
-  dried = 'Сухой',
+  noDried = 'Естественная сушка',
+  dried = 'Камерная сушка',
 }
 
 export enum SortDirectionEnum {
@@ -198,7 +198,7 @@ export enum SortDirectionTitleEnum {
 export enum EditCardSectionsEnum {
   lumber = 'Пиломатериал',
   sizes = 'Размеры',
-  sortAndSeptic = 'Сорт и Антисептик',
+  sortAndSeptic = 'Доп. характеристики',
   images = 'Фото',
   description = 'Описание',
   code = 'Артикул',

@@ -2,15 +2,14 @@ import React from 'react';
 import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { EditCardSectionsEnum, ProductCardDataType } from '../../../types/types';
-import { selectorProductMaterials, selectorProductSorts, selectorSubCategories } from '../../../store/catalogSlice';
+import { EditCardSectionsEnum } from '../../../types/types';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
-import { formatUTC, formatPrice, getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
+import { formatUTC, getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import {
   deleteProductThunk,
   selectorCatalogSearchParams,
-  selectorEditCard,
+  selectorEditProduct,
   selectorProductsSaving,
   updateProductThunk,
 } from '../../../store/productSlice';
@@ -31,47 +30,9 @@ const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const isSaving = useAppSelector(selectorProductsSaving);
-  const subCategoriesStore = useAppSelector(selectorSubCategories);
-  const allMaterials = useAppSelector(selectorProductMaterials);
-  const allSorts = useAppSelector(selectorProductSorts);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
-
-  const subCategory = subCategoriesStore.find((subCategory) => subCategory.id === editCard.subCategoryId);
-  const material = allMaterials.find((material) => material.id === editCard.productMaterialId);
-  const sort = allSorts.find((sort) => sort.id === editCard.sortId);
-
-  const productCardData: ProductCardDataType = {
-    id: editCard.id,
-    material: material ? material.title : '',
-    sort: sort ? sort.title : '',
-    subCategoryTile: subCategory ? subCategory.title : '',
-    image: editCard.images ? (editCard.images.length > 0 ? editCard.images[0] : undefined) : undefined,
-    isSeptic: editCard.isSeptic,
-    isDried: editCard.isDried,
-    height: editCard.height,
-    width: editCard.width,
-    caliber: editCard.caliber,
-    length: editCard.length,
-    price: editCard.price ? formatPrice(editCard.price) : '',
-    editionDate: editCard.editionDate,
-    publicationDate: editCard.publicationDate,
-    manufacturer: user?.manufacturer || {
-      id: 0,
-      inn: '',
-      title: '',
-      phone: '',
-      address: {
-        id: 0,
-        region: { id: 0, title: '' },
-        location: { id: 0, title: '' },
-        street: '',
-        building: '',
-        office: '',
-      },
-    },
-  };
 
   const getInfoPopUp = (sectionTitle: string) => {
     return showPortalPopUp({
@@ -101,7 +62,7 @@ const CardControlAndInfo: React.FC = () => {
     if (result) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token) {
-        dispatch(deleteProductThunk({ token, productId: editCard.id })).then(() => {
+        dispatch(deleteProductThunk({ token, productId: editProduct.id })).then(() => {
           returnToCatalog();
         });
       }
@@ -110,7 +71,7 @@ const CardControlAndInfo: React.FC = () => {
 
   const onClickDeleteBtn = () => {
     showPortalPopUp({
-      popUpContent: <DeleteCardForm productCardData={productCardData} />,
+      popUpContent: <DeleteCardForm product={editProduct} />,
       onClosePopUp: onCloseDeleteCardPopUp,
       titleConfirmBtn: 'Удалить',
       customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
@@ -119,37 +80,37 @@ const CardControlAndInfo: React.FC = () => {
   };
 
   const checkConditions = () => {
-    const isCompleteCatalogSection = checkCatalogSection(editCard);
+    const isCompleteCatalogSection = checkCatalogSection(editProduct);
     if (!isCompleteCatalogSection) {
       getInfoPopUp(EditCardSectionsEnum.lumber);
       return false;
     }
-    const isCompleteSizesSection = checkSizesSection(editCard);
+    const isCompleteSizesSection = checkSizesSection(editProduct);
     if (!isCompleteSizesSection) {
       getInfoPopUp(EditCardSectionsEnum.sizes);
       return false;
     }
-    const isCompleteSortAndSepticSection = checkSortAndSepticSection(editCard);
+    const isCompleteSortAndSepticSection = checkSortAndSepticSection(editProduct);
     if (!isCompleteSortAndSepticSection) {
       getInfoPopUp(EditCardSectionsEnum.sortAndSeptic);
       return false;
     }
-    const isCompleteCheckImagesSection = checkImagesSection(editCard);
+    const isCompleteCheckImagesSection = checkImagesSection(editProduct);
     if (!isCompleteCheckImagesSection) {
       getInfoPopUp(EditCardSectionsEnum.images);
       return false;
     }
-    const isCompleteDescriptionSection = checkDescriptionSection(editCard);
+    const isCompleteDescriptionSection = checkDescriptionSection(editProduct);
     if (!isCompleteDescriptionSection) {
       getInfoPopUp(EditCardSectionsEnum.description);
       return false;
     }
-    const isCompleteCodeSection = checkCodeSection(editCard);
+    const isCompleteCodeSection = checkCodeSection(editProduct);
     if (!isCompleteCodeSection) {
       getInfoPopUp(EditCardSectionsEnum.code);
       return false;
     }
-    const isCompletePriceSection = checkPriceSection(editCard);
+    const isCompletePriceSection = checkPriceSection(editProduct);
     if (!isCompletePriceSection) {
       getInfoPopUp(EditCardSectionsEnum.price);
       return false;
@@ -162,7 +123,7 @@ const CardControlAndInfo: React.FC = () => {
     const publicationDate = null;
     if (token) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         publicationDate,
       };
       dispatch(updateProductThunk({ token, updateData }));
@@ -174,7 +135,7 @@ const CardControlAndInfo: React.FC = () => {
     const publicationDate = new Date().toISOString();
     if (token && publicationDate) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         publicationDate,
       };
       dispatch(updateProductThunk({ token, updateData }));
@@ -209,21 +170,21 @@ const CardControlAndInfo: React.FC = () => {
     <div className={classes.container}>
       <div className={classes.topPartContainer}>
         <div className={classes.cardContainer}>
-          <ProductCard productCardData={productCardData} isManufacturerProductCard isPreview />
+          <ProductCard product={editProduct} isManufacturerProductCard isPreview />
         </div>
         <div className={classes.saveBtnSection}>
           <div className={classes.infoSaveContainer}>
             <div className={classes.title}>{isSaving ? 'Сохранение...' : 'Сохранено:'}</div>
-            <div className={classes.info}>{formatUTC(editCard.editionDate)}</div>
+            <div className={classes.info}>{formatUTC(editProduct.editionDate)}</div>
           </div>
         </div>
         <div className={classes.publicationContainer}>
           <CheckBoxEllipse
-            title={!!editCard.publicationDate ? 'Опубликовано:' : 'Опубликовать:'}
-            checked={!!editCard.publicationDate}
+            title={!!editProduct.publicationDate ? 'Опубликовано:' : 'Опубликовать:'}
+            checked={!!editProduct.publicationDate}
             onSelect={onSelectHandler}
           />
-          <div className={classes.info}>{formatUTC(editCard.publicationDate)}</div>
+          <div className={classes.info}>{formatUTC(editProduct.publicationDate)}</div>
         </div>
         <div className={classes.btnReadyContainer}>
           <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />

@@ -1,46 +1,45 @@
 import React, { useEffect } from 'react';
 import classes from './ProductSizesSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
-import { SizeTypeEnum, ProductCardType, EditCardSectionsEnum } from '../../../../../types/types';
+import { SizeTypeEnum, EditCardSectionsEnum, ProductType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { clearEditCard, selectorEditCard } from '../../../../../store/productSlice';
+import { clearEditProduct, selectorEditProduct } from '../../../../../store/productSlice';
 import { CALIBER_PRODUCT_CATEGORIES } from '../../../../../utils/constants';
 import SizeSelector from './SizeSelector/SizeSelector';
 
-export const checkSizesSection = (productCard: ProductCardType) => {
-  if (productCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(productCard.categoryId)) {
-    const result =
-      productCard.caliber && Number(productCard.caliber) > 0 && productCard.length && Number(productCard.length) > 0;
+export const checkSizesSection = (product: ProductType) => {
+  if (product.category?.id && CALIBER_PRODUCT_CATEGORIES.includes(product.category.id)) {
+    const result = product.caliber && Number(product.caliber) > 0 && product.length && Number(product.length) > 0;
     return Boolean(result);
   }
   const result =
-    productCard.height &&
-    Number(productCard.height) > 0 &&
-    productCard.width &&
-    Number(productCard.width) > 0 &&
-    productCard.length &&
-    Number(productCard.length) > 0;
+    product.height &&
+    Number(product.height) > 0 &&
+    product.width &&
+    Number(product.width) > 0 &&
+    product.length &&
+    Number(product.length) > 0;
   return Boolean(result);
 };
 
 const ProductSizesSection = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
 
   useEffect(() => {
     return () => {
-      dispatch(clearEditCard());
+      dispatch(clearEditProduct());
     };
   }, [dispatch]);
 
   return (
     <SectionContainer
       title={EditCardSectionsEnum.sizes}
-      completeCondition={checkSizesSection(editCard)}
+      completeCondition={checkSizesSection(editProduct)}
       blurCondition={false}
     >
       <div className={classes.rowContainer}>
-        {editCard.categoryId && CALIBER_PRODUCT_CATEGORIES.includes(editCard.categoryId) ? (
+        {editProduct.category?.id && CALIBER_PRODUCT_CATEGORIES.includes(editProduct.category.id) ? (
           <SizeSelector title={'Диаметр'} sizeType={SizeTypeEnum.caliber} />
         ) : (
           <>

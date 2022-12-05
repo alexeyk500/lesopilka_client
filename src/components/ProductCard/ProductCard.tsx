@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
-import { DriedEnum, ProductCardDataType, SepticEnum } from '../../types/types';
+import { DriedEnum, ProductType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
@@ -13,7 +13,7 @@ import materialIco from './../../img/materialIco.svg';
 import classNames from 'classnames';
 
 type PropsType = {
-  productCardData?: ProductCardDataType;
+  product?: ProductType;
   isAddProductCard?: boolean;
   isManufacturerProductCard?: boolean;
   onClick?: (id: number | undefined) => void;
@@ -21,19 +21,19 @@ type PropsType = {
 };
 
 const ProductCard: React.FC<PropsType> = ({
+  product,
   isAddProductCard,
-  productCardData,
   isManufacturerProductCard,
   onClick,
   isPreview,
 }) => {
   const onClickHandler = () => {
     if (onClick) {
-      onClick(productCardData?.id);
+      onClick(product?.id);
     }
   };
 
-  const isDraftProductCard = !productCardData?.publicationDate && !isAddProductCard && !isPreview;
+  const isDraftProductCard = !product?.publicationDate && !isAddProductCard && !isPreview;
 
   return (
     <div className={classes.wrapper} onClick={onClickHandler}>
@@ -46,8 +46,8 @@ const ProductCard: React.FC<PropsType> = ({
         ) : (
           <>
             <div className={classNames(classes.imageContainer, { [classes.notPublished]: isDraftProductCard })}>
-              {productCardData && productCardData.image ? (
-                <img src={productCardData ? productCardData.image : undefined} className={classes.img} alt="product" />
+              {product?.images ? (
+                <img src={product.images?.[0] ? product.images[0] : undefined} className={classes.img} alt="product" />
               ) : (
                 <div className={classes.noImageContainer}>
                   <img src={noImageIco} className={classes.noImg} alt="no product" />
@@ -57,7 +57,7 @@ const ProductCard: React.FC<PropsType> = ({
             </div>
             <div className={classes.descriptionContainer}>
               <div className={classes.rowContainerEnd}>
-                <div className={classes.subCategoryTile}>{productCardData && productCardData.subCategoryTile}</div>
+                <div className={classes.subCategoryTile}>{product?.subCategory?.title}</div>
                 {!isManufacturerProductCard && (
                   <div className={classes.btnGroup}>
                     <div className={classes.starIcoContainer}>
@@ -74,12 +74,8 @@ const ProductCard: React.FC<PropsType> = ({
                   <img src={materialIco} className={classes.materialsIco} alt="materials" />
                 </div>
                 <div className={classes.dimensionsAndMaterialContainer}>
-                  <div className={classes.materialTitle}>
-                    {productCardData && productCardData.material && productCardData.material}
-                  </div>
-                  <div className={classes.sortTitle}>
-                    {productCardData && productCardData.sort && productCardData.sort}
-                  </div>
+                  <div className={classes.materialTitle}>{product?.material?.title}</div>
+                  <div className={classes.sortTitle}>{product?.sort?.title}</div>
                 </div>
               </div>
               <div className={classes.delimiter} />
@@ -90,32 +86,31 @@ const ProductCard: React.FC<PropsType> = ({
                     <img src={dimensionsIco} className={classes.dimensionsIco} alt="dimensions" />
                   </div>
                   <div className={classes.dimensionsTile}>
-                    {productCardData && productCardData.caliber ? (
+                    {product?.caliber ? (
                       <>
-                        {productCardData && productCardData.caliber && productCardData.caliber}
-
-                        {productCardData && productCardData.length && `*${productCardData.length}`}
+                        {product.caliber}
+                        {product.length && `*${product.length}`}
                       </>
                     ) : (
                       <>
-                        {productCardData && productCardData.height && productCardData.height}
-                        {productCardData && productCardData.width && `*${productCardData.width}`}
-                        {productCardData && productCardData.length && `*${productCardData.length}`}
+                        {product?.height}
+                        {product?.width && `*${product.width}`}
+                        {product?.length && `*${product.length}`}
                       </>
                     )}
                   </div>
                 </div>
-                <div>
-                  {productCardData?.isSeptic && !productCardData?.isDried ? (
+                <div className={classes.optionsContainer}>
+                  {product?.isSeptic && !product?.isDried ? (
                     <div className={classes.isSeptic}>{SepticEnum.septic}</div>
                   ) : null}
-                  {productCardData?.isDried && !productCardData?.isSeptic ? (
+                  {product?.isDried && !product?.isSeptic ? (
                     <div className={classes.isDried}>{DriedEnum.dried}</div>
                   ) : null}
-                  {productCardData?.isDried && productCardData?.isSeptic ? (
+                  {product?.isDried && product?.isSeptic ? (
                     <>
-                      <div className={classes.doubleRow}>{SepticEnum.septic}</div>
                       <div className={classes.doubleRow}>{DriedEnum.dried}</div>
+                      <div className={classes.doubleRow}>{SepticEnum.septic}</div>
                     </>
                   ) : null}
                 </div>
@@ -125,26 +120,21 @@ const ProductCard: React.FC<PropsType> = ({
                 <div className={classes.wareHouseIcoContainer}>
                   <img src={wareHouseIco} className={classes.wareHouseIco} alt="dimensions" />
                 </div>
-                {productCardData &&
-                  productCardData.manufacturer &&
-                  productCardData.manufacturer.title &&
-                  productCardData.manufacturer.title}
+                {product?.manufacturer?.title}
               </div>
               <div className={classes.delimiter} />
               <div className={classes.rowContainer}>
                 <div className={classes.locationIcoContainer}>
                   <img src={locationIco} className={classes.locationIco} alt="dimensions" />
                 </div>
-                {productCardData &&
-                  productCardData.manufacturer.address.location.title &&
-                  productCardData.manufacturer.address.location.title}
+                {product?.manufacturer?.address.location.title}
               </div>
               <div className={classes.delimiter} />
               <div className={classes.rowContainer}>
                 <div className={classes.rubleIcoContainer}>
                   <img src={rubleIco} className={classes.rubleIco} alt="dimensions" />
                 </div>
-                {productCardData && productCardData.price}
+                {product?.price}
               </div>
             </div>
           </>

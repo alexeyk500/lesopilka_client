@@ -1,11 +1,11 @@
 import React from 'react';
-import { DriedEnum, EditCardSectionsEnum, OptionsType, ProductCardType, SepticEnum } from '../../../../../types/types';
+import { DriedEnum, EditCardSectionsEnum, OptionsType, ProductType, SepticEnum } from '../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectorProductSorts } from '../../../../../store/catalogSlice';
 import classes from './ProductSortAndSepticSection.module.css';
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import { selectorEditProduct, updateProductThunk } from '../../../../../store/productSlice';
 
 const getSortOptions = (sorts: OptionsType[]) => {
   const options: OptionsType[] = [];
@@ -14,8 +14,8 @@ const getSortOptions = (sorts: OptionsType[]) => {
   return options;
 };
 
-export const checkSortAndSepticSection = (editCard: ProductCardType) => {
-  return !!editCard.sortId;
+export const checkSortAndSepticSection = (product: ProductType) => {
+  return !!product.sort?.id;
 };
 
 const antisepticOptions = [
@@ -30,16 +30,16 @@ const driedOptions = [
 
 const ProductSortAndSepticSection = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const sorts = useAppSelector(selectorProductSorts);
   const sortsOption = getSortOptions(sorts);
-  const selectedSortId = sortsOption.find((sort) => sort.id === editCard.sortId);
+  const selectedSortId = sortsOption.find((sort) => sort.id === editProduct.sort?.id);
 
   const onChangeSortSelector = (id: number) => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token && id) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         productSortId: id,
       };
       dispatch(updateProductThunk({ token, updateData }));
@@ -50,7 +50,7 @@ const ProductSortAndSepticSection = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         isDried: id > 0 ? true : null,
       };
       dispatch(updateProductThunk({ token, updateData }));
@@ -61,14 +61,14 @@ const ProductSortAndSepticSection = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         isSeptic: id > 0 ? true : null,
       };
       dispatch(updateProductThunk({ token, updateData }));
     }
   };
 
-  const isSortAndSepticSection = checkSortAndSepticSection(editCard);
+  const isSortAndSepticSection = checkSortAndSepticSection(editProduct);
 
   return (
     <SectionContainer
@@ -78,21 +78,21 @@ const ProductSortAndSepticSection = () => {
     >
       <div className={classes.rowContainer}>
         <SectionSelector
-          title={'Сорт пиломатериала'}
+          title={'Сорт'}
           options={sortsOption}
           selectedOption={selectedSortId}
           onChangeSelector={onChangeSortSelector}
         />
         <SectionSelector
-          title={'Влажность пиломатериала'}
+          title={'Влажность'}
           options={driedOptions}
-          selectedOption={editCard.isDried ? driedOptions[1] : driedOptions[0]}
+          selectedOption={editProduct.isDried ? driedOptions[1] : driedOptions[0]}
           onChangeSelector={onChangeDriedSelector}
         />
         <SectionSelector
-          title={'Обработка Антисептиком'}
+          title={'Обработка антисептиком'}
           options={antisepticOptions}
-          selectedOption={editCard.isSeptic ? antisepticOptions[1] : antisepticOptions[0]}
+          selectedOption={editProduct.isSeptic ? antisepticOptions[1] : antisepticOptions[0]}
           onChangeSelector={onChangeSepticSelector}
         />
       </div>

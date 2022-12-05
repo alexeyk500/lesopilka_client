@@ -1,12 +1,4 @@
-import {
-  CategorySizeType,
-  OptionsType,
-  ProductCardDataType,
-  ProductType,
-  QueryEnum,
-  SizeTypeEnum,
-  UserType,
-} from '../types/types';
+import { CategorySizeType, OptionsType, ProductType, QueryEnum, SizeTypeEnum, UserType } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
@@ -230,26 +222,6 @@ export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes?: CategorySizeTy
     return size.value;
   }
   return undefined;
-};
-
-export const makeProductCardData = (product: ProductType): ProductCardDataType => {
-  return {
-    id: product.id,
-    manufacturer: product.manufacturer,
-    material: product.material ? product.material.title : '',
-    sort: product.sort ? product.sort.title : '',
-    subCategoryTile: product.subCategory?.title || '',
-    image: product.images?.[0],
-    isSeptic: product.isSeptic ? product.isSeptic : false,
-    isDried: product.isDried ? product.isDried : false,
-    height: product.height,
-    width: product.width,
-    caliber: product.caliber,
-    length: product.length,
-    price: formatPrice(product.price ? product.price : undefined),
-    editionDate: product.editionDate,
-    publicationDate: product.publicationDate,
-  };
 };
 
 export const formatUTC = (utcData: string | undefined) => {

@@ -3,17 +3,17 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ProductPriceSection.module.css';
 import { DEBOUNCE_TIME, regExpForPrice } from '../../../../../utils/constants';
-import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import { selectorEditProduct, updateProductThunk } from '../../../../../store/productSlice';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
-import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+import { EditCardSectionsEnum, ProductType } from '../../../../../types/types';
 
-export const checkPriceSection = (editCard: ProductCardType) => {
-  return !!editCard.price;
+export const checkPriceSection = (product: ProductType) => {
+  return !!product.price;
 };
 
 const ProductPriceSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const [price, setPrice] = useState<string | undefined>(undefined);
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -21,19 +21,19 @@ const ProductPriceSection: React.FC = () => {
     if (newPrice) {
       if (regExpForPrice.test(newPrice)) {
         setPrice(newPrice);
-        const updateData = { productId: editCard.id, price: newPrice };
+        const updateData = { productId: editProduct.id, price: newPrice };
         debounceUpdateCode(updateData);
       }
     } else {
       setPrice('');
-      const updateData = { productId: editCard.id, price: null };
+      const updateData = { productId: editProduct.id, price: null };
       debounceUpdateCode(updateData);
     }
   };
 
   useEffect(() => {
-    setPrice(editCard.price);
-  }, [editCard.price]);
+    setPrice(editProduct.price);
+  }, [editProduct.price]);
 
   const debounceUpdateCode = useDebouncedFunction(
     (updateData) => {
@@ -46,7 +46,7 @@ const ProductPriceSection: React.FC = () => {
     true
   );
 
-  const isCompletePriceSection = checkPriceSection(editCard);
+  const isCompletePriceSection = checkPriceSection(editProduct);
 
   return (
     <SectionContainer

@@ -3,7 +3,6 @@ import classes from './SalesCardList.module.css';
 import ProductCard from '../../../../components/ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorProducts, setCatalogSearchParams } from '../../../../store/productSlice';
-import { makeProductCardData } from '../../../../utils/functions';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SalesCardList = () => {
@@ -14,7 +13,7 @@ const SalesCardList = () => {
 
   const onClick = (id: number | undefined) => {
     if (id) {
-      navigate(`/edit_card/${id}`);
+      navigate(`/edit_product/${id}`);
       console.log('searchParams =', searchParams.toString());
       dispatch(setCatalogSearchParams(searchParams.toString()));
     }
@@ -24,12 +23,7 @@ const SalesCardList = () => {
     <div className={classes.container}>
       <ProductCard isAddProductCard />
       {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          productCardData={makeProductCardData(product)}
-          onClick={onClick}
-          isManufacturerProductCard
-        />
+        <ProductCard key={product.id} product={product} onClick={onClick} isManufacturerProductCard />
       ))}
     </div>
   );

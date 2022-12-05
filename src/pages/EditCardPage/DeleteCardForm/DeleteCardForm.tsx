@@ -1,18 +1,18 @@
 import React from 'react';
 import classes from './DeleteCardForm.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { ProductCardDataType } from '../../../types/types';
+import { ProductType } from '../../../types/types';
 
 type PropsType = {
-  productCardData: ProductCardDataType;
+  product: ProductType;
 };
 
-const DeleteCardForm: React.FC<PropsType> = ({ productCardData }) => {
+const DeleteCardForm: React.FC<PropsType> = ({ product }) => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>Удалить карточку товара</div>
       <div className={classes.cardContainer}>
-        <ProductCard productCardData={productCardData} isManufacturerProductCard />
+        <ProductCard product={product} isManufacturerProductCard />
       </div>
     </div>
   );

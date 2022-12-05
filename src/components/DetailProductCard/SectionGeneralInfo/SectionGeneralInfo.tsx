@@ -30,7 +30,7 @@ const SectionGeneralInfo: React.FC<PropsType> = ({ product }) => {
         )}
       </div>
       <div className={classes.infoManufacturer}>
-        {product.manufacturer.title}, {product.manufacturer.address.location.title}
+        {product.manufacturer?.title}, {product.manufacturer?.address.location.title}
       </div>
     </div>
   );

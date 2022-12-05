@@ -3,7 +3,7 @@ import SectionSelector from '../../../../../../components/commonComponents/Secti
 import { CategorySizeType, OptionsType, SizeTypeEnum } from '../../../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
 import { selectorCategorySizes } from '../../../../../../store/catalogSlice';
-import { selectorEditCard, updateProductThunk } from '../../../../../../store/productSlice';
+import { selectorEditProduct, updateProductThunk } from '../../../../../../store/productSlice';
 import useDebouncedFunction from '../../../../../../hooks/useDebounceFunction';
 import { DEBOUNCE_TIME } from '../../../../../../utils/constants';
 
@@ -29,7 +29,7 @@ type PropsType = {
 
 const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
 
   const [selectedOption, setSelectedOption] = useState<OptionsType | undefined>(undefined);
@@ -48,28 +48,28 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
   );
 
   useEffect(() => {
-    const options = getSizeOptions(allCategorySizes, editCard.categoryId, sizeType);
+    const options = getSizeOptions(allCategorySizes, editProduct.category?.id, sizeType);
     if (isShowCustomSizeInput) {
       const customOption = options.find((option) => option.id === -1);
       if (customOption) {
-        customOption.value = editCard[sizeType];
+        customOption.value = editProduct[sizeType];
       }
       setSelectedOption(customOption);
     } else {
-      const foundOption = options.find((option) => option.value === editCard[sizeType]);
+      const foundOption = options.find((option) => option.value === editProduct[sizeType]);
       if (foundOption) {
         setSelectedOption(foundOption);
-      } else if (editCard[sizeType]) {
+      } else if (editProduct[sizeType]) {
         const customOption = options.find((option) => option.id === -1);
         if (customOption) {
-          customOption.value = editCard[sizeType];
+          customOption.value = editProduct[sizeType];
         }
         setSelectedOption(customOption);
-        setCustomInputValue(editCard[sizeType]);
+        setCustomInputValue(editProduct[sizeType]);
         setIsShowCustomSizeInput(true);
       }
     }
-  }, [editCard, isShowCustomSizeInput, allCategorySizes, sizeType, setSelectedOption, setCustomInputValue]);
+  }, [editProduct, isShowCustomSizeInput, allCategorySizes, sizeType, setSelectedOption, setCustomInputValue]);
 
   const onChangeSelector = useCallback(
     (id: number) => {
@@ -78,7 +78,7 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
         const categorySize = allCategorySizes.find((size) => size.id === id);
         if (token && categorySize) {
           const updateData = {
-            productId: editCard.id,
+            productId: editProduct.id,
             sizeType,
             sizeValue: categorySize.value,
           };
@@ -88,7 +88,7 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
         }
       }
       if (id === -1) {
-        const options = getSizeOptions(allCategorySizes, editCard.categoryId, sizeType);
+        const options = getSizeOptions(allCategorySizes, editProduct.category?.id, sizeType);
         const customOption = options.find((option) => option.id === -1);
         if (customOption) {
           customOption.value = undefined;
@@ -97,7 +97,7 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token) {
           const updateData = {
-            productId: editCard.id,
+            productId: editProduct.id,
             sizeType,
             sizeValue: null,
           };
@@ -108,13 +108,13 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
         }
       }
     },
-    [allCategorySizes, dispatch, editCard, sizeType]
+    [allCategorySizes, dispatch, editProduct, sizeType]
   );
 
   const onChangeCustomValue = (value: string | undefined) => {
     setCustomInputValue(value);
     const updateData = {
-      productId: editCard.id,
+      productId: editProduct.id,
       sizeType,
       sizeValue: value ? value : null,
     };
@@ -124,7 +124,7 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
   return (
     <SectionSelector
       title={title}
-      options={getSizeOptions(allCategorySizes, editCard.categoryId, sizeType)}
+      options={getSizeOptions(allCategorySizes, editProduct.category?.id, sizeType)}
       selectedOption={selectedOption}
       onChangeSelector={onChangeSelector}
       showCustomSizeInput={isShowCustomSizeInput}

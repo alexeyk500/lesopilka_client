@@ -2,36 +2,36 @@ import React, { useEffect, useState } from 'react';
 import classes from './ProductCodeSection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import { selectorEditProduct, updateProductThunk } from '../../../../../store/productSlice';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
-import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+import { EditCardSectionsEnum, ProductType } from '../../../../../types/types';
 
-export const checkCodeSection = (editCard: ProductCardType) => {
-  return !!editCard.productCode?.length;
+export const checkCodeSection = (product: ProductType) => {
+  return !!product.code?.length;
 };
 
 const ProductCodeSection = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const [code, setCode] = useState<string | undefined>(undefined);
 
   const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const newCode = event.currentTarget.value ? event.currentTarget.value : undefined;
     if (newCode) {
       setCode(newCode);
-      const updateData = { productId: editCard.id, code: newCode };
+      const updateData = { productId: editProduct.id, code: newCode };
       debounceUpdateCode(updateData);
     } else {
       setCode('');
-      const updateData = { productId: editCard.id, code: null };
+      const updateData = { productId: editProduct.id, code: null };
       debounceUpdateCode(updateData);
     }
   };
 
   useEffect(() => {
-    setCode(editCard.productCode);
-  }, [editCard.productCode]);
+    setCode(editProduct.code);
+  }, [editProduct.code]);
 
   const debounceUpdateCode = useDebouncedFunction(
     (updateData) => {
@@ -44,7 +44,7 @@ const ProductCodeSection = () => {
     true
   );
 
-  const isCompleteCodeSection = checkCodeSection(editCard);
+  const isCompleteCodeSection = checkCodeSection(editProduct);
 
   return (
     <SectionContainer title={EditCardSectionsEnum.code} completeCondition={isCompleteCodeSection} blurCondition={false}>

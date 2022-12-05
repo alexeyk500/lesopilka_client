@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import classes from './ProductDescription.module.css';
-import { selectorEditCard, updateProductDescriptionThunk } from '../../../../../store/productSlice';
+import { selectorEditProduct, updateProductDescriptionThunk } from '../../../../../store/productSlice';
 import { DEBOUNCE_TIME } from '../../../../../utils/constants';
 import useDebouncedFunction from '../../../../../hooks/useDebounceFunction';
-import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+import { EditCardSectionsEnum, ProductType } from '../../../../../types/types';
 
-export const checkDescriptionSection = (editCard: ProductCardType) => {
-  return !!editCard.description?.length;
+export const checkDescriptionSection = (product: ProductType) => {
+  return !!product.description?.length;
 };
 
 const ProductDescription: React.FC = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const [description, setDescription] = useState<string | undefined>(undefined);
 
   const onChangeInput: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
@@ -22,12 +22,12 @@ const ProductDescription: React.FC = () => {
     let updateData;
     if (newDescription) {
       updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         description: newDescription,
       };
     } else {
       updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         description: null,
       };
     }
@@ -35,8 +35,8 @@ const ProductDescription: React.FC = () => {
   };
 
   useEffect(() => {
-    setDescription(editCard.description);
-  }, [editCard.description]);
+    setDescription(editProduct.description);
+  }, [editProduct.description]);
 
   const debounceUpdateDescription = useDebouncedFunction(
     (updateData) => {
@@ -49,7 +49,7 @@ const ProductDescription: React.FC = () => {
     true
   );
 
-  const isCompleteDescriptionSection = checkDescriptionSection(editCard);
+  const isCompleteDescriptionSection = checkDescriptionSection(editProduct);
 
   return (
     <SectionContainer

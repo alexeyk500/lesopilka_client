@@ -3,15 +3,15 @@ import classes from './ProductImagesSection.module.css';
 import SectionContainer from '../SectionContainer/SectionContainer';
 import ImagesList from './ImagesList/ImagesList';
 import { useAppSelector } from '../../../../../hooks/hooks';
-import { selectorEditCard } from '../../../../../store/productSlice';
-import { EditCardSectionsEnum, ProductCardType } from '../../../../../types/types';
+import { selectorEditProduct } from '../../../../../store/productSlice';
+import { EditCardSectionsEnum, ProductType } from '../../../../../types/types';
 
-export const checkImagesSection = (editCard: ProductCardType) => {
-  return !!editCard.images?.length;
+export const checkImagesSection = (product: ProductType) => {
+  return !!product.images?.length;
 };
 
 const ProductImagesSection: React.FC = () => {
-  const editCard = useAppSelector(selectorEditCard);
+  const editCard = useAppSelector(selectorEditProduct);
   const isCompleteCheckSizesSection = checkImagesSection(editCard);
   return (
     <SectionContainer title={EditCardSectionsEnum.images} completeCondition={isCompleteCheckSizesSection}>

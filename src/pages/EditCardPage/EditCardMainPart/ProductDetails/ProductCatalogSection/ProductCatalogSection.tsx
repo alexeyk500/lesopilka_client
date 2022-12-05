@@ -5,9 +5,9 @@ import { selectorCategories, selectorProductMaterials, selectorSubCategories } f
 import SectionSelector from '../../../../../components/commonComponents/SectionSelector/SectionSelector';
 import { showConfirmPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { OnClosePopUpResultType } from '../../../../../components/PortalPopUp/PortalPopUp';
-import { EditCardSectionsEnum, OptionsType, ProductCardType } from '../../../../../types/types';
+import { EditCardSectionsEnum, OptionsType, ProductType } from '../../../../../types/types';
 import SectionContainer from '../SectionContainer/SectionContainer';
-import { clearEditCard, selectorEditCard, updateProductThunk } from '../../../../../store/productSlice';
+import { clearEditProduct, selectorEditProduct, updateProductThunk } from '../../../../../store/productSlice';
 
 const getOptions = (optionsStore: OptionsType[]) => {
   const options: OptionsType[] = [];
@@ -16,45 +16,45 @@ const getOptions = (optionsStore: OptionsType[]) => {
   return options;
 };
 
-export const checkCatalogSection = (editCard: ProductCardType) => {
-  return !!editCard.categoryId && !!editCard.subCategoryId && !!editCard.productMaterialId;
+export const checkCatalogSection = (product: ProductType) => {
+  return !!product.category && !!product.subCategory && !!product.material;
 };
 
 const ProductCatalogSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const editCard = useAppSelector(selectorEditCard);
+  const editProduct = useAppSelector(selectorEditProduct);
   const categoriesRaw = useAppSelector(selectorCategories);
   const subCategoriesStore = useAppSelector(selectorSubCategories);
   const productMaterialsRaw = useAppSelector(selectorProductMaterials);
   const [formCategoryId, setFormCategoryId] = useState<number | undefined>(undefined);
 
   const subCategoriesRaw = subCategoriesStore.filter(
-    (subCategory) => subCategory.categoryId === (editCard.categoryId ? editCard.categoryId : formCategoryId)
+    (subCategory) => subCategory.categoryId === (editProduct.category ? editProduct.category?.id : formCategoryId)
   );
 
   const categories = getOptions(categoriesRaw);
   const subCategories = getOptions(subCategoriesRaw);
   const productMaterials = getOptions(productMaterialsRaw);
 
-  const selectedCategory = categories.find((category) => category.id === editCard.categoryId);
+  const selectedCategory = categories.find((category) => category.id === editProduct.category?.id);
   const formEditCardCategory = formCategoryId
     ? categories.find((category) => category.id === formCategoryId)
     : undefined;
 
-  const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === editCard.subCategoryId);
+  const selectedSubCategory = subCategories.find((subCategory) => subCategory.id === editProduct.subCategory?.id);
   const selectedProductMaterial = productMaterials.find(
-    (productMaterial) => productMaterial.id === editCard.productMaterialId
+    (productMaterial) => productMaterial.id === editProduct.material?.id
   );
 
   const onChangeCategorySelector = (id: number) => {
     const onConfirm = (result: OnClosePopUpResultType) => {
       if (result) {
-        dispatch(clearEditCard());
+        dispatch(clearEditProduct());
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token && id) {
           setFormCategoryId(id);
           const updateData = {
-            productId: editCard.id,
+            productId: editProduct.id,
             code: null,
             price: null,
             subCategoryId: null,
@@ -72,8 +72,8 @@ const ProductCatalogSection: React.FC = () => {
         }
       }
     };
-    if (editCard.categoryId) {
-      const curCategory = categories.find((category) => category.id === editCard.categoryId);
+    if (editProduct.category) {
+      const curCategory = categories.find((category) => category.id === editProduct.category?.id);
       const newCategory = categories.find((category) => category.id === id);
       showConfirmPopUp(
         `Раздела каталога "${curCategory!.title}" \nбудет изменен на \nраздел каталога "${
@@ -90,7 +90,7 @@ const ProductCatalogSection: React.FC = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token && id) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         subCategoryId: id,
       };
       dispatch(updateProductThunk({ token, updateData }));
@@ -101,26 +101,26 @@ const ProductCatalogSection: React.FC = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token && id) {
       const updateData = {
-        productId: editCard.id,
+        productId: editProduct.id,
         productMaterialId: id,
       };
       dispatch(updateProductThunk({ token, updateData }));
     }
   };
 
-  const isCompleteCatalogSection = checkCatalogSection(editCard);
+  const isCompleteCatalogSection = checkCatalogSection(editProduct);
 
   return (
     <SectionContainer title={EditCardSectionsEnum.lumber} completeCondition={isCompleteCatalogSection}>
       <div className={classes.rowContainer}>
         <SectionSelector
-          title={'Раздел Каталога'}
+          title={'Раздел каталога'}
           options={categories}
           selectedOption={selectedCategory ? selectedCategory : formEditCardCategory ? formEditCardCategory : undefined}
           onChangeSelector={onChangeCategorySelector}
         />
         <SectionSelector
-          title={'Тип Пиломатериала'}
+          title={'Тип пиломатериала'}
           options={subCategories}
           selectedOption={selectedSubCategory}
           onChangeSelector={onChangeSubCategorySelector}
