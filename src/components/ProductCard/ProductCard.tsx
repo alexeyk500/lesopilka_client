@@ -11,7 +11,7 @@ import locationIco from './../../img/locationIco.svg';
 import rubleIco from './../../img/rubleIco.svg';
 import materialIco from './../../img/materialIco.svg';
 import classNames from 'classnames';
-import {formatPrice} from "../../utils/functions";
+import { formatPrice } from '../../utils/functions';
 
 type PropsType = {
   product?: ProductType;
