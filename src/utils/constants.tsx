@@ -1,3 +1,5 @@
+import { DriedEnum, SepticEnum } from '../types/types';
+
 export const DEBOUNCE_TIME = 1000;
 export const CALIBER_PRODUCT_CATEGORIES = [6];
 
@@ -6,8 +8,13 @@ export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
 export const regExpOnlyDigit = /^[0-9\b]+$/;
 
 export const SEPTIC_OPTIONS = [
-  { id: 1, title: 'Не септирован' },
-  { id: 2, title: 'Cептирован' },
+  { id: 1, title: SepticEnum.noSeptic },
+  { id: 2, title: SepticEnum.septic },
+];
+
+export const DRIED_OPTIONS = [
+  { id: 1, title: DriedEnum.noDried },
+  { id: 2, title: DriedEnum.dried },
 ];
 
 export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;

@@ -9,7 +9,7 @@ import {
   selectorSubCategories,
 } from '../../../store/catalogSlice';
 import { CategorySizeType, QueryEnum, SizeTypeEnum } from '../../../types/types';
-import { CALIBER_PRODUCT_CATEGORIES, SEPTIC_OPTIONS } from '../../../utils/constants';
+import { CALIBER_PRODUCT_CATEGORIES, DRIED_OPTIONS, SEPTIC_OPTIONS } from '../../../utils/constants';
 import { useSearchParams } from 'react-router-dom';
 import { selectorQueryFilters, updateQueryFilters } from '../../../store/productSlice';
 
@@ -170,6 +170,14 @@ const FilterSelectors: React.FC = () => {
         options={sorts}
         onSelect={() => {
           setWhatFilterChangedRef(QueryEnum.SortId);
+        }}
+      />
+      <FilterSelectorItem
+        title={'Влажность'}
+        queryType={QueryEnum.Dried}
+        options={DRIED_OPTIONS}
+        onSelect={() => {
+          setWhatFilterChangedRef(QueryEnum.Dried);
         }}
       />
       <FilterSelectorItem

@@ -43,44 +43,6 @@ export type SubCategoryType = {
   categoryId: number;
 };
 
-export type ProductCardType = {
-  id: number;
-  categoryId: number | undefined;
-  subCategoryId: number | undefined;
-  productMaterialId: number | undefined;
-  productCode: string | undefined;
-  images: string[] | undefined;
-  height: string | undefined;
-  width: string | undefined;
-  length: string | undefined;
-  caliber: string | undefined;
-  sortId: number | undefined;
-  isSeptic: boolean;
-  isDried: boolean;
-  description: string | undefined;
-  price: string | undefined;
-  editionDate: string | undefined;
-  publicationDate: string | undefined;
-};
-
-// export type ProductCardDataType = {
-//   id: number;
-//   manufacturer: ManufacturerType;
-//   subCategoryTile: string;
-//   material: string;
-//   sort: string;
-//   isSeptic: boolean;
-//   isDried: boolean;
-//   image: string | undefined;
-//   width: string | undefined;
-//   height: string | undefined;
-//   caliber: string | undefined;
-//   length: string | undefined;
-//   price: string;
-//   editionDate: string | undefined;
-//   publicationDate: string | undefined;
-// };
-
 export type ProductMaterialType = {
   id: number;
   title: string;
@@ -154,6 +116,7 @@ export enum QueryEnum {
   SizeLength = 'sl',
   SortId = 'psid',
   Septic = 'sep',
+  Dried = 'dri',
   SearchRegionId = 'srid',
   SearchLocationId = 'slid',
   ManufacturerId = 'mid',
