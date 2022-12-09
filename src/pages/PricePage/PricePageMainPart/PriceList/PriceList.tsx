@@ -31,13 +31,11 @@ const PriceList = () => {
         const priceNodes: ReactNode[] = [];
         if (products.length > 0) {
           subCategories.forEach((subCategory) => {
-            const subCategoryProducts = products.filter(
-              (product) => product.subCategory?.id === subCategory.categoryId
-            );
+            const subCategoryProducts = products.filter((product) => product.subCategory?.id === subCategory.id);
             if (subCategoryProducts.length > 0) {
-              priceNodes.push(<PriceListGroupTitle subCategory={subCategory} />);
+              priceNodes.push(<PriceListGroupTitle key={`${subCategory.id}sc`} subCategory={subCategory} />);
               subCategoryProducts.forEach((product) => {
-                priceNodes.push(<PriceListProductItem product={product} />);
+                priceNodes.push(<PriceListProductItem key={product.id} product={product} />);
               });
             }
           });
