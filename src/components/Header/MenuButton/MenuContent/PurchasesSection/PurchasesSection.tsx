@@ -4,6 +4,7 @@ import catalogIco from '../../../../../img/catalogIco.svg';
 import cartIcoOutlined from '../../../../../img/cartIcoOutlined.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
 import { useNavigate } from 'react-router-dom';
+import { PageEnum } from '../../../../AppRouter/AppRouter';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -13,7 +14,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
 
   const onClickCatalog = () => {
-    navigate('/');
+    navigate(PageEnum.RootPage);
     closeMenuContent();
   };
 

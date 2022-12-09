@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import RulesInformForm from './RulesInformForm/RulesInformForm';
 import { useNavigate } from 'react-router-dom';
+import { PageEnum } from '../../../../components/AppRouter/AppRouter';
 
 const RegistrationAsManufacturer = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const RegistrationAsManufacturer = () => {
 
   const onCloseRulesInformForm = (result: boolean | FormData | undefined) => {
     if (result) {
-      navigate('/manufacturer_registration');
+      navigate(PageEnum.ManufacturerRegistration);
     }
   };
 

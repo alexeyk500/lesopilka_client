@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.subCategoryRow {
+  display: flex;
+  padding: 2px 12px 0 12px;
+  justify-content: center;
+  background-color: var(--gray_color_light_light);
+}
+
+.titlesRow {
+  display: flex;
+  padding: 0 12px;
+  background-color: var(--gray_color_light_light);
+}
+
+.sizeContainer {
+  width: 20%;
+}
+
+.materialContainer {
+  width: 19%;
+}
+
+.sortContainer {
+  width: 18%;
+}
+
+.codeContainer {
+  width: 25%;
+}
+
+.priceContainer {
+  width: 10%;
+}
+
+.actionsContainer {
+  display: flex;
+  min-width: 60px;
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  padding-top: 1px;
+  background-color: var(--gray_color_light_light);
+  border-bottom: 1px solid var(--gray_color_light)
+}

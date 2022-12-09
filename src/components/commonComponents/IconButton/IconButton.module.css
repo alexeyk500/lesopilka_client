@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  margin-top: 8px;
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  background-color: var(--main_background);
+  box-shadow: var(--box_shadow);
+  cursor: pointer;
+}
+
+.iconColumn {
+  display: flex;
+  flex-shrink: 0;
+  width: 50px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px 0 0 12px;
+  background-color: var(--blue_color);
+}
+
+.iconContainer {
+  display: flex;
+  width: 24px;
+  height: 24px;
+}
+
+.titleContainer {
+  display: flex;
+  padding: 17px 8px 17px 12px;
+  overflow: hidden;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+  color: var(--blue_color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

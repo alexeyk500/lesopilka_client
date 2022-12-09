@@ -124,11 +124,13 @@ export enum QueryEnum {
   PriceTo = 'pt',
   SortDirection = 'sd',
   CurrentPage = 'page',
+  PageSize = 'size',
   PageType = 'top',
 }
 
 export enum PageTypeEnum {
   manufacturerPage = 'mp',
+  pricePage = 'price',
 }
 
 export enum QueryToSizeEnum {
@@ -166,4 +168,10 @@ export enum EditCardSectionsEnum {
   description = 'Описание',
   code = 'Артикул',
   price = 'Цена',
+}
+
+export enum PriceSelectedTypeEnum {
+  published = 'published',
+  draft = 'draft',
+  all = 'all',
 }

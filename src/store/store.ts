@@ -3,6 +3,7 @@ import userReducer from './userSlice';
 import catalogReducer from './catalogSlice';
 import addressReducer from './addressSlice';
 import productsReducer from './productSlice';
+import priceReducer from './priceSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     catalog: catalogReducer,
     address: addressReducer,
     products: productsReducer,
+    price: priceReducer,
   },
 });
 

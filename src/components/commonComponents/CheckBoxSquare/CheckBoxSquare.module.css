@@ -1,8 +1,7 @@
 .container {
   display: flex;
   align-items: center;
-  width: 260px;
-  padding: 8px 16px 8px 0;
+  padding: 8px 16px 4px 12px;
   cursor: pointer;
   color: var(--gray_color);
 }
@@ -11,20 +10,22 @@
   width: 20px;
   height: 20px;
   background-color: var(--section_background);
-  border: 1px solid var(--gray_color_light);
+  border: 1px solid var(--blue_color);
   border-radius: 6px;
 }
 
 .checkedBox {
   width: 20px;
   height: 20px;
-  background-color: var(--blue_color);
+  background-color: var(--green_color);
   border-radius: 6px;
 }
 
 .title {
   margin-left: 8px;
   font-size: 16px;
+  font-weight: 600;
+  color: var(--blue_color);
 }
 
 .checkStatusIco {

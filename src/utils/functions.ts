@@ -269,3 +269,23 @@ export const getBackwardRouteToManufacturerCatalog = (
   }
   return `/`;
 };
+
+export const getProductSizesStr = (product: ProductType | undefined) => {
+  let sizes = '';
+  if (product) {
+    if (product.caliber) {
+      sizes += product.caliber;
+    } else {
+      if (product.height) {
+        sizes += product.height;
+      }
+      if (product.width) {
+        sizes += `*${product.width}`;
+      }
+    }
+    if (product.length) {
+      sizes += `*${product.length}`;
+    }
+  }
+  return sizes;
+};

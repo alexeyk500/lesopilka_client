@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './CheckBoxBlue.module.css';
+import classes from './CheckBoxSquare.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
 
 type PropsType = {
@@ -9,7 +9,7 @@ type PropsType = {
   onSelect: (id: number) => void;
 };
 
-const CheckBoxBlue: React.FC<PropsType> = ({ id, title, checked, onSelect }) => {
+const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect }) => {
   const onClick = () => {
     onSelect(id);
   };
@@ -27,4 +27,4 @@ const CheckBoxBlue: React.FC<PropsType> = ({ id, title, checked, onSelect }) => 
   );
 };
 
-export default CheckBoxBlue;
+export default CheckBoxSquare;

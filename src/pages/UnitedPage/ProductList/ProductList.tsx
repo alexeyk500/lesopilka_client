@@ -20,6 +20,7 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductType, QueryEnum } from '../../../types/types';
 import { showDetailProductCardPopUp } from '../../../components/DetailProductCard/DetailProductCard';
 import { isFulfilled } from '@reduxjs/toolkit';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
 const ProductList = () => {
   const location = useLocation();
@@ -43,7 +44,7 @@ const ProductList = () => {
         if ((result as { type: string }).type.includes('fulfilled')) {
           const id = (result.payload as ProductType).id;
           dispatch(setCatalogSearchParams(searchParams.toString()));
-          navigate(`/edit_product/${id}`);
+          navigate(`${PageEnum.EditProduct}/${id}`);
         }
       });
     }
@@ -53,7 +54,7 @@ const ProductList = () => {
     if (isSalesPage) {
       if (id) {
         dispatch(setCatalogSearchParams(searchParams.toString()));
-        navigate(`/edit_product/${id}`);
+        navigate(`${PageEnum.EditProduct}/${id}`);
       }
     } else {
       if (id) {

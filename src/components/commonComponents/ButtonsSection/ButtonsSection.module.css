@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-bottom: 8px;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main_background);
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 0.33px;
+  color: var(--gray_color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contentContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 8px 8px 8px;
+}

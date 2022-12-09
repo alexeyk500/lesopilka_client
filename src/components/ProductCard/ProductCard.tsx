@@ -11,7 +11,7 @@ import locationIco from './../../img/locationIco.svg';
 import rubleIco from './../../img/rubleIco.svg';
 import materialIco from './../../img/materialIco.svg';
 import classNames from 'classnames';
-import { formatPrice } from '../../utils/functions';
+import { formatPrice, getProductSizesStr } from '../../utils/functions';
 
 type PropsType = {
   product?: ProductType;
@@ -35,6 +35,7 @@ const ProductCard: React.FC<PropsType> = ({
   };
 
   const isDraftProductCard = !product?.publicationDate && !isAddProductCard && !isPreview;
+  const productSizes = getProductSizesStr(product);
 
   return (
     <div className={classes.wrapper} onClick={onClickHandler}>
@@ -86,20 +87,7 @@ const ProductCard: React.FC<PropsType> = ({
                   <div className={classes.dimensionsIcoContainer}>
                     <img src={dimensionsIco} className={classes.dimensionsIco} alt="dimensions" />
                   </div>
-                  <div className={classes.dimensionsTile}>
-                    {product?.caliber ? (
-                      <>
-                        {product.caliber}
-                        {product.length && `*${product.length}`}
-                      </>
-                    ) : (
-                      <>
-                        {product?.height}
-                        {product?.width && `*${product.width}`}
-                        {product?.length && `*${product.length}`}
-                      </>
-                    )}
-                  </div>
+                  <div className={classes.dimensionsTile}>{productSizes}</div>
                 </div>
                 <div className={classes.optionsContainer}>
                   {product?.isSeptic && !product?.isDried ? (

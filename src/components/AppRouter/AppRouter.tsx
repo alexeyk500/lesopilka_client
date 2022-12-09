@@ -5,22 +5,34 @@ import SuccessRegistrationPage from '../../pages/SuccessRegistrationPage/Success
 import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
 import UnitedPage from '../../pages/UnitedPage/UnitedPage';
+import PricePage from '../../pages/PricePage/PricePage';
 
 type RouteType = {
   path: string;
   element: JSX.Element;
 };
 
+export enum PageEnum {
+  RootPage = '/',
+  UserPage = '/user',
+  SuccessRegistrationPage = '/success_registration',
+  PricePage = '/manufacturer_price_page',
+  ManufacturerPage = '/manufacturer',
+  EditProduct = '/edit_product',
+  ManufacturerRegistration = '/manufacturer_registration',
+}
+
 const publicRoutes: RouteType[] = [
-  { path: '/', element: <UnitedPage /> },
-  { path: '/success_registration', element: <SuccessRegistrationPage /> },
+  { path: PageEnum.RootPage, element: <UnitedPage /> },
+  { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
-  { path: '/user', element: <UserPage /> },
-  { path: '/manufacturer', element: <UnitedPage /> },
-  { path: '/edit_product/:id', element: <EditCardPage /> },
-  { path: '/manufacturer_registration', element: <ManufacturerRegistrationPage /> },
+  { path: PageEnum.UserPage, element: <UserPage /> },
+  { path: PageEnum.ManufacturerPage, element: <UnitedPage /> },
+  { path: PageEnum.PricePage, element: <PricePage /> },
+  { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
+  { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
 ];
 
 const AppRouter = () => {

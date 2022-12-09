@@ -5,9 +5,10 @@ import ProductDetails from './ProductDetails/ProductDetails';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { CrumbType } from '../../../types/types';
-import { getUserName } from '../../UserPage/UserPage';
+import { getManufacturerOrUserName } from '../../UserPage/UserPage';
 import { selectorCatalogSearchParams } from '../../../store/productSlice';
 import { getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
 const EditCardMainPart: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -16,7 +17,7 @@ const EditCardMainPart: React.FC = () => {
   const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
 
   const crumbs: CrumbType[] = [
-    { title: getUserName(user), route: '/' },
+    { title: getManufacturerOrUserName(user), route: PageEnum.RootPage },
     { title: 'Продажи', route: getBackwardRoute },
     { title: 'Редактирование товара' },
   ];

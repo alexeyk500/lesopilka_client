@@ -8,6 +8,8 @@ import documentsIco from '../../../../../img/documentsIco.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
+import { QueryEnum } from '../../../../../types/types';
+import { PageEnum } from '../../../../AppRouter/AppRouter';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -18,7 +20,16 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const user = useAppSelector(selectorUser);
 
   const onClickCatalog = () => {
-    navigate(`/manufacturer/?mid=${user?.manufacturer?.id}`);
+    if (user?.manufacturer?.id) {
+      navigate(`/manufacturer/?${QueryEnum.ManufacturerId}=${user.manufacturer.id}`);
+    }
+    closeMenuContent();
+  };
+
+  const onClickPrice = () => {
+    if (user?.manufacturer?.id) {
+      navigate(PageEnum.PricePage);
+    }
     closeMenuContent();
   };
 
@@ -29,7 +40,7 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
         Каталог
       </button>
-      <button className={classes.menuButton}>
+      <button className={classes.menuButton} onClick={onClickPrice}>
         <img src={priceIco} className={classes.ico} alt="price button" />
         Прайс
       </button>

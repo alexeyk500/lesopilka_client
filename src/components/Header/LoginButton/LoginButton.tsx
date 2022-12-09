@@ -14,6 +14,7 @@ import EnterCodeForgotPasswordForm from './EnterCodeForgotPasswordForm/EnterCode
 import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
+import { PageEnum } from '../../AppRouter/AppRouter';
 
 const LoginButton: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -249,7 +250,7 @@ const LoginButton: React.FC = () => {
   const onClosePopUpLogout = (result?: boolean | FormData | undefined) => {
     if (result) {
       logoutUser();
-      navigate('/');
+      navigate(PageEnum.RootPage);
     }
   };
 
