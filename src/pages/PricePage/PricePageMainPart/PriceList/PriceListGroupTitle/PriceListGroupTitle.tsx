@@ -1,15 +1,23 @@
 import React from 'react';
 import classes from './PriceListGroupTitle.module.css';
-import { OptionsType } from '../../../../../types/types';
+import { DriedEnum, OptionsType, SepticEnum } from '../../../../../types/types';
 
 type PropsType = {
-  subCategory: OptionsType;
+  subCategory: OptionsType | undefined;
+  isDried: boolean;
+  isSeptic: boolean;
 };
 
-const PriceListGroupTitle: React.FC<PropsType> = ({ subCategory }) => {
+const PriceListGroupTitle: React.FC<PropsType> = ({ subCategory, isDried, isSeptic }) => {
+  const isDriedTitle = isDried ? `${DriedEnum.dried.toLowerCase()}` : `${DriedEnum.noDried.toLowerCase()}`;
+  const isSepticTitle = isSeptic ? `, ${SepticEnum.septic.toLowerCase()}` : '';
+
   return (
     <div className={classes.container}>
-      <div className={classes.subCategoryRow}>{subCategory.title}</div>
+      <div className={classes.subCategoryRow}>
+        {`${subCategory?.title}`}
+        <span className={classes.optionsTitle}>&nbsp;{`(${isDriedTitle}${isSepticTitle})`}</span>
+      </div>
       <div className={classes.delimiter} />
       <div className={classes.titlesRow}>
         <div className={classes.sizeContainer}>Размеры, мм</div>

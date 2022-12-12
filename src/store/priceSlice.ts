@@ -7,14 +7,16 @@ import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErr
 
 type PriceSliceType = {
   products: ProductType[];
-  selectedType: PriceSelectedTypeEnum;
+  selectedPriceType: PriceSelectedTypeEnum;
   isLoading: boolean;
+  editProductId: number | undefined;
 };
 
 const initialState: PriceSliceType = {
   products: [],
-  selectedType: PriceSelectedTypeEnum.published,
+  selectedPriceType: PriceSelectedTypeEnum.published,
   isLoading: false,
+  editProductId: undefined,
 };
 
 export const getPriceProductsThunk = createAsyncThunk<
@@ -34,7 +36,10 @@ export const priceSlice = createSlice({
   initialState,
   reducers: {
     setSelectedType: (state, actions) => {
-      state.selectedType = actions.payload;
+      state.selectedPriceType = actions.payload;
+    },
+    setPriceEditProductId: (state, actions) => {
+      state.editProductId = actions.payload;
     },
   },
   extraReducers: (builder) => {
@@ -53,9 +58,10 @@ export const priceSlice = createSlice({
   },
 });
 
-export const { setSelectedType } = priceSlice.actions;
+export const { setSelectedType, setPriceEditProductId } = priceSlice.actions;
 
-export const selectorSelectedType = (state: RootState) => state.price.selectedType;
+export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;
+export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
 
 export default priceSlice.reducer;

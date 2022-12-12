@@ -18,13 +18,13 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
-import { selectorSelectedType, setSelectedType } from '../../../../store/priceSlice';
+import { selectorSelectedPriceType, setSelectedType } from '../../../../store/priceSlice';
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
-  const selectedType = useAppSelector(selectorSelectedType);
+  const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
   const returnToCatalog = () => {
     const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
@@ -51,16 +51,21 @@ const PriceSelectors: React.FC = () => {
         <CheckBoxSquare
           id={1}
           title={'Опубликованные'}
-          checked={selectedType === PriceSelectedTypeEnum.published}
+          checked={selectedPriceType === PriceSelectedTypeEnum.published}
           onSelect={onSelect}
         />
         <CheckBoxSquare
           id={2}
           title={'Черновики'}
-          checked={selectedType === PriceSelectedTypeEnum.draft}
+          checked={selectedPriceType === PriceSelectedTypeEnum.draft}
           onSelect={onSelect}
         />
-        <CheckBoxSquare id={3} title={'Все'} checked={selectedType === PriceSelectedTypeEnum.all} onSelect={onSelect} />
+        <CheckBoxSquare
+          id={3}
+          title={'Все'}
+          checked={selectedPriceType === PriceSelectedTypeEnum.all}
+          onSelect={onSelect}
+        />
       </CheckBoxSection>
       <ButtonsSection title={'Прайс'}>
         <IconButton ico={downloadIco} title={'Скачать'} customIconClasses={classes.downloadIco} />

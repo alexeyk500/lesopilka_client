@@ -146,7 +146,7 @@ export enum SepticEnum {
 }
 
 export enum DriedEnum {
-  noDried = 'Естественная сушка',
+  noDried = 'Естественная влажность',
   dried = 'Камерная сушка',
 }
 

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import classes from './CardControlAndInfo.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { EditCardSectionsEnum } from '../../../types/types';
+import { EditCardSectionsEnum, PageTypeEnum, QueryEnum } from '../../../types/types';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
 import { formatUTC, getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
@@ -11,6 +11,7 @@ import {
   selectorCatalogSearchParams,
   selectorEditProduct,
   selectorProductsSaving,
+  setCatalogSearchParams,
   updateProductThunk,
 } from '../../../store/productSlice';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
@@ -25,6 +26,9 @@ import { checkImagesSection } from '../EditCardMainPart/ProductDetails/ProductIm
 import { checkDescriptionSection } from '../EditCardMainPart/ProductDetails/ProductDescription/ProductDescription';
 import { checkCodeSection } from '../EditCardMainPart/ProductDetails/ProductCodeSection/ProductCodeSection';
 import { checkPriceSection } from '../EditCardMainPart/ProductDetails/ProductPriceSection/ProductPriceSection';
+import { getPriceProductsThunk, selectorPriceEditProductId, setPriceEditProductId } from '../../../store/priceSlice';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import LicensesMonitor from '../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -33,6 +37,7 @@ const CardControlAndInfo: React.FC = () => {
   const editProduct = useAppSelector(selectorEditProduct);
   const isSaving = useAppSelector(selectorProductsSaving);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
+  const priceEditProductId = useAppSelector(selectorPriceEditProductId);
 
   const getInfoPopUp = (sectionTitle: string) => {
     return showPortalPopUp({
@@ -51,11 +56,13 @@ const CardControlAndInfo: React.FC = () => {
 
   const returnToCatalog = () => {
     const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
+    dispatch(setCatalogSearchParams(undefined));
     navigate(getBackwardRoute);
   };
 
-  const onClickReadyBtn = () => {
-    returnToCatalog();
+  const returnToPrice = () => {
+    dispatch(setPriceEditProductId(undefined));
+    navigate(PageEnum.PricePage);
   };
 
   const onCloseDeleteCardPopUp = (result?: boolean | FormData) => {
@@ -118,6 +125,19 @@ const CardControlAndInfo: React.FC = () => {
     return true;
   };
 
+  const updatePriceList = useCallback(() => {
+    if (user?.manufacturer?.id) {
+      const searchParams = new URLSearchParams();
+      searchParams.append(QueryEnum.ManufacturerId, user.manufacturer.id.toString());
+      searchParams.append(QueryEnum.PageType, PageTypeEnum.pricePage);
+      dispatch(getPriceProductsThunk(searchParams));
+    }
+  }, [dispatch, user?.manufacturer?.id]);
+
+  useEffect(() => {
+    updatePriceList();
+  }, [updatePriceList]);
+
   const onClosePopUpUnPublish = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const publicationDate = null;
@@ -126,7 +146,9 @@ const CardControlAndInfo: React.FC = () => {
         productId: editProduct.id,
         publicationDate,
       };
-      dispatch(updateProductThunk({ token, updateData }));
+      dispatch(updateProductThunk({ token, updateData })).then(() => {
+        updatePriceList();
+      });
     }
   };
 
@@ -138,7 +160,9 @@ const CardControlAndInfo: React.FC = () => {
         productId: editProduct.id,
         publicationDate,
       };
-      dispatch(updateProductThunk({ token, updateData }));
+      dispatch(updateProductThunk({ token, updateData })).then(() => {
+        updatePriceList();
+      });
     }
   };
 
@@ -186,12 +210,19 @@ const CardControlAndInfo: React.FC = () => {
           />
           <div className={classes.info}>{formatUTC(editProduct.publicationDate)}</div>
         </div>
-        <div className={classes.btnReadyContainer}>
-          <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
+        <div className={classes.btnDeleteContainer}>
+          <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED} onClick={onClickDeleteBtn} />
         </div>
       </div>
-      <div className={classes.btnDeleteContainer}>
-        <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED} onClick={onClickDeleteBtn} />
+
+      <LicensesMonitor />
+
+      <div className={classes.btnReadyContainer}>
+        {priceEditProductId ? (
+          <ButtonComponent title={'В прайс'} onClick={returnToPrice} />
+        ) : (
+          <ButtonComponent title={'В каталог'} onClick={returnToCatalog} />
+        )}
       </div>
     </div>
   );

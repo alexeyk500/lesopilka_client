@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  margin-right: 18px;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: var(--gray_color_light);
+}
+
+.rowInfo {
+  display: flex;
+  font-size: 12px;
+}
+
+.rowInfoTitle {
+  width: 93px;
+  font-size: 12px;
+}
