@@ -12,13 +12,13 @@ const PriceInfo: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.rowInfo}>
-        <span className={classes.rowInfoTitle}>Всего позиций</span>- &nbsp;{productsCount}
-      </div>
-      <div className={classes.rowInfo}>
         <span className={classes.rowInfoTitle}>Опубликовано</span>- &nbsp;{publishedProductsCount}
       </div>
       <div className={classes.rowInfo}>
         <span className={classes.rowInfoTitle}>Черновики</span>- &nbsp;{productsCount - publishedProductsCount}
+      </div>
+      <div className={classes.rowInfo}>
+        <span className={classes.rowInfoTitle}>Всего</span>- &nbsp;{productsCount}
       </div>
     </div>
   );
