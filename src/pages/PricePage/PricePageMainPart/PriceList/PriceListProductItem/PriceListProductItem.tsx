@@ -15,9 +15,10 @@ import classNames from 'classnames';
 
 type PropsType = {
   product: ProductType;
+  highlighted?: boolean;
 };
 
-const PriceListProductItem: React.FC<PropsType> = ({ product }) => {
+const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const productSizes = getProductSizesStr(product);
@@ -37,7 +38,7 @@ const PriceListProductItem: React.FC<PropsType> = ({ product }) => {
 
   return (
     <div className={classNames(classes.container, { [classes.notPublished]: product.publicationDate === undefined })}>
-      <div className={classes.infoRow}>
+      <div className={classNames(classes.infoRow, { [classes.highlighted]: highlighted })}>
         <div className={classes.sizeContainer}>{productSizes}</div>
         <div className={classes.materialContainer}>{product.material?.title}</div>
         <div className={classes.sortContainer}>{product.sort?.title}</div>

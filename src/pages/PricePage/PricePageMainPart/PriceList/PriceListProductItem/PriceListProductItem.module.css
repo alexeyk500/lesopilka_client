@@ -46,6 +46,13 @@
   padding: 0 12px;
 }
 
+.highlighted {
+  /*background-color: #0072ff;*/
+  /*border-radius: 6px;*/
+  color: var(--blue_color);
+  /*border: 3px split var(--blue_color);*/
+}
+
 .visibilityIcoContainer {
   display: flex;
   position: relative;

@@ -1,9 +1,15 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import classes from './PriceList.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { PageTypeEnum, PriceSelectedTypeEnum, ProductType, QueryEnum } from '../../../../types/types';
-import { getPriceProductsThunk, selectorPriceProducts, selectorSelectedPriceType } from '../../../../store/priceSlice';
+import {
+  getPriceProductsThunk,
+  selectorPriceEditProductId,
+  selectorPriceProducts,
+  selectorSelectedPriceType,
+  setPriceEditProductId,
+} from '../../../../store/priceSlice';
 import PriceListProductItem from './PriceListProductItem/PriceListProductItem';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
 import PriceListGroupTitle from './PriceListGroupTitle/PriceListGroupTitle';
@@ -14,8 +20,12 @@ const PriceList = () => {
   const products = useAppSelector(selectorPriceProducts);
   const subCategories = useAppSelector(selectorSubCategories);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
+  const priceEditProductId = useAppSelector(selectorPriceEditProductId);
+
+  const refs = useRef<HTMLDivElement[]>([]);
 
   const [price, setPrice] = useState<ReactNode[]>([]);
+  const [highlightedId, setHighlightedId] = useState<number | undefined>(32);
 
   useEffect(() => {
     if (user?.manufacturer?.id) {
@@ -36,6 +46,10 @@ const PriceList = () => {
             separatedProducts.push(subCategoryProducts);
           }
         });
+        const withoutSubCategoryProducts = products.filter((product) => product.subCategory === undefined);
+        if (withoutSubCategoryProducts.length > 0) {
+          separatedProducts.push(withoutSubCategoryProducts);
+        }
         return separatedProducts;
       }
     };
@@ -127,6 +141,10 @@ const PriceList = () => {
       }
     };
 
+    const onClickProduct = (id: number) => {
+      setHighlightedId(id);
+    };
+
     if (products.length > 0) {
       const productsForView =
         selectedPriceType === PriceSelectedTypeEnum.all
@@ -145,6 +163,8 @@ const PriceList = () => {
         separatedProducts = sortByMaterialId(separatedProducts);
         separatedProducts = sortBySize(separatedProducts);
 
+        refs.current = [];
+        // let curNumber = 0;
         separatedProducts?.forEach((productGroup, ind) => {
           const subCategory = productGroup[0].subCategory;
           const isDried = productGroup[0].isDried || false;
@@ -153,19 +173,55 @@ const PriceList = () => {
             <PriceListGroupTitle key={`${ind}sc`} subCategory={subCategory} isDried={isDried} isSeptic={isSeptic} />
           );
           productGroup.forEach((product) => {
-            priceNodes.push(<PriceListProductItem key={product.id} product={product} />);
+            priceNodes.push(
+              <div
+                key={`${product.id}pr`}
+                ref={(ref) => {
+                  ref && refs.current?.push(ref);
+                }}
+                id={`${product.id}pr`}
+                onClick={() => {
+                  onClickProduct(product.id);
+                }}
+              >
+                <PriceListProductItem product={product} highlighted={product.id === highlightedId} />
+              </div>
+            );
+            // curNumber += 1;
           });
         });
         return priceNodes;
       };
       setPrice(makePriceList(productsForView));
     }
-  }, [products, subCategories, selectedPriceType]);
+  }, [dispatch, products, subCategories, selectedPriceType, priceEditProductId, highlightedId]);
+
+  useEffect(() => {
+    if (price.length > 0 && priceEditProductId) {
+      const scrollDiv = refs.current.find((div) => div.id === `${priceEditProductId}pr`);
+      if (scrollDiv) {
+        scrollDiv.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+        dispatch(setPriceEditProductId(undefined));
+        setHighlightedId(priceEditProductId);
+      }
+    }
+  }, [dispatch, price, priceEditProductId]);
 
   return (
     <div className={classes.container}>
       <div className={classes.titleContainer}>
-        <div className={classes.pageTitle}>Прайс лист на пиломатериалы</div>
+        <div className={classes.pageTitle}>
+          {selectedPriceType === PriceSelectedTypeEnum.published
+            ? `Прайс лист на пиломатериалы`
+            : selectedPriceType === PriceSelectedTypeEnum.draft
+              ? 'Черновики'
+              : 'Полный список товаров'
+          }
+
+        </div>
         <div className={classes.twoColumnContainer}>
           <div className={classes.manufacturerInfo}>
             <div className={classes.rowTitle}>{user?.manufacturer?.title}</div>
@@ -186,7 +242,6 @@ const PriceList = () => {
           </div>
         </div>
       </div>
-
       <div className={classes.listScrollContainer}>{price}</div>
     </div>
   );

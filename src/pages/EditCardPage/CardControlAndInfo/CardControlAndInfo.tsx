@@ -36,8 +36,8 @@ const CardControlAndInfo: React.FC = () => {
   const user = useAppSelector(selectorUser);
   const editProduct = useAppSelector(selectorEditProduct);
   const isSaving = useAppSelector(selectorProductsSaving);
-  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
   const priceEditProductId = useAppSelector(selectorPriceEditProductId);
+  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const getInfoPopUp = (sectionTitle: string) => {
     return showPortalPopUp({
@@ -57,11 +57,11 @@ const CardControlAndInfo: React.FC = () => {
   const returnToCatalog = () => {
     const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
     dispatch(setCatalogSearchParams(undefined));
+    dispatch(setPriceEditProductId(undefined));
     navigate(getBackwardRoute);
   };
 
   const returnToPrice = () => {
-    dispatch(setPriceEditProductId(undefined));
     navigate(PageEnum.PricePage);
   };
 

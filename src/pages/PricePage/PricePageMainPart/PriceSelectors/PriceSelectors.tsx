@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
-import {selectorPriceProducts, selectorSelectedPriceType, setSelectedType} from '../../../../store/priceSlice';
+import { selectorPriceProducts, selectorSelectedPriceType, setSelectedType } from '../../../../store/priceSlice';
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
@@ -27,7 +27,6 @@ const PriceSelectors: React.FC = () => {
   const products = useAppSelector(selectorPriceProducts);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
-
 
   const productsCount = products.length;
   const publishedProductsCount = products.filter((product) => product.publicationDate).length;
