@@ -18,14 +18,20 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
-import { selectorSelectedPriceType, setSelectedType } from '../../../../store/priceSlice';
+import {selectorPriceProducts, selectorSelectedPriceType, setSelectedType} from '../../../../store/priceSlice';
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
+  const products = useAppSelector(selectorPriceProducts);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
+
+
+  const productsCount = products.length;
+  const publishedProductsCount = products.filter((product) => product.publicationDate).length;
+
   const returnToCatalog = () => {
     const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
     navigate(getBackwardRoute);
@@ -53,18 +59,21 @@ const PriceSelectors: React.FC = () => {
           title={'Опубликованные'}
           checked={selectedPriceType === PriceSelectedTypeEnum.published}
           onSelect={onSelect}
+          amount={publishedProductsCount}
         />
         <CheckBoxSquare
           id={2}
           title={'Черновики'}
           checked={selectedPriceType === PriceSelectedTypeEnum.draft}
           onSelect={onSelect}
+          amount={productsCount - publishedProductsCount}
         />
         <CheckBoxSquare
           id={3}
           title={'Все'}
           checked={selectedPriceType === PriceSelectedTypeEnum.all}
           onSelect={onSelect}
+          amount={productsCount}
         />
       </CheckBoxSection>
       <ButtonsSection title={'Прайс'}>

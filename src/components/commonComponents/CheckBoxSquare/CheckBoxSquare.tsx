@@ -1,15 +1,17 @@
 import React from 'react';
 import classes from './CheckBoxSquare.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
+import classNames from "classnames";
 
 type PropsType = {
   id: number;
   title: string;
   checked: boolean;
   onSelect: (id: number) => void;
+  amount?: number;
 };
 
-const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect }) => {
+const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect, amount }) => {
   const onClick = () => {
     onSelect(id);
   };
@@ -22,7 +24,10 @@ const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect }) =
       ) : (
         <div className={classes.box} />
       )}
-      <div className={classes.title}>{title}</div>
+      <div className={classes.title}>
+        <div className={classNames({[classes.constantWidth]: amount})}>{title}</div>
+        {amount && <div className={classes.amountTitle}>&nbsp;{`- ${amount}`}</div>}
+      </div>
     </div>
   );
 };

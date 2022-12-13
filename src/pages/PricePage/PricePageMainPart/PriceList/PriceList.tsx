@@ -7,7 +7,6 @@ import { getPriceProductsThunk, selectorPriceProducts, selectorSelectedPriceType
 import PriceListProductItem from './PriceListProductItem/PriceListProductItem';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
 import PriceListGroupTitle from './PriceListGroupTitle/PriceListGroupTitle';
-import PriceInfo from './PriceInfo/PriceInfo';
 
 const PriceList = () => {
   const dispatch = useAppDispatch();
@@ -185,7 +184,6 @@ const PriceList = () => {
               {user?.manufacturer?.phone}
             </div>
           </div>
-          <PriceInfo />
         </div>
       </div>
 

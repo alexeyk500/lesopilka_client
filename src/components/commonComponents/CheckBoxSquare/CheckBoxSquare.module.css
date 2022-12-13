@@ -1,7 +1,7 @@
 .container {
   display: flex;
   align-items: center;
-  padding: 8px 16px 4px 12px;
+  padding: 8px 2px 4px 12px;
   cursor: pointer;
   color: var(--gray_color);
 }
@@ -22,13 +22,23 @@
 }
 
 .title {
+  display: flex;
   margin-left: 8px;
   font-size: 16px;
   font-weight: 600;
   color: var(--blue_color);
 }
 
+.constantWidth {
+  width: 140px;
+}
+
 .checkStatusIco {
   margin-top: 4px;
   margin-left: 3px;
+}
+
+.amountTitle {
+  font-weight: 400;
+  color: var(--gray_color)
 }
