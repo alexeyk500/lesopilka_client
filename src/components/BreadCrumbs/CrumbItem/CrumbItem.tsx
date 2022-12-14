@@ -20,7 +20,13 @@ const CrumbItem: React.FC<PropsType> = ({ crumb, isLastCrumb, isColonAfterFirstC
 
   return (
     <div className={classes.container}>
-      <div className={classNames(classes.title, { [classes.lastCrumbs]: isLastCrumb })} onClick={onClick}>
+      <div
+        className={classNames(classes.title, {
+          [classes.lastCrumbs]: isLastCrumb,
+          [classes.withoutRoute]: !crumb.route,
+        })}
+        onClick={onClick}
+      >
         {crumb.title}
       </div>
       {isColonAfterFirstCrumb ? (

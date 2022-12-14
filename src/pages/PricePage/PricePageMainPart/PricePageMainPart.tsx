@@ -8,7 +8,6 @@ import { getManufacturerOrUserName } from '../../UserPage/UserPage';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../store/productSlice';
-import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import PriceList from './PriceList/PriceList';
 
 const PricePageMainPart: React.FC = () => {
@@ -20,8 +19,8 @@ const PricePageMainPart: React.FC = () => {
 
   const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
   const crumbs: CrumbType[] = [
-    { title: getManufacturerOrUserName(user), route: PageEnum.RootPage },
-    { title: 'Продажи', route: getBackwardRoute },
+    { title: getManufacturerOrUserName(user) },
+    { title: 'Каталог', route: getBackwardRoute },
     { title: 'Прайс лист' },
   ];
 

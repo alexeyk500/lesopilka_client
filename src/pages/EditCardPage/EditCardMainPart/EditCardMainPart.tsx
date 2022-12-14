@@ -9,18 +9,27 @@ import { getManufacturerOrUserName } from '../../UserPage/UserPage';
 import { selectorCatalogSearchParams } from '../../../store/productSlice';
 import { getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import { selectorPriceEditProductId } from '../../../store/priceSlice';
 
 const EditCardMainPart: React.FC = () => {
   const user = useAppSelector(selectorUser);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
+  const priceEditProductId = useAppSelector(selectorPriceEditProductId);
   const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
 
-  const crumbs: CrumbType[] = [
-    { title: getManufacturerOrUserName(user), route: PageEnum.RootPage },
-    { title: 'Продажи', route: getBackwardRoute },
-    { title: 'Редактирование товара' },
-  ];
+  const crumbs: CrumbType[] = priceEditProductId
+    ? [
+        { title: getManufacturerOrUserName(user) },
+        { title: 'Продажи', route: getBackwardRoute },
+        { title: 'Прайс лист', route: PageEnum.PricePage },
+        { title: 'Редактирование товара' },
+      ]
+    : [
+        { title: getManufacturerOrUserName(user) },
+        { title: 'Продажи', route: getBackwardRoute },
+        { title: 'Редактирование товара' },
+      ];
 
   return (
     <div className={classes.container}>

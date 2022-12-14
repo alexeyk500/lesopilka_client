@@ -217,10 +217,8 @@ const PriceList = () => {
           {selectedPriceType === PriceSelectedTypeEnum.published
             ? `Прайс лист на пиломатериалы`
             : selectedPriceType === PriceSelectedTypeEnum.draft
-              ? 'Черновики'
-              : 'Полный список товаров'
-          }
-
+            ? 'Черновики'
+            : 'Полный список товаров'}
         </div>
         <div className={classes.twoColumnContainer}>
           <div className={classes.manufacturerInfo}>

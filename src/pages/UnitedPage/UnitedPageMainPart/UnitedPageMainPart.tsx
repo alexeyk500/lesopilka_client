@@ -9,7 +9,6 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { CrumbType } from '../../../types/types';
 import { getManufacturerOrUserName } from '../../UserPage/UserPage';
-import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
 const UnitedPageMainPart = () => {
   const location = useLocation();
@@ -17,10 +16,7 @@ const UnitedPageMainPart = () => {
   const user = useAppSelector(selectorUser);
   const isManufacturerPage = checkIsManufacturerPage(location);
   const isShowFiltersRow = checkIsShowFiltersRow(searchParams);
-  const crumbs: CrumbType[] = [
-    { title: getManufacturerOrUserName(user), route: PageEnum.RootPage },
-    { title: 'Каталог Товаров' },
-  ];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Каталог Товаров' }];
 
   return (
     <div className={classes.container}>

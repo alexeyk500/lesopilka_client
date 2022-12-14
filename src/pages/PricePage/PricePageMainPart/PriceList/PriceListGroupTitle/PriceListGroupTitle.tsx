@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './PriceListGroupTitle.module.css';
 import { DriedEnum, OptionsType, SepticEnum } from '../../../../../types/types';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 type PropsType = {
   subCategory: OptionsType | undefined;
@@ -15,8 +15,8 @@ const PriceListGroupTitle: React.FC<PropsType> = ({ subCategory, isDried, isSept
 
   return (
     <div className={classes.container}>
-      <div className={classNames(classes.subCategoryRow,{[classes.noSubCategory]:!subCategory})}>
-        {subCategory ? `${subCategory?.title}` : 'Пиломатериал без категории'}
+      <div className={classNames(classes.subCategoryRow, { [classes.noSubCategory]: !subCategory })}>
+        {subCategory ? `${subCategory?.title}` : 'Пиломатериал без выбранной категории'}
         {subCategory && <span className={classes.optionsTitle}>&nbsp;{`(${isDriedTitle}${isSepticTitle})`}</span>}
       </div>
       <div className={classes.delimiter} />

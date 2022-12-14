@@ -14,6 +14,7 @@
 .colonContainer {
   margin-left: 2px;
   margin-right: 8px;
+  color: var(--gray_color);
 }
 
 .separatorContainer {
@@ -21,6 +22,11 @@
 }
 
 .lastCrumbs {
+  cursor: default;
+}
+
+.withoutRoute {
+  color: var(--gray_color);
   cursor: default;
 }
 
