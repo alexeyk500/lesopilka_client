@@ -164,7 +164,6 @@ const PriceList = () => {
         separatedProducts = sortBySize(separatedProducts);
 
         refs.current = [];
-        // let curNumber = 0;
         separatedProducts?.forEach((productGroup, ind) => {
           const subCategory = productGroup[0].subCategory;
           const isDried = productGroup[0].isDried || false;
@@ -187,7 +186,6 @@ const PriceList = () => {
                 <PriceListProductItem product={product} highlighted={product.id === highlightedId} />
               </div>
             );
-            // curNumber += 1;
           });
         });
         return priceNodes;
