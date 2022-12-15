@@ -12,18 +12,32 @@
   color: var(--gray_color);
 }
 
-.pageTitle {
+.priceContentContainer {
   display: flex;
-  margin: 12px;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 16px;
+  width: 100%;
+  flex-direction: column;
 }
 
 .titleContainer {
   display: flex;
-  width: 100%;
-  flex-direction: column;
+  align-items: center;
+}
+
+.dateRow {
+  display: flex;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.pageTitle {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 12px;
+  margin-bottom: 18px;
+  padding-right: 150px;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .twoColumnContainer {
@@ -37,7 +51,7 @@
   justify-content: flex-start;
   font-weight: 500;
   font-size: 14px;
-  line-height: 16px;
+  line-height: 17px;
 }
 
 .bold {

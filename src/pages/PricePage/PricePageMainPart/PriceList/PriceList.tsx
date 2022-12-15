@@ -210,29 +210,31 @@ const PriceList = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.titleContainer}>
-        <div className={classes.pageTitle}>
-          {selectedPriceType === PriceSelectedTypeEnum.published
-            ? `Прайс лист на пиломатериалы`
-            : selectedPriceType === PriceSelectedTypeEnum.draft
-            ? 'Черновики'
-            : 'Полный список товаров'}
+      <div className={classes.priceContentContainer}>
+        <div className={classes.titleContainer}>
+          <div className={classes.dateRow}>
+            15 декабря 2022 года
+          </div>
+          <div className={classes.pageTitle}>
+            {selectedPriceType === PriceSelectedTypeEnum.published
+              ? `Прайс лист на пиломатериалы`
+              : selectedPriceType === PriceSelectedTypeEnum.draft
+                ? 'Черновики'
+                : 'Полный список товаров'}
+          </div>
         </div>
         <div className={classes.twoColumnContainer}>
           <div className={classes.manufacturerInfo}>
             <div className={classes.rowTitle}>{user?.manufacturer?.title}</div>
             <div className={classes.rowTitle}>
-              <span className={classes.bold}>адрес:&nbsp;</span>
               {user?.manufacturer?.address?.region.title}, {user?.manufacturer?.address?.location.title},{' '}
               {user?.manufacturer?.address?.street}, {user?.manufacturer?.address?.building}
               {user?.manufacturer?.address?.office && <>', '{user?.manufacturer?.address?.office}</>}
             </div>
             <div className={classes.rowTitle}>
-              <span className={classes.bold}>эл.почта:&nbsp;</span>
               {user?.email}
             </div>
             <div className={classes.rowTitle}>
-              <span className={classes.bold}>тел.&nbsp;</span>
               {user?.manufacturer?.phone}
             </div>
           </div>

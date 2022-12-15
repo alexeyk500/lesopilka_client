@@ -43,7 +43,7 @@
   flex-wrap: wrap;
 }
 
-.titleContainer {
+.priceContentContainer {
   display: flex;
   width: 25%;
   min-width: 240px;
