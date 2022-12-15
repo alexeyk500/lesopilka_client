@@ -10,6 +10,7 @@ type PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum;
   isLoading: boolean;
   editProductId: number | undefined;
+  priceDownloading: boolean
 };
 
 const initialState: PriceSliceType = {
@@ -17,6 +18,7 @@ const initialState: PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum.published,
   isLoading: false,
   editProductId: undefined,
+  priceDownloading: false
 };
 
 export const getPriceProductsThunk = createAsyncThunk<
@@ -41,6 +43,9 @@ export const priceSlice = createSlice({
     setPriceEditProductId: (state, actions) => {
       state.editProductId = actions.payload;
     },
+    setPriceDownLoading: (state, actions) => {
+      state.priceDownloading = actions.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,10 +63,11 @@ export const priceSlice = createSlice({
   },
 });
 
-export const { setSelectedType, setPriceEditProductId } = priceSlice.actions;
+export const { setSelectedType, setPriceEditProductId, setPriceDownLoading } = priceSlice.actions;
 
 export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;
 export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
+export const selectorPriceDownloading = (state: RootState) => state.price.priceDownloading;
 
 export default priceSlice.reducer;

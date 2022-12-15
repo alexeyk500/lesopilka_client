@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { PageTypeEnum, PriceSelectedTypeEnum, ProductType, QueryEnum } from '../../../../types/types';
 import {
-  getPriceProductsThunk,
+  getPriceProductsThunk, selectorPriceDownloading,
   selectorPriceEditProductId,
   selectorPriceProducts,
   selectorSelectedPriceType,
@@ -13,6 +13,8 @@ import {
 import PriceListProductItem from './PriceListProductItem/PriceListProductItem';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
 import PriceListGroupTitle from './PriceListGroupTitle/PriceListGroupTitle';
+import Preloader from "../../../../components/Preloader/Preloader";
+import logo from '../../../../img/logo.png';
 
 const PriceList = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +23,7 @@ const PriceList = () => {
   const subCategories = useAppSelector(selectorSubCategories);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const priceEditProductId = useAppSelector(selectorPriceEditProductId);
+  const priceDownloading = useAppSelector(selectorPriceDownloading);
 
   const refs = useRef<HTMLDivElement[]>([]);
 
@@ -239,8 +242,13 @@ const PriceList = () => {
             </div>
           </div>
         </div>
+        <div className={classes.logoContainer}>
+          <img src={logo} alt="logo"/>
+        </div>
       </div>
-      <div className={classes.listScrollContainer}>{price}</div>
+      {priceDownloading
+        ? <div className={classes.preloaderContainer}><Preloader /> </div>
+        : <div className={classes.listScrollContainer}>{price}</div>}
     </div>
   );
 };

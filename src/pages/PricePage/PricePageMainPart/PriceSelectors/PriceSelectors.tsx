@@ -17,8 +17,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
-import { PriceSelectedTypeEnum } from '../../../../types/types';
-import { selectorPriceProducts, selectorSelectedPriceType, setSelectedType } from '../../../../store/priceSlice';
+import {PriceSelectedTypeEnum} from '../../../../types/types';
+import {
+  selectorPriceProducts,
+  selectorSelectedPriceType,
+  setPriceDownLoading,
+  setSelectedType
+} from '../../../../store/priceSlice';
+import {serverApi} from "../../../../api/serverApi";
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
@@ -50,6 +56,17 @@ const PriceSelectors: React.FC = () => {
     }
   };
 
+  const onClickDownload = async () => {
+    if (user?.manufacturer?.id){
+      dispatch(setPriceDownLoading(true))
+      const priceRaw = await serverApi.getPrice(user.manufacturer.id)
+      const blob = new Blob([priceRaw], {type: 'application/pdf'});
+      const fileURL = URL.createObjectURL(blob)
+      window.open(fileURL, '_blank_')
+      dispatch(setPriceDownLoading(false))
+    }
+  }
+
   return (
     <div className={classes.container}>
       <CheckBoxSection title={'Товары'}>
@@ -76,7 +93,7 @@ const PriceSelectors: React.FC = () => {
         />
       </CheckBoxSection>
       <ButtonsSection title={'Прайс'}>
-        <IconButton ico={downloadIco} title={'Скачать'} customIconClasses={classes.downloadIco} />
+        <IconButton ico={downloadIco} title={'Скачать'} customIconClasses={classes.downloadIco} onClick={onClickDownload}/>
         <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />
         <IconButton ico={printIco} title={'Печать'} />
       </ButtonsSection>

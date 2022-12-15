@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   display: flex;
   margin-top: 8px;
   padding: 8px 6px 8px 24px;
@@ -23,6 +24,15 @@
   align-items: center;
 }
 
+.logoContainer {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
 .dateRow {
   display: flex;
   font-weight: 600;
@@ -30,6 +40,7 @@
 }
 
 .pageTitle {
+  position: relative;
   display: flex;
   flex-grow: 1;
   margin-top: 12px;
@@ -50,8 +61,8 @@
   display: flex;
   justify-content: flex-start;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 13px;
+  line-height: 16px;
 }
 
 .bold {
@@ -62,4 +73,9 @@
 .listScrollContainer {
   overflow-y: scroll;
   padding-right: 18px;
+}
+
+.preloaderContainer {
+  display: flex;
+  height: 100%;
 }
