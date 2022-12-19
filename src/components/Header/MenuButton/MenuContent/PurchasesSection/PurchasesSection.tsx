@@ -36,6 +36,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
             })
             .then(() => {
               navigate(PageEnum.BasketPage);
+              closeMenuContent();
             });
         } catch (e: any) {
           preloaderPopUpRef.current?.closePopup();
