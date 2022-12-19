@@ -6,6 +6,7 @@ import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
 import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 import PricePage from '../../pages/PricePage/PricePage';
+import BasketPage from "../../pages/BasketPage/BasketPage";
 
 type RouteType = {
   path: string;
@@ -17,6 +18,7 @@ export enum PageEnum {
   UserPage = '/user',
   SuccessRegistrationPage = '/success_registration',
   PricePage = '/manufacturer_price_page',
+  BasketPage = '/basket_page',
   ManufacturerPage = '/manufacturer',
   EditProduct = '/edit_product',
   ManufacturerRegistration = '/manufacturer_registration',
@@ -31,6 +33,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.UserPage, element: <UserPage /> },
   { path: PageEnum.ManufacturerPage, element: <UnitedPage /> },
   { path: PageEnum.PricePage, element: <PricePage /> },
+  { path: PageEnum.BasketPage, element: <BasketPage /> },
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
 ];
