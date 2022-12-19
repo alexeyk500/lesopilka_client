@@ -3,6 +3,7 @@ import { catalogApi } from './catalogApi';
 import { addressApi } from './addressApi';
 import { productApi } from './productApi';
 import { priceApi } from './priceApi';
+import { basketApi } from './basketApi';
 
 export const serverApi = {
   ...userApi,
@@ -10,4 +11,5 @@ export const serverApi = {
   ...addressApi,
   ...productApi,
   ...priceApi,
+  ...basketApi,
 };

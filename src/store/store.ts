@@ -4,6 +4,7 @@ import catalogReducer from './catalogSlice';
 import addressReducer from './addressSlice';
 import productsReducer from './productSlice';
 import priceReducer from './priceSlice';
+import basketReducer from './basketSlice';
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     address: addressReducer,
     products: productsReducer,
     price: priceReducer,
+    basket: basketReducer,
   },
 });
 
