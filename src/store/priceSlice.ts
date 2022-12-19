@@ -10,7 +10,7 @@ type PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum;
   isLoading: boolean;
   editProductId: number | undefined;
-  priceDownloading: boolean
+  priceDownloading: boolean;
 };
 
 const initialState: PriceSliceType = {
@@ -18,7 +18,7 @@ const initialState: PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum.published,
   isLoading: false,
   editProductId: undefined,
-  priceDownloading: false
+  priceDownloading: false,
 };
 
 export const getPriceProductsThunk = createAsyncThunk<

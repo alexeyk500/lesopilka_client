@@ -6,7 +6,7 @@ import EditCardPage from '../../pages/EditCardPage/EditCardPage';
 import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPage/ManufacturerRegistrationPage';
 import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 import PricePage from '../../pages/PricePage/PricePage';
-import BasketPage from "../../pages/BasketPage/BasketPage";
+import BasketPage from '../../pages/BasketPage/BasketPage';
 
 type RouteType = {
   path: string;

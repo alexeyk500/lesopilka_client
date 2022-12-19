@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from "../PricePage/PricePage.module.css";
-import LeftColumn from "../../components/LeftColumn/LeftColumn";
-import BasketPageSelectors from "./BasketPageSelectors/BasketPageSelectors";
-import BasketPageMainPart from "./BasketPageMainPart/BasketPageMainPart";
+import classes from '../PricePage/PricePage.module.css';
+import LeftColumn from '../../components/LeftColumn/LeftColumn';
+import BasketPageSelectors from './BasketPageSelectors/BasketPageSelectors';
+import BasketPageMainPart from './BasketPageMainPart/BasketPageMainPart';
 
 const BasketPage: React.FC = () => {
   return (

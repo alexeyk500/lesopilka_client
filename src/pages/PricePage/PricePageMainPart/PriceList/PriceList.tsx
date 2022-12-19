@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { PageTypeEnum, PriceSelectedTypeEnum, ProductType, QueryEnum } from '../../../../types/types';
 import {
-  getPriceProductsThunk, selectorPriceDownloading,
+  getPriceProductsThunk,
+  selectorPriceDownloading,
   selectorPriceEditProductId,
   selectorPriceProducts,
   selectorSelectedPriceType,
@@ -13,7 +14,7 @@ import {
 import PriceListProductItem from './PriceListProductItem/PriceListProductItem';
 import { selectorSubCategories } from '../../../../store/catalogSlice';
 import PriceListGroupTitle from './PriceListGroupTitle/PriceListGroupTitle';
-import Preloader from "../../../../components/Preloader/Preloader";
+import Preloader from '../../../../components/Preloader/Preloader';
 import logo from '../../../../img/logo.png';
 
 const PriceList = () => {
@@ -215,15 +216,13 @@ const PriceList = () => {
     <div className={classes.container}>
       <div className={classes.priceContentContainer}>
         <div className={classes.titleContainer}>
-          <div className={classes.dateRow}>
-            15 декабря 2022 года
-          </div>
+          <div className={classes.dateRow}>15 декабря 2022 года</div>
           <div className={classes.pageTitle}>
             {selectedPriceType === PriceSelectedTypeEnum.published
               ? `Прайс лист на пиломатериалы`
               : selectedPriceType === PriceSelectedTypeEnum.draft
-                ? 'Черновики'
-                : 'Полный список товаров'}
+              ? 'Черновики'
+              : 'Полный список товаров'}
           </div>
         </div>
         <div className={classes.twoColumnContainer}>
@@ -234,21 +233,21 @@ const PriceList = () => {
               {user?.manufacturer?.address?.street}, {user?.manufacturer?.address?.building}
               {user?.manufacturer?.address?.office && <>', '{user?.manufacturer?.address?.office}</>}
             </div>
-            <div className={classes.rowTitle}>
-              {user?.email}
-            </div>
-            <div className={classes.rowTitle}>
-              {user?.manufacturer?.phone}
-            </div>
+            <div className={classes.rowTitle}>{user?.email}</div>
+            <div className={classes.rowTitle}>{user?.manufacturer?.phone}</div>
           </div>
         </div>
         <div className={classes.logoContainer}>
-          <img src={logo} alt="logo"/>
+          <img src={logo} alt="logo" />
         </div>
       </div>
-      {priceDownloading
-        ? <div className={classes.preloaderContainer}><Preloader /> </div>
-        : <div className={classes.listScrollContainer}>{price}</div>}
+      {priceDownloading ? (
+        <div className={classes.preloaderContainer}>
+          <Preloader />{' '}
+        </div>
+      ) : (
+        <div className={classes.listScrollContainer}>{price}</div>
+      )}
     </div>
   );
 };
