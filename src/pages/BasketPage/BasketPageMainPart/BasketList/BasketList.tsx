@@ -22,6 +22,7 @@ const BasketList = () => {
       <div className={classes.title}>{'Заказы по производителям'}</div>
       <div className={classes.scrollContainer}>
         <OrderToManufacturer products={basketProducts} />
+        <OrderToManufacturer products={basketProducts} />
       </div>
     </div>
   );

@@ -61,3 +61,20 @@
   margin: 2px 0;
   border-bottom: 1px solid var(--gray_color_light)
 }
+
+.conclusionRow {
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.allWeightTitle {
+  margin-right: 32px;
+}
+
+.allVolumeTitle {
+  margin-right: 32px;
+}

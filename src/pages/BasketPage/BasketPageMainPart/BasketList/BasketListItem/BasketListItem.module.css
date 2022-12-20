@@ -2,6 +2,7 @@
   display: flex;
   margin: 4px 0;
   align-items: center;
+  font-size: 14px;
 }
 
 .numTitle {
@@ -12,8 +13,8 @@
 .imageContainer {
   display: flex;
   flex-shrink: 0;
-  width: 102px;
-  height: 76px;
+  width: 85px;
+  height: 64px;
   margin-right: 12px;
 }
 
@@ -50,6 +51,7 @@
 }
 
 .priceRowLow {
+  text-align: center;
   font-size: 12px;
   font-weight: 400;
 }
@@ -78,7 +80,7 @@
 }
 
 .summColumn {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 

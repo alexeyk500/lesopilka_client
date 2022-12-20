@@ -39,7 +39,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <ButtonComponent title={'Оформить'} buttonType={ButtonType.DEFAULT} onClick={() => {}} />
+          <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
         </div>
       </div>
       <div className={classes.delimiter} />
@@ -49,6 +49,18 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
         })}
       </div>
       <div className={classes.delimiter} />
+      <div className={classes.conclusionRow}>
+        <div className={classes.allWeightTitle}>
+          {`Вес: 254.8 кг`}
+        </div>
+        <div className={classes.allVolumeTitle}>
+          {`Обьем: 12.1 м.куб.`}
+        </div>
+        <div className={classes.allSummTitle}>
+          {`Сумма: 12678.90 руб.`}
+        </div>
+
+      </div>
     </div>
   );
 };
