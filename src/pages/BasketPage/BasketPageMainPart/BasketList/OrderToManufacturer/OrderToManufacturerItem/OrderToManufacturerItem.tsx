@@ -1,17 +1,17 @@
 import React from 'react';
-import classes from './BasketListItem.module.css';
-import { DriedEnum, ProductType, SepticEnum } from '../../../../../types/types';
-import { formatPrice, getProductSizesStr } from '../../../../../utils/functions';
-import AmountInput from '../../../../../components/AmountInput/AmountInput';
-import viewIco from '../../../../../img/visibilityIcoOn.svg';
-import deleteIco from '../../../../../img/deleteBlueIco.svg';
+import classes from './OrderToManufacturerItem.module.css';
+import { DriedEnum, ProductType, SepticEnum } from '../../../../../../types/types';
+import { formatPrice, getProductSizesStr } from '../../../../../../utils/functions';
+import AmountInput from '../../../../../../components/AmountInput/AmountInput';
+import viewIco from '../../../../../../img/visibilityIcoOn.svg';
+import deleteIco from '../../../../../../img/deleteBlueIco.svg';
 
 type PropsType = {
   num: number;
   product: ProductType;
 };
 
-const BasketListItem: React.FC<PropsType> = ({ num, product }) => {
+const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   const productSizes = getProductSizesStr(product);
 
   return (
@@ -62,4 +62,4 @@ const BasketListItem: React.FC<PropsType> = ({ num, product }) => {
   );
 };
 
-export default BasketListItem;
+export default OrderToManufacturerItem;

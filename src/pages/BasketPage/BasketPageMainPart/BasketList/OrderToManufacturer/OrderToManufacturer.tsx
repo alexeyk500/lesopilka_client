@@ -5,7 +5,7 @@ import downloadFileIco from '../../../../../img/downloadFileIco.svg';
 import ButtonComponent, {
   ButtonType,
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import BasketListItem from '../BasketListItem/BasketListItem';
+import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
@@ -45,7 +45,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
       <div className={classes.delimiter} />
       <div className={classes.priceContentContainer}>
         {products.map((product, ind) => {
-          return <BasketListItem key={ind} num={ind} product={product} />;
+          return <OrderToManufacturerItem key={ind} num={ind} product={product} />;
         })}
       </div>
       <div className={classes.delimiter} />
