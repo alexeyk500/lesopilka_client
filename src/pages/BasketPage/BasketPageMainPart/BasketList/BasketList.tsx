@@ -19,7 +19,7 @@ const BasketList = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.title}>{'Заказы по производителям'}</div>
+      <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
       <div className={classes.scrollContainer}>
         <OrderToManufacturer products={basketProducts} />
         <OrderToManufacturer products={basketProducts} />

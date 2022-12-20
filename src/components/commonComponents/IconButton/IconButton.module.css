@@ -26,6 +26,12 @@
   height: 24px;
 }
 
+.bigIconContainer {
+  display: flex;
+  width: 32px;
+  height: 32px;
+}
+
 .priceContentContainer {
   display: flex;
   padding: 17px 8px 17px 12px;
@@ -38,9 +44,30 @@
   margin-left: 12px;
 }
 
+.twoLineContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12px;
+}
+
 .title {
+  max-width: 165px;
   font-weight: 600;
   font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0.33px;
+  color: var(--blue_color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.secondRow {
+  max-width: 165px;
+  margin-top: 2px;
+  font-weight: 600;
+  font-size: 14px;
   line-height: 16px;
   letter-spacing: 0.33px;
   color: var(--blue_color);
