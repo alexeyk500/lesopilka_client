@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--blue_color);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.inputContainer {
+  display: flex;
+  margin: 0 8px;
+  height: 32px;
+  border: 1px solid var(--blue_color);
+  border-radius: 12px;
+}
+
+.input {
+  width: 64px;
+  border: none;
+  outline: none;
+  padding: 0 8px;
+  border-radius: 12px;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  color: var(--gray_color);
+}

@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.manufacturerInfo {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.infoRowActions {
+  display: flex;
+  padding: 0 12px;
+  margin-right: 64px;
+  justify-content: center;
+  align-items: center;
+}
+
+.actionContainer {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.addToBasketIco {
+  height: 28px;
+}
+
+.downloadFileIco {
+  height: 26px;
+  margin-left: 32px;
+}
+
+.orderInfoRow {
+  display: flex;
+}
+
+.btnContainer {
+  display: flex;
+  margin-right: 36px;
+  align-items: center;
+}
+
+.priceContentContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px solid var(--gray_color_light)
+}

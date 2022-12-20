@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
-import classes from "./BasketList.module.css";
-import {useAppDispatch, useAppSelector} from "../../../../hooks/hooks";
-import {selectorUser} from "../../../../store/userSlice";
-import {getBasketProductsThunk, selectorBasketProducts} from "../../../../store/basketSlice";
-import BasketListItem from "./BasketListItem/BasketListItem";
+import React, { useEffect } from 'react';
+import classes from './BasketList.module.css';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { selectorUser } from '../../../../store/userSlice';
+import { getBasketProductsThunk, selectorBasketProducts } from '../../../../store/basketSlice';
+import OrderToManufacturer from './OrderToManufacturer/OrderToManufacturer';
 
 const BasketList = () => {
   const dispatch = useAppDispatch();
@@ -13,19 +13,15 @@ const BasketList = () => {
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (user && token) {
-      dispatch(getBasketProductsThunk(token))
+      dispatch(getBasketProductsThunk(token));
     }
   }, [dispatch, user]);
 
-
   return (
     <div className={classes.container}>
-      <div className={classes.priceContentContainer}>
-        {
-          basketProducts.map((product, ind)=>{
-            return(<BasketListItem key={ind} num={ind} product={product} />)
-          })
-        }
+      <div className={classes.title}>{'Заказы по производителям'}</div>
+      <div className={classes.scrollContainer}>
+        <OrderToManufacturer products={basketProducts} />
       </div>
     </div>
   );

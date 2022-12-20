@@ -1,5 +1,5 @@
-import {instanceAxios, setAuthHeader} from "./instanceAxios";
-import {ProductType} from "../types/types";
+import { instanceAxios, setAuthHeader } from './instanceAxios';
+import { ProductType } from '../types/types';
 
 export const basketApi = {
   async getBasketProducts(token: string) {
