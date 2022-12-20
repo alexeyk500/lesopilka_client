@@ -11,6 +11,8 @@ import Header from './components/Header/Header';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
+console.log('client version = 1.0.0')
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>
