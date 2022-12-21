@@ -5,8 +5,8 @@ import { formatPrice, getProductSizesStr } from '../../../../../../utils/functio
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
-import {toggleProductForBasketThunk} from "../../../../../../store/basketSlice";
-import {useAppDispatch} from "../../../../../../hooks/hooks";
+import { toggleProductForBasketThunk } from '../../../../../../store/basketSlice';
+import { useAppDispatch } from '../../../../../../hooks/hooks';
 
 type PropsType = {
   num: number;

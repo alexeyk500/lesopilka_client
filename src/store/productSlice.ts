@@ -295,7 +295,7 @@ export const selectorProducts = createSelector(
     const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
     return rawProducts.map((product) => {
       if (basketProductIds.includes(product.id)) {
-        console.log({ ...product, inBasket: true })
+        console.log({ ...product, inBasket: true });
         return { ...product, inBasket: true };
       } else {
         return product;
