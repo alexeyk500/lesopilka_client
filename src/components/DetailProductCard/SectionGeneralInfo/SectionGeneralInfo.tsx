@@ -3,12 +3,17 @@ import classes from './SectionGeneralInfo.module.css';
 import { ProductType, SepticEnum } from '../../../types/types';
 import starIco from '../../../img/starIco.svg';
 import cartIco from '../../../img/cartIco.svg';
+import cartIcoSelected from '../../../img/cartIcoSelected.svg';
 
 type PropsType = {
   product: ProductType;
+  isInBasket: boolean;
+  onClickToggleBasket: () => void;
 };
 
-const SectionGeneralInfo: React.FC<PropsType> = ({ product }) => {
+const SectionGeneralInfo: React.FC<PropsType> = ({ product, isInBasket, onClickToggleBasket }) => {
+  console.log('product =', product);
+
   return (
     <div className={classes.container}>
       <div className={classes.topRowContainer}>
@@ -17,7 +22,12 @@ const SectionGeneralInfo: React.FC<PropsType> = ({ product }) => {
           <div className={classes.starIcoContainer}>
             <img src={starIco} className={classes.starIco} alt="favorite" />
           </div>
-          <img src={cartIco} className={classes.cartIco} alt="to cart" />
+          <img
+            src={isInBasket ? cartIcoSelected : cartIco}
+            className={classes.cartIco}
+            onClick={onClickToggleBasket}
+            alt="to cart"
+          />
         </div>
       </div>
       <div className={classes.info}>

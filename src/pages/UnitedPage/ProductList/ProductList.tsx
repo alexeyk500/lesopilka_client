@@ -1,12 +1,13 @@
 import React, { useCallback, useRef } from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { checkIsManufacturerPage, isFiltersSearchParams } from '../../../utils/functions';
+import {checkIsManufacturerPage, isFiltersSearchParams, onCloseDetailCard} from '../../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   addProductsThunk,
   createProductThunk,
   getProductThunk,
+  selectorBasketProducts,
   selectorCurrentPage,
   selectorProducts,
   selectorProductsAdding,
@@ -18,7 +19,7 @@ import Preloader from '../../../components/Preloader/Preloader';
 import SelectRow from '../SelectRow/SelectRow';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductType, QueryEnum } from '../../../types/types';
-import { showDetailProductCardPopUp } from '../../../components/DetailProductCard/DetailProductCard';
+import {CloseDetailCardType, showDetailProductCardPopUp} from '../../../components/DetailProductCard/DetailProductCard';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
@@ -30,6 +31,7 @@ const ProductList = () => {
   const currentPageStore = useAppSelector(selectorCurrentPage);
   const totalPagesStore = useAppSelector(selectorTotalPages);
   const isAddingProducts = useAppSelector(selectorProductsAdding);
+  const basketProducts = useAppSelector(selectorBasketProducts);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -50,6 +52,10 @@ const ProductList = () => {
     }
   };
 
+  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
+    onCloseDetailCard(result, dispatch, basketProducts)
+  }
+
   const onClick = (id: number | undefined) => {
     if (isSalesPage) {
       if (id) {
@@ -58,10 +64,11 @@ const ProductList = () => {
       }
     } else {
       if (id) {
-        dispatch(getProductThunk(id)).then((result) => {
-          if (isFulfilled(result)) {
-            showDetailProductCardPopUp(result.payload);
-          }
+        dispatch(getProductThunk(id))
+          .then((result) => {
+            if (isFulfilled(result)) {
+              showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+            }
         });
       }
     }

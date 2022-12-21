@@ -1,12 +1,19 @@
 import React from 'react';
 import classes from './OrderToManufacturerItem.module.css';
 import { DriedEnum, ProductType, SepticEnum } from '../../../../../../types/types';
-import { formatPrice, getProductSizesStr } from '../../../../../../utils/functions';
+import {formatPrice, getProductSizesStr, onCloseDetailCard} from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
 import { toggleProductForBasketThunk } from '../../../../../../store/basketSlice';
-import { useAppDispatch } from '../../../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
+import { showConfirmPopUp } from '../../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { getProductThunk, selectorBasketProducts } from '../../../../../../store/productSlice';
+import { isFulfilled } from '@reduxjs/toolkit';
+import {
+  CloseDetailCardType,
+  showDetailProductCardPopUp
+} from '../../../../../../components/DetailProductCard/DetailProductCard';
 
 type PropsType = {
   num: number;
@@ -15,14 +22,36 @@ type PropsType = {
 
 const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   const dispatch = useAppDispatch();
+  const basketProducts = useAppSelector(selectorBasketProducts);
+
   const productSizes = getProductSizesStr(product);
 
-  const onDeleteFromBasket = (event: React.MouseEvent<HTMLImageElement>) => {
-    event.stopPropagation();
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (product?.id && token) {
-      dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+  const onConfirmDelete = (result: boolean | FormData | undefined) => {
+    if (result) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (product?.id && token) {
+        dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+      }
     }
+  };
+
+  const onClickDeleteFromBasket = () => {
+    showConfirmPopUp(
+      `Пиломатериал\n${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из корзины`,
+      onConfirmDelete
+    );
+  };
+
+  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
+    onCloseDetailCard(result, dispatch, basketProducts)
+  }
+
+  const onClickViewProduct = () => {
+    dispatch(getProductThunk(product.id)).then((result) => {
+      if (isFulfilled(result)) {
+        showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+      }
+    });
   };
 
   return (
@@ -62,10 +91,10 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
       </div>
       <div className={classes.summColumn}>{`1245.88 руб.`}</div>
       <div className={classes.actionsColumn}>
-        <div className={classes.actionContainer}>
+        <div className={classes.actionContainer} onClick={onClickViewProduct}>
           <img src={viewIco} className={classes.viewIco} alt="view" />
         </div>
-        <div className={classes.actionContainer} onClick={onDeleteFromBasket}>
+        <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
           <img src={deleteIco} className={classes.deleteIco} alt="view" />
         </div>
       </div>

@@ -16,6 +16,7 @@ import {
   getSubCategoriesThunk,
 } from '../../store/catalogSlice';
 import SearchLocationSelector from '../commonComponents/SearchLocationSelector/SearchLocationSelector';
+import CatalogButton from './CatalogButton/CatalogButton';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ const Header: React.FC = () => {
         <Logo />
         <SearchLocationSelector />
         <Search />
+        <CatalogButton />
         <SelectedButton />
         <CartButton />
         <LoginButton />

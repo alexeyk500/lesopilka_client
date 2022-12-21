@@ -275,7 +275,6 @@ export const productsSlice = createSlice({
 
 export const { clearEditProduct, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
-// export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
 export const selectorTotalPages = (state: RootState) => state.products.totalPages;
 export const selectorEditProduct = (state: RootState) => state.products.editProduct;
@@ -295,7 +294,6 @@ export const selectorProducts = createSelector(
     const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
     return rawProducts.map((product) => {
       if (basketProductIds.includes(product.id)) {
-        console.log({ ...product, inBasket: true });
         return { ...product, inBasket: true };
       } else {
         return product;

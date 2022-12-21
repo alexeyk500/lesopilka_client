@@ -1,16 +1,19 @@
 import React from 'react';
 import { ProductType } from '../../../../../types/types';
 import classes from './PriceListProductItem.module.css';
-import { getProductSizesStr } from '../../../../../utils/functions';
+import {getProductSizesStr, onCloseDetailCard} from '../../../../../utils/functions';
 import visibilityIcoOn from '../../../../../img/visibilityIcoOn.svg';
 import editBlueIco from '../../../../../img/editBlueIco.svg';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { setPriceEditProductId } from '../../../../../store/priceSlice';
-import { getProductThunk } from '../../../../../store/productSlice';
+import { getProductThunk, selectorBasketProducts } from '../../../../../store/productSlice';
 import { isFulfilled } from '@reduxjs/toolkit';
-import { showDetailProductCardPopUp } from '../../../../../components/DetailProductCard/DetailProductCard';
+import {
+  CloseDetailCardType,
+  showDetailProductCardPopUp
+} from '../../../../../components/DetailProductCard/DetailProductCard';
 import classNames from 'classnames';
 
 type PropsType = {
@@ -21,6 +24,7 @@ type PropsType = {
 const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const basketProducts = useAppSelector(selectorBasketProducts);
   const productSizes = getProductSizesStr(product);
 
   const onClickEdit = () => {
@@ -28,10 +32,14 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
     navigate(`${PageEnum.EditProduct}/${product.id}`);
   };
 
+  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
+    onCloseDetailCard(result, dispatch, basketProducts)
+  }
+
   const onClickView = () => {
     dispatch(getProductThunk(product.id)).then((result) => {
       if (isFulfilled(result)) {
-        showDetailProductCardPopUp(result.payload);
+        showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
       }
     });
   };
