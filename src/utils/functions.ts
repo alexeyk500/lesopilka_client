@@ -1,7 +1,8 @@
 import { CategorySizeType, OptionsType, ProductType, QueryEnum, SizeTypeEnum, UserType } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
-import {CloseDetailCardType} from "../components/DetailProductCard/DetailProductCard";
-import {toggleProductForBasketThunk} from "../store/basketSlice";
+import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
+import { toggleProductForBasketThunk } from '../store/basketSlice';
+import { Dispatch } from 'react';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
@@ -292,7 +293,11 @@ export const getProductSizesStr = (product: ProductType | undefined) => {
   return sizes;
 };
 
-export const onCloseDetailCard =({productId, isFavorite, isInBasket}: CloseDetailCardType, dispatch: any, basketProducts: ProductType[]) => {
+export const onCloseDetailCard = (
+  { productId, isFavorite, isInBasket }: CloseDetailCardType,
+  dispatch: Dispatch<any>,
+  basketProducts: ProductType[]
+) => {
   const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
   if (basketProductIds.includes(productId)) {
     if (!isInBasket) {
@@ -309,4 +314,4 @@ export const onCloseDetailCard =({productId, isFavorite, isInBasket}: CloseDetai
       }
     }
   }
-}
+};

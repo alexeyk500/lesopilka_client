@@ -15,7 +15,7 @@ type PropsType = {
   popUpRoot: Root;
   product: ProductType;
   basketProducts: ProductType[];
-  onClose: (result: CloseDetailCardType) => void
+  onClose: (result: CloseDetailCardType) => void;
 };
 
 const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, basketProducts, onClose }) => {
@@ -27,21 +27,20 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
   });
 
   const destroyPopUp = useCallback(() => {
-    onClose({productId: product.id, isFavorite, isInBasket})
+    onClose({ productId: product.id, isFavorite, isInBasket });
     popUpRoot.unmount();
     const div = document.getElementById(divId);
     if (div) {
       div.parentNode?.removeChild(div);
     }
-  }, [divId, popUpRoot]);
-
+  }, [divId, popUpRoot, isFavorite, isInBasket, onClose, product.id]);
 
   useEffect(() => {
     const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
     if (basketProductIds.includes(product.id)) {
       setIsInBasket(true);
     }
-  }, [product]);
+  }, [product, basketProducts]);
 
   const onClickToggleBasket = () => {
     setIsInBasket((prev) => !prev);
@@ -68,10 +67,10 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
 };
 
 export type CloseDetailCardType = {
-  productId: number,
-  isFavorite: boolean,
-  isInBasket: boolean
-}
+  productId: number;
+  isFavorite: boolean;
+  isInBasket: boolean;
+};
 
 export const showDetailProductCardPopUp = (
   product: ProductType,
@@ -84,6 +83,12 @@ export const showDetailProductCardPopUp = (
   const popUpContainer = document.getElementById(div.id)!;
   const popUpRoot = createRoot(popUpContainer);
   popUpRoot.render(
-    <DetailProductCard divId={div.id} popUpRoot={popUpRoot} product={product} basketProducts={basketProducts} onClose={onClose}/>
+    <DetailProductCard
+      divId={div.id}
+      popUpRoot={popUpRoot}
+      product={product}
+      basketProducts={basketProducts}
+      onClose={onClose}
+    />
   );
 };

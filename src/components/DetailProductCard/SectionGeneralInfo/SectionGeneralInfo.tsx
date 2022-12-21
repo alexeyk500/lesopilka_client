@@ -12,8 +12,6 @@ type PropsType = {
 };
 
 const SectionGeneralInfo: React.FC<PropsType> = ({ product, isInBasket, onClickToggleBasket }) => {
-  console.log('product =', product);
-
   return (
     <div className={classes.container}>
       <div className={classes.topRowContainer}>

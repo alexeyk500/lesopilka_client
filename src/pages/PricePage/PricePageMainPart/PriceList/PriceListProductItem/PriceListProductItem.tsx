@@ -1,7 +1,7 @@
 import React from 'react';
 import { ProductType } from '../../../../../types/types';
 import classes from './PriceListProductItem.module.css';
-import {getProductSizesStr, onCloseDetailCard} from '../../../../../utils/functions';
+import { getProductSizesStr, onCloseDetailCard } from '../../../../../utils/functions';
 import visibilityIcoOn from '../../../../../img/visibilityIcoOn.svg';
 import editBlueIco from '../../../../../img/editBlueIco.svg';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
@@ -12,7 +12,7 @@ import { getProductThunk, selectorBasketProducts } from '../../../../../store/pr
 import { isFulfilled } from '@reduxjs/toolkit';
 import {
   CloseDetailCardType,
-  showDetailProductCardPopUp
+  showDetailProductCardPopUp,
 } from '../../../../../components/DetailProductCard/DetailProductCard';
 import classNames from 'classnames';
 
@@ -33,8 +33,8 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts)
-  }
+    onCloseDetailCard(result, dispatch, basketProducts);
+  };
 
   const onClickView = () => {
     dispatch(getProductThunk(product.id)).then((result) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './OrderToManufacturerItem.module.css';
 import { DriedEnum, ProductType, SepticEnum } from '../../../../../../types/types';
-import {formatPrice, getProductSizesStr, onCloseDetailCard} from '../../../../../../utils/functions';
+import { formatPrice, getProductSizesStr, onCloseDetailCard } from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
@@ -12,7 +12,7 @@ import { getProductThunk, selectorBasketProducts } from '../../../../../../store
 import { isFulfilled } from '@reduxjs/toolkit';
 import {
   CloseDetailCardType,
-  showDetailProductCardPopUp
+  showDetailProductCardPopUp,
 } from '../../../../../../components/DetailProductCard/DetailProductCard';
 
 type PropsType = {
@@ -43,8 +43,8 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts)
-  }
+    onCloseDetailCard(result, dispatch, basketProducts);
+  };
 
   const onClickViewProduct = () => {
     dispatch(getProductThunk(product.id)).then((result) => {
