@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import classes from './UnitedPage.module.css';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getProductsThunk } from '../../store/productSlice';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { PageTypeEnum, QueryEnum } from '../../types/types';
@@ -9,6 +9,8 @@ import FilterSelectors from './FilterSelectors/FilterSelectors';
 import Catalog from '../../components/Catalog/Catalog';
 import UnitedPageMainPart from './UnitedPageMainPart/UnitedPageMainPart';
 import { checkIsManufacturerPage, checkIsShowFilterSelectors } from '../../utils/functions';
+import { getBasketProductsThunk } from '../../store/basketSlice';
+import { selectorUser } from '../../store/userSlice';
 
 const UnitedPage: React.FC = () => {
   const location = useLocation();
@@ -18,15 +20,21 @@ const UnitedPage: React.FC = () => {
   const isManufacturerPage = checkIsManufacturerPage(location);
   const isShowFilterSelectors = checkIsShowFilterSelectors(searchParams);
 
+  const user = useAppSelector(selectorUser);
+
   useEffect(() => {
     if (!!searchParams.toString().length) {
       const searchParamsClone = new URLSearchParams(searchParams.toString());
       if (isManufacturerPage) {
         searchParamsClone.append(QueryEnum.PageType, PageTypeEnum.manufacturerPage);
       }
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (user && token) {
+        dispatch(getBasketProductsThunk(token));
+      }
       dispatch(getProductsThunk(searchParamsClone));
     }
-  }, [dispatch, searchParams, isManufacturerPage]);
+  }, [dispatch, searchParams, isManufacturerPage, user]);
 
   const onClickCatalogCategory = (id: number) => {
     if (id) {

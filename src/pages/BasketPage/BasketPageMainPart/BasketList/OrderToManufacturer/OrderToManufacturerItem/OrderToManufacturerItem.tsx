@@ -5,6 +5,8 @@ import { formatPrice, getProductSizesStr } from '../../../../../../utils/functio
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
+import {toggleProductForBasketThunk} from "../../../../../../store/basketSlice";
+import {useAppDispatch} from "../../../../../../hooks/hooks";
 
 type PropsType = {
   num: number;
@@ -12,7 +14,16 @@ type PropsType = {
 };
 
 const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
+  const dispatch = useAppDispatch();
   const productSizes = getProductSizesStr(product);
+
+  const onDeleteFromBasket = (event: React.MouseEvent<HTMLImageElement>) => {
+    event.stopPropagation();
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (product?.id && token) {
+      dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -54,7 +65,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
         <div className={classes.actionContainer}>
           <img src={viewIco} className={classes.viewIco} alt="view" />
         </div>
-        <div className={classes.actionContainer}>
+        <div className={classes.actionContainer} onClick={onDeleteFromBasket}>
           <img src={deleteIco} className={classes.deleteIco} alt="view" />
         </div>
       </div>

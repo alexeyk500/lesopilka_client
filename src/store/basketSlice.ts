@@ -1,5 +1,5 @@
 import { ProductType } from '../types/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { RootState } from './store';
@@ -25,21 +25,32 @@ export const getBasketProductsThunk = createAsyncThunk<ProductType[], string, { 
   }
 );
 
+export const toggleProductForBasketThunk = createAsyncThunk<
+  ProductType[],
+  { productId: number; token: string },
+  { rejectValue: string }
+>('basket/addProductsToBasketThunk', async ({ productId, token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.toggleProductForBasket(productId, token);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка добавления товара в корзину\n' + e.response?.data?.message);
+  }
+});
+
 export const basketSlice = createSlice({
   name: 'basketSlice',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getBasketProductsThunk.pending, (state) => {
+      .addMatcher(isAnyOf(getBasketProductsThunk.pending, toggleProductForBasketThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addCase(getBasketProductsThunk.fulfilled, (state, action) => {
-        console.log('action.payload =', action.payload);
+      .addMatcher(isAnyOf(getBasketProductsThunk.fulfilled, toggleProductForBasketThunk.fulfilled), (state, action) => {
         state.products = action.payload;
         state.isLoading = false;
       })
-      .addCase(getBasketProductsThunk.rejected, (state, action) => {
+      .addMatcher(isAnyOf(getBasketProductsThunk.rejected, toggleProductForBasketThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);
       });

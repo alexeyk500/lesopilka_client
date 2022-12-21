@@ -6,4 +6,8 @@ export const basketApi = {
     const response = await instanceAxios.get<ProductType[]>(`/baskets`, setAuthHeader(token));
     return response.data;
   },
+  async toggleProductForBasket(productId: number, token: string) {
+    const response = await instanceAxios.post<ProductType[]>(`/baskets`, { productId }, setAuthHeader(token));
+    return response.data;
+  },
 };

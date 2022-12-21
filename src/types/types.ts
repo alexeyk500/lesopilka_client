@@ -105,6 +105,7 @@ export type ProductType = {
   subCategory?: OptionsType;
   material?: OptionsType;
   sort?: OptionsType;
+  inBasket?: boolean;
 };
 
 export enum QueryEnum {

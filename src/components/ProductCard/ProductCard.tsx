@@ -5,6 +5,7 @@ import { DriedEnum, ProductType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from './../../img/starIco.svg';
 import cartIco from './../../img/cartIco.svg';
+import cartIcoSelected from './../../img/cartIcoSelected.svg';
 import dimensionsIco from './../../img/dimensionsIco.svg';
 import wareHouseIco from './../../img/wareHouseIco.svg';
 import locationIco from './../../img/locationIco.svg';
@@ -12,6 +13,8 @@ import rubleIco from './../../img/rubleIco.svg';
 import materialIco from './../../img/materialIco.svg';
 import classNames from 'classnames';
 import { formatPrice, getProductSizesStr } from '../../utils/functions';
+import { useAppDispatch } from '../../hooks/hooks';
+import { toggleProductForBasketThunk } from '../../store/basketSlice';
 
 type PropsType = {
   product?: ProductType;
@@ -28,6 +31,8 @@ const ProductCard: React.FC<PropsType> = ({
   onClick,
   isPreview,
 }) => {
+  const dispatch = useAppDispatch();
+
   const onClickHandler = () => {
     if (onClick) {
       onClick(product?.id);
@@ -36,6 +41,14 @@ const ProductCard: React.FC<PropsType> = ({
 
   const isDraftProductCard = !product?.publicationDate && !isAddProductCard && !isPreview;
   const productSizes = getProductSizesStr(product);
+
+  const onClickToBasket = (event: React.MouseEvent<HTMLImageElement>) => {
+    event.stopPropagation();
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (product?.id && token) {
+      dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+    }
+  };
 
   return (
     <div className={classes.wrapper} onClick={onClickHandler}>
@@ -65,7 +78,12 @@ const ProductCard: React.FC<PropsType> = ({
                     <div className={classes.starIcoContainer}>
                       <img src={starIco} className={classes.starIco} alt="favorite" />
                     </div>
-                    <img src={cartIco} className={classes.cartIco} alt="to cart" />
+                    <img
+                      src={product?.inBasket ? cartIcoSelected : cartIco}
+                      className={classes.cartIco}
+                      alt="to basket"
+                      onClick={onClickToBasket}
+                    />
                   </div>
                 )}
               </div>

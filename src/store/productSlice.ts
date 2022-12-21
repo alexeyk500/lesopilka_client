@@ -1,5 +1,5 @@
 import { ProductType, QueryEnum } from '../types/types';
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
@@ -275,7 +275,7 @@ export const productsSlice = createSlice({
 
 export const { clearEditProduct, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
 
-export const selectorProducts = (state: RootState) => state.products.products;
+// export const selectorProducts = (state: RootState) => state.products.products;
 export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
 export const selectorTotalPages = (state: RootState) => state.products.totalPages;
 export const selectorEditProduct = (state: RootState) => state.products.editProduct;
@@ -285,5 +285,23 @@ export const selectorProductsLoading = (state: RootState) => state.products.isLo
 export const selectorProductsSaving = (state: RootState) => state.products.isSaving;
 export const selectorProductsAdding = (state: RootState) => state.products.isAddingProducts;
 export const selectorTotalProducts = (state: RootState) => state.products.totalProducts;
+
+export const selectorRawProducts = (state: RootState) => state.products.products;
+export const selectorBasketProducts = (state: RootState) => state.basket.products;
+
+export const selectorProducts = createSelector(
+  [selectorRawProducts, selectorBasketProducts],
+  (rawProducts, basketProducts) => {
+    const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
+    return rawProducts.map((product) => {
+      if (basketProductIds.includes(product.id)) {
+        console.log({ ...product, inBasket: true })
+        return { ...product, inBasket: true };
+      } else {
+        return product;
+      }
+    });
+  }
+);
 
 export default productsSlice.reducer;
