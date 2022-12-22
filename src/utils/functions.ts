@@ -103,31 +103,18 @@ export const formatPrice = (price: string | number | undefined) => {
   return '';
 };
 
-export const getWeight = (volume: string | number | undefined) => {
-  const volumeNumber = Number(volume);
-  if (!volumeNumber) {
-    return undefined;
+export const getWeight = (volume: number | undefined) => {
+  if (!volume) {
+    return 0;
   }
-  const weight = WEIGHT_ONE_CUBIC_METER_OF_WOOD * volumeNumber;
-  if (weight < 10) {
-    return weight.toFixed(1);
-  }
-  return weight.toFixed(0);
+  return WEIGHT_ONE_CUBIC_METER_OF_WOOD * volume;
 };
 
-export const getSquare = ({
-  width,
-  length,
-}: {
-  width: string | number | undefined;
-  length: string | number | undefined;
-}) => {
-  const widthNumber = Number(width);
-  const lengthNumber = Number(length);
-  if (!widthNumber || !lengthNumber) {
-    return undefined;
+export const getSquare = ({ width, length }: { width: number | undefined; length: number | undefined }) => {
+  if (!width || !length) {
+    return 0;
   }
-  return ((widthNumber * lengthNumber) / 1000000).toFixed(2);
+  return (width * length) / 1000000;
 };
 
 export const getPriceForSquareMeter = ({
@@ -135,17 +122,15 @@ export const getPriceForSquareMeter = ({
   length,
   price,
 }: {
-  width: string | undefined;
-  length: string | undefined;
-  price: string | undefined;
+  width: number | undefined;
+  length: number | undefined;
+  price: number | undefined;
 }) => {
   const square = getSquare({ width, length });
-  const squareNumber = Number(square);
-  const priceNumber = Number(price);
-  if (!squareNumber || !priceNumber) {
+  if (!square || !price) {
     return undefined;
   }
-  return ((1 / squareNumber) * priceNumber).toFixed(2);
+  return (1 / square) * price;
 };
 
 export const getVolume = ({
@@ -153,17 +138,14 @@ export const getVolume = ({
   width,
   length,
 }: {
-  height: string | undefined;
-  width: string | undefined;
-  length: string | undefined;
+  height: number | undefined;
+  width: number | undefined;
+  length: number | undefined;
 }) => {
-  const heightNumber = Number(height);
-  const widthNumber = Number(width);
-  const lengthNumber = Number(length);
-  if (!heightNumber || !widthNumber || !lengthNumber) {
-    return undefined;
+  if (!height || !width || !length) {
+    return 0;
   }
-  return ((widthNumber * lengthNumber * heightNumber) / 1000000000).toFixed(2);
+  return (width * length * height) / 1000000000;
 };
 
 export const getPriceForCubicMeter = ({
@@ -172,28 +154,24 @@ export const getPriceForCubicMeter = ({
   length,
   price,
 }: {
-  height: string | undefined;
-  width: string | undefined;
-  length: string | undefined;
-  price: string | undefined;
+  height: number | undefined;
+  width: number | undefined;
+  length: number | undefined;
+  price: number | undefined;
 }) => {
   const volume = getVolume({ height, width, length });
-  const volumeNumber = Number(volume);
-  const priceNumber = Number(price);
-  if (!volumeNumber || !priceNumber) {
+  if (!volume || !price) {
     return undefined;
   }
-  return ((1 / volumeNumber) * priceNumber).toFixed(2);
+  return (1 / volume) * price;
 };
 
-export const getVolumeCaliber = ({ caliber, length }: { caliber: string | undefined; length: string | undefined }) => {
-  const caliberNumber = Number(caliber);
-  const lengthNumber = Number(length);
-  if (!caliberNumber || !lengthNumber) {
-    return undefined;
+export const getVolumeCaliber = ({ caliber, length }: { caliber: number | undefined; length: number | undefined }) => {
+  if (!caliber || !length) {
+    return 0;
   }
   // (hмм*Π*dмм2/4)/1 000 000 000
-  return ((lengthNumber * Math.PI * (caliberNumber * caliberNumber)) / 4 / 1000000000).toFixed(2);
+  return (length * Math.PI * (caliber * caliber)) / 4 / 1000000000;
 };
 
 export const getPriceForCubicMeterCaliber = ({
@@ -201,24 +179,22 @@ export const getPriceForCubicMeterCaliber = ({
   length,
   price,
 }: {
-  caliber: string | undefined;
-  length: string | undefined;
-  price: string | undefined;
+  caliber: number | undefined;
+  length: number | undefined;
+  price: number | undefined;
 }) => {
   const volumeCaliber = getVolumeCaliber({ caliber, length });
-  const volumeCaliberNumber = Number(volumeCaliber);
-  const priceNumber = Number(price);
-  if (!volumeCaliberNumber || !priceNumber) {
+  if (!volumeCaliber || !price) {
     return undefined;
   }
-  return ((1 / volumeCaliberNumber) * priceNumber).toFixed(2);
+  return (1 / volumeCaliber) * price;
 };
 
 export const getSizesValue = (product: ProductType) => {
-  const height = product.height;
-  const width = product.width;
-  const length = product.length;
-  const caliber = product.caliber;
+  const height = Number(product.height);
+  const width = Number(product.width);
+  const length = Number(product.length);
+  const caliber = Number(product.caliber);
   return { height, width, length, caliber };
 };
 
@@ -317,4 +293,44 @@ export const onCloseDetailCard = (
       }
     }
   }
+};
+
+export const getLogisticInfo = (product: ProductType, amount: number = Number(product.amountInBasket) ?? 1) => {
+  const { height, width, length, caliber } = getSizesValue(product);
+  let square: number | undefined;
+  let volume: number | undefined;
+  let weight: number | undefined;
+  let summ: number | undefined;
+  if (caliber) {
+    volume = getVolumeCaliber({ caliber, length }) * amount;
+    weight = getWeight(volume) * amount;
+  } else {
+    square = getSquare({ width, length }) * amount;
+    const volumeItem = getVolume({ height, width, length });
+    volume = volumeItem * amount;
+    weight = getWeight(volumeItem) * amount;
+  }
+  summ = !isNaN(Number(product.price)) ? Number(product.price) * amount : 0;
+  return { square, weight, volume, summ };
+};
+
+export const toStrWithDelimiter = (value: number | string) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+};
+
+export const getTotalLogisticInfo = (products: ProductType[]) => {
+  let totalWeight = 0;
+  let totalVolume = 0;
+  let totalSumm = 0;
+  products.forEach((product) => {
+    const { weight, volume, summ } = getLogisticInfo(product);
+    totalWeight += Number(weight);
+    totalVolume += Number(volume);
+    totalSumm += Number(summ);
+  });
+  return {
+    totalWeight: toStrWithDelimiter(totalWeight.toFixed(1)),
+    totalVolume: toStrWithDelimiter(totalVolume.toFixed(1)),
+    totalSumm: toStrWithDelimiter(totalSumm.toFixed(2)),
+  };
 };

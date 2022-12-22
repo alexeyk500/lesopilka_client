@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import classes from './OrderToManufacturerItem.module.css';
 import { DriedEnum, ProductType, SepticEnum } from '../../../../../../types/types';
-import { formatPrice, getProductSizesStr, onCloseDetailCard } from '../../../../../../utils/functions';
+import {
+  formatPrice,
+  getLogisticInfo,
+  getProductSizesStr,
+  onCloseDetailCard,
+  toStrWithDelimiter,
+} from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
@@ -29,6 +35,11 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   const productSizes = getProductSizesStr(product);
 
   const [amount, setAmount] = useState(product.amountInBasket ? product.amountInBasket : 0);
+
+  const { square, weight, volume, summ } = getLogisticInfo(product, amount);
+
+  console.log(square, weight, volume, summ);
+
   const onChangeAmount = (newValue: number | string) => {
     if (typeof newValue === 'number') {
       if (newValue > 0 && newValue <= MAX_BASKET_PRODUCT_AMOUNT) {
@@ -113,13 +124,13 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
       <div className={classes.amountColumn}>
         <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
         <div className={classes.amountInfo}>
-          <div className={classes.amountInfoWeight}>{`${125.0} кг.`}</div>
-          <div className={classes.amountInfoSquare}>{`${34.7} м.кв.`}</div>
-          <div className={classes.amountInfoVolume}>{`${2.5} м.куб.`}</div>
+          <div className={classes.amountInfoWeight}>{weight && `${toStrWithDelimiter(weight.toFixed(1))} кг.`}</div>
+          <div className={classes.amountInfoSquare}>{square && `${square.toFixed(2)} м.кв.`}</div>
+          <div className={classes.amountInfoVolume}>{volume && `${volume.toFixed(2)} м.куб.`}</div>
         </div>
       </div>
       <div className={classes.summColumn}>
-        {`${formatPrice(product?.price ? amount * Number(product?.price) : 0)}`} <span>{' руб.'}</span>
+        {`${formatPrice(summ ? summ : 0)}`} <span>{' руб.'}</span>
       </div>
       <div className={classes.actionsColumn}>
         <div className={classes.actionContainer} onClick={onClickViewProduct}>

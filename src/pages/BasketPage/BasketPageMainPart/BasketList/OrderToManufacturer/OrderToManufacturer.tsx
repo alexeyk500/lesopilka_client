@@ -9,6 +9,7 @@ import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufactur
 import { ProductType } from '../../../../../types/types';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
+import { getTotalLogisticInfo } from '../../../../../utils/functions';
 
 type PropsType = {
   products: ProductType[];
@@ -16,6 +17,8 @@ type PropsType = {
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
   const user = useAppSelector(selectorUser);
+
+  const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
 
   return (
     <div className={classes.container}>
@@ -50,9 +53,9 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
       </div>
       <div className={classes.delimiter} />
       <div className={classes.conclusionRow}>
-        <div className={classes.allWeightTitle}>{`Вес: 254.8 кг`}</div>
-        <div className={classes.allVolumeTitle}>{`Обьем: 12.1 м.куб.`}</div>
-        <div className={classes.allSummTitle}>{`Сумма: 12678.90 руб.`}</div>
+        <div className={classes.allWeightTitle}>{`Вес: ${totalWeight} кг`}</div>
+        <div className={classes.allVolumeTitle}>{`Обьем: ${totalVolume} м.куб.`}</div>
+        <div className={classes.allSummTitle}>{`Сумма: ${totalSumm} руб.`}</div>
       </div>
     </div>
   );

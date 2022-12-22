@@ -22,7 +22,7 @@ const BasketList = () => {
       <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
       <div className={classes.scrollContainer}>
         <OrderToManufacturer products={basketProducts} />
-        <OrderToManufacturer products={basketProducts} />
+        {/*<OrderToManufacturer products={basketProducts} />*/}
       </div>
     </div>
   );

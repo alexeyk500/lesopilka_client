@@ -10,9 +10,10 @@ type PropsType = {
 const SectionSizeInfo: React.FC<PropsType> = ({ product }) => {
   const { height, width, length, caliber } = getSizesValue(product);
 
-  const square = getSquare({ width, length });
-  const volume = getVolume({ height, width, length });
-  const weight = getWeight(volume);
+  const square = getSquare({ width, length }).toFixed(2);
+  const volumeItem = getVolume({ height, width, length });
+  const volume = volumeItem.toFixed(2);
+  const weight = getWeight(volumeItem).toFixed(1);
 
   const volumeCaliber = getVolumeCaliber({ caliber, length });
   const weightCaliber = getWeight(volumeCaliber);
