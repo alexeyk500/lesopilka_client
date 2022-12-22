@@ -290,14 +290,13 @@ export const selectorBasketProducts = (state: RootState) => state.basket.product
 
 export const selectorProducts = createSelector(
   [selectorRawProducts, selectorBasketProducts],
-  (rawProducts, basketProducts) => {
-    const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
-    return rawProducts.map((product) => {
-      if (basketProductIds.includes(product.id)) {
-        return { ...product, inBasket: true };
-      } else {
-        return product;
+  (products, basketProducts) => {
+    return products.map((product) => {
+      const basketProduct = basketProducts.find((basketProduct) => basketProduct.id === product.id);
+      if (basketProduct) {
+        return basketProduct;
       }
+      return product;
     });
   }
 );

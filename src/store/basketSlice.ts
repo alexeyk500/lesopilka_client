@@ -37,6 +37,18 @@ export const toggleProductForBasketThunk = createAsyncThunk<
   }
 });
 
+export const updateBasketProductAmountThunk = createAsyncThunk<
+  ProductType[],
+  { productId: number; amount: number; token: string },
+  { rejectValue: string }
+>('basket/updateBasketProductAmountThunk', async ({ productId, amount, token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.updateBasketProductAmount(productId, amount, token);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка обновления количества товара в корзине\n' + e.response?.data?.message);
+  }
+});
+
 export const basketSlice = createSlice({
   name: 'basketSlice',
   initialState,
@@ -46,10 +58,17 @@ export const basketSlice = createSlice({
       .addMatcher(isAnyOf(getBasketProductsThunk.pending, toggleProductForBasketThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getBasketProductsThunk.fulfilled, toggleProductForBasketThunk.fulfilled), (state, action) => {
-        state.products = action.payload;
-        state.isLoading = false;
-      })
+      .addMatcher(
+        isAnyOf(
+          getBasketProductsThunk.fulfilled,
+          toggleProductForBasketThunk.fulfilled,
+          updateBasketProductAmountThunk.fulfilled
+        ),
+        (state, action) => {
+          state.products = action.payload;
+          state.isLoading = false;
+        }
+      )
       .addMatcher(isAnyOf(getBasketProductsThunk.rejected, toggleProductForBasketThunk.rejected), (state, action) => {
         state.isLoading = false;
         showErrorPopUp(action.payload!);

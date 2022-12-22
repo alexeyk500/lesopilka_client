@@ -80,15 +80,10 @@ const ProductCard: React.FC<PropsType> = ({
                 {!isManufacturerProductCard && (
                   <div className={classes.btnGroup}>
                     <div className={classes.starIcoContainer}>
-                      <img
-                        src={starIco}
-                        className={classes.starIco}
-                        onClick={onClickToFavorite}
-                        alt="favorite"
-                      />
+                      <img src={starIco} className={classes.starIco} onClick={onClickToFavorite} alt="favorite" />
                     </div>
                     <img
-                      src={product?.inBasket ? cartIcoSelected : cartIco}
+                      src={product?.amountInBasket ? cartIcoSelected : cartIco}
                       className={classes.cartIco}
                       onClick={onClickToBasket}
                       alt="to basket"

@@ -36,8 +36,8 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
   }, [divId, popUpRoot, isFavorite, isInBasket, onClose, product.id]);
 
   useEffect(() => {
-    const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
-    if (basketProductIds.includes(product.id)) {
+    const basketProduct = basketProducts.find((basketProduct) => basketProduct.id === product.id);
+    if (basketProduct) {
       setIsInBasket(true);
     }
   }, [product, basketProducts]);

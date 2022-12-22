@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './OrderToManufacturerItem.module.css';
 import { DriedEnum, ProductType, SepticEnum } from '../../../../../../types/types';
 import { formatPrice, getProductSizesStr, onCloseDetailCard } from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
-import { toggleProductForBasketThunk } from '../../../../../../store/basketSlice';
+import { toggleProductForBasketThunk, updateBasketProductAmountThunk } from '../../../../../../store/basketSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
 import { showConfirmPopUp } from '../../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { getProductThunk, selectorBasketProducts } from '../../../../../../store/productSlice';
@@ -14,6 +14,8 @@ import {
   CloseDetailCardType,
   showDetailProductCardPopUp,
 } from '../../../../../../components/DetailProductCard/DetailProductCard';
+import useDebouncedFunction from '../../../../../../hooks/useDebounceFunction';
+import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../utils/constants';
 
 type PropsType = {
   num: number;
@@ -26,6 +28,36 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
 
   const productSizes = getProductSizesStr(product);
 
+  const [amount, setAmount] = useState(product.amountInBasket ? product.amountInBasket : 0);
+  const onChangeAmount = (newValue: number | string) => {
+    if (typeof newValue === 'number') {
+      if (newValue > 0 && newValue <= MAX_BASKET_PRODUCT_AMOUNT) {
+        setAmount(newValue);
+        debounceUpdateAmount({ productId: product.id, amount: newValue });
+      }
+    } else {
+      const numberNewValue = Number(newValue);
+      if (numberNewValue) {
+        if (numberNewValue <= MAX_BASKET_PRODUCT_AMOUNT) {
+          setAmount(numberNewValue);
+          debounceUpdateAmount({ productId: product.id, amount: numberNewValue });
+        }
+      } else {
+        setAmount(0);
+      }
+    }
+  };
+  const debounceUpdateAmount = useDebouncedFunction(
+    (updateData) => {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (token && updateData) {
+        dispatch(updateBasketProductAmountThunk({ productId: updateData.productId, amount: updateData.amount, token }));
+      }
+    },
+    DEBOUNCE_TIME,
+    true
+  );
+
   const onConfirmDelete = (result: boolean | FormData | undefined) => {
     if (result) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
@@ -36,10 +68,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   };
 
   const onClickDeleteFromBasket = () => {
-    showConfirmPopUp(
-      `Пиломатериал\n${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из корзины`,
-      onConfirmDelete
-    );
+    showConfirmPopUp(`${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из корзины`, onConfirmDelete);
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
@@ -82,14 +111,16 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
         <div className={classes.priceRowLow}>{'руб.шт'}</div>
       </div>
       <div className={classes.amountColumn}>
-        <AmountInput />
+        <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
         <div className={classes.amountInfo}>
           <div className={classes.amountInfoWeight}>{`${125.0} кг.`}</div>
           <div className={classes.amountInfoSquare}>{`${34.7} м.кв.`}</div>
           <div className={classes.amountInfoVolume}>{`${2.5} м.куб.`}</div>
         </div>
       </div>
-      <div className={classes.summColumn}>{`1245.88 руб.`}</div>
+      <div className={classes.summColumn}>
+        {`${formatPrice(product?.price ? amount * Number(product?.price) : 0)}`} <span>{' руб.'}</span>
+      </div>
       <div className={classes.actionsColumn}>
         <div className={classes.actionContainer} onClick={onClickViewProduct}>
           <img src={viewIco} className={classes.viewIco} alt="view" />

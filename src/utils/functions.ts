@@ -93,9 +93,12 @@ export const getOptionTitle = (options: OptionsType[], optionId: number | undefi
 };
 
 export const formatPrice = (price: string | number | undefined) => {
+  if (price === 0) {
+    return '0.00';
+  }
   if (price) {
     const splitPrice = String((Math.round(Number(price) * 100) / 100).toFixed(2)).split('.');
-    return `${splitPrice[0]}.${splitPrice[1]}`;
+    return `${splitPrice[0]}.${splitPrice[1]}`.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
   return '';
 };
