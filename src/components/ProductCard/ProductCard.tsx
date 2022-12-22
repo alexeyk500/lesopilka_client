@@ -3,8 +3,8 @@ import classes from './ProductCard.module.css';
 import addCardButton from '../../img/addCardButton.svg';
 import { DriedEnum, ProductType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
-import starIco from './../../img/starIco.svg';
-import cartIco from './../../img/cartIco.svg';
+import starIco from '../../img/starIcoBlueStroke.svg';
+import cartIco from './../../img/cartIcoBlueStroke.svg';
 import cartIcoSelected from './../../img/cartIcoSelected.svg';
 import dimensionsIco from './../../img/dimensionsIco.svg';
 import wareHouseIco from './../../img/wareHouseIco.svg';
@@ -50,6 +50,10 @@ const ProductCard: React.FC<PropsType> = ({
     }
   };
 
+  const onClickToFavorite = (event: React.MouseEvent<HTMLImageElement>) => {
+    event.stopPropagation();
+  };
+
   return (
     <div className={classes.wrapper} onClick={onClickHandler}>
       <div className={classNames(classes.container, { [classes.notPublished]: isDraftProductCard })}>
@@ -76,13 +80,18 @@ const ProductCard: React.FC<PropsType> = ({
                 {!isManufacturerProductCard && (
                   <div className={classes.btnGroup}>
                     <div className={classes.starIcoContainer}>
-                      <img src={starIco} className={classes.starIco} alt="favorite" />
+                      <img
+                        src={starIco}
+                        className={classes.starIco}
+                        onClick={onClickToFavorite}
+                        alt="favorite"
+                      />
                     </div>
                     <img
                       src={product?.inBasket ? cartIcoSelected : cartIco}
                       className={classes.cartIco}
-                      alt="to basket"
                       onClick={onClickToBasket}
+                      alt="to basket"
                     />
                   </div>
                 )}

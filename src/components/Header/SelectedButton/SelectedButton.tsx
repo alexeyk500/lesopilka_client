@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from '../CartButton/CartButton.module.css';
-import starIco from '../../../img/starIco.svg';
+import starIco from '../../../img/starIcoGray.svg';
 
 const SelectedButton: React.FC = () => {
   return (

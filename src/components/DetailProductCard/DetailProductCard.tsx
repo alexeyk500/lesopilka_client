@@ -42,6 +42,10 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
     }
   }, [product, basketProducts]);
 
+  const onClickToggleFavorite = () => {
+    setIsFavorite((prev) => !prev);
+  };
+
   const onClickToggleBasket = () => {
     setIsInBasket((prev) => !prev);
   };
@@ -51,7 +55,13 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
       <div ref={refContent} className={classes.content}>
         <ImageSlider destroyPopUp={destroyPopUp} images={product.images} />
         <div className={classes.infoContainer}>
-          <SectionGeneralInfo product={product} isInBasket={isInBasket} onClickToggleBasket={onClickToggleBasket} />
+          <SectionGeneralInfo
+            product={product}
+            isInBasket={isInBasket}
+            onClickToggleBasket={onClickToggleBasket}
+            isFavorite={isFavorite}
+            onClickToggleFavorite={onClickToggleFavorite}
+          />
           <div className={classes.delimiter} />
           <SectionSizeInfo product={product} />
           <div className={classes.delimiter} />

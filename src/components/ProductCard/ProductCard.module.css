@@ -237,3 +237,7 @@
   transform: rotate(-25deg);
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+.starIcoContainer {
+  margin-right: 4px;
+}

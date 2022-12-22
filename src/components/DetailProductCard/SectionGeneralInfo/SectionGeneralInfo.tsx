@@ -1,24 +1,38 @@
 import React from 'react';
 import classes from './SectionGeneralInfo.module.css';
 import { ProductType, SepticEnum } from '../../../types/types';
-import starIco from '../../../img/starIco.svg';
-import cartIco from '../../../img/cartIco.svg';
+import starIco from '../../../img/starIcoBlueStroke.svg';
+import starIcoSelected from '../../../img/starIcoSelected.svg';
+import cartIco from '../../../img/cartIcoBlueStroke.svg';
 import cartIcoSelected from '../../../img/cartIcoSelected.svg';
 
 type PropsType = {
   product: ProductType;
   isInBasket: boolean;
   onClickToggleBasket: () => void;
+  isFavorite: boolean;
+  onClickToggleFavorite: () => void;
 };
 
-const SectionGeneralInfo: React.FC<PropsType> = ({ product, isInBasket, onClickToggleBasket }) => {
+const SectionGeneralInfo: React.FC<PropsType> = ({
+  product,
+  isInBasket,
+  isFavorite,
+  onClickToggleBasket,
+  onClickToggleFavorite,
+}) => {
   return (
     <div className={classes.container}>
       <div className={classes.topRowContainer}>
         <div className={classes.title}>{product.subCategory?.title}</div>
         <div className={classes.btnGroup}>
           <div className={classes.starIcoContainer}>
-            <img src={starIco} className={classes.starIco} alt="favorite" />
+            <img
+              src={isFavorite ? starIcoSelected : starIco}
+              className={classes.starIco}
+              onClick={onClickToggleFavorite}
+              alt="favorite"
+            />
           </div>
           <img
             src={isInBasket ? cartIcoSelected : cartIco}
