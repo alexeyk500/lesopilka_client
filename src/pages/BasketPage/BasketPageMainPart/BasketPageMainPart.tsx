@@ -1,11 +1,17 @@
 import React from 'react';
 import classes from './BasketPageMainPart.module.css';
 import BasketList from './BasketList/BasketList';
+import { ProductType } from '../../../types/types';
 
-const BasketPageMainPart: React.FC = () => {
+type PropsType = {
+  productsByManufacturer: ProductType[][];
+  manufacturersRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+};
+
+const BasketPageMainPart: React.FC<PropsType> = ({ productsByManufacturer, manufacturersRef }) => {
   return (
     <div className={classes.container}>
-      <BasketList />
+      <BasketList productsByManufacturer={productsByManufacturer} manufacturersRef={manufacturersRef} />
     </div>
   );
 };

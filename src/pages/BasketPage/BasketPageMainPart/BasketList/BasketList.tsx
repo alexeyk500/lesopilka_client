@@ -1,32 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classes from './BasketList.module.css';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorUser } from '../../../../store/userSlice';
-import { getBasketProductsThunk, selectorBasketProducts } from '../../../../store/basketSlice';
+
 import OrderToManufacturer from './OrderToManufacturer/OrderToManufacturer';
-import { splitProductsByManufacturer } from '../../../../utils/productFunctions';
+import { ProductType } from '../../../../types/types';
 
-const BasketList = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(selectorUser);
-  const basketProducts = useAppSelector(selectorBasketProducts);
+type PropsType = {
+  productsByManufacturer: ProductType[][];
+  manufacturersRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+};
 
-  useEffect(() => {
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (user && token) {
-      dispatch(getBasketProductsThunk(token));
-    }
-  }, [dispatch, user]);
-
-  const productsByManufacturer = splitProductsByManufacturer(basketProducts);
-
+const BasketList: React.FC<PropsType> = ({ productsByManufacturer, manufacturersRef }) => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
       <div className={classes.scrollContainer}>
-        {productsByManufacturer.map((products, ind) => (
-          <OrderToManufacturer key={ind} products={products} />
-        ))}
+        {productsByManufacturer.map((products, ind) => {
+          const getRef = (element: HTMLDivElement) => manufacturersRef.current.push(element);
+          return (
+            <div ref={getRef} key={ind}>
+              <OrderToManufacturer products={products} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -8,8 +8,14 @@ import { useAppSelector } from '../../../hooks/hooks';
 import { selectorCatalogSearchParams } from '../../../store/productSlice';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import { ProductType } from '../../../types/types';
 
-const BasketPageSelectors: React.FC = () => {
+type PropsType = {
+  productsByManufacturer: ProductType[][];
+  manufacturersRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+};
+
+const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manufacturersRef }) => {
   const navigate = useNavigate();
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
@@ -21,25 +27,25 @@ const BasketPageSelectors: React.FC = () => {
     }
   };
 
+  const onClickScrollTo = (ind: number) => {
+    manufacturersRef.current[ind]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Корзина'}</div>
       <div className={classes.btnSectionContainer}>
         <ButtonsSection title={'Поставщики'}>
-          <IconButton
-            ico={warehouseWhiteIco}
-            title={'ООО Лесопилка'}
-            secondRow={'г.Самара'}
-            customIconClasses={classes.warehouseWhiteIco}
-            onClick={() => {}}
-          />
-          <IconButton
-            ico={warehouseWhiteIco}
-            title={'ООО Четко пилим пиломатериалы'}
-            secondRow={'г.Пушкин и его окрестности'}
-            customIconClasses={classes.warehouseWhiteIco}
-            onClick={() => {}}
-          />
+          {productsByManufacturer.map((manufacturerProduct, ind) => (
+            <IconButton
+              key={ind}
+              ico={warehouseWhiteIco}
+              title={manufacturerProduct[0].manufacturer?.title || ''}
+              secondRow={manufacturerProduct[0].manufacturer?.address.location.title || ''}
+              customIconClasses={classes.warehouseWhiteIco}
+              onClick={() => onClickScrollTo(ind)}
+            />
+          ))}
         </ButtonsSection>
       </div>
 
