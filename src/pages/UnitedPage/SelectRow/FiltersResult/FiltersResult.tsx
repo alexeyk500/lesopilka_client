@@ -8,7 +8,7 @@ const FiltersResult: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.result}>{`Найдено ${totalProducts ?totalProducts :'0'} товаров`}</div>
+      <div className={classes.result}>{`Найдено ${totalProducts ? totalProducts : '0'} товаров`}</div>
     </div>
   );
 };

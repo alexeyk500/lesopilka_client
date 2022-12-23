@@ -25,7 +25,7 @@ import {
   setSelectedType,
 } from '../../../../store/priceSlice';
 import { serverApi } from '../../../../api/serverApi';
-import {PageEnum} from "../../../../components/AppRouter/AppRouter";
+import { PageEnum } from '../../../../components/AppRouter/AppRouter';
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();

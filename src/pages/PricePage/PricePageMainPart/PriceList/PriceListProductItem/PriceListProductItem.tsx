@@ -15,12 +15,10 @@ import {
   showDetailProductCardPopUp,
 } from '../../../../../components/DetailProductCard/DetailProductCard';
 import classNames from 'classnames';
-import cartIco from "../../../../../img/cartIcoBlueStroke.svg";
-import cartIcoSelected from "../../../../../img/cartIcoSelected.svg";
-import {
-  showPopUpDeleteProductFromBasket
-} from "../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm";
-import {toggleProductForBasketThunk} from "../../../../../store/basketSlice";
+import cartIco from '../../../../../img/cartIcoBlueStroke.svg';
+import cartIcoSelected from '../../../../../img/cartIcoSelected.svg';
+import { showPopUpDeleteProductFromBasket } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { toggleProductForBasketThunk } from '../../../../../store/basketSlice';
 
 type PropsType = {
   product: ProductType;
@@ -63,7 +61,7 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
         dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
       }
     }
-  }
+  };
 
   return (
     <div className={classNames(classes.container, { [classes.notPublished]: product.publicationDate === undefined })}>
@@ -77,14 +75,15 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
           <div className={classes.visibilityIcoContainer} onClick={onClickView}>
             <img className={classes.visibilityIco} src={visibilityIcoOn} alt="view" />
           </div>
-          { isManufacturerPage
-            ? <div className={classes.editIcoContainer} onClick={onClickEdit}>
-                <img className={classes.editBlueIco} src={editBlueIco} alt="edit" />
-              </div>
-            : <div className={classes.toBasketContainer} onClick={onToggleBasket}>
-                <img className={classes.basketIco} src={isProductInBasket ?cartIcoSelected :cartIco} alt="to basket" />
-              </div>
-          }
+          {isManufacturerPage ? (
+            <div className={classes.editIcoContainer} onClick={onClickEdit}>
+              <img className={classes.editBlueIco} src={editBlueIco} alt="edit" />
+            </div>
+          ) : (
+            <div className={classes.toBasketContainer} onClick={onToggleBasket}>
+              <img className={classes.basketIco} src={isProductInBasket ? cartIcoSelected : cartIco} alt="to basket" />
+            </div>
+          )}
         </div>
       </div>
       <div className={classes.delimiter} />

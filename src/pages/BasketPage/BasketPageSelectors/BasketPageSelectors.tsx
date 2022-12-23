@@ -4,23 +4,22 @@ import IconButton from '../../../components/commonComponents/IconButton/IconButt
 import warehouseWhiteIco from '../../../img/warehouseWhiteIco.svg';
 import ButtonsSection from '../../../components/commonComponents/ButtonsSection/ButtonsSection';
 import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import {useAppSelector} from "../../../hooks/hooks";
-import {selectorCatalogSearchParams} from "../../../store/productSlice";
-import {useNavigate} from "react-router-dom";
-import {PageEnum} from "../../../components/AppRouter/AppRouter";
+import { useAppSelector } from '../../../hooks/hooks';
+import { selectorCatalogSearchParams } from '../../../store/productSlice';
+import { useNavigate } from 'react-router-dom';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
 const BasketPageSelectors: React.FC = () => {
-
   const navigate = useNavigate();
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const onClickGoToCatalog = () => {
     if (catalogSearchParams) {
-      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`)
+      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`);
     } else {
-      navigate(PageEnum.RootPage)
+      navigate(PageEnum.RootPage);
     }
-  }
+  };
 
   return (
     <div className={classes.container}>
