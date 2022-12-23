@@ -10,6 +10,13 @@
   margin-right: 6px;
 }
 
+.viewContainer {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  cursor: pointer;
+}
+
 .imageContainer {
   display: flex;
   flex-shrink: 0;
@@ -83,6 +90,7 @@
 
 .summColumn {
   width: 125px;
+  margin-right: 6px;
   flex-shrink: 0;
   text-align: center;
   font-size: 14px;
@@ -92,7 +100,7 @@
 
 .actionsColumn{
   display: flex;
-  padding: 0 32px;
+  padding-right:6px;
 }
 
 .actionContainer {
@@ -104,12 +112,7 @@
   cursor: pointer;
 }
 
-.viewIco {
-  width: 24px;
-}
-
 .deleteIco {
-  margin-left: 8px;
   margin-top: -4px;
   height: 16px;
 }

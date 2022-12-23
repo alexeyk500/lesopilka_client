@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { getBasketProductsThunk, selectorBasketProducts } from '../../../../store/basketSlice';
 import OrderToManufacturer from './OrderToManufacturer/OrderToManufacturer';
+import { splitProductsByManufacturer } from '../../../../utils/productFunctions';
 
 const BasketList = () => {
   const dispatch = useAppDispatch();
@@ -17,12 +18,15 @@ const BasketList = () => {
     }
   }, [dispatch, user]);
 
+  const productsByManufacturer = splitProductsByManufacturer(basketProducts);
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
       <div className={classes.scrollContainer}>
-        <OrderToManufacturer products={basketProducts} />
-        {/*<OrderToManufacturer products={basketProducts} />*/}
+        {productsByManufacturer.map((products, ind) => (
+          <OrderToManufacturer key={ind} products={products} />
+        ))}
       </div>
     </div>
   );

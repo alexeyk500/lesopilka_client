@@ -10,6 +10,7 @@ export type ManufacturerType = {
   inn: string;
   title: string;
   phone: string;
+  email: string;
   address: {
     id: number;
     region: RegionType;

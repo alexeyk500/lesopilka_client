@@ -1,5 +1,23 @@
 import { ProductType, SubCategoryType } from '../types/types';
 
+export const splitProductsByManufacturer = (products: ProductType[]): ProductType[][] => {
+  const separatedProducts: ProductType[][] = [];
+  const manufacturerIds: number[] = [];
+  products.forEach((product) => {
+    if (product.manufacturer?.id) {
+      if (!manufacturerIds.includes(product.manufacturer.id)) {
+        manufacturerIds.push(product.manufacturer.id);
+        separatedProducts.push([]);
+      }
+      const ind = manufacturerIds.findIndex((id) => id === product.manufacturer?.id);
+      if (ind > -1) {
+        separatedProducts[ind].push(product);
+      }
+    }
+  });
+  return separatedProducts;
+};
+
 export const splitBySubCategory = (products: ProductType[] | undefined, subCategories: SubCategoryType[]) => {
   if (products && products.length > 0) {
     const separatedProducts: ProductType[][] = [];

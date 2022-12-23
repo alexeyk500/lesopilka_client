@@ -9,7 +9,6 @@ import {
   toStrWithDelimiter,
 } from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
-import viewIco from '../../../../../../img/visibilityIcoOn.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
 import { toggleProductForBasketThunk, updateBasketProductAmountThunk } from '../../../../../../store/basketSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
@@ -37,8 +36,6 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   const [amount, setAmount] = useState(product.amountInBasket ? product.amountInBasket : 0);
 
   const { square, weight, volume, summ } = getLogisticInfo(product, amount);
-
-  console.log(square, weight, volume, summ);
 
   const onChangeAmount = (newValue: number | string) => {
     if (typeof newValue === 'number') {
@@ -97,25 +94,27 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
   return (
     <div className={classes.container}>
       <div className={classes.numTitle}>{num}</div>
-      <div className={classes.imageContainer}>
-        {product.images?.[0] ? (
-          <img src={product.images?.[0] || ''} className={classes.img} alt="product" />
-        ) : (
-          <div>No image</div>
-        )}
-      </div>
-      <div className={classes.descriptionContainer}>
-        <div className={classes.descriptionRow}>
-          {product.subCategory?.title}
-          {productSizes && `, ${productSizes} мм`}
+      <div className={classes.viewContainer}>
+        <div className={classes.imageContainer} onClick={onClickViewProduct}>
+          {product.images?.[0] ? (
+            <img src={product.images?.[0] || ''} className={classes.img} alt="product" />
+          ) : (
+            <div>No image</div>
+          )}
         </div>
-        <div className={classes.descriptionRow}>
-          {product.material?.title.toLowerCase()}
-          {product.sort?.title && `, ${product.sort?.title}`.toLowerCase()}
-          {product.isSeptic && `, ${SepticEnum.septic}`.toLowerCase()}
-          {product.isDried ? `, ${DriedEnum.dried}`.toLowerCase() : `, ${DriedEnum.noDried}`.toLowerCase()}
+        <div className={classes.descriptionContainer} onClick={onClickViewProduct}>
+          <div className={classes.descriptionRow}>
+            {product.subCategory?.title}
+            {productSizes && `, ${productSizes} мм`}
+          </div>
+          <div className={classes.descriptionRow}>
+            {product.material?.title.toLowerCase()}
+            {product.sort?.title && `, ${product.sort?.title}`.toLowerCase()}
+            {product.isSeptic && `, ${SepticEnum.septic}`.toLowerCase()}
+            {product.isDried ? `, ${DriedEnum.dried}`.toLowerCase() : `, ${DriedEnum.noDried}`.toLowerCase()}
+          </div>
+          <div className={classes.descriptionRow}>{`артикул: ${product.code}`}</div>
         </div>
-        <div className={classes.descriptionRow}>{`артикул: ${product.code}`}</div>
       </div>
       <div className={classes.priceContainer}>
         <div className={classes.priceRow}>{formatPrice(product?.price)}</div>
@@ -133,9 +132,6 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
         {`${formatPrice(summ ? summ : 0)}`} <span>{' руб.'}</span>
       </div>
       <div className={classes.actionsColumn}>
-        <div className={classes.actionContainer} onClick={onClickViewProduct}>
-          <img src={viewIco} className={classes.viewIco} alt="view" />
-        </div>
         <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
           <img src={deleteIco} className={classes.deleteIco} alt="view" />
         </div>

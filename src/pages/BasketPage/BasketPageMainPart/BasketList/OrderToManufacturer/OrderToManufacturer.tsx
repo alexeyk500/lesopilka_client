@@ -7,8 +7,6 @@ import ButtonComponent, {
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
-import { useAppSelector } from '../../../../../hooks/hooks';
-import { selectorUser } from '../../../../../store/userSlice';
 import { getTotalLogisticInfo } from '../../../../../utils/functions';
 
 type PropsType = {
@@ -16,7 +14,7 @@ type PropsType = {
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
-  const user = useAppSelector(selectorUser);
+  const manufacturer = products[0].manufacturer;
 
   const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
 
@@ -24,14 +22,14 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
     <div className={classes.container}>
       <div className={classes.orderInfoRow}>
         <div className={classes.manufacturerInfo}>
-          <div className={classes.rowTitle}>{user?.manufacturer?.title}</div>
+          <div className={classes.rowTitle}>{manufacturer?.title}</div>
           <div className={classes.rowTitle}>
-            {user?.manufacturer?.address?.region.title}, {user?.manufacturer?.address?.location.title},{' '}
-            {user?.manufacturer?.address?.street}, {`д.${user?.manufacturer?.address?.building}`}
-            {user?.manufacturer?.address?.office && `, оф.${user?.manufacturer?.address?.office}`}
+            {manufacturer?.address?.region.title}, {manufacturer?.address?.location.title},{' '}
+            {manufacturer?.address?.street}, {`д.${manufacturer?.address?.building}`}
+            {manufacturer?.address?.office && `, оф.${manufacturer?.address?.office}`}
           </div>
-          <div className={classes.rowTitle}>{user?.email}</div>
-          <div className={classes.rowTitle}>{user?.manufacturer?.phone}</div>
+          <div className={classes.rowTitle}>{manufacturer?.email}</div>
+          <div className={classes.rowTitle}>{manufacturer?.phone}</div>
         </div>
         <div className={classes.infoRowActions}>
           <div className={classes.actionContainer}>
