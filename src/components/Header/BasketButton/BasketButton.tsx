@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import cartIco from '../../../img/cartIco.svg';
-import classes from './CartButton.module.css';
+import classes from './BasketButton.module.css';
 import { PageEnum } from '../../AppRouter/AppRouter';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { selectorUser, userLoginByPasswordThunk } from '../../../store/userSlice';
 import { PopupRef, showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
@@ -10,10 +10,12 @@ import LoginForm from '../LoginButton/LoginForm/LoginForm';
 import RegistrationButton from '../LoginButton/RegistrationForm/RegistrationButton/RegistrationButton';
 import ForgotPasswordButton from '../LoginButton/RegistrationForm/ForgotPasswordButton/ForgotPasswordButton';
 import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import {setCatalogSearchParams} from "../../../store/productSlice";
 
-const CartButton: React.FC = () => {
+const BasketButton: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);
   const preloaderPopUpRef = useRef<PopupRef | null>(null);
 
@@ -59,6 +61,7 @@ const CartButton: React.FC = () => {
 
   const onClickBasket = () => {
     if (user) {
+      dispatch(setCatalogSearchParams(searchParams.toString()));
       navigate(PageEnum.BasketPage);
     } else {
       loginUser();
@@ -72,4 +75,4 @@ const CartButton: React.FC = () => {
   );
 };
 
-export default CartButton;
+export default BasketButton;

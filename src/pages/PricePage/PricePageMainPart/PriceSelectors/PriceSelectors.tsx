@@ -12,8 +12,8 @@ import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSqua
 import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSection/CheckBoxSection';
 import LicensesMonitor from '../../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
 import ButtonComponent from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { getBackwardRouteToManufacturerCatalog } from '../../../../utils/functions';
-import { useNavigate } from 'react-router-dom';
+import { checkIsManufacturerPage, getBackwardRouteToManufacturerCatalog } from '../../../../utils/functions';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
@@ -25,14 +25,17 @@ import {
   setSelectedType,
 } from '../../../../store/priceSlice';
 import { serverApi } from '../../../../api/serverApi';
+import {PageEnum} from "../../../../components/AppRouter/AppRouter";
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const products = useAppSelector(selectorPriceProducts);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
+  const isManufacturerPage = checkIsManufacturerPage(location);
 
   const productsCount = products.length;
   const publishedProductsCount = products.filter((product) => product.publicationDate).length;
@@ -67,31 +70,37 @@ const PriceSelectors: React.FC = () => {
     }
   };
 
+  const onClickReturnToBasket = () => {
+    navigate(PageEnum.BasketPage);
+  };
+
   return (
     <div className={classes.container}>
-      <CheckBoxSection title={'Товары'}>
-        <CheckBoxSquare
-          id={1}
-          title={'Опубликованные'}
-          checked={selectedPriceType === PriceSelectedTypeEnum.published}
-          onSelect={onSelect}
-          amount={publishedProductsCount}
-        />
-        <CheckBoxSquare
-          id={2}
-          title={'Черновики'}
-          checked={selectedPriceType === PriceSelectedTypeEnum.draft}
-          onSelect={onSelect}
-          amount={productsCount - publishedProductsCount}
-        />
-        <CheckBoxSquare
-          id={3}
-          title={'Все'}
-          checked={selectedPriceType === PriceSelectedTypeEnum.all}
-          onSelect={onSelect}
-          amount={productsCount}
-        />
-      </CheckBoxSection>
+      {isManufacturerPage && (
+        <CheckBoxSection title={'Товары'}>
+          <CheckBoxSquare
+            id={1}
+            title={'Опубликованные'}
+            checked={selectedPriceType === PriceSelectedTypeEnum.published}
+            onSelect={onSelect}
+            amount={publishedProductsCount}
+          />
+          <CheckBoxSquare
+            id={2}
+            title={'Черновики'}
+            checked={selectedPriceType === PriceSelectedTypeEnum.draft}
+            onSelect={onSelect}
+            amount={productsCount - publishedProductsCount}
+          />
+          <CheckBoxSquare
+            id={3}
+            title={'Все'}
+            checked={selectedPriceType === PriceSelectedTypeEnum.all}
+            onSelect={onSelect}
+            amount={productsCount}
+          />
+        </CheckBoxSection>
+      )}
       <ButtonsSection title={'Прайс'}>
         <IconButton
           ico={downloadIco}
@@ -99,16 +108,30 @@ const PriceSelectors: React.FC = () => {
           customIconClasses={classes.downloadIco}
           onClick={onClickDownload}
         />
-        <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />
-        <IconButton ico={printIco} title={'Печать'} />
+        {isManufacturerPage && (
+          <>
+            <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />
+            <IconButton ico={printIco} title={'Печать'} />
+          </>
+        )}
       </ButtonsSection>
-      <ButtonsSection title={'Цены'}>
-        <IconButton ico={downloadPrice} title={'Загрузить'} customIconClasses={classes.downloadPrice} />
-      </ButtonsSection>
-      <LicensesMonitor />
-      <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
-      </div>
+      {isManufacturerPage && (
+        <>
+          <ButtonsSection title={'Цены'}>
+            <IconButton ico={downloadPrice} title={'Загрузить'} customIconClasses={classes.downloadPrice} />
+          </ButtonsSection>
+          <LicensesMonitor />
+        </>
+      )}
+      {isManufacturerPage ? (
+        <div className={classes.btnReadyContainer}>
+          <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
+        </div>
+      ) : (
+        <div className={classes.btnReadyContainer}>
+          <ButtonComponent title={'В корзину'} onClick={onClickReturnToBasket} />
+        </div>
+      )}
     </div>
   );
 };

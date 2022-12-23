@@ -8,16 +8,25 @@ import ButtonComponent, {
 import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
+import { useNavigate } from 'react-router-dom';
+import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 
 type PropsType = {
   products: ProductType[];
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
+  const navigate = useNavigate();
   const manufacturer = products[0].manufacturer;
 
   const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
   const allProductAvailable = isAllProductAvailable(products);
+
+  const goToPrice = () => {
+    if (manufacturer?.id) {
+      navigate(`${PageEnum.UserPricePage}/${manufacturer.id}`);
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -34,10 +43,10 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
         </div>
         <div className={classes.infoRowActions}>
           <div className={classes.actionContainer}>
-            <img src={addToBasketIco} className={classes.addToBasketIco} alt="view" />
+            <img src={addToBasketIco} className={classes.addToBasketIco} onClick={goToPrice} alt="add to basket" />
           </div>
           <div className={classes.actionContainer}>
-            <img src={downloadFileIco} className={classes.downloadFileIco} alt="view" />
+            <img src={downloadFileIco} className={classes.downloadFileIco} alt="download" />
           </div>
         </div>
         <div className={classes.btnContainer}>

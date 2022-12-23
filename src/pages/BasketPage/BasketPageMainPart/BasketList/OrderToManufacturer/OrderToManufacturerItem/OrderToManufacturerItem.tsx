@@ -88,8 +88,8 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classNames(classes.numTitle, { [classes.redText]: !product.publicationDate })}>{num}</div>
-      <div className={classes.viewContainer}>
+      <div className={classes.numTitle}>{num}</div>
+      <div className={classNames(classes.viewContainer, { [classes.grayText]: !product.publicationDate })}>
         <div className={classes.imageContainer} onClick={onClickViewProduct}>
           {product.images?.[0] ? (
             <img src={product.images?.[0] || ''} className={classes.img} alt="product" />
@@ -98,7 +98,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
           )}
         </div>
         <div
-          className={classNames(classes.descriptionContainer, { [classes.redText]: !product.publicationDate })}
+          className={classNames(classes.descriptionContainer, { [classes.grayText]: !product.publicationDate })}
           onClick={onClickViewProduct}
         >
           <div className={classes.descriptionRow}>

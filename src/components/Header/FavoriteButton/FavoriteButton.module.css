@@ -1,7 +1,7 @@
 .container {
   display: flex;
   padding: 0;
-  margin-right: 24px;
+  margin-right: 8px;
   cursor: pointer;
   background-color: transparent;
   border: none;

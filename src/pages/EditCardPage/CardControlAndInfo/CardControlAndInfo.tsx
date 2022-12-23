@@ -62,7 +62,7 @@ const CardControlAndInfo: React.FC = () => {
   };
 
   const returnToPrice = () => {
-    navigate(PageEnum.PricePage);
+    navigate(PageEnum.ManufacturerPricePage);
   };
 
   const onCloseDeleteCardPopUp = (result?: boolean | FormData) => {

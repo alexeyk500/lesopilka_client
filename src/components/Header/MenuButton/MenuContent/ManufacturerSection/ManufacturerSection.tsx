@@ -28,7 +28,7 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
 
   const onClickPrice = () => {
     if (user?.manufacturer?.id) {
-      navigate(PageEnum.PricePage);
+      navigate(PageEnum.ManufacturerPricePage);
     }
     closeMenuContent();
   };

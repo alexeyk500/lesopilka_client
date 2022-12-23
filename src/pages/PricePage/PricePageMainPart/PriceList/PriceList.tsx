@@ -24,15 +24,20 @@ import {
   splitByIsSeptic,
   splitBySubCategory,
 } from '../../../../utils/productFunctions';
+import { checkIsManufacturerPage } from '../../../../utils/functions';
+import { useLocation, useParams } from 'react-router-dom';
 
 const PriceList = () => {
+  const { mid } = useParams();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const user = useAppSelector(selectorUser);
   const products = useAppSelector(selectorPriceProducts);
   const subCategories = useAppSelector(selectorSubCategories);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const priceEditProductId = useAppSelector(selectorPriceEditProductId);
   const priceDownloading = useAppSelector(selectorPriceDownloading);
+  const isManufacturerPage = checkIsManufacturerPage(location);
 
   const refs = useRef<HTMLDivElement[]>([]);
 
@@ -40,13 +45,21 @@ const PriceList = () => {
   const [highlightedId, setHighlightedId] = useState<number | undefined>(32);
 
   useEffect(() => {
-    if (user?.manufacturer?.id) {
-      const searchParams = new URLSearchParams();
-      searchParams.append(QueryEnum.ManufacturerId, user.manufacturer.id.toString());
-      searchParams.append(QueryEnum.PageType, PageTypeEnum.pricePage);
+    const searchParams = new URLSearchParams();
+    searchParams.append(QueryEnum.PageType, PageTypeEnum.pricePage);
+    if (isManufacturerPage) {
+      if (user?.manufacturer?.id) {
+        searchParams.append(QueryEnum.ManufacturerId, user.manufacturer.id.toString());
+      }
+    } else {
+      if (mid) {
+        searchParams.append(QueryEnum.ManufacturerId, mid);
+      }
+    }
+    if (searchParams.get(QueryEnum.PageType) && searchParams.get(QueryEnum.ManufacturerId)) {
       dispatch(getPriceProductsThunk(searchParams));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, isManufacturerPage, mid]);
 
   const onClickProduct = (id: number) => {
     setHighlightedId(id);

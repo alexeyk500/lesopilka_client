@@ -4,6 +4,7 @@ import { RootState } from './store';
 import { GetProductsServerType } from '../api/serverResponseTypes';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { PageEnum } from '../components/AppRouter/AppRouter';
 
 type PriceSliceType = {
   products: ProductType[];
@@ -11,6 +12,7 @@ type PriceSliceType = {
   isLoading: boolean;
   editProductId: number | undefined;
   priceDownloading: boolean;
+  returnTo: string;
 };
 
 const initialState: PriceSliceType = {
@@ -19,6 +21,7 @@ const initialState: PriceSliceType = {
   isLoading: false,
   editProductId: undefined,
   priceDownloading: false,
+  returnTo: PageEnum.RootPage,
 };
 
 export const getPriceProductsThunk = createAsyncThunk<
@@ -69,5 +72,6 @@ export const selectorSelectedPriceType = (state: RootState) => state.price.selec
 export const selectorPriceProducts = (state: RootState) => state.price.products;
 export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
 export const selectorPriceDownloading = (state: RootState) => state.price.priceDownloading;
+export const selectorPriceReturnTo = (state: RootState) => state.price.returnTo;
 
 export default priceSlice.reducer;

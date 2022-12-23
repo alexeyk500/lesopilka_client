@@ -1,18 +1,25 @@
 import React from 'react';
-import classes from '../CartButton/CartButton.module.css';
+import classes from './CatalogButton.module.css';
 import catalogIcoGray from '../../../img/catalogIcoGray.svg';
 import { useNavigate } from 'react-router-dom';
-import { PageEnum } from '../../AppRouter/AppRouter';
+import {useAppSelector} from "../../../hooks/hooks";
+import {selectorCatalogSearchParams} from "../../../store/productSlice";
+import {PageEnum} from "../../AppRouter/AppRouter";
 
 const CatalogButton: React.FC = () => {
   const navigate = useNavigate();
+  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
-  const onClickCatalog = () => {
-    navigate(PageEnum.RootPage);
-  };
+  const onClickGoToCatalog = () => {
+    if (catalogSearchParams) {
+      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`)
+    } else {
+      navigate(PageEnum.RootPage)
+    }
+  }
 
   return (
-    <button className={classes.container} onClick={onClickCatalog}>
+    <button className={classes.container} onClick={onClickGoToCatalog}>
       <img className={classes.ico} src={catalogIcoGray} alt="button catalog" />
     </button>
   );

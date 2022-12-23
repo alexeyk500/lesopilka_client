@@ -22,7 +22,7 @@ const EditCardMainPart: React.FC = () => {
     ? [
         { title: getManufacturerOrUserName(user) },
         { title: 'Продажи', route: getBackwardRoute },
-        { title: 'Прайс лист', route: PageEnum.PricePage },
+        { title: 'Прайс лист', route: PageEnum.ManufacturerPricePage },
         { title: 'Редактирование товара' },
       ]
     : [

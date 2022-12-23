@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from '../CartButton/CartButton.module.css';
+import classes from './FavoriteButton.module.css';
 import starIco from '../../../img/starIcoGray.svg';
 
-const SelectedButton: React.FC = () => {
+const FavoriteButton: React.FC = () => {
   return (
     <button className={classes.container}>
       <img className={classes.ico} src={starIco} alt="button selected" />
@@ -10,4 +10,4 @@ const SelectedButton: React.FC = () => {
   );
 };
 
-export default SelectedButton;
+export default FavoriteButton;

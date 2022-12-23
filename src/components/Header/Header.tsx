@@ -4,8 +4,8 @@ import LoginButton from './LoginButton/LoginButton';
 import MenuButton from './MenuButton/MenuButton';
 import { userLoginByTokenThunk } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
-import CartButton from './CartButton/CartButton';
-import SelectedButton from './SelectedButton/SelectedButton';
+import BasketButton from './BasketButton/BasketButton';
+import FavoriteButton from './FavoriteButton/FavoriteButton';
 import Logo from './Logo/Logo';
 import Search from './Search/Search';
 import {
@@ -38,8 +38,8 @@ const Header: React.FC = () => {
         <SearchLocationSelector />
         <Search />
         <CatalogButton />
-        <SelectedButton />
-        <CartButton />
+        <FavoriteButton />
+        <BasketButton />
         <LoginButton />
       </div>
     </div>

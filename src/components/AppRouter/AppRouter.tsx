@@ -17,7 +17,8 @@ export enum PageEnum {
   RootPage = '/',
   UserPage = '/user',
   SuccessRegistrationPage = '/success_registration',
-  PricePage = '/manufacturer_price_page',
+  ManufacturerPricePage = '/manufacturer_price_page',
+  UserPricePage = '/user_price_page',
   BasketPage = '/basket_page',
   ManufacturerPage = '/manufacturer',
   EditProduct = '/edit_product',
@@ -26,13 +27,14 @@ export enum PageEnum {
 
 const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
+  { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
   { path: PageEnum.UserPage, element: <UserPage /> },
   { path: PageEnum.ManufacturerPage, element: <UnitedPage /> },
-  { path: PageEnum.PricePage, element: <PricePage /> },
+  { path: PageEnum.ManufacturerPricePage, element: <PricePage /> },
   { path: PageEnum.BasketPage, element: <BasketPage /> },
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
