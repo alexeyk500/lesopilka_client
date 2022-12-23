@@ -7,7 +7,7 @@ import ButtonComponent, {
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
-import { getTotalLogisticInfo } from '../../../../../utils/functions';
+import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
 
 type PropsType = {
   products: ProductType[];
@@ -17,6 +17,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
   const manufacturer = products[0].manufacturer;
 
   const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
+  const allProductAvailable = isAllProductAvailable(products);
 
   return (
     <div className={classes.container}>
@@ -40,7 +41,11 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
           </div>
         </div>
         <div className={classes.btnContainer}>
-          <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
+          {allProductAvailable ? (
+            <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
+          ) : (
+            <ButtonComponent title={'Оформить'} buttonType={ButtonType.GRAY} onClick={() => {}} />
+          )}
         </div>
       </div>
       <div className={classes.delimiter} />

@@ -2,7 +2,7 @@ import { CategorySizeType, OptionsType, ProductType, QueryEnum, SizeTypeEnum, Us
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
-import { Dispatch } from 'react';
+import { AppDispatch } from '../store/store';
 
 export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   const elements = myFormElement.elements;
@@ -274,7 +274,7 @@ export const getProductSizesStr = (product: ProductType | undefined) => {
 
 export const onCloseDetailCard = (
   { productId, isFavorite, isInBasket }: CloseDetailCardType,
-  dispatch: Dispatch<any>,
+  dispatch: AppDispatch,
   basketProducts: ProductType[]
 ) => {
   const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
@@ -323,14 +323,20 @@ export const getTotalLogisticInfo = (products: ProductType[]) => {
   let totalVolume = 0;
   let totalSumm = 0;
   products.forEach((product) => {
-    const { weight, volume, summ } = getLogisticInfo(product);
-    totalWeight += Number(weight);
-    totalVolume += Number(volume);
-    totalSumm += Number(summ);
+    if (product.publicationDate) {
+      const { weight, volume, summ } = getLogisticInfo(product);
+      totalWeight += Number(weight);
+      totalVolume += Number(volume);
+      totalSumm += Number(summ);
+    }
   });
   return {
     totalWeight: toStrWithDelimiter(totalWeight.toFixed(1)),
     totalVolume: toStrWithDelimiter(totalVolume.toFixed(1)),
     totalSumm: toStrWithDelimiter(totalSumm.toFixed(2)),
   };
+};
+
+export const isAllProductAvailable = (products: ProductType[]) => {
+  return !products.find((product) => product.publicationDate === undefined);
 };

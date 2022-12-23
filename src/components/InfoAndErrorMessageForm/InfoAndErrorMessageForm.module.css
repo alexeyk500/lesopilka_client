@@ -27,7 +27,7 @@
 }
 
 .customClassBottomBtnGroup {
-  padding: 0 32px 0 64px;
+  padding: 0 32px 0 64px !important;
 }
 
 @media (max-width: 375px) {

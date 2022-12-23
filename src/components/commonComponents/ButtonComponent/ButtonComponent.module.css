@@ -27,6 +27,12 @@
   background-color: var(--green_color);
 }
 
+.gray {
+  color: #FFFFFF;
+  background-color: var(--gray_color_light);
+  cursor: default;
+}
+
 .secondary {
   color: var(--blue_color);
   background-color: #FFFFFF;

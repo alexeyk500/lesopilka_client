@@ -2,13 +2,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classes from './DetailProductCard.module.css';
 import { ProductType } from '../../types/types';
 import { createRoot, Root } from 'react-dom/client';
-import useClickOutsideElement from '../../hooks/useClickOutsideElement';
 import ImageSlider from './ImageSlider/ImageSlider';
 import SectionGeneralInfo from './SectionGeneralInfo/SectionGeneralInfo';
 import SectionSizeInfo from './SectionSizeInfo/SectionSizeInfo';
 import SectionDescription from './SectionDescription/SectionDescription';
 import SectionPriceInfo from './SectionPriceInfo/SectionPriceInfo';
 import SectionReviews from './SectionReviews/SectionReviews';
+import { showPopUpDeleteProductFromBasket } from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type PropsType = {
   divId: string;
@@ -22,9 +22,7 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
   const refContent = useRef<HTMLDivElement | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isInBasket, setIsInBasket] = useState(false);
-  useClickOutsideElement(refContent, () => {
-    destroyPopUp();
-  });
+  const [isOpenAnyPopUp, setIsOpenAnyPopUp] = useState(false);
 
   const destroyPopUp = useCallback(() => {
     onClose({ productId: product.id, isFavorite, isInBasket });
@@ -34,6 +32,20 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
       div.parentNode?.removeChild(div);
     }
   }, [divId, popUpRoot, isFavorite, isInBasket, onClose, product.id]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (event && event.target && refContent.current && !refContent.current.contains(event.target as HTMLElement)) {
+        if (!isOpenAnyPopUp) {
+          destroyPopUp();
+        }
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [refContent, destroyPopUp, isOpenAnyPopUp]);
 
   useEffect(() => {
     const basketProduct = basketProducts.find((basketProduct) => basketProduct.id === product.id);
@@ -46,8 +58,21 @@ const DetailProductCard: React.FC<PropsType> = ({ divId, popUpRoot, product, bas
     setIsFavorite((prev) => !prev);
   };
 
-  const onClickToggleBasket = () => {
+  const toggleBasket = () => {
     setIsInBasket((prev) => !prev);
+  };
+
+  const setAllowToClose = () => {
+    setIsOpenAnyPopUp(false);
+  };
+
+  const onClickToggleBasket = () => {
+    if (isInBasket) {
+      setIsOpenAnyPopUp(true);
+      showPopUpDeleteProductFromBasket(product, undefined, toggleBasket, setAllowToClose);
+    } else {
+      toggleBasket();
+    }
   };
 
   return (

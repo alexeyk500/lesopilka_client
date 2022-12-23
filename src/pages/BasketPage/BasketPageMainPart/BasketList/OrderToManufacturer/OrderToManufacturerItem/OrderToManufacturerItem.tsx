@@ -10,9 +10,10 @@ import {
 } from '../../../../../../utils/functions';
 import AmountInput from '../../../../../../components/AmountInput/AmountInput';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
-import { toggleProductForBasketThunk, updateBasketProductAmountThunk } from '../../../../../../store/basketSlice';
+import deleteRedIco from '../../../../../../img/deleteRedIco.svg';
+import { updateBasketProductAmountThunk } from '../../../../../../store/basketSlice';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
-import { showConfirmPopUp } from '../../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { showPopUpDeleteProductFromBasket } from '../../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { getProductThunk, selectorBasketProducts } from '../../../../../../store/productSlice';
 import { isFulfilled } from '@reduxjs/toolkit';
 import {
@@ -21,6 +22,7 @@ import {
 } from '../../../../../../components/DetailProductCard/DetailProductCard';
 import useDebouncedFunction from '../../../../../../hooks/useDebounceFunction';
 import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../utils/constants';
+import classNames from 'classnames';
 
 type PropsType = {
   num: number;
@@ -66,17 +68,10 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
     true
   );
 
-  const onConfirmDelete = (result: boolean | FormData | undefined) => {
-    if (result) {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (product?.id && token) {
-        dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
-      }
-    }
-  };
-
   const onClickDeleteFromBasket = () => {
-    showConfirmPopUp(`${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из корзины`, onConfirmDelete);
+    if (product) {
+      showPopUpDeleteProductFromBasket(product, dispatch);
+    }
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
@@ -93,7 +88,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.numTitle}>{num}</div>
+      <div className={classNames(classes.numTitle, { [classes.redText]: !product.publicationDate })}>{num}</div>
       <div className={classes.viewContainer}>
         <div className={classes.imageContainer} onClick={onClickViewProduct}>
           {product.images?.[0] ? (
@@ -102,7 +97,10 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
             <div>No image</div>
           )}
         </div>
-        <div className={classes.descriptionContainer} onClick={onClickViewProduct}>
+        <div
+          className={classNames(classes.descriptionContainer, { [classes.redText]: !product.publicationDate })}
+          onClick={onClickViewProduct}
+        >
           <div className={classes.descriptionRow}>
             {product.subCategory?.title}
             {productSizes && `, ${productSizes} мм`}
@@ -117,23 +115,40 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
         </div>
       </div>
       <div className={classes.priceContainer}>
-        <div className={classes.priceRow}>{formatPrice(product?.price)}</div>
-        <div className={classes.priceRowLow}>{'руб.шт'}</div>
+        {product.publicationDate && (
+          <>
+            <div className={classes.priceRow}>{formatPrice(product?.price)}</div>
+            <div className={classes.priceRowLow}>{'руб.шт'}</div>
+          </>
+        )}
       </div>
       <div className={classes.amountColumn}>
-        <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
-        <div className={classes.amountInfo}>
-          <div className={classes.amountInfoWeight}>{weight && `${toStrWithDelimiter(weight.toFixed(1))} кг.`}</div>
-          <div className={classes.amountInfoSquare}>{square && `${square.toFixed(2)} м.кв.`}</div>
-          <div className={classes.amountInfoVolume}>{volume && `${volume.toFixed(2)} м.куб.`}</div>
-        </div>
+        {product.publicationDate ? (
+          <>
+            <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
+            <div className={classes.amountInfo}>
+              <div className={classes.amountInfoWeight}>{weight && `${toStrWithDelimiter(weight.toFixed(1))} кг.`}</div>
+              <div className={classes.amountInfoSquare}>{square && `${square.toFixed(2)} м.кв.`}</div>
+              <div className={classes.amountInfoVolume}>{volume && `${volume.toFixed(2)} м.куб.`}</div>
+            </div>
+          </>
+        ) : (
+          <div className={classes.unavailableInfo}>
+            <div className={classes.unavailableRow}>Временно</div>
+            <div className={classes.unavailableRow}>недоступен</div>
+          </div>
+        )}
       </div>
       <div className={classes.summColumn}>
-        {`${formatPrice(summ ? summ : 0)}`} <span>{' руб.'}</span>
+        {product.publicationDate && (
+          <>
+            {`${formatPrice(summ ? summ : 0)}`} <span>{' руб.'}</span>
+          </>
+        )}
       </div>
       <div className={classes.actionsColumn}>
         <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
-          <img src={deleteIco} className={classes.deleteIco} alt="view" />
+          <img src={product.publicationDate ? deleteIco : deleteRedIco} className={classes.deleteIco} alt="view" />
         </div>
       </div>
     </div>

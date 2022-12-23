@@ -66,13 +66,14 @@
 
 .amountColumn {
   display: flex;
+  width: 190px;
+  flex-shrink: 0;
   margin-right: 16px;
   flex-direction: column;
   align-items: center;
 }
 
 .amountInfo {
-  width: 190px;
   display: flex;
   margin-top: 4px;
   justify-content: space-between;
@@ -115,5 +116,21 @@
 .deleteIco {
   margin-top: -4px;
   height: 16px;
+}
+
+.unavailableInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.unavailableRow {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red_color);
+}
+
+.redText {
+  color: var(--gray_color_light);
 }
 

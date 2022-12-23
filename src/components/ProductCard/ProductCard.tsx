@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import { formatPrice, getProductSizesStr } from '../../utils/functions';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleProductForBasketThunk } from '../../store/basketSlice';
+import { showPopUpDeleteProductFromBasket } from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type PropsType = {
   product?: ProductType;
@@ -46,7 +47,11 @@ const ProductCard: React.FC<PropsType> = ({
     event.stopPropagation();
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (product?.id && token) {
-      dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+      if (product.amountInBasket) {
+        showPopUpDeleteProductFromBasket(product, dispatch);
+      } else {
+        dispatch(toggleProductForBasketThunk({ productId: product.id, token }));
+      }
     }
   };
 

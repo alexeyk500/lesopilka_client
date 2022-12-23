@@ -8,6 +8,7 @@ export enum ButtonType {
   FILTER,
   RED,
   GREEN,
+  GRAY,
 }
 
 type PropsType = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -34,6 +35,7 @@ const ButtonComponent: React.FC<PropsType> = ({
         [classes.filter]: buttonType === ButtonType.FILTER,
         [classes.red]: buttonType === ButtonType.RED,
         [classes.green]: buttonType === ButtonType.GREEN,
+        [classes.gray]: buttonType === ButtonType.GRAY,
       })}
       onClick={onClickHandler}
       {...otherProps}
