@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 8px;
+  padding-left: 4px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+  background-color: var(--section_background);
+}
+
+.calendarIco {
+  margin-top: -2px;
+}
+
+.downIco {
+  margin-top: 2px;
+}

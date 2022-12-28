@@ -1,0 +1,48 @@
+.rowContainer {
+  display: flex;
+  margin-top: 8px;
+}
+
+.phoneContainer {
+  margin-left: 60px;
+  margin-right: 24px;
+}
+
+.customPhoneInput {
+  display: flex;
+  width: 290px;
+  height: 40px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: var(--gray_color);
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 12px;
+}
+
+.customNameInput {
+  display: flex;
+  width: 500px;
+  height: 40px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: var(--gray_color);
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 12px;
+}
+
+.nameContainer {
+  position: relative;
+}
+
+.additionalInfoTitle {
+  position: absolute;
+  top: -30px;
+  left: 12px;
+  max-width: 350px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray_color_light);
+  z-index: 10;
+}

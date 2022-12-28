@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.icoContainer {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.ico {
+  width: 100%;
+  height: 100%;
+}
+
+.textInfoContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 14px;
+}
+
+.title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  padding-left: 8px;
+}
+
+.infoRow {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 8px 2px 4px 0;
+  cursor: pointer;
+  color: var(--gray_color);
+}
+
+.box {
+  display: flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 6px;
+}
+
+.checkedBox {
+  width: 20px;
+  height: 20px;
+  background-color: var(--blue_color);
+  border-radius: 6px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray_color);
+}
+
+.additionalInfoTitle {
+  max-width: 470px;
+  margin-left: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray_color_light);
+}
+
+.checkStatusIco {
+  margin-top: 4px;
+  margin-left: 3px;
+}

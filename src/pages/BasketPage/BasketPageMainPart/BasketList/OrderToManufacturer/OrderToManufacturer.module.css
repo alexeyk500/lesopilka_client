@@ -21,6 +21,12 @@
   align-items: center;
 }
 
+.infoRowActionsSingleButton {
+  margin-right: 0;
+  margin-top: -32px;
+}
+
+
 .actionContainer {
   display: flex;
   width: 32px;

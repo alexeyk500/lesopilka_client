@@ -10,12 +10,14 @@ import { ProductType } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
+import classNames from 'classnames';
 
 type PropsType = {
   products: ProductType[];
+  hideButtons?: boolean;
 };
 
-const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
+const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => {
   const navigate = useNavigate();
   const manufacturer = products[0].manufacturer;
 
@@ -26,6 +28,10 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
     if (manufacturer?.id) {
       navigate(`${PageEnum.UserPricePage}/${manufacturer.id}`);
     }
+  };
+
+  const onClickCreateOrder = () => {
+    navigate(PageEnum.CreateOrder);
   };
 
   return (
@@ -41,21 +47,25 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products }) => {
           <div className={classes.rowTitle}>{manufacturer?.email}</div>
           <div className={classes.rowTitle}>{manufacturer?.phone}</div>
         </div>
-        <div className={classes.infoRowActions}>
+        <div className={classNames(classes.infoRowActions, { [classes.infoRowActionsSingleButton]: hideButtons })}>
           <div className={classes.actionContainer}>
             <img src={addToBasketIco} className={classes.addToBasketIco} onClick={goToPrice} alt="add to basket" />
           </div>
-          <div className={classes.actionContainer}>
-            <img src={downloadFileIco} className={classes.downloadFileIco} alt="download" />
-          </div>
-        </div>
-        <div className={classes.btnContainer}>
-          {allProductAvailable ? (
-            <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
-          ) : (
-            <ButtonComponent title={'Оформить'} buttonType={ButtonType.GRAY} onClick={() => {}} />
+          {!hideButtons && (
+            <div className={classes.actionContainer}>
+              <img src={downloadFileIco} className={classes.downloadFileIco} alt="download" />
+            </div>
           )}
         </div>
+        {!hideButtons && (
+          <div className={classes.btnContainer}>
+            {allProductAvailable ? (
+              <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={onClickCreateOrder} />
+            ) : (
+              <ButtonComponent title={'Оформить'} buttonType={ButtonType.GRAY} />
+            )}
+          </div>
+        )}
       </div>
       <div className={classes.delimiter} />
       <div className={classes.priceContentContainer}>

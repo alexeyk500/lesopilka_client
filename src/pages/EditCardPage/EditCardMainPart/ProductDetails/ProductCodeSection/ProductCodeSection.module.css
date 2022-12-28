@@ -20,5 +20,5 @@
   color: var(--gray_color);
   background-color: var(--section_background);
   border: 1px solid var(--blue_color);
-  border-radius: 12px;
+  border-radius: 6px;
 }

@@ -1,0 +1,54 @@
+.checkBoxContainer {
+  margin-left: 32px;
+}
+
+.checkBoxDeliveryContainer {
+  margin-top: 8px;
+  margin-left: 32px;
+}
+
+.pickUpAddressContainer {
+  display: flex;
+  margin-left: 28px;
+}
+
+.pickUpAddressTitle {
+  margin-right: 32px;
+}
+
+.locationSelectorContainer {
+  margin-left: 28px;
+  margin-top: 8px;
+}
+
+.rowContainer {
+  display: flex;
+  margin-top: 4px;
+  align-items: flex-end;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-top: 2px;
+  margin-left: 12px;
+  margin-bottom: 2px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray_color_light);
+}
+
+.customSizeInput {
+  display: flex;
+  width: 500px;
+  height: 42px;
+  padding: 4px 12px;
+  font-size: 16px;
+  color: var(--gray_color);
+  background-color: var(--section_background);
+  border: 1px solid var(--blue_color);
+  border-radius: 12px;
+}

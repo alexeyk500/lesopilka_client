@@ -1,5 +1,9 @@
 import { ProductType, SubCategoryType } from '../types/types';
 
+export const filterProductsByManufacturerId = (products: ProductType[], manufacturerId: number): ProductType[] => {
+  return products.filter((product) => product.manufacturer?.id === manufacturerId);
+};
+
 export const splitProductsByManufacturer = (products: ProductType[]): ProductType[][] => {
   const separatedProducts: ProductType[][] = [];
   const manufacturerIds: number[] = [];
