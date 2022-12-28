@@ -24,7 +24,7 @@ export enum PageEnum {
   ManufacturerPage = '/manufacturer',
   EditProduct = '/edit_product',
   ManufacturerRegistration = '/manufacturer_registration',
-  CreateOrder = '/create_order',
+  NewOrder = '/new_order',
 }
 
 const publicRoutes: RouteType[] = [
@@ -40,7 +40,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.BasketPage, element: <BasketPage /> },
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
-  { path: PageEnum.CreateOrder, element: <OrderCreatePage /> },
+  { path: PageEnum.NewOrder, element: <OrderCreatePage /> },
 ];
 
 const AppRouter = () => {

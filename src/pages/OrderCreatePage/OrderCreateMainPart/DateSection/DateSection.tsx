@@ -7,10 +7,14 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './custom-datapicker_style.css';
 import { registerLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
+import { selectorNewOrderDate, setDate } from '../../../../store/newOrderSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 registerLocale('ru', ru);
 
 const DateSection: React.FC = () => {
-  const [newOrderDate, setNewOrderDate] = useState(new Date());
+  const dispatch = useAppDispatch();
+  const newOrderDate = new Date(useAppSelector(selectorNewOrderDate));
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDatePicker = () => {
@@ -18,7 +22,7 @@ const DateSection: React.FC = () => {
   };
 
   const handleSetDate = (date: Date) => {
-    setNewOrderDate(date);
+    dispatch(setDate(date.toISOString()));
     setIsOpen(false);
   };
 

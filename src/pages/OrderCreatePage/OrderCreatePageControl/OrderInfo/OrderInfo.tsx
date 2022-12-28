@@ -11,14 +11,19 @@ import woodGrayIco from '../../../../img/woodGrayIco.svg';
 import cashMachineGrayIco from '../../../../img/cashMachineGrayIco.svg';
 import moneyGrayIco from '../../../../img/moneyGrayIco.svg';
 import locationGrayIco from '../../../../img/locationGrayIco.svg';
+import { formatUTCtoDDMMMMYYYY } from '../../../../utils/functions';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { selectorNewOrderDate } from '../../../../store/newOrderSlice';
 
 const OrderInfo: React.FC = () => {
+  const date = formatUTCtoDDMMMMYYYY(useAppSelector(selectorNewOrderDate));
+
   return (
     <div className={classes.container}>
       <OrderInfoSection
         ico={calendarIcoGray}
         title={'Дата доставки:'}
-        infoFirstLine={'12 декабря 2022 г.'}
+        infoFirstLine={date}
         customIcoClasses={classes.calendarIco}
       />
       <OrderInfoSection

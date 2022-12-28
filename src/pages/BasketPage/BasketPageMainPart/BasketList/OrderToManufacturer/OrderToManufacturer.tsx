@@ -11,6 +11,8 @@ import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../util
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
+import { useAppDispatch } from '../../../../../hooks/hooks';
+import { setManufacturerId } from '../../../../../store/newOrderSlice';
 
 type PropsType = {
   products: ProductType[];
@@ -18,6 +20,7 @@ type PropsType = {
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const manufacturer = products[0].manufacturer;
 
@@ -31,7 +34,10 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
   };
 
   const onClickCreateOrder = () => {
-    navigate(PageEnum.CreateOrder);
+    if (manufacturer?.id) {
+      dispatch(setManufacturerId(manufacturer.id));
+      navigate(PageEnum.NewOrder);
+    }
   };
 
   return (
@@ -70,7 +76,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
       <div className={classes.delimiter} />
       <div className={classes.priceContentContainer}>
         {products.map((product, ind) => {
-          return <OrderToManufacturerItem key={ind} num={ind} product={product} />;
+          return <OrderToManufacturerItem key={ind} num={ind + 1} product={product} />;
         })}
       </div>
       <div className={classes.delimiter} />

@@ -5,11 +5,13 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import { getBasketProductsThunk, selectorBasketProducts } from '../../../../store/basketSlice';
 import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
+import { selectorNewOrderManufacturerId } from '../../../../store/newOrderSlice';
 
 const OrderContentSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const newOrderManufacturerId = useAppSelector(selectorNewOrderManufacturerId) ?? 0;
 
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
@@ -18,8 +20,7 @@ const OrderContentSection: React.FC = () => {
     }
   }, [dispatch, user]);
 
-  const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, 9);
-  console.log({ productsByManufacturerId });
+  const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, newOrderManufacturerId);
 
   return (
     <div className={classes.container}>

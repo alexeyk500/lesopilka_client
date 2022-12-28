@@ -177,3 +177,16 @@ export enum PriceSelectedTypeEnum {
   draft = 'draft',
   all = 'all',
 }
+
+export enum DeliveryMethodEnum {
+  pickup = 'Самовывоз',
+  delivery = 'Доставка',
+}
+
+export enum PaymentMethodEnum {
+  bank = 'Оплата через интернет банк',
+  cardAtPickUp = 'Картой при самовывозе',
+  cardAtDelivery = 'Картой при доставке',
+  cashAtPickUp = 'Наличные при самовывозе',
+  cashAtDelivery = 'Наличные при доставке',
+}

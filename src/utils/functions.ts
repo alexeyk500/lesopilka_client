@@ -220,6 +220,17 @@ export const formatUTC = (utcData: string | undefined) => {
   return null;
 };
 
+export const formatUTCtoDDMMMMYYYY = (utcData: string | undefined) => {
+  if (utcData) {
+    return new Date(utcData).toLocaleString('ru-Ru', {
+      month: 'long',
+      year: 'numeric',
+      day: '2-digit',
+    });
+  }
+  return '';
+};
+
 export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, searchLocationId?: number) => {
   const searchParams = new URLSearchParams();
   if (user?.manufacturer?.id) {
@@ -339,4 +350,10 @@ export const getTotalLogisticInfo = (products: ProductType[]) => {
 
 export const isAllProductAvailable = (products: ProductType[]) => {
   return !products.find((product) => product.publicationDate === undefined);
+};
+
+export const addDays = (date: Date, days: number) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result.toISOString();
 };
