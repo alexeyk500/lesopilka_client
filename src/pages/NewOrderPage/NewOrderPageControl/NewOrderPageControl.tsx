@@ -1,11 +1,11 @@
 import React from 'react';
-import classes from './OrderCreatePageControl.module.css';
+import classes from './NewOrderPageControl.module.css';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import OrderInfo from './OrderInfo/OrderInfo';
 
-const OrderCreatePageControl: React.FC = () => {
+const NewOrderPageControl: React.FC = () => {
   const navigate = useNavigate();
 
   const onClickGoToBasket = () => {
@@ -17,7 +17,7 @@ const OrderCreatePageControl: React.FC = () => {
       <div className={classes.infoSection}>
         <OrderInfo />
         <div className={classes.btnCreateContainer}>
-          <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
+          <ButtonComponent title={'Отправить'} buttonType={ButtonType.GREEN} onClick={() => {}} />
         </div>
       </div>
       <div className={classes.btnReadyContainer}>
@@ -27,4 +27,4 @@ const OrderCreatePageControl: React.FC = () => {
   );
 };
 
-export default OrderCreatePageControl;
+export default NewOrderPageControl;

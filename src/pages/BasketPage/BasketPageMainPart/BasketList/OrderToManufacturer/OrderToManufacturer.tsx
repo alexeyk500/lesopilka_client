@@ -11,8 +11,6 @@ import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../util
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../../../../hooks/hooks';
-import { setManufacturerId } from '../../../../../store/newOrderSlice';
 
 type PropsType = {
   products: ProductType[];
@@ -20,9 +18,8 @@ type PropsType = {
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const manufacturer = products[0].manufacturer;
+  const manufacturer = products?.[0]?.manufacturer;
 
   const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
   const allProductAvailable = isAllProductAvailable(products);
@@ -35,8 +32,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
 
   const onClickCreateOrder = () => {
     if (manufacturer?.id) {
-      dispatch(setManufacturerId(manufacturer.id));
-      navigate(PageEnum.NewOrder);
+      navigate(`${PageEnum.NewOrder}/${manufacturer.id}`);
     }
   };
 

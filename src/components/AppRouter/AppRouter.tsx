@@ -7,7 +7,7 @@ import ManufacturerRegistrationPage from '../../pages/ManufacturerRegistrationPa
 import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 import PricePage from '../../pages/PricePage/PricePage';
 import BasketPage from '../../pages/BasketPage/BasketPage';
-import OrderCreatePage from '../../pages/OrderCreatePage/OrderCreatePage';
+import NewOrderPage from '../../pages/NewOrderPage/NewOrderPage';
 
 type RouteType = {
   path: string;
@@ -40,7 +40,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.BasketPage, element: <BasketPage /> },
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
-  { path: PageEnum.NewOrder, element: <OrderCreatePage /> },
+  { path: `${PageEnum.NewOrder}/:mid`, element: <NewOrderPage /> },
 ];
 
 const AppRouter = () => {

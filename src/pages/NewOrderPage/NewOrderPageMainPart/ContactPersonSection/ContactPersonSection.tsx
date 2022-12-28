@@ -16,7 +16,6 @@ const ContactPersonSection: React.FC = () => {
           </div>
         </div>
       </div>
-
     </SectionContainer>
   );
 };

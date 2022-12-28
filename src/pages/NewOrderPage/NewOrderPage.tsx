@@ -1,21 +1,21 @@
 import React from 'react';
-import classes from './OrderCreatePage.module.css';
+import classes from './NewOrderPage.module.css';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import MainColumn from '../../components/MainColumn/MainColumn';
-import OrderCreatePageControl from './OrderCreatePageControl/OrderCreatePageControl';
-import OrderCreateMainPart from './OrderCreateMainPart/OrderCreateMainPart';
+import NewOrderPageControl from './NewOrderPageControl/NewOrderPageControl';
+import NewOrderPageMainPart from './NewOrderPageMainPart/NewOrderPageMainPart';
 
-const OrderCreatePage = () => {
+const NewOrderPage = () => {
   return (
     <div className={classes.container}>
       <LeftColumn title={`Оформление заказа`}>
-        <OrderCreatePageControl />
+        <NewOrderPageControl />
       </LeftColumn>
       <MainColumn>
-        <OrderCreateMainPart />
+        <NewOrderPageMainPart />
       </MainColumn>
     </div>
   );
 };
 
-export default OrderCreatePage;
+export default NewOrderPage;

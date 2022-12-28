@@ -1,12 +1,12 @@
 import React from 'react';
-import classes from './OrderCreateMainPart.module.css';
+import classes from './NewOrderPageMainPart.module.css';
 import DateSection from './DateSection/DateSection';
 import DeliverySection from './DeliverySection/DeliverySection';
 import ContactPersonSection from './ContactPersonSection/ContactPersonSection';
 import PaymentMethodSection from './PaymentMethodSection/PaymentMethodSection';
 import OrderContentSection from './OrderContentSection/OrderContentSection';
 
-const OrderCreateMainPart: React.FC = () => {
+const NewOrderPageMainPart: React.FC = () => {
   return (
     <div className={classes.container}>
       <DateSection />
@@ -18,4 +18,4 @@ const OrderCreateMainPart: React.FC = () => {
   );
 };
 
-export default OrderCreateMainPart;
+export default NewOrderPageMainPart;

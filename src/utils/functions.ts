@@ -1,4 +1,12 @@
-import { CategorySizeType, OptionsType, ProductType, QueryEnum, SizeTypeEnum, UserType } from '../types/types';
+import {
+  CategorySizeType,
+  ManufacturerType,
+  OptionsType,
+  ProductType,
+  QueryEnum,
+  SizeTypeEnum,
+  UserType,
+} from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
@@ -356,4 +364,25 @@ export const addDays = (date: Date, days: number) => {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result.toISOString();
+};
+
+export const getFullManufacturerAddress = (manufacturer: ManufacturerType | undefined) => {
+  if (manufacturer) {
+    let address = '';
+    address += manufacturer?.address?.region?.title;
+    if (manufacturer?.address?.location?.title) {
+      address += `, ${manufacturer?.address?.location?.title}`;
+    }
+    if (manufacturer?.address?.street) {
+      address += `, ул.${manufacturer?.address?.street}`;
+    }
+    if (manufacturer?.address?.building) {
+      address += `, д.${manufacturer?.address?.building}`;
+    }
+    if (manufacturer?.address?.office) {
+      address += `, оф.${manufacturer?.address?.office}`;
+    }
+    return address;
+  }
+  return '';
 };

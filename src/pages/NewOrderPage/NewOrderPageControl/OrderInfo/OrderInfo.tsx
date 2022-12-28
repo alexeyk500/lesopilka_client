@@ -11,12 +11,20 @@ import woodGrayIco from '../../../../img/woodGrayIco.svg';
 import cashMachineGrayIco from '../../../../img/cashMachineGrayIco.svg';
 import moneyGrayIco from '../../../../img/moneyGrayIco.svg';
 import locationGrayIco from '../../../../img/locationGrayIco.svg';
-import { formatUTCtoDDMMMMYYYY } from '../../../../utils/functions';
+import { formatUTCtoDDMMMMYYYY, getTotalLogisticInfo } from '../../../../utils/functions';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorNewOrderDate } from '../../../../store/newOrderSlice';
+import { selectorBasketProducts } from '../../../../store/basketSlice';
+import { useParams } from 'react-router-dom';
+import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
 
 const OrderInfo: React.FC = () => {
+  const { mid } = useParams();
+  const basketProducts = useAppSelector(selectorBasketProducts);
   const date = formatUTCtoDDMMMMYYYY(useAppSelector(selectorNewOrderDate));
+  const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
+  const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
+  const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(productsByManufacturerId);
 
   return (
     <div className={classes.container}>
@@ -29,20 +37,20 @@ const OrderInfo: React.FC = () => {
       <OrderInfoSection
         ico={wareGrayHouseIco}
         title={'Поставщик:'}
-        infoFirstLine={'ООО Лесопилка,'}
-        infoSecondLine={'г.Самара'}
+        infoFirstLine={manufacturer?.title ?? ''}
+        infoSecondLine={manufacturer?.address.location.title ?? ''}
         customIcoClasses={classes.downIco}
       />
       <OrderInfoSection
         ico={weightGrayIco}
         title={'Вес заказа:'}
-        infoFirstLine={'123.0 кг.'}
+        infoFirstLine={`${totalWeight} кг`}
         customIcoClasses={classes.downIco}
       />
       <OrderInfoSection
         ico={woodGrayIco}
         title={'Объем заказа:'}
-        infoFirstLine={'1.3 м.куб.'}
+        infoFirstLine={`${totalVolume} м.куб.`}
         customIcoClasses={classes.downIco}
       />
       <OrderInfoSection
@@ -75,7 +83,7 @@ const OrderInfo: React.FC = () => {
       <OrderInfoSection
         ico={moneyGrayIco}
         title={'Сумма заказа:'}
-        infoFirstLine={'1 245.45 руб.'}
+        infoFirstLine={`${totalSumm} руб.`}
         customIcoClasses={classes.downIco}
       />
     </div>

@@ -3,14 +3,25 @@ import SectionContainer from '../../../EditCardPage/EditCardMainPart/ProductDeta
 import CheckBoxBlueSquare from '../../../../components/commonComponents/CheckBoxBlueSquare/CheckBoxBlueSquare';
 import classes from './DeliverySection.module.css';
 import SearchLocationSelector from '../../../../components/commonComponents/SearchLocationSelector/SearchLocationSelector';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../../../hooks/hooks';
+import { selectorBasketProducts } from '../../../../store/basketSlice';
+import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
+import { getFullManufacturerAddress } from '../../../../utils/functions';
 
 const DeliverySection: React.FC = () => {
+  const { mid } = useParams();
+  const basketProducts = useAppSelector(selectorBasketProducts);
+  const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
+  const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
+  const fullManufacturerAddress = getFullManufacturerAddress(manufacturer);
+
   return (
     <SectionContainer title={'Способ доставки'} completeCondition={false}>
       <div className={classes.checkBoxContainer}>
         <CheckBoxBlueSquare id={1} title={'Самовывоз'} checked={true} onSelect={() => {}} />
         <div className={classes.pickUpAddressContainer}>
-          <div className={classes.pickUpAddressTitle}>{'г. Самара, ул. Ленина, д.45'}</div>
+          <div className={classes.pickUpAddressTitle}>{fullManufacturerAddress}</div>
         </div>
       </div>
       <div className={classes.checkBoxDeliveryContainer}>
