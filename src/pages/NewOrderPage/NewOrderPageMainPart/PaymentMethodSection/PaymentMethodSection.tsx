@@ -2,19 +2,39 @@ import React from 'react';
 import SectionContainer from '../../../EditCardPage/EditCardMainPart/ProductDetails/SectionContainer/SectionContainer';
 import classes from './PaymentMethodSection.module.css';
 import CheckBoxBlueSquare from '../../../../components/commonComponents/CheckBoxBlueSquare/CheckBoxBlueSquare';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import {
+  selectorNewOrderDeliveryMethod,
+  selectorNewOrderPaymentMethod,
+  setPaymentMethod,
+} from '../../../../store/newOrderSlice';
+import { DeliveryMethodEnum, PaymentMethodEnum } from '../../../../types/types';
+import { DELIVERY_PAYMENT_METHODS, PICKUP_PAYMENT_METHODS } from '../../../../utils/constants';
 
 const PaymentMethodSection: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const paymentMethod = useAppSelector(selectorNewOrderPaymentMethod);
+  const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
+
+  const paymentOptions =
+    deliveryMethod === DeliveryMethodEnum.delivery ? DELIVERY_PAYMENT_METHODS : PICKUP_PAYMENT_METHODS;
+
+  const onSelectPaymentMethod = (id: number | string) => {
+    dispatch(setPaymentMethod(id as PaymentMethodEnum));
+  };
+
   return (
     <SectionContainer title={'Способ оплаты'} completeCondition={false}>
-      <div className={classes.checkBoxContainer}>
-        <CheckBoxBlueSquare id={1} title={'Оплата через интернет банк'} checked={true} onSelect={() => {}} />
-      </div>
-      <div className={classes.checkBoxContainer}>
-        <CheckBoxBlueSquare id={2} title={'Наличными при доставке'} checked={false} onSelect={() => {}} />
-      </div>
-      <div className={classes.checkBoxContainer}>
-        <CheckBoxBlueSquare id={3} title={'Картой при доставке'} checked={false} onSelect={() => {}} />
-      </div>
+      {paymentOptions.map((paymentOption) => (
+        <div key={paymentOption} className={classes.checkBoxContainer}>
+          <CheckBoxBlueSquare
+            id={paymentOption}
+            title={paymentOption}
+            checked={paymentMethod === paymentOption}
+            onSelect={onSelectPaymentMethod}
+          />
+        </div>
+      ))}
     </SectionContainer>
   );
 };

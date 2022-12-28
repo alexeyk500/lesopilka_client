@@ -374,15 +374,37 @@ export const getFullManufacturerAddress = (manufacturer: ManufacturerType | unde
       address += `, ${manufacturer?.address?.location?.title}`;
     }
     if (manufacturer?.address?.street) {
-      address += `, ул.${manufacturer?.address?.street}`;
+      address += `, ${manufacturer?.address?.street}`;
     }
     if (manufacturer?.address?.building) {
-      address += `, д.${manufacturer?.address?.building}`;
+      address += `, ${manufacturer?.address?.building}`;
     }
     if (manufacturer?.address?.office) {
-      address += `, оф.${manufacturer?.address?.office}`;
+      address += `, ${manufacturer?.address?.office}`;
     }
     return address;
   }
   return '';
+};
+
+export const getShortManufacturerTwoLineAddress = (manufacturer: ManufacturerType | undefined) => {
+  let locationTitle = ''
+  let address = '';
+  if (manufacturer) {
+    if (manufacturer?.address?.location?.title) {
+      locationTitle = manufacturer?.address?.location?.title;
+    }
+
+    if (manufacturer?.address?.street) {
+      address += `${manufacturer?.address?.street}`;
+    }
+    if (manufacturer?.address?.building) {
+      address += `, ${manufacturer?.address?.building}`;
+    }
+    if (manufacturer?.address?.office) {
+      address += `, ${manufacturer?.address?.office}`;
+    }
+
+  }
+  return [locationTitle, address];
 };

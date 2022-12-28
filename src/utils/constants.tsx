@@ -1,4 +1,4 @@
-import { DriedEnum, SepticEnum } from '../types/types';
+import { DriedEnum, PaymentMethodEnum, SepticEnum } from '../types/types';
 
 export const DEBOUNCE_TIME = 1000;
 export const CALIBER_PRODUCT_CATEGORIES = [6];
@@ -22,3 +22,17 @@ export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;
 export const PRODUCTS_PAGE_SIZE = 32;
 
 export const MAX_BASKET_PRODUCT_AMOUNT = 10000;
+
+export const DELIVERY_PAYMENT_METHODS = [
+  PaymentMethodEnum.transferToAccount,
+  PaymentMethodEnum.transferToCard,
+  PaymentMethodEnum.cardAtDelivery,
+  PaymentMethodEnum.cashAtDelivery,
+];
+
+export const PICKUP_PAYMENT_METHODS = [
+  PaymentMethodEnum.transferToAccount,
+  PaymentMethodEnum.transferToCard,
+  PaymentMethodEnum.cardAtPickUp,
+  PaymentMethodEnum.cashAtPickUp,
+];

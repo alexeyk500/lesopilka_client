@@ -11,16 +11,22 @@ import woodGrayIco from '../../../../img/woodGrayIco.svg';
 import cashMachineGrayIco from '../../../../img/cashMachineGrayIco.svg';
 import moneyGrayIco from '../../../../img/moneyGrayIco.svg';
 import locationGrayIco from '../../../../img/locationGrayIco.svg';
-import { formatUTCtoDDMMMMYYYY, getTotalLogisticInfo } from '../../../../utils/functions';
+import {
+  formatUTCtoDDMMMMYYYY,
+  getShortManufacturerTwoLineAddress,
+  getTotalLogisticInfo
+} from '../../../../utils/functions';
 import { useAppSelector } from '../../../../hooks/hooks';
-import { selectorNewOrderDate } from '../../../../store/newOrderSlice';
+import { selectorNewOrderDate, selectorNewOrderDeliveryMethod } from '../../../../store/newOrderSlice';
 import { selectorBasketProducts } from '../../../../store/basketSlice';
 import { useParams } from 'react-router-dom';
 import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
+import {DeliveryMethodEnum} from "../../../../types/types";
 
 const OrderInfo: React.FC = () => {
   const { mid } = useParams();
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
   const date = formatUTCtoDDMMMMYYYY(useAppSelector(selectorNewOrderDate));
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
@@ -56,16 +62,31 @@ const OrderInfo: React.FC = () => {
       <OrderInfoSection
         ico={truckGrayIco}
         title={'Способ доставки:'}
-        infoFirstLine={'Самовывоз'}
+        infoFirstLine={deliveryMethod}
         customIcoClasses={classes.calendarIco}
       />
-      <OrderInfoSection
-        ico={locationGrayIco}
-        title={'Адрес доставки:'}
-        infoFirstLine={'г.Самара,'}
-        infoSecondLine={'ул.Ленина, д.23'}
-        customIcoClasses={classes.downIco}
-      />
+      {
+        deliveryMethod === DeliveryMethodEnum.delivery
+        ? (
+            <OrderInfoSection
+              ico={locationGrayIco}
+              title={'Адрес доставки:'}
+              infoFirstLine={'г.Самара,'}
+              infoSecondLine={'ул.Ленина, д.23'}
+              customIcoClasses={classes.downIco}
+            />
+          )
+        : (
+            <OrderInfoSection
+              ico={locationGrayIco}
+              title={'Адрес самовывоза:'}
+              infoFirstLine={getShortManufacturerTwoLineAddress(manufacturer)[0]}
+              infoSecondLine={getShortManufacturerTwoLineAddress(manufacturer)[1]}
+              customIcoClasses={classes.downIco}
+            />
+          )
+      }
+
       <OrderInfoSection
         ico={phoneGrayIco}
         title={'Контактное лицо:'}

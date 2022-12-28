@@ -3,10 +3,10 @@ import classes from './CheckBoxBlueSquare.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
 
 type PropsType = {
-  id: number;
+  id: number | string;
   title: string;
   checked: boolean;
-  onSelect: (id: number) => void;
+  onSelect: (id: number | string) => void;
   additionalInfo?: string;
 };
 

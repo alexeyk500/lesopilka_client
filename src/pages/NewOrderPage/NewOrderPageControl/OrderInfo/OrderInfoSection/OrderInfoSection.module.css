@@ -37,6 +37,7 @@
 }
 
 .infoRow {
+  width: 165px;
   font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
