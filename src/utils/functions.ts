@@ -388,7 +388,7 @@ export const getFullManufacturerAddress = (manufacturer: ManufacturerType | unde
 };
 
 export const getShortManufacturerTwoLineAddress = (manufacturer: ManufacturerType | undefined) => {
-  let locationTitle = ''
+  let locationTitle = '';
   let address = '';
   if (manufacturer) {
     if (manufacturer?.address?.location?.title) {
@@ -404,7 +404,6 @@ export const getShortManufacturerTwoLineAddress = (manufacturer: ManufacturerTyp
     if (manufacturer?.address?.office) {
       address += `, ${manufacturer?.address?.office}`;
     }
-
   }
   return [locationTitle, address];
 };

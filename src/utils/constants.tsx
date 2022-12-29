@@ -7,6 +7,8 @@ export const regExpForPrice = /^\d*\.?(?:\d{1,2})?$/;
 
 export const regExpOnlyDigit = /^[0-9\b]+$/;
 
+export const regPhone = /^\+\d{0,11}?$/;
+
 export const SEPTIC_OPTIONS = [
   { id: 1, title: SepticEnum.noSeptic },
   { id: 2, title: SepticEnum.septic },

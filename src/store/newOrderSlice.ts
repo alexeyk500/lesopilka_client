@@ -36,13 +36,22 @@ export const newOrderSlice = createSlice({
     setPaymentMethod: (state, actions) => {
       state.paymentMethod = actions.payload;
     },
+    setContactPersonName: (state, actions) => {
+      state.contactPersonName = actions.payload;
+    },
+    setContactPersonPhone: (state, actions) => {
+      state.contactPersonPhone = actions.payload;
+    },
   },
 });
 
-export const { setDate, setDeliveryMethod, setPaymentMethod } = newOrderSlice.actions;
+export const { setDate, setDeliveryMethod, setPaymentMethod, setContactPersonName, setContactPersonPhone } =
+  newOrderSlice.actions;
 
 export const selectorNewOrderDate = (state: RootState) => state.newOrder.date;
 export const selectorNewOrderDeliveryMethod = (state: RootState) => state.newOrder.deliveryMethod;
 export const selectorNewOrderPaymentMethod = (state: RootState) => state.newOrder.paymentMethod;
+export const selectorNewOrderContactPersonName = (state: RootState) => state.newOrder.contactPersonName;
+export const selectorNewOrderContactPersonPhone = (state: RootState) => state.newOrder.contactPersonPhone;
 
 export default newOrderSlice.reducer;

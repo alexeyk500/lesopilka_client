@@ -8,13 +8,22 @@ type PropsType = {
   infoFirstLine: string;
   infoSecondLine?: string;
   customIcoClasses?: string;
+  customContainerClasses?: string;
 };
 
-const OrderInfoSection: React.FC<PropsType> = ({ ico, title, infoFirstLine, infoSecondLine, customIcoClasses }) => {
+const OrderInfoSection: React.FC<PropsType> = ({
+  ico,
+  title,
+  infoFirstLine,
+  infoSecondLine,
+  customIcoClasses,
+  customContainerClasses,
+}) => {
   const customIcoClass = classNames(customIcoClasses);
+  const customContainerClass = classNames(customContainerClasses);
 
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, { [customContainerClass]: customContainerClass })}>
       <div className={classNames(classes.icoContainer, { [customIcoClass]: customIcoClass })}>
         <img src={ico} className={classes.ico} alt="icon" />
       </div>

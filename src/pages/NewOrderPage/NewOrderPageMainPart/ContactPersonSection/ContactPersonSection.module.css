@@ -4,6 +4,7 @@
 }
 
 .phoneContainer {
+  position: relative;
   margin-left: 60px;
   margin-right: 24px;
 }
@@ -11,7 +12,7 @@
 .customPhoneInput {
   display: flex;
   width: 290px;
-  height: 40px;
+  height: 32px;
   padding: 4px 12px;
   font-size: 16px;
   color: var(--gray_color);
@@ -23,7 +24,7 @@
 .customNameInput {
   display: flex;
   width: 500px;
-  height: 40px;
+  height: 32px;
   padding: 4px 12px;
   font-size: 16px;
   color: var(--gray_color);
@@ -45,4 +46,19 @@
   font-weight: 400;
   color: var(--gray_color_light);
   z-index: 10;
+}
+
+.toolTipContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  top: 34px;
+  left: 30px;
+  height: 32px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  border: 1px solid var(--gray_color_light);
+  background-color: var(--main_background);
 }

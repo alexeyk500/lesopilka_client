@@ -14,20 +14,27 @@ import locationGrayIco from '../../../../img/locationGrayIco.svg';
 import {
   formatUTCtoDDMMMMYYYY,
   getShortManufacturerTwoLineAddress,
-  getTotalLogisticInfo
+  getTotalLogisticInfo,
 } from '../../../../utils/functions';
 import { useAppSelector } from '../../../../hooks/hooks';
-import { selectorNewOrderDate, selectorNewOrderDeliveryMethod } from '../../../../store/newOrderSlice';
+import {
+  selectorNewOrderContactPersonName,
+  selectorNewOrderContactPersonPhone,
+  selectorNewOrderDate,
+  selectorNewOrderDeliveryMethod,
+} from '../../../../store/newOrderSlice';
 import { selectorBasketProducts } from '../../../../store/basketSlice';
 import { useParams } from 'react-router-dom';
 import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
-import {DeliveryMethodEnum} from "../../../../types/types";
+import { DeliveryMethodEnum } from '../../../../types/types';
 
 const OrderInfo: React.FC = () => {
   const { mid } = useParams();
   const basketProducts = useAppSelector(selectorBasketProducts);
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
   const date = formatUTCtoDDMMMMYYYY(useAppSelector(selectorNewOrderDate));
+  const contactPersonName = useAppSelector(selectorNewOrderContactPersonName);
+  const contactPersonPhone = useAppSelector(selectorNewOrderContactPersonPhone);
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
   const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(productsByManufacturerId);
@@ -65,34 +72,31 @@ const OrderInfo: React.FC = () => {
         infoFirstLine={deliveryMethod}
         customIcoClasses={classes.calendarIco}
       />
-      {
-        deliveryMethod === DeliveryMethodEnum.delivery
-        ? (
-            <OrderInfoSection
-              ico={locationGrayIco}
-              title={'Адрес доставки:'}
-              infoFirstLine={'г.Самара,'}
-              infoSecondLine={'ул.Ленина, д.23'}
-              customIcoClasses={classes.downIco}
-            />
-          )
-        : (
-            <OrderInfoSection
-              ico={locationGrayIco}
-              title={'Адрес самовывоза:'}
-              infoFirstLine={getShortManufacturerTwoLineAddress(manufacturer)[0]}
-              infoSecondLine={getShortManufacturerTwoLineAddress(manufacturer)[1]}
-              customIcoClasses={classes.downIco}
-            />
-          )
-      }
+      {deliveryMethod === DeliveryMethodEnum.delivery ? (
+        <OrderInfoSection
+          ico={locationGrayIco}
+          title={'Адрес доставки:'}
+          infoFirstLine={'г.Самара,'}
+          infoSecondLine={'ул.Ленина, д.23'}
+          customIcoClasses={classes.downIco}
+        />
+      ) : (
+        <OrderInfoSection
+          ico={locationGrayIco}
+          title={'Адрес самовывоза:'}
+          infoFirstLine={getShortManufacturerTwoLineAddress(manufacturer)[0]}
+          infoSecondLine={getShortManufacturerTwoLineAddress(manufacturer)[1]}
+          customIcoClasses={classes.downIco}
+        />
+      )}
 
       <OrderInfoSection
         ico={phoneGrayIco}
         title={'Контактное лицо:'}
-        infoFirstLine={'Петров Анатолий'}
-        infoSecondLine={'+79219843567'}
+        infoFirstLine={contactPersonPhone || ''}
+        infoSecondLine={contactPersonName || ''}
         customIcoClasses={classes.downIco}
+        customContainerClasses={classes.customContainer}
       />
       <OrderInfoSection
         ico={cashMachineGrayIco}
