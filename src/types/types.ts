@@ -184,7 +184,7 @@ export enum DeliveryMethodEnum {
 }
 
 export enum PaymentMethodEnum {
-  transferToAccount = 'Перевод на счет',
+  transferToAccount = 'Оплата на счет в банке',
   transferToCard = 'Перевод на карту',
   cardAtPickUp = 'Картой при самовывозе',
   cardAtDelivery = 'Картой при доставке',

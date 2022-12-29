@@ -24,6 +24,7 @@ const ContactPersonSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const contactPersonName = useAppSelector(selectorNewOrderContactPersonName);
   const contactPersonPhone = useAppSelector(selectorNewOrderContactPersonPhone);
+  const isSectionCondition = checkContactPersonSection({ contactPersonName, contactPersonPhone });
 
   const onChangePhone = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === '' || regPhone.test(event.target.value)) {
@@ -36,7 +37,6 @@ const ContactPersonSection: React.FC = () => {
   };
 
   const [isShowPhoneToolTip, setIsShowPhoneToolTip] = useState(false);
-
   let showPhoneSetTimeOut: NodeJS.Timeout;
 
   const showPhoneToolTip = () => {
@@ -49,8 +49,6 @@ const ContactPersonSection: React.FC = () => {
     clearTimeout(showPhoneSetTimeOut);
     setIsShowPhoneToolTip(false);
   };
-
-  const isSectionCondition = checkContactPersonSection({ contactPersonName, contactPersonPhone });
 
   return (
     <SectionContainer title={'Контактное лицо'} completeCondition={isSectionCondition}>

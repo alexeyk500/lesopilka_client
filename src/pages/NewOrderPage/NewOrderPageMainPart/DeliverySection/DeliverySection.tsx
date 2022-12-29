@@ -11,6 +11,14 @@ import { getFullManufacturerAddress } from '../../../../utils/functions';
 import { DeliveryMethodEnum } from '../../../../types/types';
 import { selectorNewOrderDeliveryMethod, setDeliveryMethod } from '../../../../store/newOrderSlice';
 
+export const checkDeliverySection = (deliveryMethod: DeliveryMethodEnum) => {
+  if (deliveryMethod === DeliveryMethodEnum.pickup) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const DeliverySection: React.FC = () => {
   const { mid } = useParams();
   const dispatch = useAppDispatch();
@@ -20,12 +28,14 @@ const DeliverySection: React.FC = () => {
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
   const fullManufacturerAddress = getFullManufacturerAddress(manufacturer);
 
+  const isSectionCondition = checkDeliverySection(deliveryMethod);
+
   const onSelectDeliveryMethod = (id: number | string) => {
     dispatch(setDeliveryMethod(id as DeliveryMethodEnum));
   };
 
   return (
-    <SectionContainer title={'Способ доставки'} completeCondition={false}>
+    <SectionContainer title={'Способ доставки'} completeCondition={isSectionCondition}>
       <div className={classes.checkBoxContainer}>
         <CheckBoxBlueSquare
           id={DeliveryMethodEnum.pickup}

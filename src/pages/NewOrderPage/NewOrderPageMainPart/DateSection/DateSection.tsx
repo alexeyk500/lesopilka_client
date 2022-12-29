@@ -11,9 +11,14 @@ import { selectorNewOrderDate, setDate } from '../../../../store/newOrderSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 registerLocale('ru', ru);
 
+export const checkDateSection = (orderDate: Date) => {
+  return !!orderDate;
+};
+
 const DateSection: React.FC = () => {
   const dispatch = useAppDispatch();
-  const newOrderDate = new Date(useAppSelector(selectorNewOrderDate));
+  const orderDate = new Date(useAppSelector(selectorNewOrderDate));
+  const isSectionCondition = checkDateSection(orderDate);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,12 +36,12 @@ const DateSection: React.FC = () => {
   };
 
   return (
-    <SectionContainer title={'Дата доставки'} completeCondition={true}>
+    <SectionContainer title={'Дата доставки'} completeCondition={isSectionCondition}>
       <div className={classes.datePickerContainer}>
         <DatePicker
           locale="ru"
           dateFormat="dd MMMM yyyy"
-          selected={newOrderDate}
+          selected={orderDate}
           onChange={handleSetDate}
           open={isOpen}
           onInputClick={toggleDatePicker}
