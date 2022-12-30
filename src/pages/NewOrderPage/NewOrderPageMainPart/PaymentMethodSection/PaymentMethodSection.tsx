@@ -11,10 +11,15 @@ import {
 import { DeliveryMethodEnum, PaymentMethodEnum } from '../../../../types/types';
 import { DELIVERY_PAYMENT_METHODS, PICKUP_PAYMENT_METHODS } from '../../../../utils/constants';
 
+export const checkPaymentMethodSection = (paymentMethod: PaymentMethodEnum) => {
+  return !!paymentMethod;
+};
+
 const PaymentMethodSection: React.FC = () => {
   const dispatch = useAppDispatch();
   const paymentMethod = useAppSelector(selectorNewOrderPaymentMethod);
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
+  const isSectionCondition = checkPaymentMethodSection(paymentMethod);
 
   const paymentOptions =
     deliveryMethod === DeliveryMethodEnum.delivery ? DELIVERY_PAYMENT_METHODS : PICKUP_PAYMENT_METHODS;
@@ -24,7 +29,7 @@ const PaymentMethodSection: React.FC = () => {
   };
 
   return (
-    <SectionContainer title={'Способ оплаты'} completeCondition={false}>
+    <SectionContainer title={'Способ оплаты'} completeCondition={isSectionCondition}>
       {paymentOptions.map((paymentOption) => (
         <div key={paymentOption} className={classes.checkBoxContainer}>
           <CheckBoxBlueSquare

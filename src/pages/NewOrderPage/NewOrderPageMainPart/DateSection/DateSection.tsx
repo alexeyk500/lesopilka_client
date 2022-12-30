@@ -27,8 +27,11 @@ const DateSection: React.FC = () => {
   };
 
   const handleSetDate = (date: Date) => {
-    dispatch(setDate(date.toISOString()));
-    setIsOpen(false);
+    const dateTodayStr = new Date().toISOString().split('T')[0];
+    if (date >= new Date(dateTodayStr)) {
+      dispatch(setDate(date.toISOString()));
+      setIsOpen(false);
+    }
   };
 
   const handleCloseDatePicker = () => {

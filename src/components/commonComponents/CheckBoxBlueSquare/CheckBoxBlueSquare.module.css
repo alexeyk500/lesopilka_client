@@ -17,10 +17,7 @@
 }
 
 .checkedBox {
-  width: 20px;
-  height: 20px;
   background-color: var(--blue_color);
-  border-radius: 6px;
 }
 
 .title {
@@ -41,6 +38,7 @@
 }
 
 .checkStatusIco {
-  margin-top: 4px;
-  margin-left: 3px;
+  width: 13px;
+  margin-top: 2px;
+  margin-left: 2px;
 }

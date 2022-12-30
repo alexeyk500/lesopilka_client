@@ -23,7 +23,6 @@
 
 .rowContainer {
   display: flex;
-  margin-top: 4px;
   align-items: flex-end;
 }
 
@@ -44,7 +43,7 @@
 .customSizeInput {
   display: flex;
   width: 500px;
-  height: 42px;
+  height: 32px;
   padding: 4px 12px;
   font-size: 16px;
   color: var(--gray_color);

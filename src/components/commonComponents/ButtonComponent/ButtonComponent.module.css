@@ -30,7 +30,11 @@
 .gray {
   color: #FFFFFF;
   background-color: var(--gray_color_light);
-  cursor: default;
+}
+
+.disabled {
+  color: #FFFFFF;
+  background-color: var(--gray_color_light);
 }
 
 .secondary {

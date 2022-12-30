@@ -2,21 +2,35 @@ import React from 'react';
 import SectionContainer from '../../../EditCardPage/EditCardMainPart/ProductDetails/SectionContainer/SectionContainer';
 import CheckBoxBlueSquare from '../../../../components/commonComponents/CheckBoxBlueSquare/CheckBoxBlueSquare';
 import classes from './DeliverySection.module.css';
-import SearchLocationSelector from '../../../../components/commonComponents/SearchLocationSelector/SearchLocationSelector';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorBasketProducts } from '../../../../store/basketSlice';
 import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
 import { getFullManufacturerAddress } from '../../../../utils/functions';
-import { DeliveryMethodEnum } from '../../../../types/types';
-import { selectorNewOrderDeliveryMethod, setDeliveryMethod } from '../../../../store/newOrderSlice';
+import { DeliveryMethodEnum, OptionsType } from '../../../../types/types';
+import {
+  selectorNewOrderDeliveryAddress,
+  selectorNewOrderDeliveryLocation,
+  selectorNewOrderDeliveryMethod,
+  setDeliveryAddress,
+  setDeliveryLocation,
+  setDeliveryMethod,
+} from '../../../../store/newOrderSlice';
+import PlaceSelector from '../../../../components/PlaceSelector/PlaceSelector';
 
-export const checkDeliverySection = (deliveryMethod: DeliveryMethodEnum) => {
+export const checkDeliverySection = (
+  deliveryMethod: DeliveryMethodEnum,
+  deliveryLocationId: OptionsType | undefined,
+  deliveryAddress: string | undefined
+) => {
   if (deliveryMethod === DeliveryMethodEnum.pickup) {
     return true;
   } else {
-    return false;
+    if (deliveryLocationId && deliveryAddress) {
+      return true;
+    }
   }
+  return false;
 };
 
 const DeliverySection: React.FC = () => {
@@ -24,14 +38,24 @@ const DeliverySection: React.FC = () => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
+  const deliveryLocation = useAppSelector(selectorNewOrderDeliveryLocation);
+  const deliveryAddress = useAppSelector(selectorNewOrderDeliveryAddress);
+
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
   const fullManufacturerAddress = getFullManufacturerAddress(manufacturer);
-
-  const isSectionCondition = checkDeliverySection(deliveryMethod);
+  const isSectionCondition = checkDeliverySection(deliveryMethod, deliveryLocation, deliveryAddress);
 
   const onSelectDeliveryMethod = (id: number | string) => {
     dispatch(setDeliveryMethod(id as DeliveryMethodEnum));
+  };
+
+  const onSelectLocation = (option: OptionsType | undefined) => {
+    dispatch(setDeliveryLocation(option));
+  };
+
+  const onChangeDeliveryAddress = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setDeliveryAddress(event.currentTarget.value === '' ? undefined : event.currentTarget.value));
   };
 
   return (
@@ -61,11 +85,17 @@ const DeliverySection: React.FC = () => {
         {deliveryMethod === DeliveryMethodEnum.delivery && (
           <div className={classes.rowContainer}>
             <div className={classes.locationSelectorContainer}>
-              <SearchLocationSelector />
+              <PlaceSelector onSelectLocation={onSelectLocation} />
             </div>
             <div className={classes.contentContainer}>
               <div className={classes.title}>{'Укажите Ваш точный адрес для доставки'}</div>
-              <input className={classes.customSizeInput} placeholder={'Улица, дом'} onChange={() => {}} type="text" />
+              <input
+                className={classes.customSizeInput}
+                placeholder={'Улица, дом'}
+                value={deliveryAddress || ''}
+                onChange={onChangeDeliveryAddress}
+                type="text"
+              />
             </div>
           </div>
         )}

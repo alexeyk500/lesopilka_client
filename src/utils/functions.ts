@@ -44,10 +44,14 @@ export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
   }
 }
 
-export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[]) => {
+export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[], emptyOptionTitle?: string) => {
   const options: OptionsType[] = [];
-  options.push({ id: 0, title: '' });
-  options.push(...optionsStore);
+  if (optionsStore.length > 0) {
+    options.push({ id: 0, title: emptyOptionTitle ? emptyOptionTitle : '' });
+    options.push(...optionsStore);
+  } else {
+    options.push({ id: 0, title: '' });
+  }
   return options;
 };
 
@@ -406,4 +410,12 @@ export const getShortManufacturerTwoLineAddress = (manufacturer: ManufacturerTyp
     }
   }
   return [locationTitle, address];
+};
+
+export const getSelectedOption = (optionId?: number, options?: OptionsType[]) => {
+  if (optionId && optionId > 0 && !!options?.length) {
+    return options.find((option) => option.id === optionId);
+  } else {
+    return undefined;
+  }
 };

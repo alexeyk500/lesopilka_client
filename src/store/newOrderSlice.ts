@@ -1,4 +1,4 @@
-import { DeliveryMethodEnum, PaymentMethodEnum } from '../types/types';
+import { DeliveryMethodEnum, OptionsType, PaymentMethodEnum } from '../types/types';
 import { addDays } from '../utils/functions';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
@@ -6,7 +6,7 @@ import { RootState } from './store';
 type NewOrderSliceType = {
   date: string;
   deliveryMethod: DeliveryMethodEnum;
-  deliveryLocationId: number | undefined;
+  deliveryLocation: OptionsType | undefined;
   deliveryAddress: string | undefined;
   contactPersonName: string | undefined;
   contactPersonPhone: string | undefined;
@@ -16,7 +16,7 @@ type NewOrderSliceType = {
 const initialState: NewOrderSliceType = {
   date: addDays(new Date(), 1),
   deliveryMethod: DeliveryMethodEnum.pickup,
-  deliveryLocationId: undefined,
+  deliveryLocation: undefined,
   deliveryAddress: undefined,
   contactPersonName: undefined,
   contactPersonPhone: undefined,
@@ -42,16 +42,31 @@ export const newOrderSlice = createSlice({
     setContactPersonPhone: (state, actions) => {
       state.contactPersonPhone = actions.payload;
     },
+    setDeliveryLocation: (state, actions) => {
+      state.deliveryLocation = actions.payload;
+    },
+    setDeliveryAddress: (state, actions) => {
+      state.deliveryAddress = actions.payload;
+    },
   },
 });
 
-export const { setDate, setDeliveryMethod, setPaymentMethod, setContactPersonName, setContactPersonPhone } =
-  newOrderSlice.actions;
+export const {
+  setDate,
+  setDeliveryMethod,
+  setPaymentMethod,
+  setContactPersonName,
+  setContactPersonPhone,
+  setDeliveryLocation,
+  setDeliveryAddress,
+} = newOrderSlice.actions;
 
 export const selectorNewOrderDate = (state: RootState) => state.newOrder.date;
 export const selectorNewOrderDeliveryMethod = (state: RootState) => state.newOrder.deliveryMethod;
 export const selectorNewOrderPaymentMethod = (state: RootState) => state.newOrder.paymentMethod;
 export const selectorNewOrderContactPersonName = (state: RootState) => state.newOrder.contactPersonName;
 export const selectorNewOrderContactPersonPhone = (state: RootState) => state.newOrder.contactPersonPhone;
+export const selectorNewOrderDeliveryLocation = (state: RootState) => state.newOrder.deliveryLocation;
+export const selectorNewOrderDeliveryAddress = (state: RootState) => state.newOrder.deliveryAddress;
 
 export default newOrderSlice.reducer;

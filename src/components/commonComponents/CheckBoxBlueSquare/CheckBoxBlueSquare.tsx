@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './CheckBoxBlueSquare.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
+import classNames from 'classnames';
 
 type PropsType = {
   id: number | string;
@@ -15,14 +16,10 @@ const CheckBoxBlueSquare: React.FC<PropsType> = ({ id, title, checked, onSelect,
     onSelect(id);
   };
   return (
-    <div className={classes.container} onClick={onClick}>
-      {checked ? (
-        <div className={classes.checkedBox}>
-          <img src={checkStatusIco} className={classes.checkStatusIco} alt="check status ico" />
-        </div>
-      ) : (
-        <div className={classes.box} />
-      )}
+    <div className={classes.container}>
+      <div className={classNames(classes.box, { [classes.checkedBox]: checked })} onClick={onClick}>
+        {checked && <img src={checkStatusIco} className={classes.checkStatusIco} alt="check status ico" />}
+      </div>
       <div className={classes.title}>
         <div className={classes.constantWidth}>{title}</div>
         {additionalInfo && <div className={classes.additionalInfoTitle}>{additionalInfo}</div>}
