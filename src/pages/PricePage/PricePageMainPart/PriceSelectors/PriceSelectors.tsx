@@ -20,12 +20,23 @@ import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
 import {
   selectorPriceProducts,
+  selectorPriceReturnTo,
   selectorSelectedPriceType,
   setPriceDownLoading,
+  setPriceReturnTo,
   setSelectedType,
 } from '../../../../store/priceSlice';
 import { serverApi } from '../../../../api/serverApi';
 import { PageEnum } from '../../../../components/AppRouter/AppRouter';
+
+const getReturnInfo = (returnTo?: string) => {
+  if (returnTo?.includes(PageEnum.BasketPage)) {
+    return { title: 'В корзину', url: returnTo };
+  } else if (returnTo?.includes(PageEnum.NewOrder)) {
+    return { title: 'В заказ', url: returnTo };
+  }
+  return { title: 'В каталог', url: returnTo ? returnTo : PageEnum.RootPage };
+};
 
 const PriceSelectors: React.FC = () => {
   const navigate = useNavigate();
@@ -35,19 +46,13 @@ const PriceSelectors: React.FC = () => {
   const products = useAppSelector(selectorPriceProducts);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
+  const returnTo = useAppSelector(selectorPriceReturnTo);
   const isManufacturerPage = checkIsManufacturerPage(location);
 
   const productsCount = products.length;
   const publishedProductsCount = products.filter((product) => product.publicationDate).length;
 
-  const returnToCatalog = () => {
-    const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
-    navigate(getBackwardRoute);
-  };
-
-  const onClickReadyBtn = () => {
-    returnToCatalog();
-  };
+  const returnInfo = getReturnInfo(returnTo);
 
   const onSelect = (id: number) => {
     if (id === 1) {
@@ -70,9 +75,22 @@ const PriceSelectors: React.FC = () => {
     }
   };
 
-  const onClickReturnToBasket = () => {
-    navigate(PageEnum.BasketPage);
+  const returnToCatalog = () => {
+    const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
+    navigate(getBackwardRoute);
   };
+  const onClickReadyBtn = () => {
+    returnToCatalog();
+  };
+
+  const onClickReturnTo = () => {
+    dispatch(setPriceReturnTo(PageEnum.RootPage));
+    navigate(returnInfo.url);
+  };
+
+  // const onClickReturnToBasket = () => {
+  //   navigate(PageEnum.BasketPage);
+  // };
 
   return (
     <div className={classes.container}>
@@ -129,7 +147,7 @@ const PriceSelectors: React.FC = () => {
         </div>
       ) : (
         <div className={classes.btnReadyContainer}>
-          <ButtonComponent title={'В корзину'} onClick={onClickReturnToBasket} />
+          <ButtonComponent title={returnInfo.title} onClick={onClickReturnTo} />
         </div>
       )}
     </div>

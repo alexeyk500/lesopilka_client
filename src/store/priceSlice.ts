@@ -49,6 +49,9 @@ export const priceSlice = createSlice({
     setPriceDownLoading: (state, actions) => {
       state.priceDownloading = actions.payload;
     },
+    setPriceReturnTo: (state, actions) => {
+      state.returnTo = actions.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -66,7 +69,7 @@ export const priceSlice = createSlice({
   },
 });
 
-export const { setSelectedType, setPriceEditProductId, setPriceDownLoading } = priceSlice.actions;
+export const { setSelectedType, setPriceEditProductId, setPriceDownLoading, setPriceReturnTo } = priceSlice.actions;
 
 export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;

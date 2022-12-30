@@ -8,9 +8,11 @@ import ButtonComponent, {
 import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
+import { useAppDispatch } from '../../../../../hooks/hooks';
+import { setPriceReturnTo } from '../../../../../store/priceSlice';
 
 type PropsType = {
   products: ProductType[];
@@ -18,6 +20,8 @@ type PropsType = {
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => {
+  const location = useLocation();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const manufacturer = products?.[0]?.manufacturer;
 
@@ -26,6 +30,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
 
   const goToPrice = () => {
     if (manufacturer?.id) {
+      dispatch(setPriceReturnTo(location.pathname + location.search));
       navigate(`${PageEnum.UserPricePage}/${manufacturer.id}`);
     }
   };
@@ -61,11 +66,12 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
         </div>
         {!hideButtons && (
           <div className={classes.btnContainer}>
-            {allProductAvailable ? (
-              <ButtonComponent title={'Оформить'} buttonType={ButtonType.GREEN} onClick={onClickCreateOrder} />
-            ) : (
-              <ButtonComponent title={'Оформить'} buttonType={ButtonType.GRAY} />
-            )}
+            <ButtonComponent
+              title={'Оформить'}
+              buttonType={ButtonType.GREEN}
+              disabled={!allProductAvailable}
+              onClick={onClickCreateOrder}
+            />
           </div>
         )}
       </div>
