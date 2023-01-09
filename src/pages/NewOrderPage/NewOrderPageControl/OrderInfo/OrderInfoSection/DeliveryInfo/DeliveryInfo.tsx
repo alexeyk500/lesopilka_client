@@ -26,7 +26,7 @@ const DeliveryInfo: React.FC = () => {
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
 
   return (
-    <>
+    <div className={classes.containerDeliveryInfo}>
       <OrderInfoSection
         ico={truckGrayIco}
         title={'Способ доставки:'}
@@ -50,7 +50,7 @@ const DeliveryInfo: React.FC = () => {
           customIcoClasses={classes.downIco}
         />
       )}
-    </>
+    </div>
   );
 };
 

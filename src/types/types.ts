@@ -5,20 +5,22 @@ export type OptionsType = {
   value?: string;
 };
 
+export type AddressType = {
+  id: number;
+  region: RegionType;
+  location: LocationType;
+  street: string;
+  building: string;
+  office: string;
+};
+
 export type ManufacturerType = {
   id: number;
   inn: string;
   title: string;
   phone: string;
   email: string;
-  address: {
-    id: number;
-    region: RegionType;
-    location: LocationType;
-    street: string;
-    building: string;
-    office: string;
-  };
+  address: AddressType;
 };
 
 export type UserType = {

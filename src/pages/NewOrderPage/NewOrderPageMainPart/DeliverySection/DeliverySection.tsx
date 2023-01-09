@@ -12,6 +12,8 @@ import {
   selectorNewOrderDeliveryAddress,
   selectorNewOrderDeliveryLocation,
   selectorNewOrderDeliveryMethod,
+  selectorNewOrderDeliveryMethods,
+  selectorNewOrderManufacturerPickUpAddress,
   setDeliveryAddress,
   setDeliveryLocation,
   setDeliveryMethod,
@@ -36,10 +38,12 @@ export const checkDeliverySection = (
 const DeliverySection: React.FC = () => {
   const { mid } = useParams();
   const dispatch = useAppDispatch();
+  const deliveryMethods = useAppSelector(selectorNewOrderDeliveryMethods);
   const basketProducts = useAppSelector(selectorBasketProducts);
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
   const deliveryLocation = useAppSelector(selectorNewOrderDeliveryLocation);
   const deliveryAddress = useAppSelector(selectorNewOrderDeliveryAddress);
+  const manufacturerPickUpAddress = useAppSelector(selectorNewOrderManufacturerPickUpAddress);
 
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
@@ -60,46 +64,75 @@ const DeliverySection: React.FC = () => {
 
   return (
     <SectionContainer title={'Способ доставки'} completeCondition={isSectionCondition}>
-      <div className={classes.checkBoxContainer}>
-        <CheckBoxBlueSquare
-          id={DeliveryMethodEnum.pickup}
-          title={DeliveryMethodEnum.pickup}
-          checked={deliveryMethod === DeliveryMethodEnum.pickup}
-          onSelect={onSelectDeliveryMethod}
-        />
-        <div className={classes.pickUpAddressContainer}>
-          <div className={classes.pickUpAddressTitle}>{fullManufacturerAddress}</div>
-        </div>
-      </div>
-      <div className={classes.checkBoxDeliveryContainer}>
-        <CheckBoxBlueSquare
-          id={DeliveryMethodEnum.delivery}
-          title={DeliveryMethodEnum.delivery}
-          checked={deliveryMethod === DeliveryMethodEnum.delivery}
-          onSelect={onSelectDeliveryMethod}
-          additionalInfo={
-            'За организацию доставки поставщик может брать дополнительную плату, ' +
-            'если доставка платная, то ее стоимость поставщик укажет в счете на заказ.'
-          }
-        />
-        {deliveryMethod === DeliveryMethodEnum.delivery && (
-          <div className={classes.rowContainer}>
-            <div className={classes.locationSelectorContainer}>
-              <PlaceSelector onSelectLocation={onSelectLocation} />
+      {deliveryMethods.map((deliveryMethodItem) => {
+        if ((deliveryMethodItem.title as DeliveryMethodEnum) === DeliveryMethodEnum.pickup) {
+          return (
+            <div className={classes.checkBoxContainer}>
+              {manufacturerPickUpAddress ? (
+                <>
+                  <CheckBoxBlueSquare
+                    id={DeliveryMethodEnum.pickup}
+                    title={DeliveryMethodEnum.pickup}
+                    checked={deliveryMethod === DeliveryMethodEnum.pickup}
+                    onSelect={onSelectDeliveryMethod}
+                  />
+                  <div className={classes.pickUpAddressContainer}>
+                    <div className={classes.pickUpAddressTitle}>{fullManufacturerAddress}</div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <CheckBoxBlueSquare
+                    id={DeliveryMethodEnum.pickup}
+                    title={DeliveryMethodEnum.pickup}
+                    checked={false}
+                    onSelect={() => {}}
+                    disabled
+                  />
+                  <div className={classes.pickUpAddressContainer}>
+                    <div className={classes.pickUpAddressTitle}>
+                      {'- производитель не указал, возможность самовывоза товара со своего склада.'}
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
-            <div className={classes.contentContainer}>
-              <div className={classes.title}>{'Укажите Ваш точный адрес для доставки'}</div>
-              <input
-                className={classes.customSizeInput}
-                placeholder={'Улица, дом'}
-                value={deliveryAddress || ''}
-                onChange={onChangeDeliveryAddress}
-                type="text"
+          );
+        } else if ((deliveryMethodItem.title as DeliveryMethodEnum) === DeliveryMethodEnum.delivery) {
+          return (
+            <div className={classes.checkBoxDeliveryContainer}>
+              <CheckBoxBlueSquare
+                id={DeliveryMethodEnum.delivery}
+                title={DeliveryMethodEnum.delivery}
+                checked={deliveryMethod === DeliveryMethodEnum.delivery}
+                onSelect={onSelectDeliveryMethod}
+                additionalInfo={
+                  'За организацию доставки поставщик может брать дополнительную плату, ' +
+                  'если доставка платная, то ее стоимость поставщик укажет в счете на заказ.'
+                }
               />
+              {deliveryMethod === DeliveryMethodEnum.delivery && (
+                <div className={classes.rowContainer}>
+                  <div className={classes.locationSelectorContainer}>
+                    <PlaceSelector onSelectLocation={onSelectLocation} />
+                  </div>
+                  <div className={classes.contentContainer}>
+                    <div className={classes.title}>{'Укажите Ваш точный адрес для доставки'}</div>
+                    <input
+                      className={classes.customSizeInput}
+                      placeholder={'Улица, дом'}
+                      value={deliveryAddress || ''}
+                      onChange={onChangeDeliveryAddress}
+                      type="text"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
-      </div>
+          );
+        }
+        return null;
+      })}
     </SectionContainer>
   );
 };
