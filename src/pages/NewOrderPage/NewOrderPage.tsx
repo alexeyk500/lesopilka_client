@@ -4,21 +4,21 @@ import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import MainColumn from '../../components/MainColumn/MainColumn';
 import NewOrderPageControl from './NewOrderPageControl/NewOrderPageControl';
 import NewOrderPageMainPart from './NewOrderPageMainPart/NewOrderPageMainPart';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { getDeliveryMethodThunk, getManufacturerPickUpAddress, getPaymentMethodThunk } from '../../store/newOrderSlice';
-import { selectorUser } from '../../store/userSlice';
+import {useParams} from "react-router-dom";
 
 const NewOrderPage = () => {
-  const user = useAppSelector(selectorUser);
+  const { mid } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (user?.manufacturer?.id && user.manufacturer.id > 0) {
+    if (Number(mid) > 0) {
       dispatch(getPaymentMethodThunk());
       dispatch(getDeliveryMethodThunk());
-      dispatch(getManufacturerPickUpAddress(user.manufacturer.id));
+      dispatch(getManufacturerPickUpAddress(Number(mid)));
     }
-  }, [dispatch, user?.manufacturer?.id]);
+  }, [dispatch, mid]);
 
   return (
     <div className={classes.container}>

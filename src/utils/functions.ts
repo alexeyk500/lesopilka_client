@@ -1,4 +1,5 @@
 import {
+  AddressType,
   CategorySizeType,
   ManufacturerType,
   OptionsType,
@@ -370,23 +371,30 @@ export const addDays = (date: Date, days: number) => {
   return result.toISOString();
 };
 
+export const getFullStringAddress = (address: AddressType | undefined) => {
+  if (address) {
+    let fullAddress = '';
+    fullAddress += address?.region?.title;
+    if (address?.location?.title) {
+      fullAddress += `, ${address?.location?.title}`;
+    }
+    if (address?.street) {
+      fullAddress += `, ${address?.street}`;
+    }
+    if (address?.building) {
+      fullAddress += `, ${address?.building}`;
+    }
+    if (address?.office) {
+      fullAddress += `, ${address?.office}`;
+    }
+    return fullAddress;
+  }
+  return '';
+};
+
 export const getFullManufacturerAddress = (manufacturer: ManufacturerType | undefined) => {
-  if (manufacturer) {
-    let address = '';
-    address += manufacturer?.address?.region?.title;
-    if (manufacturer?.address?.location?.title) {
-      address += `, ${manufacturer?.address?.location?.title}`;
-    }
-    if (manufacturer?.address?.street) {
-      address += `, ${manufacturer?.address?.street}`;
-    }
-    if (manufacturer?.address?.building) {
-      address += `, ${manufacturer?.address?.building}`;
-    }
-    if (manufacturer?.address?.office) {
-      address += `, ${manufacturer?.address?.office}`;
-    }
-    return address;
+  if (manufacturer?.address) {
+    return getFullStringAddress(manufacturer.address);
   }
   return '';
 };

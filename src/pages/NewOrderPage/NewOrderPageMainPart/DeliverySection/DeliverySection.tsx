@@ -2,11 +2,8 @@ import React from 'react';
 import SectionContainer from '../../../EditCardPage/EditCardMainPart/ProductDetails/SectionContainer/SectionContainer';
 import CheckBoxBlueSquare from '../../../../components/commonComponents/CheckBoxBlueSquare/CheckBoxBlueSquare';
 import classes from './DeliverySection.module.css';
-import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorBasketProducts } from '../../../../store/basketSlice';
-import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
-import { getFullManufacturerAddress } from '../../../../utils/functions';
+import {getFullStringAddress} from '../../../../utils/functions';
 import { DeliveryMethodEnum, OptionsType } from '../../../../types/types';
 import {
   selectorNewOrderDeliveryAddress,
@@ -36,18 +33,13 @@ export const checkDeliverySection = (
 };
 
 const DeliverySection: React.FC = () => {
-  const { mid } = useParams();
   const dispatch = useAppDispatch();
   const deliveryMethods = useAppSelector(selectorNewOrderDeliveryMethods);
-  const basketProducts = useAppSelector(selectorBasketProducts);
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
   const deliveryLocation = useAppSelector(selectorNewOrderDeliveryLocation);
   const deliveryAddress = useAppSelector(selectorNewOrderDeliveryAddress);
-  const manufacturerPickUpAddress = useAppSelector(selectorNewOrderManufacturerPickUpAddress);
+  const manufacturerPickUpAddress = getFullStringAddress(useAppSelector(selectorNewOrderManufacturerPickUpAddress));
 
-  const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
-  const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
-  const fullManufacturerAddress = getFullManufacturerAddress(manufacturer);
   const isSectionCondition = checkDeliverySection(deliveryMethod, deliveryLocation, deliveryAddress);
 
   const onSelectDeliveryMethod = (id: number | string) => {
@@ -67,7 +59,7 @@ const DeliverySection: React.FC = () => {
       {deliveryMethods.map((deliveryMethodItem) => {
         if ((deliveryMethodItem.title as DeliveryMethodEnum) === DeliveryMethodEnum.pickup) {
           return (
-            <div className={classes.checkBoxContainer}>
+            <div className={classes.checkBoxContainer} key={deliveryMethodItem.title}>
               {manufacturerPickUpAddress ? (
                 <>
                   <CheckBoxBlueSquare
@@ -77,7 +69,7 @@ const DeliverySection: React.FC = () => {
                     onSelect={onSelectDeliveryMethod}
                   />
                   <div className={classes.pickUpAddressContainer}>
-                    <div className={classes.pickUpAddressTitle}>{fullManufacturerAddress}</div>
+                    <div className={classes.pickUpAddressTitle}>{manufacturerPickUpAddress}</div>
                   </div>
                 </>
               ) : (
@@ -100,7 +92,7 @@ const DeliverySection: React.FC = () => {
           );
         } else if ((deliveryMethodItem.title as DeliveryMethodEnum) === DeliveryMethodEnum.delivery) {
           return (
-            <div className={classes.checkBoxDeliveryContainer}>
+            <div className={classes.checkBoxDeliveryContainer} key={deliveryMethodItem.title}>
               <CheckBoxBlueSquare
                 id={DeliveryMethodEnum.delivery}
                 title={DeliveryMethodEnum.delivery}
@@ -131,7 +123,7 @@ const DeliverySection: React.FC = () => {
             </div>
           );
         }
-        return null;
+        return null
       })}
     </SectionContainer>
   );

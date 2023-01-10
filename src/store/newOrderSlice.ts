@@ -138,6 +138,7 @@ export const selectorNewOrderContactPersonPhone = (state: RootState) => state.ne
 export const selectorNewOrderDeliveryLocation = (state: RootState) => state.newOrder.deliveryLocation;
 export const selectorNewOrderDeliveryAddress = (state: RootState) => state.newOrder.deliveryAddress;
 export const selectorNewOrderDeliveryMethods = (state: RootState) => state.newOrder.deliveryMethods;
+export const selectorNewOrderPaymentMethods = (state: RootState) => state.newOrder.paymentMethods;
 export const selectorNewOrderManufacturerPickUpAddress = (state: RootState) => state.newOrder.manufacturerPickUpAddress;
 
 export default newOrderSlice.reducer;
