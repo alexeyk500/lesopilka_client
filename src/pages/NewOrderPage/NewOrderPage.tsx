@@ -5,8 +5,12 @@ import MainColumn from '../../components/MainColumn/MainColumn';
 import NewOrderPageControl from './NewOrderPageControl/NewOrderPageControl';
 import NewOrderPageMainPart from './NewOrderPageMainPart/NewOrderPageMainPart';
 import { useAppDispatch } from '../../hooks/hooks';
-import { getDeliveryMethodThunk, getManufacturerPickUpAddress, getPaymentMethodThunk } from '../../store/newOrderSlice';
-import {useParams} from "react-router-dom";
+import {
+  getDeliveryMethodThunk,
+  getManufacturerPickUpAddressThunk,
+  getPaymentMethodThunk,
+} from '../../store/newOrderSlice';
+import { useParams } from 'react-router-dom';
 
 const NewOrderPage = () => {
   const { mid } = useParams();
@@ -16,7 +20,7 @@ const NewOrderPage = () => {
     if (Number(mid) > 0) {
       dispatch(getPaymentMethodThunk());
       dispatch(getDeliveryMethodThunk());
-      dispatch(getManufacturerPickUpAddress(Number(mid)));
+      dispatch(getManufacturerPickUpAddressThunk(Number(mid)));
     }
   }, [dispatch, mid]);
 

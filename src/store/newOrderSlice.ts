@@ -3,6 +3,8 @@ import { addDays } from '../utils/functions';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
+import { GetOrderServerType } from '../api/serverResponseTypes';
+import { CreateNewOrderParamsType } from '../api/orderApi';
 
 type NewOrderSliceType = {
   date: string;
@@ -54,16 +56,29 @@ export const getDeliveryMethodThunk = createAsyncThunk<CategoryType[], undefined
   }
 );
 
-export const getManufacturerPickUpAddress = createAsyncThunk<{ address: AddressType }, number, { rejectValue: string }>(
-  'user/getManufacturerPickUpAddress',
-  async (mid, { rejectWithValue }) => {
-    try {
-      return await serverApi.getManufacturerPickUpAddress(mid);
-    } catch (e) {
-      return rejectWithValue('Ошибка получения адреса склада производителя');
-    }
+export const getManufacturerPickUpAddressThunk = createAsyncThunk<
+  { address: AddressType },
+  number,
+  { rejectValue: string }
+>('user/getManufacturerPickUpAddress', async (mid, { rejectWithValue }) => {
+  try {
+    return await serverApi.getManufacturerPickUpAddress(mid);
+  } catch (e) {
+    return rejectWithValue('Ошибка получения адреса склада производителя');
   }
-);
+});
+
+export const createNewOrderThunk = createAsyncThunk<
+  GetOrderServerType[],
+  CreateNewOrderParamsType,
+  { rejectValue: string }
+>('user/createNewOrderThunk', async (createNewOrderParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.createNewOrder(createNewOrderParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка создания нового заказа поставщику');
+  }
+});
 
 export const newOrderSlice = createSlice({
   name: 'newOrderSlice',
@@ -101,18 +116,26 @@ export const newOrderSlice = createSlice({
         state.deliveryMethods = action.payload;
         state.isLoading = false;
       })
-      .addCase(getManufacturerPickUpAddress.fulfilled, (state, action) => {
+      .addCase(getManufacturerPickUpAddressThunk.fulfilled, (state, action) => {
         state.manufacturerPickUpAddress = action.payload.address;
         state.isLoading = false;
       })
       .addMatcher(
-        isAnyOf(getPaymentMethodThunk.pending, getDeliveryMethodThunk.pending, getManufacturerPickUpAddress.pending),
+        isAnyOf(
+          getPaymentMethodThunk.pending,
+          getDeliveryMethodThunk.pending,
+          getManufacturerPickUpAddressThunk.pending
+        ),
         (state) => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(getPaymentMethodThunk.rejected, getDeliveryMethodThunk.rejected, getManufacturerPickUpAddress.rejected),
+        isAnyOf(
+          getPaymentMethodThunk.rejected,
+          getDeliveryMethodThunk.rejected,
+          getManufacturerPickUpAddressThunk.rejected
+        ),
         (state) => {
           state.isLoading = false;
         }

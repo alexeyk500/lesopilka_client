@@ -53,6 +53,35 @@ export type ProductMaterialType = {
   order: number;
 };
 
+export enum OrderStatusEnum {
+  onConfirming = 'На подтверждении',
+  onPaymentWaiting = 'Ждет оплаты',
+  onAssembling = 'На сборке',
+  onDelivering = 'В пути',
+  completed = 'Получен',
+}
+
+export type OrderInfoType = {
+  id: number;
+  date: string;
+  status: OrderStatusEnum;
+  contactPersonName: string;
+  contactPersonPhone: string;
+  deliveryAddress: string;
+  userId: number;
+  paymentMethod: OptionsType;
+  deliveryMethod: OptionsType;
+  location: {
+    id: number;
+    title: string;
+    regionId: number;
+    region: {
+      id: number;
+      title: string;
+    };
+  };
+};
+
 export enum SizeTypeEnum {
   height = 'height',
   width = 'width',

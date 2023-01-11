@@ -4,15 +4,18 @@ import ButtonComponent, { ButtonType } from '../../../components/commonComponent
 import { useNavigate, useParams } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import OrderInfo from './OrderInfo/OrderInfo';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
+  createNewOrderThunk,
   selectorNewOrderContactPersonName,
   selectorNewOrderContactPersonPhone,
   selectorNewOrderDate,
   selectorNewOrderDeliveryAddress,
   selectorNewOrderDeliveryLocation,
   selectorNewOrderDeliveryMethod,
+  selectorNewOrderDeliveryMethods,
   selectorNewOrderPaymentMethod,
+  selectorNewOrderPaymentMethods,
 } from '../../../store/newOrderSlice';
 import { checkDateSection } from '../NewOrderPageMainPart/DateSection/DateSection';
 import { checkDeliverySection } from '../NewOrderPageMainPart/DeliverySection/DeliverySection';
@@ -22,6 +25,8 @@ import { checkPaymentMethodSection } from '../NewOrderPageMainPart/PaymentMethod
 import { selectorBasketProducts } from '../../../store/basketSlice';
 import { filterProductsByManufacturerId } from '../../../utils/productFunctions';
 import { checkOrderContentSection } from '../NewOrderPageMainPart/OrderContentSection/OrderContentSection';
+import { CreateNewOrderParamsType } from '../../../api/orderApi';
+import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
 
 const getErrorMessage = (
   orderDate: Date,
@@ -50,6 +55,7 @@ const getErrorMessage = (
 const NewOrderPageControl: React.FC = () => {
   const { mid } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const orderDate = new Date(useAppSelector(selectorNewOrderDate));
   const deliveryMethod = useAppSelector(selectorNewOrderDeliveryMethod);
   const deliveryLocation = useAppSelector(selectorNewOrderDeliveryLocation);
@@ -58,6 +64,8 @@ const NewOrderPageControl: React.FC = () => {
   const contactPersonPhone = useAppSelector(selectorNewOrderContactPersonPhone);
   const paymentMethod = useAppSelector(selectorNewOrderPaymentMethod);
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const deliveryMethods = useAppSelector(selectorNewOrderDeliveryMethods);
+  const paymentMethods = useAppSelector(selectorNewOrderPaymentMethods);
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
 
   const errorMessage = getErrorMessage(
@@ -75,6 +83,52 @@ const NewOrderPageControl: React.FC = () => {
     navigate(PageEnum.BasketPage);
   };
 
+  const onClickSendOrder = () => {
+    const deliveryMethodId = deliveryMethods.find(
+      (method) => (method.title as DeliveryMethodEnum) === deliveryMethod
+    )?.id;
+    const paymentMethodId = paymentMethods.find((method) => (method.title as PaymentMethodEnum) === paymentMethod)?.id;
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (
+      Number(mid) &&
+      orderDate.toISOString() &&
+      contactPersonName &&
+      contactPersonPhone &&
+      paymentMethodId &&
+      deliveryMethodId &&
+      token
+    ) {
+      const createNewOrderParams: CreateNewOrderParamsType = {
+        mid: Number(mid),
+        date: orderDate.toISOString(),
+        contactPersonName,
+        contactPersonPhone,
+        deliveryAddress: deliveryAddress ? deliveryAddress : undefined,
+        locationId: deliveryLocation?.id ? deliveryLocation?.id : undefined,
+        paymentMethodId,
+        deliveryMethodId,
+        token,
+      };
+      dispatch(createNewOrderThunk(createNewOrderParams)).then(() => {
+        showPortalPopUp({
+          popUpContent: (
+            <div className={classes.infoPopUpText}>
+              {'Заказ создан и отправлен поставщику.\n\n'}
+              <span className={classes.infoPopUpSmallText}>
+                {'Вы сможете контролировать его статус \nперейдя в меню "Заказы"'}
+              </span>
+            </div>
+          ),
+          oneCenterConfirmBtn: true,
+          titleConfirmBtn: 'Понятно',
+          onClosePopUp: () => {
+            navigate(PageEnum.BasketPage);
+          },
+        });
+      });
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.infoSection}>
@@ -85,7 +139,7 @@ const NewOrderPageControl: React.FC = () => {
             buttonType={ButtonType.GREEN}
             disabled={!!errorMessage}
             disabledPopUpMessage={errorMessage}
-            onClick={() => {}}
+            onClick={onClickSendOrder}
           />
         </div>
       </div>

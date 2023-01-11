@@ -3,7 +3,7 @@ import SectionContainer from '../../../EditCardPage/EditCardMainPart/ProductDeta
 import CheckBoxBlueSquare from '../../../../components/commonComponents/CheckBoxBlueSquare/CheckBoxBlueSquare';
 import classes from './DeliverySection.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import {getFullStringAddress} from '../../../../utils/functions';
+import { getFullStringAddress } from '../../../../utils/functions';
 import { DeliveryMethodEnum, OptionsType } from '../../../../types/types';
 import {
   selectorNewOrderDeliveryAddress,
@@ -123,7 +123,7 @@ const DeliverySection: React.FC = () => {
             </div>
           );
         }
-        return null
+        return null;
       })}
     </SectionContainer>
   );

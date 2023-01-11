@@ -1,4 +1,4 @@
-import { ProductType, UserType } from '../types/types';
+import { OrderInfoType, ProductType, UserType } from '../types/types';
 
 export type SendConfirmationEmailServerType = {
   message: string;
@@ -30,4 +30,9 @@ export type GetProductsServerType = {
   pageSize: number;
   totalPages: number;
   currentPage: number;
+};
+
+export type GetOrderServerType = {
+  order: OrderInfoType;
+  products: ProductType[];
 };
