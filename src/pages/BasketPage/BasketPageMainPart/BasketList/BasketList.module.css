@@ -28,3 +28,14 @@
   row-gap: 64px;
   overflow-y: scroll;
 }
+
+.emptyBasket {
+  display: flex;
+  margin-top: 20%;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+  letter-spacing: 0.33px;
+  color: var(--red_color);
+}
