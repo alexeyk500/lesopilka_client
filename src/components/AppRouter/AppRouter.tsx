@@ -8,6 +8,7 @@ import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 import PricePage from '../../pages/PricePage/PricePage';
 import BasketPage from '../../pages/BasketPage/BasketPage';
 import NewOrderPage from '../../pages/NewOrderPage/NewOrderPage';
+import OrdersPage from '../../pages/OrdersPage/OrdersPage';
 
 type RouteType = {
   path: string;
@@ -25,6 +26,7 @@ export enum PageEnum {
   EditProduct = '/edit_product',
   ManufacturerRegistration = '/manufacturer_registration',
   NewOrder = '/new_order',
+  OrdersPage = '/orders',
 }
 
 const publicRoutes: RouteType[] = [
@@ -41,6 +43,7 @@ const protectedRoutes: RouteType[] = [
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
   { path: `${PageEnum.NewOrder}/:mid`, element: <NewOrderPage /> },
+  { path: PageEnum.OrdersPage, element: <OrdersPage /> },
 ];
 
 const AppRouter = () => {

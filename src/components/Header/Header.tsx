@@ -17,6 +17,7 @@ import {
 } from '../../store/catalogSlice';
 import SearchLocationSelector from '../commonComponents/SearchLocationSelector/SearchLocationSelector';
 import CatalogButton from './CatalogButton/CatalogButton';
+import OrdersButton from './OrdersButton/OrdersButton';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ const Header: React.FC = () => {
         <CatalogButton />
         <FavoriteButton />
         <BasketButton />
+        <OrdersButton />
         <LoginButton />
       </div>
     </div>

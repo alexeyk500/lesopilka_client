@@ -78,6 +78,15 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     closeMenuContent();
   };
 
+  const onClickOrders = () => {
+    if (user) {
+      navigate(PageEnum.OrdersPage);
+    } else {
+      loginUser();
+    }
+    closeMenuContent();
+  };
+
   return (
     <div className={classes.section}>
       Покупки
@@ -89,7 +98,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
         <img src={cartIcoOutlined} className={classes.ico} alt="basket button" />
         Корзина
       </button>
-      <button className={classes.menuButton}>
+      <button className={classes.menuButton} onClick={onClickOrders}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />
         Заказы
       </button>
