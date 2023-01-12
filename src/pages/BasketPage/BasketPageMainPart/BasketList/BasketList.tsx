@@ -12,8 +12,8 @@ type PropsType = {
 const BasketList: React.FC<PropsType> = ({ productsByManufacturer, manufacturersRef }) => {
   return (
     <div className={classes.container}>
-      {!!productsByManufacturer.length
-      ? <>
+      {!!productsByManufacturer.length ? (
+        <>
           <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
           <div className={classes.scrollContainer}>
             {productsByManufacturer.map((products, ind) => {
@@ -26,9 +26,9 @@ const BasketList: React.FC<PropsType> = ({ productsByManufacturer, manufacturers
             })}
           </div>
         </>
-        : <div className={classes.emptyBasket}>{'В вашей корзине пусто'}</div>
-      }
-
+      ) : (
+        <div className={classes.emptyBasket}>{'В вашей корзине пусто'}</div>
+      )}
     </div>
   );
 };

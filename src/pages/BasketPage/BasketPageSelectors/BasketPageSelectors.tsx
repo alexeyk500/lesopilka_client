@@ -35,7 +35,7 @@ const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manu
     <div className={classes.container}>
       <div className={classes.title}>{'Корзина'}</div>
       <div className={classes.btnSectionContainer}>
-        {!!productsByManufacturer.length &&
+        {!!productsByManufacturer.length && (
           <ButtonsSection title={'Поставщики'}>
             {productsByManufacturer.map((manufacturerProduct, ind) => (
               <IconButton
@@ -48,7 +48,7 @@ const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manu
               />
             ))}
           </ButtonsSection>
-        }
+        )}
       </div>
 
       <div className={classes.btnReadyContainer}>

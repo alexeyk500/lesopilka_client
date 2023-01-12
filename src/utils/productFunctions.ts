@@ -125,3 +125,15 @@ export const sortByMaterialId = (productsGroup: ProductType[][] | undefined) => 
     return separatedProducts;
   }
 };
+
+export const sortProducts = (products: ProductType[], subCategories: SubCategoryType[]) => {
+  let separatedProducts = splitBySubCategory(products, subCategories);
+  separatedProducts = splitByIsDried(separatedProducts);
+  separatedProducts = splitByIsSeptic(separatedProducts);
+  separatedProducts = sortBySortId(separatedProducts);
+  separatedProducts = sortByMaterialId(separatedProducts);
+  separatedProducts = sortBySize(separatedProducts);
+  let flattenSeparatedProducts: ProductType[] = [];
+  separatedProducts?.forEach((products) => products.forEach((product) => flattenSeparatedProducts.push(product)));
+  return flattenSeparatedProducts;
+};
