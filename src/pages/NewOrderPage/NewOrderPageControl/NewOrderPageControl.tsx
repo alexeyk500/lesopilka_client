@@ -84,6 +84,19 @@ const NewOrderPageControl: React.FC = () => {
   };
 
   const onClickSendOrder = () => {
+    showPortalPopUp({
+      popUpContent: <div className={classes.infoPopUpText}>{'\n\nОтправить заказ поставщику?\n\n\n\n'}</div>,
+      titleConfirmBtn: 'Отправить',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        if (result) {
+          sendOrder();
+        }
+      },
+    });
+  };
+
+  const sendOrder = () => {
     const deliveryMethodId = deliveryMethods.find(
       (method) => (method.title as DeliveryMethodEnum) === deliveryMethod
     )?.id;
@@ -110,20 +123,18 @@ const NewOrderPageControl: React.FC = () => {
         token,
       };
       dispatch(createNewOrderThunk(createNewOrderParams)).then(() => {
+        navigate(PageEnum.BasketPage);
         showPortalPopUp({
           popUpContent: (
             <div className={classes.infoPopUpText}>
               {'Заказ создан и отправлен поставщику.\n\n'}
               <span className={classes.infoPopUpSmallText}>
-                {'Вы сможете контролировать его статус \nперейдя в меню "Заказы"'}
+                {'Вы можете контролировать его \nперейдя в меню "Заказы"'}
               </span>
             </div>
           ),
           oneCenterConfirmBtn: true,
           titleConfirmBtn: 'Понятно',
-          onClosePopUp: () => {
-            navigate(PageEnum.BasketPage);
-          },
         });
       });
     }

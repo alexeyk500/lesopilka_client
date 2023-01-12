@@ -35,3 +35,9 @@
 .infoPopUpSmallText {
   font-size: 18px;
 }
+
+.customPopUpBottomBtnGroup {
+  width: 378px;
+  padding: 0 32px !important;
+  margin-bottom: 0 !important;
+}
