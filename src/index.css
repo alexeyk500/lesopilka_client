@@ -156,3 +156,15 @@ template {
   flex-direction: column;
   background-color: var(--main_background);
 }
+
+*::-webkit-scrollbar {
+  width: 8px;
+}
+*::-webkit-scrollbar-track {
+  margin-bottom: 10px;
+  background: inherit;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--gray_color_light_light_light);
+  border-radius: 12px;
+}
