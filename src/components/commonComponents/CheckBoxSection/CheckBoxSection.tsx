@@ -2,14 +2,14 @@ import React, { ReactNode } from 'react';
 import classes from './CheckBoxSection.module.css';
 
 type PropsType = {
-  title: string;
+  title?: string;
   children: ReactNode;
 };
 
 const CheckBoxSection: React.FC<PropsType> = ({ title, children }) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>{title}</div>
+      {title && <div className={classes.title}>{title}</div>}
       <div className={classes.contentContainer}>{children}</div>
     </div>
   );
