@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import classes from '../PricePage/PricePage.module.css';
+import classes from './BasketPage.module.css';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import BasketPageSelectors from './BasketPageSelectors/BasketPageSelectors';
 import BasketPageMainPart from './BasketPageMainPart/BasketPageMainPart';
