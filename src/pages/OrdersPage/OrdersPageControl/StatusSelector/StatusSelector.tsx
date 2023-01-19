@@ -1,19 +1,40 @@
 import React from 'react';
 import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
-import { OrderStatusEnum } from '../../../../types/types';
+import { OptionsType, OrderStatusEnum } from '../../../../types/types';
 import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSection/CheckBoxSection';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { selectorSelectedOrderStatusId, setSelectedOrderStatusId } from '../../../../store/ordersSlice';
+
+const orderStatusOptions: OptionsType[] = [
+  { id: 0, title: 'Все', toolTip: 'Все ваши заказы' },
+  { id: 1, title: OrderStatusEnum.onConfirming, toolTip: 'Ожидайте, поставщик готовит вам счет на эти заказы' },
+  { id: 2, title: OrderStatusEnum.onPaymentWaiting, toolTip: 'Заказы которые ожидают Вашей оплаты' },
+  { id: 3, title: OrderStatusEnum.onAssembling, toolTip: 'Заказы которые поставщик комплектует и готовит к отправке' },
+  { id: 4, title: OrderStatusEnum.onDelivering, toolTip: 'Заказы котрые уже к вам в пути' },
+  { id: 5, title: OrderStatusEnum.completed, toolTip: 'Ваши завершенные заказы' },
+];
 
 const StatusSelector: React.FC = () => {
-  const onSelect = (id: number) => {};
+  const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
+
+  const dispatch = useAppDispatch();
+
+  const onSelect = (id: number) => {
+    dispatch(setSelectedOrderStatusId(id));
+  };
 
   return (
     <CheckBoxSection>
-      <CheckBoxSquare id={0} title={'Все'} checked={true} onSelect={onSelect} />
-      <CheckBoxSquare id={1} title={OrderStatusEnum.onConfirming} checked={false} onSelect={onSelect} />
-      <CheckBoxSquare id={2} title={OrderStatusEnum.onPaymentWaiting} checked={false} onSelect={onSelect} />
-      <CheckBoxSquare id={3} title={OrderStatusEnum.onAssembling} checked={false} onSelect={onSelect} />
-      <CheckBoxSquare id={4} title={OrderStatusEnum.onDelivering} checked={false} onSelect={onSelect} />
-      <CheckBoxSquare id={5} title={OrderStatusEnum.completed} checked={false} onSelect={onSelect} />
+      {orderStatusOptions.map((orderStatusOption) => (
+        <CheckBoxSquare
+          key={orderStatusOption.id!}
+          id={orderStatusOption.id!}
+          title={orderStatusOption.title}
+          checked={selectedOrderStatusId === orderStatusOption.id}
+          toolTip={orderStatusOption.toolTip}
+          onSelect={onSelect}
+        />
+      ))}
     </CheckBoxSection>
   );
 };

@@ -3,6 +3,7 @@ export type OptionsType = {
   title: string;
   key?: string;
   value?: string;
+  toolTip?: string;
 };
 
 export type AddressType = {
@@ -55,10 +56,10 @@ export type ProductMaterialType = {
 
 export enum OrderStatusEnum {
   onConfirming = 'На подтверждении',
-  onPaymentWaiting = 'Ждают оплаты',
+  onPaymentWaiting = 'Ждает оплаты',
   onAssembling = 'В сборке',
   onDelivering = 'В пути',
-  completed = 'Получены',
+  completed = 'Получен',
 }
 
 export type OrderInfoType = {

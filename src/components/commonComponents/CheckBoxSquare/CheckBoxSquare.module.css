@@ -1,8 +1,8 @@
 .container {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 8px 2px 4px 12px;
-  cursor: pointer;
   color: var(--gray_color);
 }
 
@@ -12,6 +12,7 @@
   background-color: var(--section_background);
   border: 1px solid var(--blue_color);
   border-radius: 6px;
+  cursor: pointer;
 }
 
 .checkedBox {
@@ -19,9 +20,11 @@
   height: 20px;
   background-color: var(--green_color);
   border-radius: 6px;
+  cursor: pointer;
 }
 
 .title {
+  position: static;
   display: flex;
   margin-left: 8px;
   font-size: 16px;
@@ -45,4 +48,18 @@
   font-size: 14px;
   font-weight: 600;
   color: var(--gray_color)
+}
+
+.toolTip {
+  position: fixed;
+  display: flex;
+  padding: 8px 12px;
+  align-items: center;
+  left: 250px;
+  background: var(--main_background);
+  border-radius: 6px;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: var(--box_shadow);
+  color: var(--orange_color);
 }
