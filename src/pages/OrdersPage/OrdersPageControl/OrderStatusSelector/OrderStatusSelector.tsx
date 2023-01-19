@@ -14,7 +14,7 @@ const orderStatusOptions: OptionsType[] = [
   { id: 5, title: OrderStatusEnum.completed, toolTip: 'Ваши завершенные заказы' },
 ];
 
-const StatusSelector: React.FC = () => {
+const OrderStatusSelector: React.FC = () => {
   const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
 
   const dispatch = useAppDispatch();
@@ -39,4 +39,4 @@ const StatusSelector: React.FC = () => {
   );
 };
 
-export default StatusSelector;
+export default OrderStatusSelector;
