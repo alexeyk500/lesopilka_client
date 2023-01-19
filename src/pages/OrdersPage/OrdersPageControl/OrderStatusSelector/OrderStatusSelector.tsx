@@ -24,7 +24,7 @@ const OrderStatusSelector: React.FC = () => {
   };
 
   return (
-    <CheckBoxSection>
+    <CheckBoxSection title={'Статусы заказов'}>
       {orderStatusOptions.map((orderStatusOption) => (
         <CheckBoxSquare
           key={orderStatusOption.id!}

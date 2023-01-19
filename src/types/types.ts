@@ -56,7 +56,7 @@ export type ProductMaterialType = {
 
 export enum OrderStatusEnum {
   onConfirming = 'На подтверждении',
-  onPaymentWaiting = 'Ждает оплаты',
+  onPaymentWaiting = 'Ожидает оплаты',
   onAssembling = 'В сборке',
   onDelivering = 'В пути',
   completed = 'Получен',

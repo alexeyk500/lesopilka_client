@@ -7,9 +7,11 @@ const OrdersPageControl: React.FC = () => {
   return (
     <>
       <div className={classes.containerStatusSelector}>
+        <DateIntervalSelector />
+      </div>
+      <div className={classes.containerStatusSelector}>
         <OrderStatusSelector />
       </div>
-      <DateIntervalSelector />
     </>
   );
 };

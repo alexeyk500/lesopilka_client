@@ -16,11 +16,12 @@ const InfoAndErrorMessageForm: React.FC<PropsType> = ({ message, isError }) => {
   return <div className={classNames(classes.container, { [classes.error]: isError })}>{message}</div>;
 };
 
-export const showErrorPopUp = (message: string) => {
+export const showErrorPopUp = (message: string, onConfirm?: (result?: boolean | FormData) => void) => {
   showPortalPopUp({
     popUpContent: <InfoAndErrorMessageForm message={message} isError />,
     oneCenterConfirmBtn: true,
     titleConfirmBtn: 'Понятно',
+    onClosePopUp: onConfirm,
   });
 };
 
