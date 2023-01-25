@@ -1,10 +1,12 @@
 import { AddressType, CategoryType, DeliveryMethodEnum, OptionsType, PaymentMethodEnum } from '../types/types';
-import { addDays } from '../utils/functions';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { GetOrderServerType } from '../api/serverResponseTypes';
 import { CreateNewOrderParamsType } from '../api/orderApi';
+import { dateDayShift } from '../utils/dateTimeFunctions';
+
+const minDateForNewOrder = dateDayShift(new Date(), 1).toISOString();
 
 type NewOrderSliceType = {
   date: string;
@@ -21,7 +23,7 @@ type NewOrderSliceType = {
 };
 
 const initialState: NewOrderSliceType = {
-  date: addDays(new Date(), 1),
+  date: minDateForNewOrder,
   deliveryMethod: DeliveryMethodEnum.pickup,
   deliveryMethods: [],
   deliveryLocation: undefined,

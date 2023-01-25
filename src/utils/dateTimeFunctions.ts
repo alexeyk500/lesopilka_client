@@ -1,5 +1,11 @@
+export const dateDayShift = (date: Date, days: number) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
 export const dateMonthShift = (startDate: Date, monthShift: number) => {
-  let newDate = new Date(startDate.toISOString());
+  let newDate = new Date(startDate);
   return new Date(newDate.setMonth(newDate.getMonth() + monthShift));
 };
 

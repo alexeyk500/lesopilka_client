@@ -28,19 +28,18 @@ const DatePickerComponent: React.FC<PropsType> = ({
   };
 
   const showOverMaxDate = () => {
-    showErrorPopUp(`Максимальная дата для заказа - ${formatUTCtoDDMMMMYYYY(maxDate!.toISOString())}`, () => {
+    showErrorPopUp(`Максимальная дата для выбора - ${formatUTCtoDDMMMMYYYY(maxDate!.toISOString())}`, () => {
       setIsOpen(true);
     });
   };
   const showUndoMinDate = () => {
-    showErrorPopUp(`Минимальная дата для заказа - ${formatUTCtoDDMMMMYYYY(minDate!.toISOString())}`, () => {
+    showErrorPopUp(`Минимальная дата для выбора - ${formatUTCtoDDMMMMYYYY(minDate!.toISOString())}`, () => {
       setIsOpen(true);
     });
     setIsOpen(true);
   };
 
   const handleSetDate = (date: Date) => {
-    console.log('handleSetDate date =', date, '   minDate =', minDate, '   maxDate=', maxDate);
     if (date && onSelectDate) {
       if (minDate) {
         if (date >= minDate) {

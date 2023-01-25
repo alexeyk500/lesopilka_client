@@ -305,12 +305,6 @@ export const isAllProductAvailable = (products: ProductType[]) => {
   return !products.find((product) => product.publicationDate === undefined);
 };
 
-export const addDays = (date: Date, days: number) => {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result.toISOString();
-};
-
 export const getFullStringAddress = (address: AddressType | undefined) => {
   if (address) {
     let fullAddress = '';
