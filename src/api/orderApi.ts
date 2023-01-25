@@ -14,19 +14,26 @@ export type CreateNewOrderParamsType = {
   token: string;
 };
 
+export type GetOrdersType = {
+  dateFrom: string;
+  dateTo: string;
+  ordersStatus: string;
+  token: string;
+};
+
 export const orderApi = {
   async getPaymentMethods() {
-    const response = await instanceAxios.get<CategoryType[]>('/order/payment_methods');
+    const response = await instanceAxios.get<CategoryType[]>('/orders/payment_methods');
     return response.data;
   },
 
   async getDeliveryMethods() {
-    const response = await instanceAxios.get<CategoryType[]>('/order/delivery_methods');
+    const response = await instanceAxios.get<CategoryType[]>('/orders/delivery_methods');
     return response.data;
   },
 
   async getManufacturerPickUpAddress(mid: number) {
-    const response = await instanceAxios.get<{ address: AddressType }>(`/order/pick_up_address/${mid}`);
+    const response = await instanceAxios.get<{ address: AddressType }>(`/orders/pick_up_address/${mid}`);
     return response.data;
   },
 
@@ -42,7 +49,7 @@ export const orderApi = {
     token,
   }: CreateNewOrderParamsType) {
     const response = await instanceAxios.post<GetOrderServerType[]>(
-      `/order`,
+      `/orders`,
       {
         mid,
         date,
@@ -55,6 +62,11 @@ export const orderApi = {
       },
       setAuthHeader(token)
     );
+    return response.data;
+  },
+
+  async getOrders({ dateFrom, dateTo, ordersStatus, token }: GetOrdersType) {
+    const response = await instanceAxios.get<GetOrderServerType[]>('/orders', setAuthHeader(token));
     return response.data;
   },
 };

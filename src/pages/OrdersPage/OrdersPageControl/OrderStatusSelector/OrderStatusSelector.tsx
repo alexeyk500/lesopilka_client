@@ -5,7 +5,7 @@ import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSec
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorSelectedOrderStatusId, setSelectedOrderStatusId } from '../../../../store/ordersSlice';
 
-const orderStatusOptions: OptionsType[] = [
+export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: 'Все', toolTip: 'Все ваши заказы' },
   { id: 1, title: OrderStatusEnum.onConfirming, toolTip: 'Ожидайте, поставщик готовит вам счет на эти заказы' },
   { id: 2, title: OrderStatusEnum.onPaymentWaiting, toolTip: 'Заказы которые ожидают Вашей оплаты' },
