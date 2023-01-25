@@ -1,8 +1,10 @@
 .container {
   display: flex;
   width: 100%;
-  padding-left: 8px;
+  height: 100%;
+  padding: 0 8px;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .pageTitle {
@@ -14,76 +16,3 @@
   line-height: 32px;
   margin-bottom: 6px;
 }
-
-.tableTitle {
-  display: flex;
-  width: 100%;
-  background-color: #4A90E2;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-
-.tableColumnDate {
-  display: flex;
-  justify-content: center;
-  width: 7%;
-  background-color: #818cee;
-}
-
-.tableColumnNumber {
-  display: flex;
-  justify-content: center;
-  width: 9%;
-  background-color: #db6bf3;
-}
-
-.tableColumnManufacturer {
-  display: flex;
-  justify-content: center;
-  width: 16%;
-  background-color: #adff2d;
-}
-
-.tableColumnWeight {
-  display: flex;
-  justify-content: center;
-  width: 9%;
-  background-color: #f667bd;
-}
-
-.tableColumnVolume {
-  display: flex;
-  justify-content: center;
-  width: 9%;
-  background-color: #a9ffce;
-}
-
-.tableColumnDelivery {
-  display: flex;
-  justify-content: center;
-  width: 12%;
-  background-color: #fff8a9;
-}
-
-.tableColumnCost {
-  display: flex;
-  justify-content: center;
-  width: 12%;
-  background-color: #a9efff;
-}
-
-.tableColumnActions {
-  display: flex;
-  justify-content: center;
-  width: 12%;
-  background-color: #d5a9ff;
-}
-
-.tableColumnStatus {
-  display: flex;
-  justify-content: center;
-  width: 14%;
-  background-color: #fff8a9;
-}
-

@@ -54,6 +54,8 @@ export type ProductMaterialType = {
   order: number;
 };
 
+export type ServerOrderStatusType = 'onConfirming' | 'onPaymentWaiting' | 'onAssembling' | 'onDelivering' | 'completed';
+
 export enum OrderStatusEnum {
   onConfirming = 'На подтверждении',
   onPaymentWaiting = 'Ожидает оплаты',
@@ -81,6 +83,11 @@ export type OrderInfoType = {
       title: string;
     };
   };
+};
+
+export type OrderType = {
+  order: OrderInfoType;
+  products: ProductType[];
 };
 
 export enum SizeTypeEnum {

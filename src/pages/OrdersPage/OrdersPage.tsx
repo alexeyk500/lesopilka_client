@@ -11,7 +11,7 @@ const OrdersPage: React.FC = () => {
       <LeftColumn title={`Заказы`}>
         <OrdersPageControl />
       </LeftColumn>
-      <MainColumn>
+      <MainColumn noScroll>
         <OrdersPageMain />
       </MainColumn>
     </div>

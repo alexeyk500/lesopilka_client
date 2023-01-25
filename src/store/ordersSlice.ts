@@ -4,13 +4,14 @@ import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { MAX_MONTH_SHIFT_FOR_ORDERS } from '../utils/constants';
 import { serverApi } from '../api/serverApi';
 import { GetOrderServerType } from '../api/serverResponseTypes';
-import { GetOrdersType } from '../api/orderApi';
+import { GetOrdersParamsType } from '../api/orderApi';
+import { OrderType } from '../types/types';
 
 type OrdersSliceType = {
   selectedOrderStatusId: number;
   dateFrom: string;
   dateTo: string;
-  orders: GetOrderServerType[];
+  orders: OrderType[];
   isLoading: boolean;
 };
 
@@ -25,7 +26,7 @@ const initialState: OrdersSliceType = {
   isLoading: false,
 };
 
-export const getOrdersThunk = createAsyncThunk<GetOrderServerType[], GetOrdersType, { rejectValue: string }>(
+export const getOrdersThunk = createAsyncThunk<GetOrderServerType[], GetOrdersParamsType, { rejectValue: string }>(
   'user/getOrdersThunk',
   async (getOrdersParams, { rejectWithValue }) => {
     try {
@@ -70,5 +71,6 @@ export const { setSelectedOrderStatusId, setDateFrom, setDateTo } = ordersSlice.
 export const selectorSelectedOrderStatusId = (state: RootState) => state.orders.selectedOrderStatusId;
 export const selectorSelectedOrderDateFrom = (state: RootState) => state.orders.dateFrom;
 export const selectorSelectedOrderDateTo = (state: RootState) => state.orders.dateTo;
+export const selectorOrders = (state: RootState) => state.orders.orders;
 
 export default ordersSlice.reducer;

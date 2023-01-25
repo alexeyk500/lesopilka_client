@@ -1,5 +1,5 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { AddressType, CategoryType } from '../types/types';
+import { AddressType, CategoryType, ServerOrderStatusType } from '../types/types';
 import { GetOrderServerType } from './serverResponseTypes';
 import { normalizeData } from '../utils/dateTimeFunctions';
 
@@ -15,10 +15,10 @@ export type CreateNewOrderParamsType = {
   token: string;
 };
 
-export type GetOrdersType = {
+export type GetOrdersParamsType = {
   dateFrom: string;
   dateTo: string;
-  ordersStatus: string;
+  ordersStatus: ServerOrderStatusType | 'all';
   token: string;
 };
 
@@ -66,7 +66,7 @@ export const orderApi = {
     return response.data;
   },
 
-  async getOrders({ dateFrom, dateTo, ordersStatus, token }: GetOrdersType) {
+  async getOrders({ dateFrom, dateTo, ordersStatus, token }: GetOrdersParamsType) {
     const response = await instanceAxios.post<GetOrderServerType[]>(
       '/orders',
       { dateFrom: normalizeData(dateFrom), dateTo: normalizeData(dateTo), ordersStatus },

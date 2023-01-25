@@ -1,8 +1,9 @@
 .wrapper {
   display: flex;
   padding: 8px;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 .container {
   display: flex;
@@ -24,5 +25,9 @@
   width: 100%;
   height: 100%;
   align-items: center;
-  overflow-y: scroll;
+  overflow: scroll;
+}
+
+.noScroll {
+  overflow: hidden !important;
 }
