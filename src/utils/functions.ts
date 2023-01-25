@@ -1,13 +1,4 @@
-import {
-  AddressType,
-  CategorySizeType,
-  ManufacturerType,
-  OptionsType,
-  ProductType,
-  QueryEnum,
-  SizeTypeEnum,
-  UserType,
-} from '../types/types';
+import { AddressType, ManufacturerType, OptionsType, ProductType, QueryEnum } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
@@ -211,57 +202,6 @@ export const getSizesValue = (product: ProductType) => {
   return { height, width, length, caliber };
 };
 
-export const getSizeBySizeType = (sizeType: SizeTypeEnum, sizes?: CategorySizeType[]) => {
-  const size = sizes?.find((size) => size.type === sizeType);
-  if (size) {
-    return size.value;
-  }
-  return undefined;
-};
-
-export const formatUTC = (utcData: string | undefined) => {
-  if (utcData) {
-    return new Date(utcData).toLocaleString('ru-Ru', {
-      month: 'long',
-      year: 'numeric',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
-  }
-  return null;
-};
-
-export const formatUTCtoDDMMMMYYYY = (utcData: string | undefined) => {
-  if (utcData) {
-    return new Date(utcData).toLocaleString('ru-Ru', {
-      month: 'long',
-      year: 'numeric',
-      day: '2-digit',
-    });
-  }
-  return '';
-};
-
-export const makeFirstSearchParams = (user?: UserType, searchRegionId?: number, searchLocationId?: number) => {
-  const searchParams = new URLSearchParams();
-  if (user?.manufacturer?.id) {
-    searchParams.set(QueryEnum.ManufacturerId, user.manufacturer.id.toString());
-  }
-  if (searchRegionId) {
-    searchParams.set(QueryEnum.SearchRegionId, searchRegionId.toString());
-  }
-  if (searchLocationId) {
-    searchParams.set(QueryEnum.SearchLocationId, searchLocationId.toString());
-  }
-  const searchParamsStr = searchParams.toString();
-  if (!!searchParamsStr.length) {
-    return `?${searchParamsStr}`;
-  }
-  return '';
-};
-
 export const checkIsManufacturerPage = (location: { pathname: string }) => location?.pathname?.includes('manufacturer');
 
 export const getBackwardRouteToManufacturerCatalog = (
@@ -388,13 +328,6 @@ export const getFullStringAddress = (address: AddressType | undefined) => {
       fullAddress += `, ${address?.office}`;
     }
     return fullAddress;
-  }
-  return '';
-};
-
-export const getFullManufacturerAddress = (manufacturer: ManufacturerType | undefined) => {
-  if (manufacturer?.address) {
-    return getFullStringAddress(manufacturer.address);
   }
   return '';
 };

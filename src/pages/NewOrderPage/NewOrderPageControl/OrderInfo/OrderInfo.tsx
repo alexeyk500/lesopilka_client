@@ -8,7 +8,7 @@ import wareGrayHouseIco from '../../../../img/wareGrayHouseIco.svg';
 import weightGrayIco from '../../../../img/weightGrayIco.svg';
 import woodGrayIco from '../../../../img/woodGrayIco.svg';
 import moneyGrayIco from '../../../../img/moneyGrayIco.svg';
-import { formatUTCtoDDMMMMYYYY, getTotalLogisticInfo } from '../../../../utils/functions';
+import { getTotalLogisticInfo } from '../../../../utils/functions';
 import { useAppSelector } from '../../../../hooks/hooks';
 import {
   selectorNewOrderContactPersonName,
@@ -20,6 +20,7 @@ import { useParams } from 'react-router-dom';
 import { filterProductsByManufacturerId } from '../../../../utils/productFunctions';
 import PaymentMethodInfo from './OrderInfoSection/PaymentMethodInfo/PaymentMethodInfo';
 import DeliveryInfo from './OrderInfoSection/DeliveryInfo/DeliveryInfo';
+import { formatUTCtoDDMMMMYYYY } from '../../../../utils/dateTimeFunctions';
 
 const OrderInfo: React.FC = () => {
   const { mid } = useParams();

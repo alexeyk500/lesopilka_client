@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { dateMonthShift } from '../utils/dateTimeFunctions';
 
 type OrdersSliceType = {
   selectedOrderStatusId: number;
@@ -7,10 +8,8 @@ type OrdersSliceType = {
   dateTo: string;
 };
 
-let nowDateTo = new Date();
-const dateTo = new Date(nowDateTo.setMonth(nowDateTo.getMonth() + 1));
-let nowDateFrom = new Date();
-const dateFrom = new Date(nowDateFrom.setMonth(nowDateFrom.getMonth() - 4));
+const dateTo = dateMonthShift(new Date(), 1);
+const dateFrom = dateMonthShift(new Date(), -4);
 
 const initialState: OrdersSliceType = {
   selectedOrderStatusId: 0,

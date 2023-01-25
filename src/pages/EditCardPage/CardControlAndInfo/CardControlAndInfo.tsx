@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { EditCardSectionsEnum, PageTypeEnum, QueryEnum } from '../../../types/types';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
-import { formatUTC, getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
+import { getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import {
   deleteProductThunk,
   selectorCatalogSearchParams,
@@ -29,6 +29,7 @@ import { checkPriceSection } from '../EditCardMainPart/ProductDetails/ProductPri
 import { getPriceProductsThunk, selectorPriceEditProductId, setPriceEditProductId } from '../../../store/priceSlice';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import LicensesMonitor from '../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
+import { formatUTC } from '../../../utils/dateTimeFunctions';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker';
 import calendarBlueIco from '../../../img/calendarBlueIco.svg';
 import classNames from 'classnames';
 import { showErrorPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { formatUTCtoDDMMMMYYYY } from '../../../utils/functions';
+import { formatUTCtoDDMMMMYYYY } from '../../../utils/dateTimeFunctions';
 
 type PropsType = {
   selectedDate: Date | null;

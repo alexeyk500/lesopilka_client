@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/client.iml" filepath="$PROJECT_DIR$/.idea/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../lesopilka_server/.idea/lesopilka_server.iml" filepath="$PROJECT_DIR$/../lesopilka_server/.idea/lesopilka_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lesopilka_client.iml" filepath="$PROJECT_DIR$/.idea/lesopilka_client.iml" />
     </modules>
   </component>
 </project>
