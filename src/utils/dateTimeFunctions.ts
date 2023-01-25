@@ -33,3 +33,10 @@ export const formatUTC = (utcData: string | undefined) => {
   }
   return null;
 };
+
+export const normalizeData = (data: Date | string) => {
+  const newData = new Date(data);
+  const newDataStr = newData.toISOString();
+  const onlyDataStr = newDataStr.split('T')[0];
+  return new Date(onlyDataStr);
+};

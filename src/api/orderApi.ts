@@ -1,6 +1,7 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { AddressType, CategoryType } from '../types/types';
 import { GetOrderServerType } from './serverResponseTypes';
+import { normalizeData } from '../utils/dateTimeFunctions';
 
 export type CreateNewOrderParamsType = {
   mid: number;
@@ -49,10 +50,10 @@ export const orderApi = {
     token,
   }: CreateNewOrderParamsType) {
     const response = await instanceAxios.post<GetOrderServerType[]>(
-      `/orders`,
+      `/orders/new_order`,
       {
         mid,
-        date,
+        date: normalizeData(date),
         contactPersonName,
         contactPersonPhone,
         deliveryAddress,
@@ -66,7 +67,11 @@ export const orderApi = {
   },
 
   async getOrders({ dateFrom, dateTo, ordersStatus, token }: GetOrdersType) {
-    const response = await instanceAxios.get<GetOrderServerType[]>('/orders', setAuthHeader(token));
+    const response = await instanceAxios.post<GetOrderServerType[]>(
+      '/orders',
+      { dateFrom: normalizeData(dateFrom), dateTo: normalizeData(dateTo), ordersStatus },
+      setAuthHeader(token)
+    );
     return response.data;
   },
 };
