@@ -3,12 +3,8 @@ import classes from './BasketPageSelectors.module.css';
 import IconButton from '../../../components/commonComponents/IconButton/IconButton';
 import warehouseWhiteIco from '../../../img/warehouseWhiteIco.svg';
 import ButtonsSection from '../../../components/commonComponents/ButtonsSection/ButtonsSection';
-import ButtonComponent from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { useAppSelector } from '../../../hooks/hooks';
-import { selectorCatalogSearchParams } from '../../../store/productSlice';
-import { useNavigate } from 'react-router-dom';
-import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import { ProductType } from '../../../types/types';
+import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
 
 type PropsType = {
   productsByManufacturer: ProductType[][];
@@ -16,17 +12,6 @@ type PropsType = {
 };
 
 const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manufacturersRef }) => {
-  const navigate = useNavigate();
-  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
-
-  const onClickGoToCatalog = () => {
-    if (catalogSearchParams) {
-      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`);
-    } else {
-      navigate(PageEnum.RootPage);
-    }
-  };
-
   const onClickScrollTo = (ind: number) => {
     manufacturersRef.current[ind]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -50,10 +35,7 @@ const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manu
           </ButtonsSection>
         )}
       </div>
-
-      <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В каталог'} onClick={onClickGoToCatalog} />
-      </div>
+      <BottomButtonReturnTo returnTo={ReturnToEnum.catalog} />
     </div>
   );
 };

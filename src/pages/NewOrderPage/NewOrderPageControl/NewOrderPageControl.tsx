@@ -27,6 +27,7 @@ import { filterProductsByManufacturerId } from '../../../utils/productFunctions'
 import { checkOrderContentSection } from '../NewOrderPageMainPart/OrderContentSection/OrderContentSection';
 import { CreateNewOrderParamsType } from '../../../api/orderApi';
 import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
+import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
 
 const getErrorMessage = (
   orderDate: Date,
@@ -78,10 +79,6 @@ const NewOrderPageControl: React.FC = () => {
     paymentMethod,
     productsByManufacturerId
   );
-
-  const onClickGoToBasket = () => {
-    navigate(PageEnum.BasketPage);
-  };
 
   const onClickSendOrder = () => {
     showPortalPopUp({
@@ -154,9 +151,7 @@ const NewOrderPageControl: React.FC = () => {
           />
         </div>
       </div>
-      <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В корзину'} onClick={onClickGoToBasket} />
-      </div>
+      <BottomButtonReturnTo returnTo={ReturnToEnum.basket} />
     </div>
   );
 };

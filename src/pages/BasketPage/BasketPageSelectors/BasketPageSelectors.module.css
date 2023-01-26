@@ -22,8 +22,3 @@
   align-items: flex-start;
   flex-grow: 1;
 }
-
-.btnReadyContainer {
-  display: flex;
-  margin: 32px 0;
-}
