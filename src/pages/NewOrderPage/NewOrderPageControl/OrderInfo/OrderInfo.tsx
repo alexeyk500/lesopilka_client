@@ -30,7 +30,7 @@ const OrderInfo: React.FC = () => {
   const contactPersonPhone = useAppSelector(selectorNewOrderContactPersonPhone);
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
-  const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(productsByManufacturerId);
+  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(productsByManufacturerId);
 
   return (
     <div className={classes.container}>
@@ -72,7 +72,7 @@ const OrderInfo: React.FC = () => {
       <OrderInfoSection
         ico={moneyGrayIco}
         title={'Сумма заказа:'}
-        infoFirstLine={`${totalSumm} руб.`}
+        infoFirstLine={`${totalCost} руб.`}
         customIcoClasses={classes.downIco}
       />
     </div>

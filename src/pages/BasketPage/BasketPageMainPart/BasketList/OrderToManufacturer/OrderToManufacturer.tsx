@@ -28,7 +28,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
   const subCategories = useAppSelector(selectorSubCategories);
   const manufacturer = products?.[0]?.manufacturer;
 
-  const { totalWeight, totalVolume, totalSumm } = getTotalLogisticInfo(products);
+  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(products);
   const allProductAvailable = isAllProductAvailable(products);
 
   const goToPrice = () => {
@@ -90,7 +90,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
       <div className={classes.conclusionRow}>
         <div className={classes.allWeightTitle}>{`Вес: ${totalWeight} кг`}</div>
         <div className={classes.allVolumeTitle}>{`Обьем: ${totalVolume} м.куб.`}</div>
-        <div className={classes.allSummTitle}>{`Сумма: ${totalSumm} руб.`}</div>
+        <div className={classes.allSummTitle}>{`Сумма: ${totalCost} руб.`}</div>
       </div>
     </div>
   );

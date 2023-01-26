@@ -259,12 +259,21 @@ export const onCloseDetailCard = (
   }
 };
 
-export const getLogisticInfo = (product: ProductType, amount: number = Number(product.amountInBasket) ?? 1) => {
+export const getLogisticInfo = (product: ProductType, rawAmount?: number) => {
   const { height, width, length, caliber } = getSizesValue(product);
   let square: number | undefined;
   let volume: number | undefined;
   let weight: number | undefined;
   let summ: number | undefined;
+
+  let amount: number = rawAmount
+    ? rawAmount
+    : product.amountInBasket
+    ? Number(product.amountInBasket)
+    : product.amountInOrder
+    ? Number(product.amountInOrder)
+    : 1;
+
   if (caliber) {
     volume = getVolumeCaliber({ caliber, length }) * amount;
     weight = getWeight(volume) * amount;
@@ -275,7 +284,7 @@ export const getLogisticInfo = (product: ProductType, amount: number = Number(pr
     weight = getWeight(volumeItem) * amount;
   }
   summ = !isNaN(Number(product.price)) ? Number(product.price) * amount : 0;
-  return { square, weight, volume, summ };
+  return { square, weight, volume, cost: summ };
 };
 
 export const toStrWithDelimiter = (value: number | string) => {
@@ -285,19 +294,19 @@ export const toStrWithDelimiter = (value: number | string) => {
 export const getTotalLogisticInfo = (products: ProductType[]) => {
   let totalWeight = 0;
   let totalVolume = 0;
-  let totalSumm = 0;
+  let totalCost = 0;
   products.forEach((product) => {
     if (product.publicationDate) {
-      const { weight, volume, summ } = getLogisticInfo(product);
+      const { weight, volume, cost } = getLogisticInfo(product);
       totalWeight += Number(weight);
       totalVolume += Number(volume);
-      totalSumm += Number(summ);
+      totalCost += Number(cost);
     }
   });
   return {
     totalWeight: toStrWithDelimiter(totalWeight.toFixed(1)),
     totalVolume: toStrWithDelimiter(totalVolume.toFixed(1)),
-    totalSumm: toStrWithDelimiter(totalSumm.toFixed(2)),
+    totalCost: toStrWithDelimiter(totalCost.toFixed(2)),
   };
 };
 

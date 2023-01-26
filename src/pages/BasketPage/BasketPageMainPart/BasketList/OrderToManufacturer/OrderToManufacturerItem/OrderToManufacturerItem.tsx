@@ -37,7 +37,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
 
   const [amount, setAmount] = useState(product.amountInBasket ? product.amountInBasket : 0);
 
-  const { square, weight, volume, summ } = getLogisticInfo(product, amount);
+  const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
   const onChangeAmount = (newValue: number | string) => {
     if (typeof newValue === 'number') {
@@ -142,7 +142,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product }) => {
       <div className={classes.summColumn}>
         {product.publicationDate && (
           <>
-            {`${formatPrice(summ ? summ : 0)}`} <span>{' руб.'}</span>
+            {`${formatPrice(cost ? cost : 0)}`} <span>{' руб.'}</span>
           </>
         )}
       </div>

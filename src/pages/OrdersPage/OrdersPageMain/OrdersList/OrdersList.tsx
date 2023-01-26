@@ -26,7 +26,6 @@ const OrdersList: React.FC = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
     if (dateFrom && dateTo && serverOrdersStatus && token) {
-      console.log('will ask orders from server -', dateFrom, dateTo, serverOrdersStatus, token);
       dispatch(getOrdersThunk({ dateFrom, dateTo, ordersStatus: serverOrdersStatus, token }));
     }
   }, [dispatch, dateFrom, dateTo, ordersStatus]);

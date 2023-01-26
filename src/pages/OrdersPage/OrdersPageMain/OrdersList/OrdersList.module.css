@@ -11,27 +11,27 @@
   width: 100%;
   font-size: 16px;
   font-weight: 500;
-  margin-bottom: 6px;
+  padding-right: 8px;
 }
 
 .tableColumnDate {
   display: flex;
   justify-content: center;
-  width: 7%;
+  width: 8%;
   background-color: #818cee;
 }
 
 .tableColumnNumber {
   display: flex;
   justify-content: center;
-  width: 9%;
+  width: 7%;
   background-color: #db6bf3;
 }
 
 .tableColumnManufacturer {
   display: flex;
   justify-content: center;
-  width: 16%;
+  width: 17%;
   background-color: #adff2d;
 }
 
@@ -80,7 +80,8 @@
 .scrollContainer {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: calc(100% + 8px);
   height: 100%;
-  overflow: scroll;
+  padding: 8px 8px 8px 0;
+  overflow-y: scroll;
 }

@@ -1,3 +1,20 @@
 .container {
   display: flex;
+  padding: 6px 0;
+  width: 100%;
+  background-color: var(--main_background);
+  color: var(--gray_color);
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.leftAlignment {
+  display: flex;
+  padding-left: 12px;
+  justify-content: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

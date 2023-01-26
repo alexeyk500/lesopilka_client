@@ -40,3 +40,14 @@ export const normalizeData = (data: Date | string) => {
   const onlyDataStr = newDataStr.split('T')[0];
   return new Date(onlyDataStr);
 };
+
+export const formatUTCtoDDMMYYYY = (utcData: string | undefined) => {
+  if (utcData) {
+    return new Date(utcData).toLocaleString('ru-Ru', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
+    });
+  }
+  return '';
+};

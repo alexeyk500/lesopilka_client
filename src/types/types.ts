@@ -146,6 +146,7 @@ export type ProductType = {
   material?: OptionsType;
   sort?: OptionsType;
   amountInBasket?: number;
+  amountInOrder?: number;
 };
 
 export enum QueryEnum {
