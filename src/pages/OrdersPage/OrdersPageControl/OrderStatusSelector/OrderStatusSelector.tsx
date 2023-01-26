@@ -32,6 +32,7 @@ const OrderStatusSelector: React.FC = () => {
           title={orderStatusOption.title}
           checked={selectedOrderStatusId === orderStatusOption.id}
           toolTip={orderStatusOption.toolTip}
+          toolTipVerticalShift={328}
           onSelect={onSelect}
         />
       ))}

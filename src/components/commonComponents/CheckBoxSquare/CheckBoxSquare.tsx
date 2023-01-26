@@ -10,9 +10,18 @@ type PropsType = {
   onSelect: (id: number) => void;
   amount?: number;
   toolTip?: string;
+  toolTipVerticalShift?: number;
 };
 
-const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect, amount, toolTip }) => {
+const CheckBoxSquare: React.FC<PropsType> = ({
+  id,
+  title,
+  checked,
+  onSelect,
+  amount,
+  toolTip,
+  toolTipVerticalShift = 0,
+}) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [showToolTip, setShowToolTip] = useState(false);
   let timeOutId: NodeJS.Timeout;
@@ -38,7 +47,7 @@ const CheckBoxSquare: React.FC<PropsType> = ({ id, title, checked, onSelect, amo
     clearTimeout(timeOutId);
   };
 
-  const topValue = id * 32 + 118 + 'px';
+  const topValue = id * 32 + toolTipVerticalShift + 'px';
   const leftValue = ref.current?.offsetWidth ? 100 + ref.current?.offsetWidth + 'px' : '0';
 
   return (
