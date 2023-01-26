@@ -18,63 +18,61 @@
   display: flex;
   justify-content: center;
   width: 8%;
-  background-color: #818cee;
 }
 
 .tableColumnNumber {
   display: flex;
-  justify-content: center;
+  padding-left: 12px;
+  justify-content: flex-start;
   width: 7%;
-  background-color: #db6bf3;
 }
 
 .tableColumnManufacturer {
   display: flex;
-  justify-content: center;
+  padding-left: 12px;
+  justify-content: flex-start;
   width: 17%;
-  background-color: #adff2d;
 }
 
 .tableColumnWeight {
   display: flex;
-  justify-content: center;
+  padding-left: 12px;
+  justify-content: flex-start;
   width: 9%;
-  background-color: #f667bd;
 }
 
 .tableColumnVolume {
   display: flex;
-  justify-content: center;
+  padding-left: 12px;
+  justify-content: flex-start;
   width: 9%;
-  background-color: #a9ffce;
 }
 
 .tableColumnDelivery {
   display: flex;
-  justify-content: center;
+  padding-left: 12px;
+  justify-content: flex-start;
   width: 12%;
-  background-color: #fff8a9;
 }
 
 .tableColumnCost {
   display: flex;
-  justify-content: center;
-  width: 12%;
-  background-color: #a9efff;
+  padding-left: 12px;
+  justify-content: flex-start;
+  width: 13%;
 }
 
 .tableColumnActions {
   display: flex;
-  justify-content: center;
-  width: 12%;
-  background-color: #d5a9ff;
+  padding-left: 12px;
+  justify-content: flex-start;
+  width: 10%;
 }
 
 .tableColumnStatus {
   display: flex;
   justify-content: center;
-  width: 14%;
-  background-color: #fff8a9;
+  width: 15%;
 }
 
 .scrollContainer {

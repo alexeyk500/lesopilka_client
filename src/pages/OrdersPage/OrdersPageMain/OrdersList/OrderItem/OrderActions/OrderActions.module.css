@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.viewIco {
+  height: 18px;
+  margin-right: 14px;
+}
+
+.billIco {
+  height: 16px;
+  margin-right: 14px;
+}
+
+.deleteIco {
+  height: 16px;
+}
+
