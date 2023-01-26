@@ -7,6 +7,7 @@
   border-radius: 12px;
   width: 146px;
   color: var(--dark_blue_color);
+  cursor: pointer;
 }
 
 .title {
@@ -29,21 +30,38 @@
   color: var(--section_background);
   background-color: var(--green_color_light);
   border: 1px solid var(--green_color_light);
+  cursor: default;
 }
 
 .assembling {
   color: var(--blue_color);
   background-color: var(--yellow_color);
   border: 1px solid var(--yellow_color);
+  cursor: default;
 }
 
 .confirming {
-color: var(--blue_color);
+  color: var(--blue_color);
   background-color: var(--gray_color_light_light);
   border: 1px solid var(--gray_color_light_light);
+  cursor: default;
 }
 
 .delivering {
   color: var(--orange_color);
   border: 1px solid var(--orange_color);
+}
+
+.infoPopUpText {
+  text-align: center;
+  color: var(--blue_color);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: pre;
+}
+
+.customPopUpBottomBtnGroup {
+  width: 378px;
+  padding: 0 32px !important;
+  margin-bottom: 0 !important;
 }

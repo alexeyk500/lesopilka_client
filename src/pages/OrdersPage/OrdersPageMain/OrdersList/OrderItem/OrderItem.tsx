@@ -26,7 +26,7 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
       <div className={classNames(listClasses.tableColumnDelivery, classes.leftAlignment)}>{'Расчет'}</div>
       <div className={classNames(listClasses.tableColumnCost, classes.leftAlignment)}>{`${totalCost} руб.`}</div>
       <div className={classNames(listClasses.tableColumnActions)}>
-        <OrderActions />
+        <OrderActions orderId={order.order.id} status={order.order.status} />
       </div>
       <div className={classNames(listClasses.tableColumnStatus)}>
         <OrderStatus status={order.order.status} />

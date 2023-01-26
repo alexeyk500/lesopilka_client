@@ -3,13 +3,60 @@ import classes from './OrderActions.module.css';
 import viewIco from '../../../../../../img/eyeIco.svg';
 import billIco from '../../../../../../img/billIco.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
+import { OrderStatusEnum } from '../../../../../../types/types';
+import { getOrderStatusEnumValue } from '../OrderStatus/OrderStatus';
+import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
+import {
+  cancelOrderByIdThunk,
+  getOrdersThunk,
+  selectorSelectedOrderDateFrom,
+  selectorSelectedOrderDateTo,
+  selectorSelectedOrderStatusId,
+} from '../../../../../../store/ordersSlice';
+import { orderStatusOptions } from '../../../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
+import { convertOrdersStatusToServerOrdersStatus } from '../../../../../../utils/functions';
 
-const OrderActions: React.FC = () => {
+type PropsType = {
+  orderId: number;
+  status: OrderStatusEnum;
+};
+
+const OrderActions: React.FC<PropsType> = ({ orderId, status }) => {
+  const dispatch = useAppDispatch();
+  const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
+  const dateTo = useAppSelector(selectorSelectedOrderDateTo);
+  const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
+  const ordersStatus = orderStatusOptions.find((option) => option.id === selectedOrderStatusId)?.title;
+  const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
+
+  const onCancelClick = () => {
+    showPortalPopUp({
+      popUpContent: (
+        <div className={classes.infoPopUpText}>
+          {'\n\nПодтвердите отмену заказа?\n\nТовары из заказа вернутся\nв вашу корзину.\n\n\n'}
+        </div>
+      ),
+      titleConfirmBtn: 'Отменить заказ',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+        if (result && token && dateFrom && dateTo && serverOrdersStatus) {
+          dispatch(cancelOrderByIdThunk({ orderId, token })).then(() => {
+            dispatch(getOrdersThunk({ dateFrom, dateTo, ordersStatus: serverOrdersStatus, token }));
+          });
+        }
+      },
+    });
+  };
+
   return (
     <div className={classes.container}>
       <img src={viewIco} className={classes.viewIco} alt="view" />
       <img src={billIco} className={classes.billIco} alt="view" />
-      <img src={deleteIco} className={classes.deleteIco} alt="view" />
+      {getOrderStatusEnumValue(status) === OrderStatusEnum.onConfirming && (
+        <img src={deleteIco} className={classes.deleteIco} alt="view" onClick={onCancelClick} />
+      )}
     </div>
   );
 };

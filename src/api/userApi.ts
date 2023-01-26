@@ -1,5 +1,5 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CreateManufacturerType, SendConfirmationEmailServerType, UserLoginServerType } from './serverResponseTypes';
+import { CreateManufacturerType, UniversalServerResponseType, UserLoginServerType } from './serverResponseTypes';
 
 export const userApi = {
   async userLoginByPassword(email: string, password: string) {
@@ -16,7 +16,7 @@ export const userApi = {
   },
 
   async sendConfirmationEmail(email: string, password: string) {
-    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/send_confirmation_email', {
+    const response = await instanceAxios.post<UniversalServerResponseType>('/user/send_confirmation_email', {
       email,
       password,
     });
@@ -24,14 +24,14 @@ export const userApi = {
   },
 
   async sendRecoveryPasswordEmail(email: string) {
-    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/send_recovery_password_email', {
+    const response = await instanceAxios.post<UniversalServerResponseType>('/user/send_recovery_password_email', {
       email,
     });
     return response.data;
   },
 
   async sendConfirmedRecoveryPasswordCode(code: string, password: string) {
-    const response = await instanceAxios.post<SendConfirmationEmailServerType>('/user/confirm_recovery_password_code', {
+    const response = await instanceAxios.post<UniversalServerResponseType>('/user/confirm_recovery_password_code', {
       code,
       password,
     });

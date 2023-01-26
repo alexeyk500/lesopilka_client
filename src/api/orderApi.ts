@@ -1,6 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { AddressType, CategoryType, ServerOrderStatusType } from '../types/types';
-import { GetOrderServerType } from './serverResponseTypes';
+import { GetOrderServerType, UniversalServerResponseType } from './serverResponseTypes';
 import { normalizeData } from '../utils/dateTimeFunctions';
 
 export type CreateNewOrderParamsType = {
@@ -70,6 +70,15 @@ export const orderApi = {
     const response = await instanceAxios.post<GetOrderServerType[]>(
       '/orders',
       { dateFrom: normalizeData(dateFrom), dateTo: normalizeData(dateTo), ordersStatus },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async cancelOrderById(orderId: number, token: string) {
+    const response = await instanceAxios.post<UniversalServerResponseType>(
+      '/orders/cancel_order',
+      { orderId },
       setAuthHeader(token)
     );
     return response.data;

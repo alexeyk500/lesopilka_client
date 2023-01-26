@@ -1,9 +1,5 @@
 import { OrderInfoType, ProductType, UserType } from '../types/types';
 
-export type SendConfirmationEmailServerType = {
-  message: string;
-};
-
 export type UserLoginServerType = {
   user: UserType;
   token: string;
@@ -35,4 +31,8 @@ export type GetProductsServerType = {
 export type GetOrderServerType = {
   order: OrderInfoType;
   products: ProductType[];
+};
+
+export type UniversalServerResponseType = {
+  message: string;
 };

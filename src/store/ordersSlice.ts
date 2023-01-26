@@ -3,7 +3,7 @@ import { RootState } from './store';
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { MAX_MONTH_SHIFT_FOR_ORDERS } from '../utils/constants';
 import { serverApi } from '../api/serverApi';
-import { GetOrderServerType } from '../api/serverResponseTypes';
+import { GetOrderServerType, UniversalServerResponseType } from '../api/serverResponseTypes';
 import { GetOrdersParamsType } from '../api/orderApi';
 import { OrderType } from '../types/types';
 
@@ -37,6 +37,18 @@ export const getOrdersThunk = createAsyncThunk<GetOrderServerType[], GetOrdersPa
   }
 );
 
+export const cancelOrderByIdThunk = createAsyncThunk<
+  UniversalServerResponseType,
+  { orderId: number; token: string },
+  { rejectValue: string }
+>('user/cancelOrderById', async ({ orderId, token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.cancelOrderById(orderId, token);
+  } catch (e) {
+    return rejectWithValue('Ошибка отмены заказа');
+  }
+});
+
 export const ordersSlice = createSlice({
   name: 'ordersSlice',
   initialState,
@@ -57,10 +69,13 @@ export const ordersSlice = createSlice({
         state.orders = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getOrdersThunk.pending), (state) => {
+      .addCase(cancelOrderByIdThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addMatcher(isAnyOf(getOrdersThunk.pending, cancelOrderByIdThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getOrdersThunk.rejected), (state) => {
+      .addMatcher(isAnyOf(getOrdersThunk.rejected, cancelOrderByIdThunk.rejected), (state) => {
         state.isLoading = false;
       });
   },
