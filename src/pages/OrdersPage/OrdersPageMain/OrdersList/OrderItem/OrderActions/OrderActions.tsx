@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './OrderActions.module.css';
 import viewIco from '../../../../../../img/eyeIco.svg';
+import viewCloseIco from '../../../../../../img/eyeCloseIco.svg';
 import billIco from '../../../../../../img/billIco.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
-import { OrderStatusEnum } from '../../../../../../types/types';
+import { OrderStatusEnum, OrderType } from '../../../../../../types/types';
 import { getOrderStatusEnumValue } from '../OrderStatus/OrderStatus';
 import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
@@ -18,11 +19,12 @@ import { orderStatusOptions } from '../../../../OrdersPageControl/OrderStatusSel
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../../../utils/functions';
 
 type PropsType = {
-  orderId: number;
-  status: OrderStatusEnum;
+  order: OrderType;
+  isOpenDetails: boolean;
+  toggleDetails: () => void;
 };
 
-const OrderActions: React.FC<PropsType> = ({ orderId, status }) => {
+const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails }) => {
   const dispatch = useAppDispatch();
   const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
   const dateTo = useAppSelector(selectorSelectedOrderDateTo);
@@ -42,7 +44,7 @@ const OrderActions: React.FC<PropsType> = ({ orderId, status }) => {
       onClosePopUp: (result?: boolean | FormData | undefined) => {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (result && token && dateFrom && dateTo && serverOrdersStatus) {
-          dispatch(cancelOrderByIdThunk({ orderId, token })).then(() => {
+          dispatch(cancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
             dispatch(getOrdersThunk({ dateFrom, dateTo, ordersStatus: serverOrdersStatus, token }));
           });
         }
@@ -50,11 +52,20 @@ const OrderActions: React.FC<PropsType> = ({ orderId, status }) => {
     });
   };
 
+  const onClickToggleDetails = () => {
+    toggleDetails();
+  };
+
   return (
     <div className={classes.container}>
-      <img src={viewIco} className={classes.viewIco} alt="view" />
+      <img
+        src={isOpenDetails ? viewCloseIco : viewIco}
+        className={classes.viewIco}
+        alt="view"
+        onClick={onClickToggleDetails}
+      />
       <img src={billIco} className={classes.billIco} alt="view" />
-      {getOrderStatusEnumValue(status) === OrderStatusEnum.onConfirming && (
+      {getOrderStatusEnumValue(order.order.status) === OrderStatusEnum.onConfirming && (
         <img src={deleteIco} className={classes.deleteIco} alt="view" onClick={onCancelClick} />
       )}
     </div>

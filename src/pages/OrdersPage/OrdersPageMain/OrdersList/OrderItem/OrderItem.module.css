@@ -1,15 +1,21 @@
 .container {
   display: flex;
-  padding: 6px 0;
   width: calc(100% - 2px);
-  align-items: center;
-  background-color: var(--main_background);
-  color: var(--gray_color);
-  border-radius: 12px;
-  box-shadow: var(--box_shadow);
-  font-size: 14px;
   margin-bottom: 8px;
   margin-left: 2px;
+  flex-direction: column;
+  background-color: var(--main_background);
+  color: var(--gray_color);
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+}
+
+.itemContainer {
+  display: flex;
+  width: 100%;
+  padding: 6px 0;
+  align-items: center;
 }
 
 .leftAlignment {
@@ -19,4 +25,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.detailsContainer {
+  display: flex;
+  width: 100%;
 }

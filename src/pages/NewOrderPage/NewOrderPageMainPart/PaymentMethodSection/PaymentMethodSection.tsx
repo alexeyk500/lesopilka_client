@@ -15,7 +15,7 @@ export const checkPaymentMethodSection = (paymentMethod: PaymentMethodEnum) => {
   return !!paymentMethod;
 };
 
-const getPaymentMethodTitle = (deliveryMethod: DeliveryMethodEnum, paymentOption: string) => {
+export const getPaymentMethodTitle = (deliveryMethod: DeliveryMethodEnum, paymentOption: string) => {
   if (
     (paymentOption as PaymentMethodEnum) === PaymentMethodEnum.card ||
     (paymentOption as PaymentMethodEnum) === PaymentMethodEnum.cash

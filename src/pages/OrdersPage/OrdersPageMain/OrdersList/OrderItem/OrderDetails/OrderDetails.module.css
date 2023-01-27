@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 2px 8px 8px 18px;
+}
+
+.detailsHeader {
+  display: flex;
+  width: 100%;
+  margin-top: 4px;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.title {
+  width: 128px;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px solid var(--gray_color_light)
+}
