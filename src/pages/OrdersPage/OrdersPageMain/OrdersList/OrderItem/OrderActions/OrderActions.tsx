@@ -56,15 +56,19 @@ const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails
     toggleDetails();
   };
 
+  console.log('confirmedManufacturer =', order.order.confirmedManufacturer);
+
   return (
     <div className={classes.container}>
-      <img
-        src={isOpenDetails ? viewCloseIco : viewIco}
-        className={classes.viewIco}
-        alt="view"
-        onClick={onClickToggleDetails}
-      />
-      <img src={billIco} className={classes.billIco} alt="view" />
+      {!order.order.confirmedManufacturer && (
+        <img
+          src={isOpenDetails ? viewCloseIco : viewIco}
+          className={classes.viewIco}
+          alt="view"
+          onClick={onClickToggleDetails}
+        />
+      )}
+      {order.order.confirmedManufacturer && <img src={billIco} className={classes.billIco} alt="view" />}
       {getOrderStatusEnumValue(order.order.status) === OrderStatusEnum.onConfirming && (
         <img src={deleteIco} className={classes.deleteIco} alt="view" onClick={onCancelClick} />
       )}

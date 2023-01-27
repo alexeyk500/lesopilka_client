@@ -74,13 +74,13 @@
   display: flex;
   padding-left: 12px;
   justify-content: flex-start;
-  width: 10%;
+  width: 8%;
 }
 
 .tableColumnStatus {
   display: flex;
   justify-content: center;
-  width: 15%;
+  width: 17%;
 }
 
 .scrollContainer {

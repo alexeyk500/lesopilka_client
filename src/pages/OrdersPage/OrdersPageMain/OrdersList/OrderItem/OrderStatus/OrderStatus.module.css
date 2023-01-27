@@ -5,7 +5,7 @@
   align-items: center;
   border: 1px solid var(--dark_blue_color);
   border-radius: 12px;
-  width: 146px;
+  min-width: 156px;
   color: var(--dark_blue_color);
   cursor: pointer;
 }

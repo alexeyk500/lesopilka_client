@@ -12,19 +12,31 @@ type PropsType = {
   order: OrderType;
 };
 
-const getDeliveryTitle = (deliveryMethodTile: string) => {
+export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number, oneRow?: boolean) => {
   if (deliveryMethodTile === ServerDeliveryMethodEnum.selfPickUp) {
     return deliveryMethodTile;
   }
-  const deliveryCost = formatPrice(3500);
-  return `${deliveryMethodTile} -\n${deliveryCost} руб.`;
+  if (deliveryMethodTile === ServerDeliveryMethodEnum.delivery) {
+    if (deliveryPrice !== undefined) {
+      if (deliveryPrice === null) {
+        return `${deliveryMethodTile}${oneRow ? ', ' : ':\n '}на подсчете`;
+      }
+      if (deliveryPrice === 0) {
+        return `${deliveryMethodTile}${oneRow ? ', ' : ':\n '}бесплатно`;
+      } else {
+        return `${deliveryMethodTile}${oneRow ? ', стоимость доставки заказа ' : ':\n '}${formatPrice(
+          deliveryPrice
+        )} руб.`;
+      }
+    }
+  }
 };
 
 const OrderItem: React.FC<PropsType> = ({ order }) => {
   const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products);
 
-  const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title);
+  const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice);
 
   const [isOpenDetails, setIsOpenDetails] = useState(false);
 

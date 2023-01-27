@@ -88,6 +88,8 @@ export type OrderInfoType = {
       title: string;
     };
   };
+  deliveryPrice: number;
+  confirmedManufacturer: string;
 };
 
 // export type BillProductType = {

@@ -5,6 +5,7 @@ import { formatUTCtoDDMMMMYYYY } from '../../../../../../utils/dateTimeFunctions
 import { getPaymentMethodTitle } from '../../../../../NewOrderPage/NewOrderPageMainPart/PaymentMethodSection/PaymentMethodSection';
 import ListProductsInOrder from '../../../../../BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/ListProductsInOrder/ListProductsInOrder';
 import { getTotalLogisticInfo } from '../../../../../../utils/functions';
+import { getDeliveryTitle } from '../OrderItem';
 
 type PropsType = {
   order: OrderType;
@@ -17,7 +18,7 @@ const OrderDetails: React.FC<PropsType> = ({ order }) => {
   const manufacturerEmail = order.products[0].manufacturer?.email ?? '';
 
   const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.date);
-  const deliveryMethodTile = order.order.deliveryMethod.title;
+  const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice, true);
   const paymentMethodTitle = getPaymentMethodTitle(
     order.order.deliveryMethod.title as DeliveryMethodEnum,
     order.order.paymentMethod.title
@@ -50,7 +51,7 @@ const OrderDetails: React.FC<PropsType> = ({ order }) => {
         </div>
         <div className={classes.row}>
           <div className={classes.title}>{'Способ поставки:'}</div>
-          <div className={classes.info}>{`${deliveryMethodTile}`}</div>
+          <div className={classes.info}>{`${deliveryTitle}`}</div>
         </div>
         <div className={classes.row}>
           <div className={classes.title}>{'Способ оплаты:'}</div>
