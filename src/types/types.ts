@@ -90,9 +90,36 @@ export type OrderInfoType = {
   };
 };
 
+// export type BillProductType = {
+//   id: number;
+//   manufacturer?: ManufacturerType;
+//   code?: string;
+//   price?: string;
+//   isSeptic?: boolean;
+//   isDried?: boolean;
+//   height?: string;
+//   width?: string;
+//   length?: string;
+//   caliber?: string;
+//   category?: OptionsType;
+//   subCategory?: OptionsType;
+//   material?: OptionsType;
+//   sort?: OptionsType;
+//   amountInBill?: number;
+// }
+//
+// export type BillType = {
+//   id: number;
+//   manufacturer?: ManufacturerType;
+//   products: BillProductType[];
+//   delivery: ServerDeliveryMethodEnum;
+//   deliveryCost?: number;
+// };
+
 export type OrderType = {
   order: OrderInfoType;
   products: ProductType[];
+  // bill?: BillType;
 };
 
 export enum SizeTypeEnum {

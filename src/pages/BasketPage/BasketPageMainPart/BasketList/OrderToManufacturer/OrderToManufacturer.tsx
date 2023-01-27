@@ -5,16 +5,14 @@ import downloadFileIco from '../../../../../img/downloadFileIco.svg';
 import ButtonComponent, {
   ButtonType,
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { ProductType } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
+import { useAppDispatch } from '../../../../../hooks/hooks';
 import { setPriceReturnTo } from '../../../../../store/priceSlice';
-import { selectorSubCategories } from '../../../../../store/catalogSlice';
-import { sortProducts } from '../../../../../utils/productFunctions';
+import ListProductsInOrder from './ListProductsInOrder/ListProductsInOrder';
 
 type PropsType = {
   products: ProductType[];
@@ -25,7 +23,6 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
   const location = useLocation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const subCategories = useAppSelector(selectorSubCategories);
   const manufacturer = products?.[0]?.manufacturer;
 
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(products);
@@ -43,8 +40,6 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
       navigate(`${PageEnum.NewOrder}/${manufacturer.id}`);
     }
   };
-
-  const sortedProducts = sortProducts(products, subCategories);
 
   return (
     <div className={classes.container}>
@@ -81,16 +76,12 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
         )}
       </div>
       <div className={classes.delimiter} />
-      <div className={classes.priceContentContainer}>
-        {sortedProducts.map((product, ind) => {
-          return <OrderToManufacturerItem key={ind} num={ind + 1} product={product} />;
-        })}
-      </div>
+      <ListProductsInOrder products={products} />
       <div className={classes.delimiter} />
       <div className={classes.conclusionRow}>
         <div className={classes.allWeightTitle}>{`Вес: ${totalWeight} кг`}</div>
         <div className={classes.allVolumeTitle}>{`Обьем: ${totalVolume} м.куб.`}</div>
-        <div className={classes.allSummTitle}>{`Сумма: ${totalCost} руб.`}</div>
+        <div className={classes.allCostTitle}>{`Сумма: ${totalCost} руб.`}</div>
       </div>
     </div>
   );

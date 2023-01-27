@@ -2,14 +2,23 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 2px 8px 8px 18px;
+  padding: 0 8px 0 18px;
 }
 
 .detailsHeader {
   display: flex;
   width: 100%;
-  margin-top: 4px;
+  margin-top: 8px;
   flex-direction: column;
+}
+
+.titleRow {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .row {
@@ -28,4 +37,28 @@
   width: 100%;
   margin: 2px 0;
   border-bottom: 1px solid var(--gray_color_light)
+}
+
+.delimiterDotted {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px dashed var(--gray_color_light)
+}
+
+.conclusionRow {
+  display: flex;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.allWeightTitle {
+  margin-right: 32px;
+}
+
+.allVolumeTitle {
+  margin-right: 32px;
 }

@@ -55,12 +55,6 @@
   align-items: center;
 }
 
-.priceContentContainer {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-
 .delimiter {
   display: flex;
   width: 100%;

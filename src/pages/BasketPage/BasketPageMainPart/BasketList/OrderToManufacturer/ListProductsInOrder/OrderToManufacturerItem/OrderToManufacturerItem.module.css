@@ -134,3 +134,9 @@
   color: var(--gray_color_light);
 }
 
+.amountRow {
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+}
+
