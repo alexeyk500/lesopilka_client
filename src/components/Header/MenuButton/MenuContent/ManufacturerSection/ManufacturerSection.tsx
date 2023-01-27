@@ -33,18 +33,25 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     closeMenuContent();
   };
 
+  const onClickManufacturersOrder = () => {
+    if (user?.manufacturer?.id) {
+      navigate(PageEnum.ManufacturerOrdersPage);
+    }
+    closeMenuContent();
+  };
+
   return (
     <div className={classes.section}>
-      Производство
+      Продажи
       <button className={classes.menuButton} onClick={onClickCatalog}>
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
-        Каталог
+        Каталог продаж
       </button>
       <button className={classes.menuButton} onClick={onClickPrice}>
         <img src={priceIco} className={classes.ico} alt="price button" />
-        Прайс
+        Прайс лист
       </button>
-      <button className={classes.menuButton}>
+      <button className={classes.menuButton} onClick={onClickManufacturersOrder}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />
         Заказы
       </button>

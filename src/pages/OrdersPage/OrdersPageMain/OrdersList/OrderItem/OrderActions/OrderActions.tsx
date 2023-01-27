@@ -56,8 +56,6 @@ const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails
     toggleDetails();
   };
 
-  console.log('confirmedManufacturer =', order.order.confirmedManufacturer);
-
   return (
     <div className={classes.container}>
       {!order.order.confirmedManufacturer && (
