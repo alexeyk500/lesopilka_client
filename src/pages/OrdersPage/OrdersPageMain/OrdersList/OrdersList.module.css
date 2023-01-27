@@ -22,29 +22,37 @@
 .tableColumnNumber {
   display: flex;
   padding-left: 12px;
-  justify-content: flex-start;
   width: 7%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tableColumnManufacturer {
   display: flex;
   padding-left: 12px;
-  justify-content: flex-start;
   width: 17%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tableColumnWeight {
   display: flex;
   padding-left: 12px;
-  justify-content: flex-start;
   width: 9%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tableColumnVolume {
   display: flex;
   padding-left: 12px;
-  justify-content: flex-start;
   width: 9%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tableColumnDelivery {
@@ -52,13 +60,14 @@
   padding-left: 12px;
   justify-content: flex-start;
   width: 12%;
+  white-space: pre-line;
 }
 
 .tableColumnCost {
   display: flex;
   padding-left: 12px;
-  justify-content: flex-start;
   width: 13%;
+  white-space: pre-line;
 }
 
 .tableColumnActions {
@@ -81,5 +90,4 @@
   height: 100%;
   padding: 8px 8px 8px 0;
   overflow-y: scroll;
-
 }

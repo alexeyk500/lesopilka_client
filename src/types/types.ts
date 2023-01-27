@@ -56,6 +56,11 @@ export type ProductMaterialType = {
 
 export type ServerOrderStatusType = 'onConfirming' | 'onPaymentWaiting' | 'onAssembling' | 'onDelivering' | 'completed';
 
+export enum ServerDeliveryMethodEnum {
+  selfPickUp = 'Самовывоз',
+  delivery = 'Доставка',
+}
+
 export enum OrderStatusEnum {
   onConfirming = 'На подтверждении',
   onPaymentWaiting = 'Ожидает оплаты',
