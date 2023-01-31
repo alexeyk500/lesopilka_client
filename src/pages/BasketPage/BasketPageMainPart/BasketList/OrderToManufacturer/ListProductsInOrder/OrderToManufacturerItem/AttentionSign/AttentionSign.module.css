@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+  display: flex;
+  width: 24px;
+  justify-content: center;
+}
+
+.ico {
+  margin-top: -6px;
+  width: 20px;
+}
+
+.toolTip {
+  position: absolute;
+  top: -48px;
+  left: -180px;
+  display: flex;
+  width: 180px;
+  justify-content: center;
+  background-color: var(--gray_color_light_light_light);
+  pointer-events: none;
+  border-radius: 12px;
+  padding: 4px 12px;
+  margin-right: 12px;
+  text-align: center;
+  color: var(--dark_blue_color);
+  white-space: pre-line;
+}

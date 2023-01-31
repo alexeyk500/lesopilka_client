@@ -272,7 +272,9 @@ export const getLogisticInfo = (product: ProductType, rawAmount?: number) => {
     ? Number(product.amountInBasket)
     : product.amountInOrder
     ? Number(product.amountInOrder)
-    : 1;
+    : product.amountInConfirmation
+    ? Number(product.amountInConfirmation)
+    : 0;
 
   if (caliber) {
     volume = getVolumeCaliber({ caliber, length }) * amount;

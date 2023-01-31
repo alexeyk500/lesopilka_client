@@ -3,6 +3,7 @@ import classes from './OrderActions.module.css';
 import viewIco from '../../../../../../img/eyeIco.svg';
 import viewCloseIco from '../../../../../../img/eyeCloseIco.svg';
 import billIco from '../../../../../../img/billIco.svg';
+import billIcoHide from '../../../../../../img/billIcoHide.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
 import { OrderStatusEnum, OrderType } from '../../../../../../types/types';
 import { getOrderStatusEnumValue } from '../OrderStatus/OrderStatus';
@@ -22,9 +23,26 @@ type PropsType = {
   order: OrderType;
   isOpenDetails: boolean;
   toggleDetails: () => void;
+  isOpenConfirmation: boolean;
+  toggleConfirmation: () => void;
 };
 
-const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails }) => {
+const checkIsPossibleToCancelOrder = (orderStatus: OrderStatusEnum) => {
+  if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming) {
+    return true;
+  } else if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onPaymentWaiting) {
+    return true;
+  }
+  return false;
+};
+
+const OrderActions: React.FC<PropsType> = ({
+  order,
+  isOpenDetails,
+  toggleDetails,
+  isOpenConfirmation,
+  toggleConfirmation,
+}) => {
   const dispatch = useAppDispatch();
   const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
   const dateTo = useAppSelector(selectorSelectedOrderDateTo);
@@ -56,19 +74,26 @@ const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails
     toggleDetails();
   };
 
+  const isPossibleToCancelOrder = checkIsPossibleToCancelOrder(order.order.status);
+
   return (
     <div className={classes.container}>
-      {!order.order.confirmedManufacturer && (
+      <img
+        src={isOpenDetails ? viewCloseIco : viewIco}
+        className={classes.viewIco}
+        onClick={onClickToggleDetails}
+        alt="view order"
+      />
+      {order.order.confirmedManufacturer && (
         <img
-          src={isOpenDetails ? viewCloseIco : viewIco}
-          className={classes.viewIco}
-          alt="view"
-          onClick={onClickToggleDetails}
+          src={isOpenConfirmation ? billIcoHide : billIco}
+          className={classes.billIco}
+          onClick={toggleConfirmation}
+          alt="view confirmation"
         />
       )}
-      {order.order.confirmedManufacturer && <img src={billIco} className={classes.billIco} alt="view" />}
-      {getOrderStatusEnumValue(order.order.status) === OrderStatusEnum.onConfirming && (
-        <img src={deleteIco} className={classes.deleteIco} alt="view" onClick={onCancelClick} />
+      {isPossibleToCancelOrder && (
+        <img src={deleteIco} className={classes.deleteIco} alt="cancel order" onClick={onCancelClick} />
       )}
     </div>
   );

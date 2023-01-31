@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classes from './OrderToManufacturerItem.module.css';
-import { DriedEnum, ProductType, SepticEnum } from '../../../../../../../types/types';
+import { DriedEnum, OrderType, ProductType, SepticEnum } from '../../../../../../../types/types';
 import {
   formatPrice,
   getLogisticInfo,
@@ -23,20 +23,40 @@ import {
 import useDebouncedFunction from '../../../../../../../hooks/useDebounceFunction';
 import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../../utils/constants';
 import classNames from 'classnames';
+import AttentionSign from './AttentionSign/AttentionSign';
 
 type PropsType = {
   num: number;
   product: ProductType;
   onlyView?: boolean;
+  isConfirmation?: boolean;
+  order?: OrderType;
 };
 
-const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView }) => {
+interface IGetAmount {
+  product: ProductType;
+  onlyView?: boolean;
+  isConfirmation?: boolean;
+}
+
+const getAmount = ({ product, onlyView, isConfirmation }: IGetAmount) => {
+  if (onlyView) {
+    return product.amountInOrder ? product.amountInOrder : 0;
+  } else if (isConfirmation) {
+    return product.amountInConfirmation ? product.amountInConfirmation : 0;
+  } else if (product.amountInBasket) {
+    return product.amountInBasket ? product.amountInBasket : 0;
+  }
+  return 0;
+};
+
+const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, isConfirmation, order }) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
 
   const productSizes = getProductSizesStr(product);
 
-  const [amount, setAmount] = useState(product.amountInBasket ? product.amountInBasket : 0);
+  const [amount, setAmount] = useState(getAmount({ product, onlyView, isConfirmation }));
 
   const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
@@ -80,12 +100,24 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView }
   };
 
   const onClickViewProduct = () => {
-    dispatch(getProductThunk(product.id)).then((result) => {
-      if (isFulfilled(result)) {
-        showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
-      }
-    });
+    let productId;
+    if (isConfirmation) {
+      productId = product.confirmedProductId;
+    } else {
+      productId = product.id;
+    }
+    if (productId) {
+      dispatch(getProductThunk(productId)).then((result) => {
+        if (isFulfilled(result)) {
+          showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+        }
+      });
+    }
   };
+
+  const isShowDeleteFromBasket = onlyView ? false : isConfirmation ? false : true;
+
+  console.log('OrderToManufacturerItem =', product, onlyView, isConfirmation);
 
   return (
     <div className={classes.container}>
@@ -126,16 +158,20 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView }
       <div className={classes.amountColumn}>
         {product.publicationDate ? (
           <>
-            {onlyView ? (
-              <div className={classes.amountRow}>{`${product.amountInOrder} шт.`}</div>
+            {onlyView || isConfirmation ? (
+              <div className={classes.amountRow}>{`${amount} шт.`}</div>
             ) : (
               <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
             )}
-            <div className={classes.amountInfo}>
-              <div className={classes.amountInfoWeight}>{weight && `${toStrWithDelimiter(weight.toFixed(1))} кг.`}</div>
-              <div className={classes.amountInfoSquare}>{square && `${square.toFixed(2)} м.кв.`}</div>
-              <div className={classes.amountInfoVolume}>{volume && `${volume.toFixed(2)} м.куб.`}</div>
-            </div>
+            {amount > 0 && (
+              <div className={classes.amountInfo}>
+                <div className={classes.amountInfoWeight}>
+                  {weight && `${toStrWithDelimiter(weight.toFixed(1))} кг.`}
+                </div>
+                <div className={classes.amountInfoSquare}>{square && `${square.toFixed(2)} м.кв.`}</div>
+                <div className={classes.amountInfoVolume}>{volume && `${volume.toFixed(2)} м.куб.`}</div>
+              </div>
+            )}
           </>
         ) : (
           <div className={classes.unavailableInfo}>
@@ -144,20 +180,28 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView }
           </div>
         )}
       </div>
-      <div className={classes.summColumn}>
+      <div className={classes.costColumn}>
         {product.publicationDate && (
           <>
             {`${formatPrice(cost ? cost : 0)}`} <span>{' руб.'}</span>
           </>
         )}
       </div>
-      {!onlyView && (
+      {isShowDeleteFromBasket && (
         <div className={classes.actionsColumn}>
           <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
             <img src={product.publicationDate ? deleteIco : deleteRedIco} className={classes.deleteIco} alt="view" />
           </div>
         </div>
       )}
+      {
+        <AttentionSign
+          order={order}
+          productId={isConfirmation ? product.confirmedProductId : product.id}
+          onlyView={onlyView}
+          isConfirmation={isConfirmation}
+        />
+      }
     </div>
   );
 };

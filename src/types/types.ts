@@ -155,6 +155,8 @@ export type ProductType = {
   sort?: OptionsType;
   amountInBasket?: number;
   amountInOrder?: number;
+  amountInConfirmation?: number;
+  confirmedProductId?: number;
 };
 
 export enum QueryEnum {

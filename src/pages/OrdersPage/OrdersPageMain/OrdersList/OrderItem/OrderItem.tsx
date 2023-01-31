@@ -39,9 +39,14 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice);
 
   const [isOpenDetails, setIsOpenDetails] = useState(false);
+  const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
 
   const toggleDetails = () => {
     setIsOpenDetails((prev) => !prev);
+  };
+
+  const toggleConfirmation = () => {
+    setIsOpenConfirmation((prev) => !prev);
   };
 
   return (
@@ -55,13 +60,20 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
         <div className={listClasses.tableColumnDelivery}>{deliveryTitle}</div>
         <div className={listClasses.tableColumnCost}>{`${totalCost} руб.`}</div>
         <div className={listClasses.tableColumnActions}>
-          <OrderActions order={order} isOpenDetails={isOpenDetails} toggleDetails={toggleDetails} />
+          <OrderActions
+            order={order}
+            isOpenDetails={isOpenDetails}
+            toggleDetails={toggleDetails}
+            isOpenConfirmation={isOpenConfirmation}
+            toggleConfirmation={toggleConfirmation}
+          />
         </div>
         <div className={listClasses.tableColumnStatus}>
           <OrderStatus status={order.order.status} />
         </div>
       </div>
       {isOpenDetails && <OrderDetails order={order} />}
+      {isOpenConfirmation && <OrderDetails order={order} isConfirmation />}
     </div>
   );
 };
