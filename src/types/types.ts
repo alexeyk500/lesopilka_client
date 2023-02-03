@@ -157,6 +157,7 @@ export type ProductType = {
   amountInOrder?: number;
   amountInConfirmation?: number;
   confirmedProductId?: number;
+  divergenceAmount?: number;
 };
 
 export enum QueryEnum {

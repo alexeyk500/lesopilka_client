@@ -34,26 +34,31 @@ export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: num
 };
 
 const OrderItem: React.FC<PropsType> = ({ order }) => {
+  const [isOpenDetails, setIsOpenDetails] = useState(false);
+  const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
+  const [isOpenDivergence, setIsOpenDivergence] = useState(false);
+
   const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products);
 
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice);
 
-  const [isOpenDetails, setIsOpenDetails] = useState(false);
-  const [isOpenConfirmation, setIsOpenConfirmation] = useState(false);
-
   const toggleDetails = () => {
     setIsOpenDetails((prev) => !prev);
-    if (isOpenConfirmation) {
-      setIsOpenConfirmation(false);
-    }
+    isOpenConfirmation && setIsOpenConfirmation(false);
+    isOpenDivergence && setIsOpenDivergence(false);
   };
 
   const toggleConfirmation = () => {
     setIsOpenConfirmation((prev) => !prev);
-    if (isOpenDetails) {
-      setIsOpenDetails(false);
-    }
+    isOpenDetails && setIsOpenDetails(false);
+    isOpenDivergence && setIsOpenDivergence(false);
+  };
+
+  const toggleDivergence = () => {
+    setIsOpenDivergence((prev) => !prev);
+    isOpenDetails && setIsOpenDetails(false);
+    isOpenConfirmation && setIsOpenConfirmation(false);
   };
 
   return (
@@ -73,6 +78,8 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
             toggleDetails={toggleDetails}
             isOpenConfirmation={isOpenConfirmation}
             toggleConfirmation={toggleConfirmation}
+            isOpenDivergence={isOpenDivergence}
+            toggleDivergence={toggleDivergence}
           />
         </div>
         <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
@@ -81,6 +88,7 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
       </div>
       {isOpenDetails && <OrderDetails order={order} />}
       {isOpenConfirmation && <OrderDetails order={order} isConfirmation />}
+      {isOpenDivergence && <OrderDetails order={order} isDivergence />}
     </div>
   );
 };

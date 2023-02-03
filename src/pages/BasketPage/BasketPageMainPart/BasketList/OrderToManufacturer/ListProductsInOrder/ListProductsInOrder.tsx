@@ -10,10 +10,11 @@ type PropsType = {
   products: ProductType[];
   onlyView?: boolean;
   isConfirmation?: boolean;
+  isDivergence?: boolean;
   order?: OrderType;
 };
 
-const ListProductsInOrder: React.FC<PropsType> = ({ products, onlyView, isConfirmation, order }) => {
+const ListProductsInOrder: React.FC<PropsType> = ({ products, onlyView, isConfirmation, isDivergence, order }) => {
   const subCategories = useAppSelector(selectorSubCategories);
   const sortedProducts = sortProducts(products, subCategories);
 
@@ -27,6 +28,7 @@ const ListProductsInOrder: React.FC<PropsType> = ({ products, onlyView, isConfir
             product={product}
             onlyView={onlyView}
             isConfirmation={isConfirmation}
+            isDivergence={isDivergence}
             order={order}
           />
         );

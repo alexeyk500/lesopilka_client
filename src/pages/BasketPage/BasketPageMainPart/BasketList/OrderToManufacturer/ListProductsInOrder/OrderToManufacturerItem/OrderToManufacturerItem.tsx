@@ -24,12 +24,14 @@ import useDebouncedFunction from '../../../../../../../hooks/useDebounceFunction
 import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../../utils/constants';
 import classNames from 'classnames';
 import AttentionSign from './AttentionSign/AttentionSign';
+import { checkIsDivergenceByProductId } from '../../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   num: number;
   product: ProductType;
   onlyView?: boolean;
   isConfirmation?: boolean;
+  isDivergence?: boolean;
   order?: OrderType;
 };
 
@@ -37,26 +39,41 @@ interface IGetAmount {
   product: ProductType;
   onlyView?: boolean;
   isConfirmation?: boolean;
+  isDivergence?: boolean;
+  productDivergenceAmount?: number | boolean;
 }
 
-const getAmount = ({ product, onlyView, isConfirmation }: IGetAmount) => {
+const getAmount = ({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount }: IGetAmount) => {
   if (onlyView) {
     return product.amountInOrder ? product.amountInOrder : 0;
   } else if (isConfirmation) {
     return product.amountInConfirmation ? product.amountInConfirmation : 0;
+  } else if (isDivergence) {
+    return typeof productDivergenceAmount === 'number' ? productDivergenceAmount : 0;
   } else if (product.amountInBasket) {
     return product.amountInBasket ? product.amountInBasket : 0;
   }
   return 0;
 };
 
-const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, isConfirmation, order }) => {
+const OrderToManufacturerItem: React.FC<PropsType> = ({
+  num,
+  product,
+  onlyView,
+  isConfirmation,
+  isDivergence,
+  order,
+}) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
 
   const productSizes = getProductSizesStr(product);
 
-  const [amount, setAmount] = useState(getAmount({ product, onlyView, isConfirmation }));
+  const productDivergenceAmount = checkIsDivergenceByProductId(product.confirmedProductId, order);
+
+  const [amount, setAmount] = useState(
+    getAmount({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount })
+  );
 
   const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
@@ -115,7 +132,11 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, 
     }
   };
 
-  const isShowDeleteFromBasket = onlyView ? false : isConfirmation ? false : true;
+  const isShowDeleteFromBasket = onlyView ? false : isConfirmation ? false : isDivergence ? false : true;
+
+  if (isDivergence && !productDivergenceAmount) {
+    return null;
+  }
 
   return (
     <div className={classes.container}>
@@ -156,7 +177,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, 
       <div className={classes.amountColumn}>
         {product.publicationDate ? (
           <>
-            {onlyView || isConfirmation ? (
+            {onlyView || isConfirmation || isDivergence ? (
               <div className={classes.amountRow}>{`${amount} шт.`}</div>
             ) : (
               <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
@@ -195,9 +216,12 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, 
       {
         <AttentionSign
           order={order}
-          productId={isConfirmation ? product.confirmedProductId : product.id}
+          productId={
+            isConfirmation ? product.confirmedProductId : isDivergence ? product.confirmedProductId : product.id
+          }
           onlyView={onlyView}
           isConfirmation={isConfirmation}
+          isDivergence={isDivergence}
         />
       }
     </div>

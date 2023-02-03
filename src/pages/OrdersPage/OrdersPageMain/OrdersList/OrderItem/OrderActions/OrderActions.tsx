@@ -6,8 +6,7 @@ import billIco from '../../../../../../img/billIco.svg';
 import billIcoHide from '../../../../../../img/billIcoHide.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
 import divergenceIco from '../../../../../../img/attentionBlueIco.svg';
-import { OrderStatusEnum, OrderType } from '../../../../../../types/types';
-import { getOrderStatusEnumValue } from '../OrderStatus/OrderStatus';
+import { OrderType } from '../../../../../../types/types';
 import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
 import {
@@ -20,6 +19,7 @@ import {
 import { orderStatusOptions } from '../../../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../../../utils/functions';
 import ToolTip from '../../../../../../components/commonComponents/ToolTip/ToolTip';
+import { checkIsDivergenceInOrder, checkIsPossibleToCancelOrder } from '../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;
@@ -27,15 +27,8 @@ type PropsType = {
   toggleDetails: () => void;
   isOpenConfirmation: boolean;
   toggleConfirmation: () => void;
-};
-
-const checkIsPossibleToCancelOrder = (orderStatus: OrderStatusEnum) => {
-  if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming) {
-    return true;
-  } else if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onPaymentWaiting) {
-    return true;
-  }
-  return false;
+  isOpenDivergence: boolean;
+  toggleDivergence: () => void;
 };
 
 const OrderActions: React.FC<PropsType> = ({
@@ -44,6 +37,7 @@ const OrderActions: React.FC<PropsType> = ({
   toggleDetails,
   isOpenConfirmation,
   toggleConfirmation,
+  toggleDivergence,
 }) => {
   const dispatch = useAppDispatch();
   const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
@@ -73,6 +67,7 @@ const OrderActions: React.FC<PropsType> = ({
   };
 
   const isPossibleToCancelOrder = checkIsPossibleToCancelOrder(order.order.status);
+  const isOrderDivergence = checkIsDivergenceInOrder(order);
 
   return (
     <div className={classes.container}>
@@ -96,9 +91,11 @@ const OrderActions: React.FC<PropsType> = ({
         </ToolTip>
       )}
 
-      <ToolTip text={'Просмотр расхождений'} customClass={classes.customTooltipDivergence}>
-        <img src={divergenceIco} className={classes.billIco} alt="view confirmation" />
-      </ToolTip>
+      {isOrderDivergence && (
+        <ToolTip text={'Просмотр расхождений'} customClass={classes.customTooltipDivergence}>
+          <img src={divergenceIco} className={classes.billIco} alt="view confirmation" onClick={toggleDivergence} />
+        </ToolTip>
+      )}
 
       {isPossibleToCancelOrder && (
         <ToolTip text={'Отмена заказа'} customClass={classes.customTooltipCancel}>

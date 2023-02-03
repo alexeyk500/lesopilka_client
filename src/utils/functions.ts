@@ -274,6 +274,8 @@ export const getLogisticInfo = (product: ProductType, rawAmount?: number) => {
     ? Number(product.amountInOrder)
     : product.amountInConfirmation
     ? Number(product.amountInConfirmation)
+    : product.divergenceAmount
+    ? Number(product.divergenceAmount)
     : 0;
 
   if (caliber) {

@@ -6,13 +6,15 @@ import { getPaymentMethodTitle } from '../../../../../NewOrderPage/NewOrderPageM
 import ListProductsInOrder from '../../../../../BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/ListProductsInOrder/ListProductsInOrder';
 import { getTotalLogisticInfo } from '../../../../../../utils/functions';
 import { getDeliveryTitle } from '../OrderItem';
+import { getOrderDetailHeader, getProductDivergence } from '../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;
   isConfirmation?: boolean;
+  isDivergence?: boolean;
 };
 
-const OrderDetails: React.FC<PropsType> = ({ order, isConfirmation }) => {
+const OrderDetails: React.FC<PropsType> = ({ order, isConfirmation, isDivergence }) => {
   const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
   const manufacturerLocationTitle = order.products[0].manufacturer?.address.location.title ?? '';
   const manufacturerPhone = order.products[0].manufacturer?.phone ?? '';
@@ -36,28 +38,44 @@ const OrderDetails: React.FC<PropsType> = ({ order, isConfirmation }) => {
     if (order.confirmedProducts) {
       logisticInfo = getTotalLogisticInfo(order.confirmedProducts);
     }
+  } else if (isDivergence) {
+    if (order.confirmedProducts) {
+      logisticInfo = getTotalLogisticInfo(order.confirmedProducts);
+      const divergentProducts = getProductDivergence(order);
+      logisticInfo = getTotalLogisticInfo(divergentProducts);
+    }
   } else {
     logisticInfo = getTotalLogisticInfo(order.products);
   }
+
   if (logisticInfo) {
     totalWeight = logisticInfo.totalWeight;
     totalVolume = logisticInfo.totalVolume;
     totalCost = logisticInfo.totalCost;
   }
 
-  const productsList = isConfirmation ? (order.confirmedProducts ? order.confirmedProducts : []) : order.products;
+  const productsList = isConfirmation
+    ? order.confirmedProducts
+      ? order.confirmedProducts
+      : []
+    : isDivergence
+    ? order.confirmedProducts
+      ? order.confirmedProducts
+      : []
+    : order.products;
+
+  const orderDetailsHeader = getOrderDetailHeader({
+    orderId: order.order.id,
+    date: deliveryDate,
+    isConfirmation,
+    isDivergence,
+  });
 
   return (
     <div className={classes.container}>
       <div className={classes.delimiterDotted} />
       <div className={classes.detailsHeader}>
-        {isConfirmation ? (
-          <div
-            className={classes.titleRow}
-          >{`Подтвержденние заказа от поставщика\nЗаказ № ${order.order.id} на ${deliveryDate}`}</div>
-        ) : (
-          <div className={classes.titleRow}>{`Заказ № ${order.order.id} на ${deliveryDate}`}</div>
-        )}
+        <div className={classes.titleRow}>{orderDetailsHeader}</div>
         <div className={classes.row}>
           <div className={classes.title}>{'Поставщик:'}</div>
           <div className={classes.info}>
@@ -94,6 +112,8 @@ const OrderDetails: React.FC<PropsType> = ({ order, isConfirmation }) => {
       <div className={classes.delimiter} />
       {isConfirmation ? (
         <ListProductsInOrder order={order} products={productsList} isConfirmation />
+      ) : isDivergence ? (
+        <ListProductsInOrder order={order} products={productsList} isDivergence />
       ) : (
         <ListProductsInOrder order={order} products={productsList} onlyView />
       )}
