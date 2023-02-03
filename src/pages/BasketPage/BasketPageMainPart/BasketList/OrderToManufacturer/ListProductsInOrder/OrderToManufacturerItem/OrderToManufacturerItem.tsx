@@ -117,8 +117,6 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, onlyView, 
 
   const isShowDeleteFromBasket = onlyView ? false : isConfirmation ? false : true;
 
-  console.log('OrderToManufacturerItem =', product, onlyView, isConfirmation);
-
   return (
     <div className={classes.container}>
       <div className={classes.numTitle}>{num}</div>

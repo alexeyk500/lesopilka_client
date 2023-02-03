@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import classes from './AttentionSign.module.css';
 import attentionIco from '../../../../../../../../img/attentionIco.svg';
 import { OrderType } from '../../../../../../../../types/types';
+import ToolTip from '../../../../../../../../components/commonComponents/ToolTip/ToolTip';
 
 type PropsType = {
   productId: number | undefined;
@@ -37,31 +38,16 @@ const AttentionSign: React.FC<PropsType> = ({ productId, order, onlyView, isConf
   const isDivergence = checkIsDivergence(productId, order);
   const divergenceNumber = typeof isDivergence === 'boolean' ? undefined : isDivergence;
 
-  const [showToolTip, setShowToolTip] = useState(false);
-
-  const timeOutId = useRef<NodeJS.Timeout>();
-
-  const onMouseEnterHandler = () => {
-    timeOutId.current = setTimeout(() => {
-      setShowToolTip(true);
-    }, 500);
-  };
-
-  const onMouseLeaveHandler = () => {
-    setShowToolTip(false);
-    clearTimeout(timeOutId.current);
-  };
+  const text =
+    (divergenceNumber ? `${divergenceNumber} шт - ` : '') +
+    (isConfirmation ? 'расхождение с заказом' : 'расхождение с подтверждением');
 
   return (
-    <div className={classes.container} onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
-      {isPresentAttention && isDivergence && <img src={attentionIco} className={classes.ico} alt="attention" />}
-      {showToolTip && (
-        <div className={classes.toolTip}>
-          {divergenceNumber ? `${divergenceNumber} шт - ` : ''}
-          {isConfirmation ? 'расхождение с заказом' : 'расхождение с подтверждением'}
-        </div>
-      )}
-    </div>
+    <ToolTip text={text} customClass={classes.customToolTip}>
+      <div className={classes.container}>
+        {isPresentAttention && isDivergence && <img src={attentionIco} className={classes.ico} alt="attention" />}
+      </div>
+    </ToolTip>
   );
 };
 

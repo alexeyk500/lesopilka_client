@@ -35,3 +35,18 @@
   margin-bottom: 0 !important;
 }
 
+.customTooltipOrder {
+  margin-top: -32px;
+  margin-left: -150px;
+}
+
+.customTooltipConfirmation {
+  margin-top: -32px;
+  margin-left: -220px;
+}
+
+.customTooltipCancel {
+  margin-top: -32px;
+  margin-left: -135px;
+}
+

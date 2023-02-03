@@ -1,0 +1,39 @@
+.container {
+  position: relative;
+  display: flex;
+}
+
+.toolTip {
+  display: flex;
+  position: absolute;
+  padding: 8px 16px;
+  background-color: #4A90E2;
+  color: #FFFFFF;
+  pointer-events: none;
+  white-space: nowrap;
+  margin-left: calc(100%);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  justify-content: center;
+}
+
+.exampleEnter {
+  opacity: 0;
+  transform:translateY(-100%);
+}
+.exampleEnterActive {
+  opacity: 1;
+  transform:translateY(0);
+  transition: opacity 350ms, transform 350ms;
+}
+.exampleExit {
+  opacity: 1;
+  transform:translateY(0);
+}
+.exampleExitActive {
+  opacity: 0;
+  transform:translateY(-100%);
+  transition: opacity 350ms, transform 350ms;
+}

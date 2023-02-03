@@ -10,19 +10,17 @@
   width: 20px;
 }
 
-.toolTip {
-  position: absolute;
-  top: -48px;
-  left: -180px;
-  display: flex;
-  width: 180px;
-  justify-content: center;
-  background-color: var(--gray_color_light_light_light);
-  pointer-events: none;
-  border-radius: 12px;
-  padding: 4px 12px;
-  margin-right: 12px;
-  text-align: center;
-  color: var(--dark_blue_color);
-  white-space: pre-line;
+.customToolTip {
+  top: -48px !important;
+  left: -180px !important;
+  width: 180px !important;
+  padding: 4px 12px !important;
+  margin-left: 0!important;
+  justify-content: center !important;
+  color: var(--section_background) !important;
+  background-color: var(--orange_color) !important;
+  border-radius: 12px !important;
+  text-align: center !important;
+  white-space: pre-line !important;
+  font-weight: 700 !important;
 }

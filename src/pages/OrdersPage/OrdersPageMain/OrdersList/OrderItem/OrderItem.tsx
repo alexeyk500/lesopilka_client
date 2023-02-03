@@ -43,10 +43,16 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
 
   const toggleDetails = () => {
     setIsOpenDetails((prev) => !prev);
+    if (isOpenConfirmation) {
+      setIsOpenConfirmation(false);
+    }
   };
 
   const toggleConfirmation = () => {
     setIsOpenConfirmation((prev) => !prev);
+    if (isOpenDetails) {
+      setIsOpenDetails(false);
+    }
   };
 
   return (

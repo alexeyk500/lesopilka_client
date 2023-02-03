@@ -18,6 +18,7 @@ import {
 } from '../../../../../../store/ordersSlice';
 import { orderStatusOptions } from '../../../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../../../utils/functions';
+import ToolTip from '../../../../../../components/commonComponents/ToolTip/ToolTip';
 
 type PropsType = {
   order: OrderType;
@@ -70,30 +71,33 @@ const OrderActions: React.FC<PropsType> = ({
     });
   };
 
-  const onClickToggleDetails = () => {
-    toggleDetails();
-  };
-
   const isPossibleToCancelOrder = checkIsPossibleToCancelOrder(order.order.status);
 
   return (
     <div className={classes.container}>
-      <img
-        src={isOpenDetails ? viewCloseIco : viewIco}
-        className={classes.viewIco}
-        onClick={onClickToggleDetails}
-        alt="view order"
-      />
-      {order.order.confirmedManufacturer && (
+      <ToolTip text={'Просмотр заказа'} customClass={classes.customTooltipOrder}>
         <img
-          src={isOpenConfirmation ? billIcoHide : billIco}
-          className={classes.billIco}
-          onClick={toggleConfirmation}
-          alt="view confirmation"
+          src={isOpenDetails ? viewCloseIco : viewIco}
+          className={classes.viewIco}
+          onClick={toggleDetails}
+          alt="view order"
         />
+      </ToolTip>
+
+      {order.order.confirmedManufacturer && (
+        <ToolTip text={'Просмотр подтверждения'} customClass={classes.customTooltipConfirmation}>
+          <img
+            src={isOpenConfirmation ? billIcoHide : billIco}
+            className={classes.billIco}
+            onClick={toggleConfirmation}
+            alt="view confirmation"
+          />
+        </ToolTip>
       )}
       {isPossibleToCancelOrder && (
-        <img src={deleteIco} className={classes.deleteIco} alt="cancel order" onClick={onCancelClick} />
+        <ToolTip text={'Отмена заказа'} customClass={classes.customTooltipCancel}>
+          <img src={deleteIco} className={classes.deleteIco} alt="cancel order" onClick={onCancelClick} />
+        </ToolTip>
       )}
     </div>
   );
