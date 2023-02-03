@@ -36,17 +36,22 @@
 }
 
 .customTooltipOrder {
-  margin-top: -32px;
-  margin-left: -150px;
+  margin-top: -8px;
+  margin-left: -160px;
 }
 
 .customTooltipConfirmation {
-  margin-top: -32px;
-  margin-left: -220px;
+  margin-top: -8px;
+  margin-left: -225px;
+}
+
+.customTooltipDivergence {
+  margin-top: -8px;
+  margin-left: -211px;
 }
 
 .customTooltipCancel {
-  margin-top: -32px;
-  margin-left: -135px;
+  margin-top: -8px;
+  margin-left: -143px;
 }
 

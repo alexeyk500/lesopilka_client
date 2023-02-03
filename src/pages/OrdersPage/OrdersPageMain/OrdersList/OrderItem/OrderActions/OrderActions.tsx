@@ -5,6 +5,7 @@ import viewCloseIco from '../../../../../../img/eyeCloseIco.svg';
 import billIco from '../../../../../../img/billIco.svg';
 import billIcoHide from '../../../../../../img/billIcoHide.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
+import divergenceIco from '../../../../../../img/attentionBlueIco.svg';
 import { OrderStatusEnum, OrderType } from '../../../../../../types/types';
 import { getOrderStatusEnumValue } from '../OrderStatus/OrderStatus';
 import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
@@ -94,6 +95,11 @@ const OrderActions: React.FC<PropsType> = ({
           />
         </ToolTip>
       )}
+
+      <ToolTip text={'Просмотр расхождений'} customClass={classes.customTooltipDivergence}>
+        <img src={divergenceIco} className={classes.billIco} alt="view confirmation" />
+      </ToolTip>
+
       {isPossibleToCancelOrder && (
         <ToolTip text={'Отмена заказа'} customClass={classes.customTooltipCancel}>
           <img src={deleteIco} className={classes.deleteIco} alt="cancel order" onClick={onCancelClick} />

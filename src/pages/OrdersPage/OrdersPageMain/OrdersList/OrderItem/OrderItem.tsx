@@ -7,6 +7,7 @@ import { formatPrice, getTotalLogisticInfo } from '../../../../../utils/function
 import OrderActions from './OrderActions/OrderActions';
 import OrderStatus from './OrderStatus/OrderStatus';
 import OrderDetails from './OrderDetails/OrderDetails';
+import classNames from 'classnames';
 
 type PropsType = {
   order: OrderType;
@@ -74,7 +75,7 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
             toggleConfirmation={toggleConfirmation}
           />
         </div>
-        <div className={listClasses.tableColumnStatus}>
+        <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
           <OrderStatus status={order.order.status} />
         </div>
       </div>

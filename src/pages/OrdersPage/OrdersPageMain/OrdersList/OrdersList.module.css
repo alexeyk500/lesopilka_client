@@ -16,7 +16,7 @@
 .tableColumnDate {
   display: flex;
   justify-content: center;
-  width: 8%;
+  width: 7%;
 }
 
 .tableColumnNumber {
@@ -59,28 +59,28 @@
   display: flex;
   padding-left: 12px;
   justify-content: flex-start;
-  width: 12%;
+  width: 11%;
   white-space: pre-line;
 }
 
 .tableColumnCost {
   display: flex;
   padding-left: 12px;
-  width: 13%;
+  width: 12%;
   white-space: pre-line;
 }
 
 .tableColumnActions {
   display: flex;
-  padding-left: 12px;
+  padding-left: 13px;
   justify-content: flex-start;
-  width: 8%;
+  width: 12%;
 }
 
 .tableColumnStatus {
   display: flex;
   justify-content: center;
-  width: 17%;
+  width: 15%;
 }
 
 .scrollContainer {

@@ -22,3 +22,7 @@
   display: flex;
   width: 100%;
 }
+
+.rightAlign {
+  justify-content: flex-end;
+}
