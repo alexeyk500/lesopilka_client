@@ -1,14 +1,14 @@
 import React from 'react';
-import DateIntervalSelector from './DateIntervalSelector/DateIntervalSelector';
 import OrderStatusSelector from './OrderStatusSelector/OrderStatusSelector';
 import classes from './OrdersPageControl.module.css';
 import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
+import OrdersPageDateIntervalSelector from './OrdersPageDateIntervalSelector/OrdersPageDateIntervalSelector';
 
 const OrdersPageControl: React.FC = () => {
   return (
     <>
       <div className={classes.containerStatusSelector}>
-        <DateIntervalSelector />
+        <OrdersPageDateIntervalSelector />
       </div>
       <div className={classes.containerStatusSelector}>
         <OrderStatusSelector />

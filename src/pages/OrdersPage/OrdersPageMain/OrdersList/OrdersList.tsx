@@ -11,6 +11,7 @@ import {
 import { orderStatusOptions } from '../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
 import OrderItem from './OrderItem/OrderItem';
+import { dateDayShift } from '../../../../utils/dateTimeFunctions';
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,8 +26,9 @@ const OrdersList: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
-    if (dateFrom && dateTo && serverOrdersStatus && token) {
-      dispatch(getOrdersThunk({ dateFrom, dateTo, ordersStatus: serverOrdersStatus, token }));
+    const dateToWithShift = dateDayShift(new Date(dateTo), 1).toISOString();
+    if (dateFrom && dateToWithShift && serverOrdersStatus && token) {
+      dispatch(getOrdersThunk({ dateFrom, dateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token }));
     }
   }, [dispatch, dateFrom, dateTo, ordersStatus]);
 

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { dateMonthShift } from '../utils/dateTimeFunctions';
-import { MAX_MONTH_SHIFT_FOR_ORDERS } from '../utils/constants';
+import { dateMonthShift, normalizeDate } from '../utils/dateTimeFunctions';
+import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS} from '../utils/constants';
 import { serverApi } from '../api/serverApi';
 import { GetOrderServerType, UniversalServerResponseType } from '../api/serverResponseTypes';
 import { GetOrdersParamsType } from '../api/orderApi';
@@ -15,8 +15,8 @@ type OrdersSliceType = {
   isLoading: boolean;
 };
 
-const dateFrom = dateMonthShift(new Date(), -4);
-const dateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_ORDERS);
+const dateFrom = normalizeDate(dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_USER_ORDERS));
+const dateTo = normalizeDate(dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_USER_ORDERS));
 
 const initialState: OrdersSliceType = {
   selectedOrderStatusId: 0,
