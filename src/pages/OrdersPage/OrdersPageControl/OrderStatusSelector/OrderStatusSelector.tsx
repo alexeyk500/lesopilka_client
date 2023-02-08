@@ -8,13 +8,13 @@ import { selectorSelectedOrderStatusId, setSelectedOrderStatusId } from '../../.
 export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: 'Все', toolTip: 'Все ваши заказы' },
   { id: 1, title: OrderStatusEnum.onConfirming, toolTip: 'Заказы еще на рассмотрении у поставщика' },
-  { id: 2, title: OrderStatusEnum.confirmedOrder, toolTip: 'Поставщик подтвердил вам поставку этих заказов' },
+  { id: 2, title: OrderStatusEnum.confirmedOrder, toolTip: 'Поставщик готов поставить вам эти заказы' },
   { id: 3, title: OrderStatusEnum.canceledByUser, toolTip: 'Вы отменили эти заказы' },
   { id: 4, title: OrderStatusEnum.canceledByManufacturer, toolTip: 'Поставщик не готов поставить вам эти заказы' },
   {
     id: 5,
     title: OrderStatusEnum.closedByDate,
-    toolTip: 'Закасы которые истекли по сроку подтверждения или по дате поставки',
+    toolTip: 'Заказы истекшие по сроку подтверждения или по дате поставки',
   },
 ];
 
