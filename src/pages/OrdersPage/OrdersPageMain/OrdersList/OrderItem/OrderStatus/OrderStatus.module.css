@@ -36,6 +36,6 @@
 }
 
 .closedByDate {
-  border: 1px solid var(--gray_color_light_light);
-  color: var(--gray_color_light_light);
+  border: 1px solid var(--gray_color_light);
+  color: var(--gray_color_light);
 }
