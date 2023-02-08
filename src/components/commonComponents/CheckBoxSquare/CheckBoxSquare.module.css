@@ -61,6 +61,6 @@
   border-radius: 6px;
   z-index: 10;
   white-space: nowrap;
-  box-shadow: var(--box_shadow);
-  color: var(--orange_color);
+  box-shadow: var(--box_shadow_dark);
+  color: var(--green_color_light);
 }

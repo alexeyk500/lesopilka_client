@@ -371,14 +371,12 @@ export const getSelectedOption = (optionId?: number, options?: OptionsType[]) =>
 export const convertOrdersStatusToServerOrdersStatus = (ordersStatus: string) => {
   if (ordersStatus === 'На подтверждении') {
     return 'onConfirming';
-  } else if (ordersStatus === 'Ожидает оплаты') {
-    return 'onPaymentWaiting';
-  } else if (ordersStatus === 'В сборке') {
-    return 'onAssembling';
-  } else if (ordersStatus === 'В пути') {
-    return 'onDelivering';
-  } else if (ordersStatus === 'Получен') {
-    return 'completed';
+  } else if (ordersStatus === 'Подтвержден') {
+    return 'confirmedOrder';
+  } else if (ordersStatus === 'Отмена клиентом') {
+    return 'canceledByUser';
+  } else if (ordersStatus === 'Отказ поставщика') {
+    return 'canceledByManufacturer';
   }
   return 'all';
 };

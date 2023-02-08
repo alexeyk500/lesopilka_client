@@ -7,11 +7,15 @@ import { selectorSelectedOrderStatusId, setSelectedOrderStatusId } from '../../.
 
 export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: 'Все', toolTip: 'Все ваши заказы' },
-  { id: 1, title: OrderStatusEnum.onConfirming, toolTip: 'Ожидайте, поставщик готовит вам счет на эти заказы' },
-  { id: 2, title: OrderStatusEnum.onPaymentWaiting, toolTip: 'Заказы которые ожидают Вашей оплаты' },
-  { id: 3, title: OrderStatusEnum.onAssembling, toolTip: 'Заказы которые поставщик комплектует и готовит к отправке' },
-  { id: 4, title: OrderStatusEnum.onDelivering, toolTip: 'Заказы котрые уже к вам в пути' },
-  { id: 5, title: OrderStatusEnum.completed, toolTip: 'Ваши завершенные заказы' },
+  { id: 1, title: OrderStatusEnum.onConfirming, toolTip: 'Заказы еще на рассмотрении у поставщика' },
+  { id: 2, title: OrderStatusEnum.confirmedOrder, toolTip: 'Поставщик подтвердил вам поставку этих заказов' },
+  { id: 3, title: OrderStatusEnum.canceledByUser, toolTip: 'Вы отменили эти заказы' },
+  { id: 4, title: OrderStatusEnum.canceledByManufacturer, toolTip: 'Поставщик не готов поставить вам эти заказы' },
+  {
+    id: 5,
+    title: OrderStatusEnum.closedByDate,
+    toolTip: 'Закасы которые истекли по сроку подтверждения или по дате поставки',
+  },
 ];
 
 const OrderStatusSelector: React.FC = () => {

@@ -48,7 +48,7 @@ const CheckBoxSquare: React.FC<PropsType> = ({
   };
 
   const topValue = id * 32 + toolTipVerticalShift + 'px';
-  const leftValue = ref.current?.offsetWidth ? 100 + ref.current?.offsetWidth + 'px' : '0';
+  const leftValue = ref.current?.offsetWidth ? 115 + ref.current?.offsetWidth + 'px' : '0';
 
   return (
     <div className={classes.container}>

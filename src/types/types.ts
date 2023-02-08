@@ -54,19 +54,19 @@ export type ProductMaterialType = {
   order: number;
 };
 
-export type ServerOrderStatusType = 'onConfirming' | 'onPaymentWaiting' | 'onAssembling' | 'onDelivering' | 'completed';
-
 export enum ServerDeliveryMethodEnum {
   selfPickUp = 'Самовывоз',
   delivery = 'Доставка',
 }
 
+export type ServerOrderStatusType = 'onConfirming' | 'confirmedOrder' | 'canceledByUser' | 'canceledByManufacturer';
+
 export enum OrderStatusEnum {
   onConfirming = 'На подтверждении',
-  onPaymentWaiting = 'Ожидает оплаты',
-  onAssembling = 'В сборке',
-  onDelivering = 'В пути',
-  completed = 'Получен',
+  confirmedOrder = 'Подтвержден',
+  canceledByUser = 'Отмена клиентом',
+  canceledByManufacturer = 'Отказ поставщика',
+  closedByDate = 'Закрыт по сроку',
 }
 
 export type OrderInfoType = {

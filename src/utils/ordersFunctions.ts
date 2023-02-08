@@ -58,12 +58,7 @@ export const getOrderDetailHeader = ({
 };
 
 export const checkIsPossibleToCancelOrder = (orderStatus: OrderStatusEnum) => {
-  if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming) {
-    return true;
-  } else if (getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onPaymentWaiting) {
-    return true;
-  }
-  return false;
+  return getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming;
 };
 
 export const getProductDivergence = (order: OrderType) => {
