@@ -90,7 +90,7 @@ export type OrderInfoType = {
     };
   };
   deliveryPrice: number;
-  confirmedManufacturer: string;
+  manufacturerConfirmedDate: string;
 };
 
 export type OrderType = {

@@ -80,7 +80,7 @@ const OrderActions: React.FC<PropsType> = ({
         />
       </ToolTip>
 
-      {order.order.confirmedManufacturer && (
+      {order.order.manufacturerConfirmedDate && (
         <ToolTip text={'Просмотр подтверждения'} customClass={classes.customTooltipConfirmation}>
           <img
             src={isOpenConfirmation ? billIcoHide : billIco}
