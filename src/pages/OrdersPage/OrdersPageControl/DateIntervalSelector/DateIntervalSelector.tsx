@@ -9,12 +9,12 @@ import {
   setDateTo,
 } from '../../../../store/ordersSlice';
 import { dateMonthShift } from '../../../../utils/dateTimeFunctions';
-import { MAX_MONTH_SHIFT_FOR_ORDERS } from '../../../../utils/constants';
+import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS } from '../../../../utils/constants';
 
-const minDateFrom = dateMonthShift(new Date(), -4);
+const minDateFrom = dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_USER_ORDERS);
 const maxDateFrom = new Date();
 const minDateTo = new Date();
-const maxDateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_ORDERS);
+const maxDateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_USER_ORDERS);
 
 const DateIntervalSelector = () => {
   const dispatch = useAppDispatch();
