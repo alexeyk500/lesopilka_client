@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.title {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: 0.33px;
+  color: var(--gray_color);
+  margin-bottom: 8px;
+}
+
+.customDatePicker {
+  width: 204px;
+  margin-left: 0;
+}
+
+.dateSelectorRow {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.rowTitle {
+  display: flex;
+  margin-left: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  font-weight: 600;
+  font-size: 20px;
+}
