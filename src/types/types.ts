@@ -91,6 +91,8 @@ export type OrderInfoType = {
   };
   deliveryPrice: number;
   manufacturerConfirmedDate: string;
+  deleteByUser: boolean;
+  deleteByManufacturer: boolean;
 };
 
 export type OrderType = {
