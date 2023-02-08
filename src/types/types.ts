@@ -71,7 +71,8 @@ export enum OrderStatusEnum {
 
 export type OrderInfoType = {
   id: number;
-  date: string;
+  orderDate: string;
+  deliveryDate: string;
   status: OrderStatusEnum;
   contactPersonName: string;
   contactPersonPhone: string;

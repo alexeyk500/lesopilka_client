@@ -20,7 +20,7 @@ const OrderDetails: React.FC<PropsType> = ({ order, isConfirmation, isDivergence
   const manufacturerPhone = order.products[0].manufacturer?.phone ?? '';
   const manufacturerEmail = order.products[0].manufacturer?.email ?? '';
 
-  const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.date);
+  const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.deliveryDate);
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice, true);
   const paymentMethodTitle = getPaymentMethodTitle(
     order.order.deliveryMethod.title as DeliveryMethodEnum,

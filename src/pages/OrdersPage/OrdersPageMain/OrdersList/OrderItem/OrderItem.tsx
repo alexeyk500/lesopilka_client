@@ -64,7 +64,7 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>
-        <div className={listClasses.tableColumnDate}>{formatUTCtoDDMMYYYY(order.order.date)}</div>
+        <div className={listClasses.tableColumnDate}>{formatUTCtoDDMMYYYY(order.order.orderDate)}</div>
         <div className={listClasses.tableColumnNumber}>{order.order.id}</div>
         <div className={listClasses.tableColumnManufacturer}>{manufacturerTitle}</div>
         <div className={listClasses.tableColumnWeight}>{`${totalWeight} кг.`}</div>

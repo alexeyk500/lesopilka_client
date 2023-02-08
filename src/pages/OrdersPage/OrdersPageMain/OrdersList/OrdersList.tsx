@@ -15,8 +15,8 @@ import { dateDayShift } from '../../../../utils/dateTimeFunctions';
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
-  const dateTo = useAppSelector(selectorSelectedOrderDateTo);
+  const orderDateFrom = useAppSelector(selectorSelectedOrderDateFrom);
+  const orderDateTo = useAppSelector(selectorSelectedOrderDateTo);
 
   const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
   const ordersStatus = orderStatusOptions.find((option) => option.id === selectedOrderStatusId)?.title;
@@ -26,11 +26,13 @@ const OrdersList: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
-    const dateToWithShift = dateDayShift(new Date(dateTo), 1).toISOString();
-    if (dateFrom && dateToWithShift && serverOrdersStatus && token) {
-      dispatch(getOrdersThunk({ dateFrom, dateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token }));
+    const dateToWithShift = dateDayShift(new Date(orderDateTo), 1).toISOString();
+    if (orderDateFrom && dateToWithShift && serverOrdersStatus && token) {
+      dispatch(
+        getOrdersThunk({ orderDateFrom, orderDateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token })
+      );
     }
-  }, [dispatch, dateFrom, dateTo, ordersStatus]);
+  }, [dispatch, orderDateFrom, orderDateTo, ordersStatus]);
 
   return (
     <div className={classes.container}>

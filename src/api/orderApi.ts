@@ -16,8 +16,8 @@ export type CreateNewOrderParamsType = {
 };
 
 export type GetOrdersParamsType = {
-  dateFrom: string;
-  dateTo: string;
+  orderDateFrom: string;
+  orderDateTo: string;
   ordersStatus: ServerOrderStatusType | 'all';
   token: string;
 };
@@ -66,10 +66,10 @@ export const orderApi = {
     return response.data;
   },
 
-  async getOrders({ dateFrom, dateTo, ordersStatus, token }: GetOrdersParamsType) {
+  async getOrders({ orderDateFrom, orderDateTo, ordersStatus, token }: GetOrdersParamsType) {
     const response = await instanceAxios.post<GetOrderServerType[]>(
       '/orders',
-      { dateFrom: normalizeDate(dateFrom), dateTo: normalizeDate(dateTo), ordersStatus },
+      { orderDateFrom: normalizeDate(orderDateFrom), orderDateTo: normalizeDate(orderDateTo), ordersStatus },
       setAuthHeader(token)
     );
     return response.data;

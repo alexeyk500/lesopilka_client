@@ -40,8 +40,8 @@ const OrderActions: React.FC<PropsType> = ({
   toggleDivergence,
 }) => {
   const dispatch = useAppDispatch();
-  const dateFrom = useAppSelector(selectorSelectedOrderDateFrom);
-  const dateTo = useAppSelector(selectorSelectedOrderDateTo);
+  const orderDateFrom = useAppSelector(selectorSelectedOrderDateFrom);
+  const orderDateTo = useAppSelector(selectorSelectedOrderDateTo);
   const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
   const ordersStatus = orderStatusOptions.find((option) => option.id === selectedOrderStatusId)?.title;
   const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
@@ -57,9 +57,9 @@ const OrderActions: React.FC<PropsType> = ({
       customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
       onClosePopUp: (result?: boolean | FormData | undefined) => {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-        if (result && token && dateFrom && dateTo && serverOrdersStatus) {
+        if (result && token && orderDateFrom && orderDateTo && serverOrdersStatus) {
           dispatch(cancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
-            dispatch(getOrdersThunk({ dateFrom, dateTo, ordersStatus: serverOrdersStatus, token }));
+            dispatch(getOrdersThunk({ orderDateFrom, orderDateTo, ordersStatus: serverOrdersStatus, token }));
           });
         }
       },

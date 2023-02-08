@@ -9,19 +9,19 @@ import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS } from
 
 type OrdersSliceType = {
   selectedOrderStatusId: number;
-  dateFrom: string;
-  dateTo: string;
+  orderDateFrom: string;
+  orderDateTo: string;
   orders: OrderType[];
   isLoading: boolean;
 };
 
-const dateFrom = dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_USER_ORDERS);
-const dateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_USER_ORDERS);
+const orderDateFrom = dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_USER_ORDERS);
+const orderDateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_USER_ORDERS);
 
 const initialState: OrdersSliceType = {
   selectedOrderStatusId: 0,
-  dateFrom: dateFrom.toISOString(),
-  dateTo: dateTo.toISOString(),
+  orderDateFrom: orderDateFrom.toISOString(),
+  orderDateTo: orderDateTo.toISOString(),
   orders: [],
   isLoading: false,
 };
@@ -57,10 +57,10 @@ export const ordersSlice = createSlice({
       state.selectedOrderStatusId = actions.payload;
     },
     setDateFrom: (state, actions) => {
-      state.dateFrom = actions.payload;
+      state.orderDateFrom = actions.payload;
     },
     setDateTo: (state, actions) => {
-      state.dateTo = actions.payload;
+      state.orderDateTo = actions.payload;
     },
   },
   extraReducers: (builder) => {
@@ -84,8 +84,8 @@ export const ordersSlice = createSlice({
 export const { setSelectedOrderStatusId, setDateFrom, setDateTo } = ordersSlice.actions;
 
 export const selectorSelectedOrderStatusId = (state: RootState) => state.orders.selectedOrderStatusId;
-export const selectorSelectedOrderDateFrom = (state: RootState) => state.orders.dateFrom;
-export const selectorSelectedOrderDateTo = (state: RootState) => state.orders.dateTo;
+export const selectorSelectedOrderDateFrom = (state: RootState) => state.orders.orderDateFrom;
+export const selectorSelectedOrderDateTo = (state: RootState) => state.orders.orderDateTo;
 export const selectorOrders = (state: RootState) => state.orders.orders;
 
 export default ordersSlice.reducer;
