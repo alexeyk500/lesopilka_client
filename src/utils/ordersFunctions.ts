@@ -52,7 +52,7 @@ export const getOrderDetailHeader = ({
   if (isConfirmation) {
     firstLine = 'Подтвержденние заказа от поставщика';
   } else if (isDivergence) {
-    firstLine = 'Расхождения в подтвержденным заказе';
+    firstLine = 'Расхождения в заказе подтвержденным поставщиком от вашего исходного заказа';
   }
   return firstLine + `\nЗаказ № ${orderId} на ${date}`;
 };
