@@ -20,14 +20,14 @@ export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: num
   if (deliveryMethodTile === ServerDeliveryMethodEnum.delivery) {
     if (deliveryPrice !== undefined) {
       if (deliveryPrice === null) {
-        return `${deliveryMethodTile}${oneRow ? ', ' : ':\n '}на подсчете`;
+        return oneRow ? `${deliveryMethodTile}, стоимость доставки заказа - на подсчете у поставщика` : 'На подсчете';
       }
       if (deliveryPrice === 0) {
-        return `${deliveryMethodTile}${oneRow ? ', ' : ':\n '}бесплатно`;
+        return oneRow ? `${deliveryMethodTile}. Поставщик доставит вам заказ бесплатно` : 'Бесплатно';
       } else {
-        return `${deliveryMethodTile}${oneRow ? ', стоимость доставки заказа ' : ':\n '}${formatPrice(
-          deliveryPrice
-        )} руб.`;
+        return oneRow
+          ? `${deliveryMethodTile}, стоимость доставки заказа - ${formatPrice(deliveryPrice)} руб.`
+          : `${formatPrice(deliveryPrice)} руб.`;
       }
     }
   }
@@ -64,13 +64,13 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>
-        <div className={listClasses.tableColumnDate}>{formatUTCtoDDMMYYYY(order.order.orderDate)}</div>
+        <div className={listClasses.tableColumnDate}>{formatUTCtoDDMMYYYY(order.order.deliveryDate)}</div>
         <div className={listClasses.tableColumnNumber}>{order.order.id}</div>
         <div className={listClasses.tableColumnManufacturer}>{manufacturerTitle}</div>
         <div className={listClasses.tableColumnWeight}>{`${totalWeight} кг.`}</div>
         <div className={listClasses.tableColumnVolume}>{`${totalVolume} м.куб.`}</div>
-        <div className={listClasses.tableColumnDelivery}>{deliveryTitle}</div>
         <div className={listClasses.tableColumnCost}>{`${totalCost} руб.`}</div>
+        <div className={listClasses.tableColumnDelivery}>{deliveryTitle}</div>
         <div className={listClasses.tableColumnActions}>
           <OrderActions
             order={order}

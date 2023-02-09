@@ -42,8 +42,8 @@ const OrdersList: React.FC = () => {
         <div className={classes.tableColumnManufacturer}>{'Поставщик'}</div>
         <div className={classes.tableColumnWeight}>{'Вес'}</div>
         <div className={classes.tableColumnVolume}>{'Обьем'}</div>
-        <div className={classes.tableColumnDelivery}>{'Доставка'}</div>
         <div className={classes.tableColumnCost}>{'Стоимость'}</div>
+        <div className={classes.tableColumnDelivery}>{'Доставка'}</div>
         <div className={classes.tableColumnActions}>{'Действия'}</div>
         <div className={classes.tableColumnStatus}>{'Статус'}</div>
       </div>
