@@ -1,5 +1,7 @@
-import { OrderStatusEnum, OrderType, ProductType } from '../types/types';
+import { OrderStatusEnum, OrderType, ProductType, ServerDeliveryMethodEnum } from '../types/types';
 import { getOrderStatusEnumValue } from '../pages/OrdersPage/OrdersPageMain/OrdersList/OrderItem/OrderStatus/OrderStatus';
+import { InfoTabSelectorEnum } from '../pages/OrdersPage/OrdersPageMain/OrdersList/OrderItem/OrderDetails/InfoTabSelector/InfoTabSelector';
+import { formatPrice } from './functions';
 
 export const checkIsDivergenceByProductId = (productId?: number, order?: OrderType) => {
   if (order && productId) {
@@ -40,21 +42,18 @@ export const checkIsDivergenceInOrder = (order: OrderType) => {
 export const getOrderDetailHeader = ({
   orderId,
   date,
-  isConfirmation,
-  isDivergence,
+  infoTab,
 }: {
   orderId: number;
   date: string;
-  isConfirmation?: boolean;
-  isDivergence?: boolean;
+  infoTab: InfoTabSelectorEnum;
 }) => {
-  let firstLine = 'Ваш заказ поставщику';
-  if (isConfirmation) {
-    firstLine = 'Подтвержденние заказа от поставщика';
-  } else if (isDivergence) {
-    firstLine = 'Расхождения в заказе подтвержденным поставщиком от вашего исходного заказа';
+  if (infoTab === InfoTabSelectorEnum.confirmation) {
+    return `Подтверждение от поставщика по Заказу № ${orderId} на ${date}`;
+  } else if (infoTab === InfoTabSelectorEnum.divergence) {
+    return `Расхождения по Заказу № ${orderId} на ${date}`;
   }
-  return firstLine + `\nЗаказ № ${orderId} на ${date}`;
+  return `Заказ № ${orderId} на ${date}`;
 };
 
 export const checkIsPossibleToCancelOrder = (orderStatus: OrderStatusEnum) => {
@@ -79,4 +78,24 @@ export const getProductDivergence = (order: OrderType) => {
     }
   });
   return divergentProducts;
+};
+
+export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number, oneRow?: boolean) => {
+  if (deliveryMethodTile === ServerDeliveryMethodEnum.selfPickUp) {
+    return deliveryMethodTile;
+  }
+  if (deliveryMethodTile === ServerDeliveryMethodEnum.delivery) {
+    if (deliveryPrice !== undefined) {
+      if (deliveryPrice === null) {
+        return oneRow ? `${deliveryMethodTile}, стоимость доставки заказа - на подсчете у поставщика` : 'На подсчете';
+      }
+      if (deliveryPrice === 0) {
+        return oneRow ? `${deliveryMethodTile}. Поставщик доставит вам заказ бесплатно` : 'Бесплатно';
+      } else {
+        return oneRow
+          ? `${deliveryMethodTile}, стоимость доставки заказа - ${formatPrice(deliveryPrice)} руб.`
+          : `${formatPrice(deliveryPrice)} руб.`;
+      }
+    }
+  }
 };

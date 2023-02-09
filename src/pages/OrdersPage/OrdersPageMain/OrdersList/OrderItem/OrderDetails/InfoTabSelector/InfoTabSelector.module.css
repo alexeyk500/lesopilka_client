@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+}
+
+.selectorsRow {
+  display: flex;
+}
+
+.tab {
+  display: flex;
+  margin-left: 24px;
+  height: 28px;
+  width: 180px;
+  justify-content: center;
+  align-items: center;
+  color: var(--blue_color);
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid var(--gray_color_light);
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.activeTab {
+  color: var(--green_color);
+  border-bottom: 1px solid var(--main_background);
+}
+
+.tabDelimiter {
+  display: flex;
+  width: 100%;
+  margin-top: -1px;
+  border-bottom: 1px solid var(--gray_color_light);
+  z-index: 4;
+}

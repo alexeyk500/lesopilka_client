@@ -12,7 +12,7 @@ import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../../../hooks/hooks';
 import { setPriceReturnTo } from '../../../../../store/priceSlice';
-import ListProductsInOrder from './ListProductsInOrder/ListProductsInOrder';
+import OrderProductsList from './OrderProductsList/OrderProductsList';
 
 type PropsType = {
   products: ProductType[];
@@ -76,7 +76,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
         )}
       </div>
       <div className={classes.delimiter} />
-      <ListProductsInOrder products={products} />
+      <OrderProductsList products={products} />
       <div className={classes.delimiter} />
       <div className={classes.conclusionRow}>
         <div className={classes.allWeightTitle}>{`Вес: ${totalWeight} кг`}</div>

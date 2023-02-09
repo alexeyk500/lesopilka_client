@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './OrderToManufacturerItem.module.css';
 import { DriedEnum, OrderType, ProductType, SepticEnum } from '../../../../../../../types/types';
 import {
@@ -74,6 +74,10 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
   const [amount, setAmount] = useState(
     getAmount({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount })
   );
+
+  useEffect(() => {
+    setAmount(getAmount({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount }));
+  }, [product, onlyView, isConfirmation, isDivergence, order, productDivergenceAmount]);
 
   const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
