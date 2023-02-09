@@ -1,4 +1,4 @@
-import { AddressType, ManufacturerType, OptionsType, ProductType, QueryEnum } from '../types/types';
+import { AddressType, ManufacturerType, OptionsType, OrderStatusEnum, ProductType, QueryEnum } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
@@ -369,14 +369,16 @@ export const getSelectedOption = (optionId?: number, options?: OptionsType[]) =>
 };
 
 export const convertOrdersStatusToServerOrdersStatus = (ordersStatus: string) => {
-  if (ordersStatus === 'На подтверждении') {
+  if (ordersStatus === OrderStatusEnum.onConfirming) {
     return 'onConfirming';
-  } else if (ordersStatus === 'Подтвержден') {
+  } else if (ordersStatus === OrderStatusEnum.confirmedOrder) {
     return 'confirmedOrder';
-  } else if (ordersStatus === 'Отмена клиентом') {
+  } else if (ordersStatus === OrderStatusEnum.canceledByUser) {
     return 'canceledByUser';
-  } else if (ordersStatus === 'Отказ поставщика') {
+  } else if (ordersStatus === OrderStatusEnum.canceledByManufacturer) {
     return 'canceledByManufacturer';
+  } else if (ordersStatus === OrderStatusEnum.inArchive) {
+    return 'inArchive';
   }
   return 'all';
 };

@@ -12,7 +12,20 @@
   display: flex;
   flex-wrap: nowrap;
   flex-shrink: 0;
+  white-space: pre-line;
+  font-size: 14px;
   font-weight: 600;
+  text-align: center;
+}
+
+.secondLine {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  white-space: pre-line;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .onConfirming {
@@ -35,7 +48,7 @@
   color: var(--red_color);
 }
 
-.closedByDate {
+.inArchive {
   border: 1px solid var(--gray_color_light);
   color: var(--gray_color_light);
 }

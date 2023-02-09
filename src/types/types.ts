@@ -66,7 +66,7 @@ export enum OrderStatusEnum {
   confirmedOrder = 'Подтвержден',
   canceledByUser = 'Отмена клиентом',
   canceledByManufacturer = 'Отказ поставщика',
-  closedByDate = 'Закрыт по сроку',
+  inArchive = 'В архиве',
 }
 
 export type OrderInfoType = {

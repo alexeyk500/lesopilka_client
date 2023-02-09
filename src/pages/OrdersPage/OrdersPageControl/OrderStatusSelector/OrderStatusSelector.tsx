@@ -11,11 +11,7 @@ export const orderStatusOptions: OptionsType[] = [
   { id: 2, title: OrderStatusEnum.confirmedOrder, toolTip: 'Поставщик готов поставить вам эти заказы' },
   { id: 3, title: OrderStatusEnum.canceledByUser, toolTip: 'Вы отменили эти заказы' },
   { id: 4, title: OrderStatusEnum.canceledByManufacturer, toolTip: 'Поставщик не готов поставить вам эти заказы' },
-  {
-    id: 5,
-    title: OrderStatusEnum.closedByDate,
-    toolTip: 'Заказы истекшие по сроку подтверждения или по дате поставки',
-  },
+  { id: 5, title: OrderStatusEnum.inArchive, toolTip: 'Заказы c датой поставки старше 30 дней' },
 ];
 
 const OrderStatusSelector: React.FC = () => {

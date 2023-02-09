@@ -13,12 +13,13 @@ export const getOrderStatusEnumValue = (status: OrderStatusEnum) => {
 
 const OrderStatus: React.FC<PropsType> = ({ status }) => {
   const statusValue = getOrderStatusEnumValue(status);
+  const partedTitle = statusValue.split('|');
 
   const isOnConfirming = getOrderStatusEnumValue(status) === OrderStatusEnum.onConfirming;
   const isConfirmedOrder = getOrderStatusEnumValue(status) === OrderStatusEnum.confirmedOrder;
   const isCanceledByUser = getOrderStatusEnumValue(status) === OrderStatusEnum.canceledByUser;
   const isCanceledByManufacturer = getOrderStatusEnumValue(status) === OrderStatusEnum.canceledByManufacturer;
-  const isClosedByDate = getOrderStatusEnumValue(status) === OrderStatusEnum.closedByDate;
+  const inArchive = getOrderStatusEnumValue(status) === OrderStatusEnum.inArchive;
 
   return (
     <div
@@ -27,10 +28,13 @@ const OrderStatus: React.FC<PropsType> = ({ status }) => {
         [classes.confirmedOrder]: isConfirmedOrder,
         [classes.canceledByUser]: isCanceledByUser,
         [classes.canceledByManufacturer]: isCanceledByManufacturer,
-        [classes.closedByDate]: isClosedByDate,
+        [classes.inArchive]: inArchive,
       })}
     >
-      <div className={classes.title}>{statusValue}</div>
+      <div className={classes.title}>
+        {partedTitle[0]}
+        {partedTitle[1] && <div className={classes.secondLine}>{partedTitle[1]}</div>}
+      </div>
     </div>
   );
 };
