@@ -6,6 +6,7 @@
   border-radius: 12px;
   min-width: 156px;
   background-color: var(--main_background);
+  cursor: default;
 }
 
 .title {
