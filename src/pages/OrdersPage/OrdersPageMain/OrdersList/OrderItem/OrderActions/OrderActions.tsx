@@ -33,7 +33,7 @@ const OrderActions: React.FC<PropsType> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const onCancelClick = () => {
+  const onCancelOrderAndReturnToBasket = () => {
     showPortalPopUp({
       popUpContent: (
         <div className={classes.infoPopUpText}>
@@ -81,13 +81,13 @@ const OrderActions: React.FC<PropsType> = ({
             src={returnToBasket}
             className={classes.returnToBasketIco}
             alt="return order to basket"
-            onClick={() => {}}
+            onClick={onCancelOrderAndReturnToBasket}
           />
         </ToolTip>
       )}
 
       <ToolTip text={'Удалить заказ'} customClass={classes.customTooltipCancel}>
-        <img src={deleteIco} className={classes.deleteIco} alt="delete order" onClick={onCancelClick} />
+        <img src={deleteIco} className={classes.deleteIco} alt="delete order" onClick={() => {}} />
       </ToolTip>
     </div>
   );
