@@ -12,10 +12,12 @@ import { getDeliveryTitle } from '../../../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;
+  updateOrders: () => void;
 };
 
-const OrderItem: React.FC<PropsType> = ({ order }) => {
+const OrderItem: React.FC<PropsType> = ({ order, updateOrders }) => {
   const [isOpenDetails, setIsOpenDetails] = useState(false);
+  const [isOpenChat, setIsOpenChat] = useState(false);
 
   const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products, AmountTypeEnum.inOrder);
@@ -24,6 +26,10 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
 
   const toggleDetails = () => {
     setIsOpenDetails((prev) => !prev);
+  };
+
+  const toggleChat = () => {
+    setIsOpenChat((prev) => !prev);
   };
 
   return (
@@ -37,7 +43,14 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
         <div className={listClasses.tableColumnCost}>{`${totalCost} руб.`}</div>
         <div className={listClasses.tableColumnDelivery}>{deliveryTitle}</div>
         <div className={listClasses.tableColumnActions}>
-          <OrderActions order={order} isOpenDetails={isOpenDetails} toggleDetails={toggleDetails} />
+          <OrderActions
+            order={order}
+            updateOrders={updateOrders}
+            isOpenDetails={isOpenDetails}
+            toggleDetails={toggleDetails}
+            isOpenChat={isOpenChat}
+            toggleChat={toggleChat}
+          />
         </div>
         <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
           <OrderStatus status={order.order.status} />

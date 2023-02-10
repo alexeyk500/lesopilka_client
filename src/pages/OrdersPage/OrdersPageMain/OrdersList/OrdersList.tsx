@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import classes from './OrdersList.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import {
-  getOrdersThunk,
+  getOrdersByParamsThunk,
   selectorOrders,
   selectorSelectedOrderDateFrom,
   selectorSelectedOrderDateTo,
@@ -15,24 +15,25 @@ import { dateDayShift } from '../../../../utils/dateTimeFunctions';
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
-  const orderDateFrom = useAppSelector(selectorSelectedOrderDateFrom);
+  const orders = useAppSelector(selectorOrders);
   const orderDateTo = useAppSelector(selectorSelectedOrderDateTo);
-
+  const orderDateFrom = useAppSelector(selectorSelectedOrderDateFrom);
   const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
+
   const ordersStatus = orderStatusOptions.find((option) => option.id === selectedOrderStatusId)?.title;
 
-  const orders = useAppSelector(selectorOrders);
-
-  useEffect(() => {
+  const updateOrdersByParams = useCallback(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
     const dateToWithShift = dateDayShift(new Date(orderDateTo), 1).toISOString();
     if (orderDateFrom && dateToWithShift && serverOrdersStatus && token) {
       dispatch(
-        getOrdersThunk({ orderDateFrom, orderDateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token })
+        getOrdersByParamsThunk({ orderDateFrom, orderDateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token })
       );
     }
   }, [dispatch, orderDateFrom, orderDateTo, ordersStatus]);
+
+  useEffect(updateOrdersByParams, [dispatch, orderDateFrom, orderDateTo, ordersStatus, updateOrdersByParams]);
 
   return (
     <div className={classes.container}>
@@ -49,7 +50,7 @@ const OrdersList: React.FC = () => {
       </div>
       <div className={classes.scrollContainer}>
         {orders.map((order) => (
-          <OrderItem key={order.order.id} order={order} />
+          <OrderItem key={order.order.id} order={order} updateOrders={updateOrdersByParams} />
         ))}
       </div>
     </div>

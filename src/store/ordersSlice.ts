@@ -26,24 +26,25 @@ const initialState: OrdersSliceType = {
   isLoading: false,
 };
 
-export const getOrdersThunk = createAsyncThunk<GetOrderServerType[], GetOrdersParamsType, { rejectValue: string }>(
-  'user/getOrdersThunk',
-  async (getOrdersParams, { rejectWithValue }) => {
-    try {
-      return await serverApi.getOrders(getOrdersParams);
-    } catch (e) {
-      return rejectWithValue('Ошибка получения списка заказов');
-    }
+export const getOrdersByParamsThunk = createAsyncThunk<
+  GetOrderServerType[],
+  GetOrdersParamsType,
+  { rejectValue: string }
+>('user/getOrdersThunk', async (getOrdersParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.getOrders(getOrdersParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка получения списка заказов');
   }
-);
+});
 
-export const cancelOrderByIdThunk = createAsyncThunk<
+export const returnToBasketAndCancelOrderByIdThunk = createAsyncThunk<
   UniversalServerResponseType,
   { orderId: number; token: string },
   { rejectValue: string }
->('user/cancelOrderById', async ({ orderId, token }, { rejectWithValue }) => {
+>('user/returnToBasketAndCancelOrderById', async ({ orderId, token }, { rejectWithValue }) => {
   try {
-    return await serverApi.cancelOrderById(orderId, token);
+    return await serverApi.returnToBasketAndCancelOrderById(orderId, token);
   } catch (e) {
     return rejectWithValue('Ошибка отмены заказа');
   }
@@ -65,17 +66,17 @@ export const ordersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getOrdersThunk.fulfilled, (state, action) => {
+      .addCase(getOrdersByParamsThunk.fulfilled, (state, action) => {
         state.orders = action.payload;
         state.isLoading = false;
       })
-      .addCase(cancelOrderByIdThunk.fulfilled, (state) => {
+      .addCase(returnToBasketAndCancelOrderByIdThunk.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getOrdersThunk.pending, cancelOrderByIdThunk.pending), (state) => {
+      .addMatcher(isAnyOf(getOrdersByParamsThunk.pending, returnToBasketAndCancelOrderByIdThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getOrdersThunk.rejected, cancelOrderByIdThunk.rejected), (state) => {
+      .addMatcher(isAnyOf(getOrdersByParamsThunk.rejected, returnToBasketAndCancelOrderByIdThunk.rejected), (state) => {
         state.isLoading = false;
       });
   },

@@ -75,9 +75,9 @@ export const orderApi = {
     return response.data;
   },
 
-  async cancelOrderById(orderId: number, token: string) {
+  async returnToBasketAndCancelOrderById(orderId: number, token: string) {
     const response = await instanceAxios.post<UniversalServerResponseType>(
-      '/orders/cancel_order',
+      '/orders/cancel_order_return_to_basket',
       { orderId },
       setAuthHeader(token)
     );

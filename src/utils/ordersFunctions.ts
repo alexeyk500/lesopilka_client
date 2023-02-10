@@ -19,7 +19,7 @@ export const getOrderDetailHeader = ({
   return `Заказ № ${orderId} на ${date}`;
 };
 
-export const checkIsPossibleToCancelOrder = (orderStatus: OrderStatusEnum) => {
+export const checkIsPossibleCancelOrderAndReturnToBasket = (orderStatus: OrderStatusEnum) => {
   return getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming;
 };
 

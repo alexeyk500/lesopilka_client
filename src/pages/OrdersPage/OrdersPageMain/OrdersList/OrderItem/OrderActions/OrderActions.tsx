@@ -1,36 +1,37 @@
 import React from 'react';
 import classes from './OrderActions.module.css';
-import viewIco from '../../../../../../img/eyeIco.svg';
-import viewCloseIco from '../../../../../../img/eyeCloseIco.svg';
+import viewIco from '../../../../../../img/visibilityIcoOn.svg';
+import viewCloseIco from '../../../../../../img/visibilityIcoOff.svg';
+import chatIco from '../../../../../../img/chatIco.svg';
+import chatIcoOff from '../../../../../../img/chatIcoOff.svg';
 import deleteIco from '../../../../../../img/deleteBlueIco.svg';
+import returnToBasket from '../../../../../../img/returnToBasket.svg';
 import { OrderType } from '../../../../../../types/types';
 import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
-import { useAppDispatch, useAppSelector } from '../../../../../../hooks/hooks';
-import {
-  cancelOrderByIdThunk,
-  getOrdersThunk,
-  selectorSelectedOrderDateFrom,
-  selectorSelectedOrderDateTo,
-  selectorSelectedOrderStatusId,
-} from '../../../../../../store/ordersSlice';
-import { orderStatusOptions } from '../../../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
-import { convertOrdersStatusToServerOrdersStatus } from '../../../../../../utils/functions';
+import { useAppDispatch } from '../../../../../../hooks/hooks';
+import { returnToBasketAndCancelOrderByIdThunk } from '../../../../../../store/ordersSlice';
+
 import ToolTip from '../../../../../../components/commonComponents/ToolTip/ToolTip';
-import { checkIsPossibleToCancelOrder } from '../../../../../../utils/ordersFunctions';
+import { checkIsPossibleCancelOrderAndReturnToBasket } from '../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;
+  updateOrders: () => void;
   isOpenDetails: boolean;
   toggleDetails: () => void;
+  isOpenChat: boolean;
+  toggleChat: () => void;
 };
 
-const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails }) => {
+const OrderActions: React.FC<PropsType> = ({
+  order,
+  isOpenDetails,
+  toggleDetails,
+  isOpenChat,
+  toggleChat,
+  updateOrders,
+}) => {
   const dispatch = useAppDispatch();
-  const orderDateFrom = useAppSelector(selectorSelectedOrderDateFrom);
-  const orderDateTo = useAppSelector(selectorSelectedOrderDateTo);
-  const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
-  const ordersStatus = orderStatusOptions.find((option) => option.id === selectedOrderStatusId)?.title;
-  const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
 
   const onCancelClick = () => {
     showPortalPopUp({
@@ -43,16 +44,16 @@ const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails
       customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
       onClosePopUp: (result?: boolean | FormData | undefined) => {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-        if (result && token && orderDateFrom && orderDateTo && serverOrdersStatus) {
-          dispatch(cancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
-            dispatch(getOrdersThunk({ orderDateFrom, orderDateTo, ordersStatus: serverOrdersStatus, token }));
+        if (result && token) {
+          dispatch(returnToBasketAndCancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
+            updateOrders();
           });
         }
       },
     });
   };
 
-  const isPossibleToCancelOrder = checkIsPossibleToCancelOrder(order.order.status);
+  const isPossibleReturnToBasket = checkIsPossibleCancelOrderAndReturnToBasket(order.order.status);
 
   return (
     <div className={classes.container}>
@@ -65,11 +66,29 @@ const OrderActions: React.FC<PropsType> = ({ order, isOpenDetails, toggleDetails
         />
       </ToolTip>
 
-      {isPossibleToCancelOrder && (
-        <ToolTip text={'Отмена заказа'} customClass={classes.customTooltipCancel}>
-          <img src={deleteIco} className={classes.deleteIco} alt="cancel order" onClick={onCancelClick} />
+      <ToolTip text={'Переписка по заказу'} customClass={classes.customTooltipChat}>
+        <img
+          src={isOpenChat ? chatIcoOff : chatIco}
+          className={classes.chatIco}
+          onClick={toggleChat}
+          alt="view order"
+        />
+      </ToolTip>
+
+      {isPossibleReturnToBasket && (
+        <ToolTip text={'Отменить заказ и вернуть товар в корзину'} customClass={classes.customTooltipReturnToBasket}>
+          <img
+            src={returnToBasket}
+            className={classes.returnToBasketIco}
+            alt="return order to basket"
+            onClick={() => {}}
+          />
         </ToolTip>
       )}
+
+      <ToolTip text={'Удалить заказ'} customClass={classes.customTooltipCancel}>
+        <img src={deleteIco} className={classes.deleteIco} alt="delete order" onClick={onCancelClick} />
+      </ToolTip>
     </div>
   );
 };

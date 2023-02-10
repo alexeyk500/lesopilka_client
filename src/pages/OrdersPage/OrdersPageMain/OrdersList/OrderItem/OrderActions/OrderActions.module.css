@@ -5,19 +5,32 @@
 }
 
 .viewIco {
-  height: 18px;
-  margin-right: 14px;
+  height: 20px;
+  width: 20px;
+  margin-top: 2px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
-.billIco {
-  height: 16px;
-  margin-right: 14px;
+.chatIco {
+  height: 22px;
+  width: 22px;
+  margin-top: 5px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.returnToBasketIco {
+  height: 17px;
+  width: 17px;
+  margin-top: 5px;
+  margin-right: 10px;
   cursor: pointer;
 }
 
 .deleteIco {
-  height: 16px;
+  height: 15px;
+  margin-top: 3px;
   cursor: pointer;
 }
 
@@ -36,12 +49,22 @@
 }
 
 .customTooltipDetails {
-  margin-top: -8px;
+  margin-top: -5px;
   margin-left: -145px;
 }
 
+.customTooltipChat {
+  margin-top: -2px;
+  margin-left: -191px;
+}
+
+.customTooltipReturnToBasket {
+  margin-top: -4px;
+  margin-left: -345px;
+}
+
 .customTooltipCancel {
-  margin-top: -8px;
-  margin-left: -145px;
+  margin-top: -7px;
+  margin-left: -143px;
 }
 
