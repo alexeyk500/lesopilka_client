@@ -156,12 +156,19 @@ export type ProductType = {
   subCategory?: OptionsType;
   material?: OptionsType;
   sort?: OptionsType;
+  confirmedProductId?: number;
   amountInBasket?: number;
   amountInOrder?: number;
   amountInConfirmation?: number;
-  confirmedProductId?: number;
-  divergenceAmount?: number;
+  amountInDivergence?: number;
 };
+
+export enum AmountTypeEnum {
+  inBasket = 'Корзина',
+  inOrder = 'Заказ',
+  inConfirmation = 'Подтверждение',
+  inDivergence = 'Расхождения',
+}
 
 export enum QueryEnum {
   CatalogCategory = 'cid',

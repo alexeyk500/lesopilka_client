@@ -1,34 +1,29 @@
 import React from 'react';
 import classes from './InfoTabSelector.module.css';
 import classNames from 'classnames';
-
-export enum InfoTabSelectorEnum {
-  order = 'Заказ',
-  confirmation = 'Подтверждение',
-  divergence = 'Расхождения',
-}
+import { AmountTypeEnum } from '../../../../../../../types/types';
 
 type PropsType = {
-  infoTab: InfoTabSelectorEnum;
-  setInfoTab: (value: InfoTabSelectorEnum) => void;
+  infoTab: AmountTypeEnum;
+  setInfoTab: (value: AmountTypeEnum) => void;
 };
 
 const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab }) => {
   const setInfoTabOrder = () => {
-    if (infoTab !== InfoTabSelectorEnum.order) {
-      setInfoTab(InfoTabSelectorEnum.order);
+    if (infoTab !== AmountTypeEnum.inOrder) {
+      setInfoTab(AmountTypeEnum.inOrder);
     }
   };
 
   const setInfoTabConfirmation = () => {
-    if (infoTab !== InfoTabSelectorEnum.confirmation) {
-      setInfoTab(InfoTabSelectorEnum.confirmation);
+    if (infoTab !== AmountTypeEnum.inConfirmation) {
+      setInfoTab(AmountTypeEnum.inConfirmation);
     }
   };
 
   const setInfoTabDivergence = () => {
-    if (infoTab !== InfoTabSelectorEnum.divergence) {
-      setInfoTab(InfoTabSelectorEnum.divergence);
+    if (infoTab !== AmountTypeEnum.inDivergence) {
+      setInfoTab(AmountTypeEnum.inDivergence);
     }
   };
 
@@ -36,22 +31,22 @@ const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab }) => {
     <div className={classes.container}>
       <div className={classes.selectorsRow}>
         <div
-          className={classNames(classes.tab, { [classes.activeTab]: infoTab === InfoTabSelectorEnum.order })}
+          className={classNames(classes.tab, { [classes.activeTab]: infoTab === AmountTypeEnum.inOrder })}
           onClick={setInfoTabOrder}
         >
-          {InfoTabSelectorEnum.order}
+          {AmountTypeEnum.inOrder}
         </div>
         <div
-          className={classNames(classes.tab, { [classes.activeTab]: infoTab === InfoTabSelectorEnum.confirmation })}
+          className={classNames(classes.tab, { [classes.activeTab]: infoTab === AmountTypeEnum.inConfirmation })}
           onClick={setInfoTabConfirmation}
         >
-          {InfoTabSelectorEnum.confirmation}
+          {AmountTypeEnum.inConfirmation}
         </div>
         <div
-          className={classNames(classes.tab, { [classes.activeTab]: infoTab === InfoTabSelectorEnum.divergence })}
+          className={classNames(classes.tab, { [classes.activeTab]: infoTab === AmountTypeEnum.inDivergence })}
           onClick={setInfoTabDivergence}
         >
-          {InfoTabSelectorEnum.divergence}
+          {AmountTypeEnum.inDivergence}
         </div>
       </div>
       <div className={classes.tabDelimiter} />

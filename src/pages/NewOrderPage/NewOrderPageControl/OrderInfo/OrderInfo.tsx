@@ -21,6 +21,7 @@ import { filterProductsByManufacturerId } from '../../../../utils/productFunctio
 import PaymentMethodInfo from './OrderInfoSection/PaymentMethodInfo/PaymentMethodInfo';
 import DeliveryInfo from './OrderInfoSection/DeliveryInfo/DeliveryInfo';
 import { formatUTCtoDDMMMMYYYY } from '../../../../utils/dateTimeFunctions';
+import { AmountTypeEnum } from '../../../../types/types';
 
 const OrderInfo: React.FC = () => {
   const { mid } = useParams();
@@ -30,7 +31,10 @@ const OrderInfo: React.FC = () => {
   const contactPersonPhone = useAppSelector(selectorNewOrderContactPersonPhone);
   const productsByManufacturerId = filterProductsByManufacturerId(basketProducts, Number(mid) ?? 0);
   const manufacturer = productsByManufacturerId?.[0]?.manufacturer;
-  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(productsByManufacturerId);
+  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(
+    productsByManufacturerId,
+    AmountTypeEnum.inBasket
+  );
 
   return (
     <div className={classes.container}>

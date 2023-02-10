@@ -5,7 +5,7 @@ import downloadFileIco from '../../../../../img/downloadFileIco.svg';
 import ButtonComponent, {
   ButtonType,
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { ProductType } from '../../../../../types/types';
+import { AmountTypeEnum, ProductType } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
@@ -25,7 +25,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
   const navigate = useNavigate();
   const manufacturer = products?.[0]?.manufacturer;
 
-  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(products);
+  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(products, AmountTypeEnum.inBasket);
   const allProductAvailable = isAllProductAvailable(products);
 
   const goToPrice = () => {
@@ -76,7 +76,7 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
         )}
       </div>
       <div className={classes.delimiter} />
-      <OrderProductsList products={products} />
+      <OrderProductsList products={products} amountType={AmountTypeEnum.inBasket} />
       <div className={classes.delimiter} />
       <div className={classes.conclusionRow}>
         <div className={classes.allWeightTitle}>{`Вес: ${totalWeight} кг`}</div>

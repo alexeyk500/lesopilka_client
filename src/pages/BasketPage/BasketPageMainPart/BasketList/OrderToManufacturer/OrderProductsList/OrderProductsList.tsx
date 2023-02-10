@@ -2,35 +2,33 @@ import React from 'react';
 import classes from './OrderProductsList.module.css';
 import OrderToManufacturerItem from './OrderToManufacturerItem/OrderToManufacturerItem';
 import { sortProducts } from '../../../../../../utils/productFunctions';
-import { OrderType, ProductType } from '../../../../../../types/types';
+import { AmountTypeEnum, ProductType, SubCategoryType } from '../../../../../../types/types';
 import { useAppSelector } from '../../../../../../hooks/hooks';
 import { selectorSubCategories } from '../../../../../../store/catalogSlice';
-import { InfoTabSelectorEnum } from '../../../../../OrdersPage/OrdersPageMain/OrdersList/OrderItem/OrderDetails/InfoTabSelector/InfoTabSelector';
 
 type PropsType = {
   products: ProductType[];
-  order?: OrderType;
-  infoTab?: InfoTabSelectorEnum;
+  amountType: AmountTypeEnum;
 };
 
-const OrderProductsList: React.FC<PropsType> = ({ products, order, infoTab }) => {
+const getProductsToShow = (products: ProductType[], amountType: AmountTypeEnum, subCategories: SubCategoryType[]) => {
+  if (amountType === AmountTypeEnum.inDivergence) {
+    const productsWithDivergence = products.filter(
+      (product) => product.amountInDivergence && product.amountInDivergence > 0
+    );
+    return sortProducts(productsWithDivergence, subCategories);
+  }
+  return sortProducts(products, subCategories);
+};
+
+const OrderProductsList: React.FC<PropsType> = ({ products, amountType }) => {
   const subCategories = useAppSelector(selectorSubCategories);
-  const sortedProducts = sortProducts(products, subCategories);
+  const productsToShow = getProductsToShow(products, amountType, subCategories);
 
   return (
     <div className={classes.priceContentContainer}>
-      {sortedProducts.map((product, ind) => {
-        return (
-          <OrderToManufacturerItem
-            key={ind}
-            num={ind + 1}
-            product={product}
-            onlyView={infoTab === InfoTabSelectorEnum.order}
-            isConfirmation={infoTab === InfoTabSelectorEnum.confirmation}
-            isDivergence={infoTab === InfoTabSelectorEnum.divergence}
-            order={order}
-          />
-        );
+      {productsToShow.map((product, ind) => {
+        return <OrderToManufacturerItem key={ind} num={ind + 1} product={product} amountType={amountType} />;
       })}
     </div>
   );

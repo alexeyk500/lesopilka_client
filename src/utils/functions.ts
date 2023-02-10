@@ -1,4 +1,12 @@
-import { AddressType, ManufacturerType, OptionsType, OrderStatusEnum, ProductType, QueryEnum } from '../types/types';
+import {
+  AddressType,
+  AmountTypeEnum,
+  ManufacturerType,
+  OptionsType,
+  OrderStatusEnum,
+  ProductType,
+  QueryEnum,
+} from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
@@ -259,24 +267,16 @@ export const onCloseDetailCard = (
   }
 };
 
-export const getLogisticInfo = (product: ProductType, rawAmount?: number) => {
+export const toStrWithDelimiter = (value: number | string) => {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+};
+
+export const getLogisticInfo = (product: ProductType, amount: number) => {
   const { height, width, length, caliber } = getSizesValue(product);
   let square: number | undefined;
   let volume: number | undefined;
   let weight: number | undefined;
-  let summ: number | undefined;
-
-  let amount: number = rawAmount
-    ? rawAmount
-    : product.amountInBasket
-    ? Number(product.amountInBasket)
-    : product.amountInOrder
-    ? Number(product.amountInOrder)
-    : product.amountInConfirmation
-    ? Number(product.amountInConfirmation)
-    : product.divergenceAmount
-    ? Number(product.divergenceAmount)
-    : 0;
+  let cost: number | undefined;
 
   if (caliber) {
     volume = getVolumeCaliber({ caliber, length }) * amount;
@@ -287,21 +287,30 @@ export const getLogisticInfo = (product: ProductType, rawAmount?: number) => {
     volume = volumeItem * amount;
     weight = getWeight(volumeItem) * amount;
   }
-  summ = !isNaN(Number(product.price)) ? Number(product.price) * amount : 0;
-  return { square, weight, volume, cost: summ };
+  cost = !isNaN(Number(product.price)) ? Number(product.price) * amount : 0;
+  return { square, weight, volume, cost };
 };
 
-export const toStrWithDelimiter = (value: number | string) => {
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-};
-
-export const getTotalLogisticInfo = (products: ProductType[]) => {
+export const getTotalLogisticInfo = (products: ProductType[], amountType: AmountTypeEnum) => {
   let totalWeight = 0;
   let totalVolume = 0;
   let totalCost = 0;
   products.forEach((product) => {
     if (product.publicationDate) {
-      const { weight, volume, cost } = getLogisticInfo(product);
+      let amount = 0;
+      if (amountType === AmountTypeEnum.inBasket && product.amountInBasket) {
+        amount = product.amountInBasket;
+      }
+      if (amountType === AmountTypeEnum.inOrder && product.amountInOrder) {
+        amount = product.amountInOrder;
+      }
+      if (amountType === AmountTypeEnum.inConfirmation && product.amountInConfirmation) {
+        amount = product.amountInConfirmation;
+      }
+      if (amountType === AmountTypeEnum.inDivergence && product.amountInDivergence) {
+        amount = product.amountInDivergence;
+      }
+      const { weight, volume, cost } = getLogisticInfo(product, amount);
       totalWeight += Number(weight);
       totalVolume += Number(volume);
       totalCost += Number(cost);

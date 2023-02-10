@@ -88,6 +88,10 @@
   flex-direction: column;
   width: calc(100% + 4px);
   height: 100%;
-  padding: 8px 8px 8px 0;
+  padding: 8px 8px 38px 0;
   overflow-y: scroll;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+  margin-bottom: 42px;
 }

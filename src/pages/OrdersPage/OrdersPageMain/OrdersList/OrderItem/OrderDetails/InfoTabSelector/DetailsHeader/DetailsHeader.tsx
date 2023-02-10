@@ -1,14 +1,13 @@
 import React from 'react';
 import classes from '../../OrderDetails.module.css';
-import { DeliveryMethodEnum, OrderType } from '../../../../../../../../types/types';
+import { DeliveryMethodEnum, AmountTypeEnum, OrderType } from '../../../../../../../../types/types';
 import { getDeliveryTitle, getOrderDetailHeader } from '../../../../../../../../utils/ordersFunctions';
 import { formatUTCtoDDMMMMYYYY } from '../../../../../../../../utils/dateTimeFunctions';
 import { getPaymentMethodTitle } from '../../../../../../../NewOrderPage/NewOrderPageMainPart/PaymentMethodSection/PaymentMethodSection';
-import { InfoTabSelectorEnum } from '../InfoTabSelector';
 
 type PropsType = {
   order: OrderType;
-  infoTab: InfoTabSelectorEnum;
+  infoTab: AmountTypeEnum;
 };
 
 const DetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {

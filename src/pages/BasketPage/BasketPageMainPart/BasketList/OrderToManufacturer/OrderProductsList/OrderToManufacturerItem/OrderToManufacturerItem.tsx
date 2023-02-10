@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './OrderToManufacturerItem.module.css';
-import { DriedEnum, OrderType, ProductType, SepticEnum } from '../../../../../../../types/types';
+import { AmountTypeEnum, DriedEnum, ProductType, SepticEnum } from '../../../../../../../types/types';
 import {
   formatPrice,
   getLogisticInfo,
@@ -24,61 +24,24 @@ import useDebouncedFunction from '../../../../../../../hooks/useDebounceFunction
 import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../../utils/constants';
 import classNames from 'classnames';
 import AttentionSign from './AttentionSign/AttentionSign';
-import { checkIsDivergenceByProductId } from '../../../../../../../utils/ordersFunctions';
+import { getProductAmountByAmountType } from '../../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   num: number;
   product: ProductType;
-  onlyView?: boolean;
-  isConfirmation?: boolean;
-  isDivergence?: boolean;
-  order?: OrderType;
+  amountType: AmountTypeEnum;
 };
 
-interface IGetAmount {
-  product: ProductType;
-  onlyView?: boolean;
-  isConfirmation?: boolean;
-  isDivergence?: boolean;
-  productDivergenceAmount?: number | boolean;
-}
-
-const getAmount = ({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount }: IGetAmount) => {
-  if (onlyView) {
-    return product.amountInOrder ? product.amountInOrder : 0;
-  } else if (isConfirmation) {
-    return product.amountInConfirmation ? product.amountInConfirmation : 0;
-  } else if (isDivergence) {
-    return typeof productDivergenceAmount === 'number' ? productDivergenceAmount : 0;
-  } else if (product.amountInBasket) {
-    return product.amountInBasket ? product.amountInBasket : 0;
-  }
-  return 0;
-};
-
-const OrderToManufacturerItem: React.FC<PropsType> = ({
-  num,
-  product,
-  onlyView,
-  isConfirmation,
-  isDivergence,
-  order,
-}) => {
+const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, amountType }) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
-
-  const productSizes = getProductSizesStr(product);
-
-  const productDivergenceAmount = checkIsDivergenceByProductId(product.confirmedProductId, order);
-
-  const [amount, setAmount] = useState(
-    getAmount({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount })
-  );
+  const [amount, setAmount] = useState(getProductAmountByAmountType(product, amountType));
 
   useEffect(() => {
-    setAmount(getAmount({ product, onlyView, isConfirmation, isDivergence, productDivergenceAmount }));
-  }, [product, onlyView, isConfirmation, isDivergence, order, productDivergenceAmount]);
+    setAmount(getProductAmountByAmountType(product, amountType));
+  }, [product, amountType]);
 
+  const productSizes = getProductSizesStr(product);
   const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
   const onChangeAmount = (newValue: number | string) => {
@@ -122,7 +85,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
 
   const onClickViewProduct = () => {
     let productId;
-    if (isConfirmation) {
+    if (amountType === AmountTypeEnum.inConfirmation) {
       productId = product.confirmedProductId;
     } else {
       productId = product.id;
@@ -135,12 +98,6 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
       });
     }
   };
-
-  const isShowDeleteFromBasket = onlyView ? false : isConfirmation ? false : isDivergence ? false : true;
-
-  if (isDivergence && !productDivergenceAmount) {
-    return null;
-  }
 
   return (
     <div className={classes.container}>
@@ -181,7 +138,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
       <div className={classes.amountColumn}>
         {product.publicationDate ? (
           <>
-            {onlyView || isConfirmation || isDivergence ? (
+            {amountType !== AmountTypeEnum.inBasket ? (
               <div className={classes.amountRow}>{`${amount} шт.`}</div>
             ) : (
               <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
@@ -210,24 +167,14 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
           </>
         )}
       </div>
-      {isShowDeleteFromBasket && (
+      {amountType === AmountTypeEnum.inBasket && (
         <div className={classes.actionsColumn}>
           <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
-            <img src={product.publicationDate ? deleteIco : deleteRedIco} className={classes.deleteIco} alt="view" />
+            <img src={product.publicationDate ? deleteIco : deleteRedIco} className={classes.deleteIco} alt="delete" />
           </div>
         </div>
       )}
-      {
-        <AttentionSign
-          order={order}
-          productId={
-            isConfirmation ? product.confirmedProductId : isDivergence ? product.confirmedProductId : product.id
-          }
-          onlyView={onlyView}
-          isConfirmation={isConfirmation}
-          isDivergence={isDivergence}
-        />
-      }
+      {<AttentionSign product={product} amountType={amountType} />}
     </div>
   );
 };

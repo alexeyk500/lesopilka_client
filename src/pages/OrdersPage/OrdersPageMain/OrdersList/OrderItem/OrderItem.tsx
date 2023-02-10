@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classes from './OrderItem.module.css';
 import listClasses from '../OrdersList.module.css';
-import { OrderType } from '../../../../../types/types';
+import { AmountTypeEnum, OrderType } from '../../../../../types/types';
 import { formatUTCtoDDMMYYYY } from '../../../../../utils/dateTimeFunctions';
 import { getTotalLogisticInfo } from '../../../../../utils/functions';
 import OrderActions from './OrderActions/OrderActions';
@@ -18,7 +18,7 @@ const OrderItem: React.FC<PropsType> = ({ order }) => {
   const [isOpenDetails, setIsOpenDetails] = useState(false);
 
   const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
-  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products);
+  const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products, AmountTypeEnum.inOrder);
 
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice);
 

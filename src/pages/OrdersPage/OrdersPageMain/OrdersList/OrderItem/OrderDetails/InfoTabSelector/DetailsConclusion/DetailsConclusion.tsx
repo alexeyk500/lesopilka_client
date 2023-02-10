@@ -1,33 +1,25 @@
 import React from 'react';
 import classes from './DetailsConclusion.module.css';
 import { getTotalLogisticInfo } from '../../../../../../../../utils/functions';
-import { getProductDivergence } from '../../../../../../../../utils/ordersFunctions';
-import { OrderType } from '../../../../../../../../types/types';
-import { InfoTabSelectorEnum } from '../InfoTabSelector';
+import { AmountTypeEnum, ProductType } from '../../../../../../../../types/types';
 
 type PropsType = {
-  order: OrderType;
-  infoTab: InfoTabSelectorEnum;
+  products: ProductType[];
+  amountType: AmountTypeEnum;
 };
 
-const DetailsConclusion: React.FC<PropsType> = ({ order, infoTab }) => {
+const DetailsConclusion: React.FC<PropsType> = ({ products, amountType }) => {
   let totalWeight;
   let totalVolume;
   let totalCost;
   let logisticInfo;
 
-  if (infoTab === InfoTabSelectorEnum.confirmation) {
-    if (order.confirmedProducts) {
-      logisticInfo = getTotalLogisticInfo(order.confirmedProducts);
-    }
-  } else if (infoTab === InfoTabSelectorEnum.divergence) {
-    if (order.confirmedProducts) {
-      logisticInfo = getTotalLogisticInfo(order.confirmedProducts);
-      const divergentProducts = getProductDivergence(order);
-      logisticInfo = getTotalLogisticInfo(divergentProducts);
-    }
-  } else {
-    logisticInfo = getTotalLogisticInfo(order.products);
+  if (amountType === AmountTypeEnum.inOrder) {
+    logisticInfo = getTotalLogisticInfo(products, AmountTypeEnum.inOrder);
+  } else if (amountType === AmountTypeEnum.inConfirmation) {
+    logisticInfo = getTotalLogisticInfo(products, AmountTypeEnum.inConfirmation);
+  } else if (amountType === AmountTypeEnum.inDivergence) {
+    logisticInfo = getTotalLogisticInfo(products, AmountTypeEnum.inDivergence);
   }
 
   if (logisticInfo) {
