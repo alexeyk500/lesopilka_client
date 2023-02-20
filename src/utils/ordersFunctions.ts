@@ -1,5 +1,5 @@
 import { AmountTypeEnum, OrderStatusEnum, OrderType, ProductType, ServerDeliveryMethodEnum } from '../types/types';
-import { getOrderStatusEnumValue } from '../pages/UserOrdersPage/UserOrdersPageMain/OrdersList/OrderItem/OrderStatus/OrderStatus';
+import { getOrderStatusEnumValue } from '../components/commonComponents/OrderStatus/OrderStatus';
 import { formatPrice } from './functions';
 
 export const getOrderDetailHeader = ({

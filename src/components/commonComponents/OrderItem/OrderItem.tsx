@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import classes from './OrderItem.module.css';
-import listClasses from '../OrdersList.module.css';
-import { AmountTypeEnum, OrderType } from '../../../../../types/types';
-import { formatUTCtoDDMMYYYY } from '../../../../../utils/dateTimeFunctions';
-import { getTotalLogisticInfo } from '../../../../../utils/functions';
-import OrderActions from './OrderActions/OrderActions';
-import OrderStatus from './OrderStatus/OrderStatus';
-import OrderDetails from './OrderDetails/OrderDetails';
+import listClasses from '../../../pages/UserOrdersPage/UserOrdersPageMain/UserOrdersList/UserOrdersList.module.css';
+import { AmountTypeEnum, OrderType } from '../../../types/types';
+import { formatUTCtoDDMMYYYY } from '../../../utils/dateTimeFunctions';
+import { getTotalLogisticInfo } from '../../../utils/functions';
+import OrderActions from '../OrderActions/OrderActions';
+import OrderStatus from '../OrderStatus/OrderStatus';
+import OrderDetails from '../OrderDetails/OrderDetails';
 import classNames from 'classnames';
-import { getDeliveryTitle } from '../../../../../utils/ordersFunctions';
+import { getDeliveryTitle } from '../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;

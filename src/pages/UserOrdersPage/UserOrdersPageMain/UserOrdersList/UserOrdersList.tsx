@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import classes from './OrdersList.module.css';
+import classes from './UserOrdersList.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import {
   getOrdersByParamsThunk,
@@ -9,11 +9,11 @@ import {
   selectorSelectedOrderStatusId,
 } from '../../../../store/ordersSlice';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
-import OrderItem from './OrderItem/OrderItem';
+import OrderItem from '../../../../components/commonComponents/OrderItem/OrderItem';
 import { dateDayShift } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
 
-const OrdersList: React.FC = () => {
+const UserOrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
   const orders = useAppSelector(selectorOrders);
   const orderDateTo = useAppSelector(selectorSelectedOrderDateTo);
@@ -57,4 +57,4 @@ const OrdersList: React.FC = () => {
   );
 };
 
-export default OrdersList;
+export default UserOrdersList;

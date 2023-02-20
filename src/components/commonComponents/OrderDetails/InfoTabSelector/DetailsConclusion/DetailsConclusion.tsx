@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './DetailsConclusion.module.css';
-import { getTotalLogisticInfo } from '../../../../../../../../utils/functions';
-import { AmountTypeEnum, ProductType } from '../../../../../../../../types/types';
+import { getTotalLogisticInfo } from '../../../../../utils/functions';
+import { AmountTypeEnum, ProductType } from '../../../../../types/types';
 
 type PropsType = {
   products: ProductType[];

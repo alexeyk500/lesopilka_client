@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './OrderStatus.module.css';
-import { OrderStatusEnum } from '../../../../../../types/types';
+import { OrderStatusEnum } from '../../../types/types';
 import classNames from 'classnames';
 
 type PropsType = {
@@ -13,7 +13,6 @@ export const getOrderStatusEnumValue = (status: OrderStatusEnum) => {
 
 const OrderStatus: React.FC<PropsType> = ({ status }) => {
   const statusValue = getOrderStatusEnumValue(status);
-  const partedTitle = statusValue.split('|');
 
   const isOnConfirming = getOrderStatusEnumValue(status) === OrderStatusEnum.onConfirming;
   const isConfirmedOrder = getOrderStatusEnumValue(status) === OrderStatusEnum.confirmedOrder;
@@ -31,10 +30,7 @@ const OrderStatus: React.FC<PropsType> = ({ status }) => {
         [classes.inArchive]: inArchive,
       })}
     >
-      <div className={classes.title}>
-        {partedTitle[0]}
-        {partedTitle[1] && <div className={classes.secondLine}>{partedTitle[1]}</div>}
-      </div>
+      <div className={classes.title}>{statusValue}</div>
     </div>
   );
 };

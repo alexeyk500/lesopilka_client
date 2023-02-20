@@ -1,18 +1,18 @@
 import React from 'react';
 import classes from './OrderActions.module.css';
-import viewIco from '../../../../../../img/visibilityIcoOn.svg';
-import viewCloseIco from '../../../../../../img/visibilityIcoOff.svg';
-import chatIco from '../../../../../../img/chatIco.svg';
-import chatIcoOff from '../../../../../../img/chatIcoOff.svg';
-import deleteIco from '../../../../../../img/deleteBlueIco.svg';
-import returnToBasket from '../../../../../../img/returnToBasket.svg';
-import { OrderType } from '../../../../../../types/types';
-import { showPortalPopUp } from '../../../../../../components/PortalPopUp/PortalPopUp';
-import { useAppDispatch } from '../../../../../../hooks/hooks';
-import { returnToBasketAndCancelOrderByIdThunk } from '../../../../../../store/ordersSlice';
+import viewIco from '../../../img/visibilityIcoOn.svg';
+import viewCloseIco from '../../../img/visibilityIcoOff.svg';
+import chatIco from '../../../img/chatIco.svg';
+import chatIcoOff from '../../../img/chatIcoOff.svg';
+import deleteIco from '../../../img/deleteBlueIco.svg';
+import returnToBasket from '../../../img/returnToBasket.svg';
+import { OrderType } from '../../../types/types';
+import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { returnToBasketAndCancelOrderByIdThunk } from '../../../store/ordersSlice';
 
-import ToolTip from '../../../../../../components/commonComponents/ToolTip/ToolTip';
-import { checkIsPossibleCancelOrderAndReturnToBasket } from '../../../../../../utils/ordersFunctions';
+import ToolTip from '../ToolTip/ToolTip';
+import { checkIsPossibleCancelOrderAndReturnToBasket } from '../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;

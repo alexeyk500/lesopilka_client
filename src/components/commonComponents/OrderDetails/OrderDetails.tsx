@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import classes from './OrderDetails.module.css';
-import { AmountTypeEnum, OrderType, ProductType } from '../../../../../../types/types';
-import OrderProductsList from '../../../../../BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/OrderProductsList/OrderProductsList';
+import { AmountTypeEnum, OrderType, ProductType } from '../../../types/types';
+import OrderProductsList from '../../../pages/BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/OrderProductsList/OrderProductsList';
 import InfoTabSelector from './InfoTabSelector/InfoTabSelector';
 import DetailsHeader from './InfoTabSelector/DetailsHeader/DetailsHeader';
 import DetailsConclusion from './InfoTabSelector/DetailsConclusion/DetailsConclusion';
-import { getProductsAllAmountsType } from '../../../../../../utils/ordersFunctions';
+import { getProductsAllAmountsType } from '../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;

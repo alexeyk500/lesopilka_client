@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './InfoTabSelector.module.css';
 import classNames from 'classnames';
-import { AmountTypeEnum } from '../../../../../../../types/types';
+import { AmountTypeEnum } from '../../../../types/types';
 
 type PropsType = {
   infoTab: AmountTypeEnum;

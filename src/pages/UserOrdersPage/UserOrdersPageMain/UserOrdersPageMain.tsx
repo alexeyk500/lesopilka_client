@@ -1,12 +1,12 @@
 import React from 'react';
 import classes from './UserOrdersPageMain.module.css';
-import OrdersList from './OrdersList/OrdersList';
+import UserOrdersList from './UserOrdersList/UserOrdersList';
 
 const UserOrdersPageMain: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.pageTitle}>{'Оформленные заказы'}</div>
-      <OrdersList />
+      <UserOrdersList />
     </div>
   );
 };
