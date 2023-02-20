@@ -25,7 +25,7 @@ const DateIntervalSelector: React.FC<PropsType> = ({
 }) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Период заказов'}</div>
+      <div className={classes.title}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Период поставки'}</div>
       <div className={classes.dateSelectorRow}>
         <div className={classes.rowTitle}>{'c'}</div>
         <DatePickerComponent

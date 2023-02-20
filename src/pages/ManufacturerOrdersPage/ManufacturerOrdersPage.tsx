@@ -6,7 +6,7 @@ import ManufacturerOrdersPageControl from './ManufacturerOrdersPageControl/Manuf
 const ManufacturerOrdersPage: React.FC = () => {
   return (
     <div className={classes.container}>
-      <LeftColumn title={`Заказы`}>
+      <LeftColumn title={`Заказы от покупателей`}>
         <ManufacturerOrdersPageControl />
       </LeftColumn>
     </div>
