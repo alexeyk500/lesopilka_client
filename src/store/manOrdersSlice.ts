@@ -6,7 +6,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
 type ManOrdersSliceType = {
-  selectedOrderStatusId: number;
+  selectedManOrderStatusId: number;
   manOrderDateFrom: string;
   manOrderDateTo: string;
   manOrders: OrderType[];
@@ -17,7 +17,7 @@ const manOrderDateFrom = dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_MANUFACT
 const manOrderDateTo = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS);
 
 const initialState: ManOrdersSliceType = {
-  selectedOrderStatusId: 0,
+  selectedManOrderStatusId: 0,
   manOrderDateFrom: manOrderDateFrom.toISOString(),
   manOrderDateTo: manOrderDateTo.toISOString(),
   manOrders: [],
@@ -28,6 +28,9 @@ export const manOrdersSlice = createSlice({
   name: 'manOrdersSlice',
   initialState,
   reducers: {
+    setSelectedManOrderStatusId: (state, actions) => {
+      state.selectedManOrderStatusId = actions.payload;
+    },
     setManDateFrom: (state, actions) => {
       state.manOrderDateFrom = actions.payload;
     },
@@ -37,8 +40,9 @@ export const manOrdersSlice = createSlice({
   },
 });
 
-export const { setManDateFrom, setManDateTo } = manOrdersSlice.actions;
+export const { setSelectedManOrderStatusId, setManDateFrom, setManDateTo } = manOrdersSlice.actions;
 
+export const selectorSelectedManOrderStatusId = (state: RootState) => state.manOrders.selectedManOrderStatusId;
 export const selectorSelectedManOrderDateFrom = (state: RootState) => state.manOrders.manOrderDateFrom;
 export const selectorSelectedManOrderDateTo = (state: RootState) => state.manOrders.manOrderDateTo;
 

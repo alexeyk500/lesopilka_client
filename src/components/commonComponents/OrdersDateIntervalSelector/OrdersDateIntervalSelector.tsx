@@ -11,7 +11,7 @@ type PropsType = {
   onSelectDateTo: (newDate: string) => void;
 };
 
-const OrdersPageDateIntervalSelector: React.FC<PropsType> = ({
+const OrdersDateIntervalSelector: React.FC<PropsType> = ({
   minDate,
   maxDate,
   dateFrom,
@@ -41,4 +41,4 @@ const OrdersPageDateIntervalSelector: React.FC<PropsType> = ({
   );
 };
 
-export default OrdersPageDateIntervalSelector;
+export default OrdersDateIntervalSelector;

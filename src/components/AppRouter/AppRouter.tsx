@@ -8,7 +8,7 @@ import UnitedPage from '../../pages/UnitedPage/UnitedPage';
 import PricePage from '../../pages/PricePage/PricePage';
 import BasketPage from '../../pages/BasketPage/BasketPage';
 import NewOrderPage from '../../pages/NewOrderPage/NewOrderPage';
-import OrdersPage from '../../pages/OrdersPage/OrdersPage';
+import UserOrdersPage from '../../pages/UserOrdersPage/UserOrdersPage';
 import ManufacturerOrdersPage from '../../pages/ManufacturerOrdersPage/ManufacturerOrdersPage';
 
 type RouteType = {
@@ -45,7 +45,7 @@ const protectedRoutes: RouteType[] = [
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
   { path: `${PageEnum.NewOrder}/:mid`, element: <NewOrderPage /> },
-  { path: PageEnum.OrdersPage, element: <OrdersPage /> },
+  { path: PageEnum.OrdersPage, element: <UserOrdersPage /> },
   { path: PageEnum.ManufacturerOrdersPage, element: <ManufacturerOrdersPage /> },
 ];
 

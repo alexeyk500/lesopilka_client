@@ -8,10 +8,10 @@ import {
   selectorSelectedOrderDateTo,
   selectorSelectedOrderStatusId,
 } from '../../../../store/ordersSlice';
-import { orderStatusOptions } from '../../OrdersPageControl/OrderStatusSelector/OrderStatusSelector';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
 import OrderItem from './OrderItem/OrderItem';
 import { dateDayShift } from '../../../../utils/dateTimeFunctions';
+import { orderStatusOptions } from '../../UserOrdersPageControl/UserOrderStatusSelector/UserOrderStatusSelector';
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();

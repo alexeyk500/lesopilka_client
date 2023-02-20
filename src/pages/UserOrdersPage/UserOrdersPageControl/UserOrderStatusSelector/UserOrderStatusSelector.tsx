@@ -1,9 +1,9 @@
 import React from 'react';
-import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
-import { OptionsType, OrderStatusEnum } from '../../../../types/types';
-import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSection/CheckBoxSection';
+import classes from './UserOrderStatusSelector.module.css';
+import OrderStatusSelector from '../../../../components/commonComponents/OrderStatusSelector/OrderStatusSelector';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorSelectedOrderStatusId, setSelectedOrderStatusId } from '../../../../store/ordersSlice';
+import { OptionsType, OrderStatusEnum } from '../../../../types/types';
 
 export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: 'Все', toolTip: 'Все ваши заказы' },
@@ -14,30 +14,22 @@ export const orderStatusOptions: OptionsType[] = [
   { id: 5, title: OrderStatusEnum.inArchive, toolTip: 'Заказы c датой поставки старше 30 дней' },
 ];
 
-const OrderStatusSelector: React.FC = () => {
-  const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
-
+const UserOrderStatusSelector: React.FC = () => {
   const dispatch = useAppDispatch();
-
-  const onSelect = (id: number) => {
+  const selectedOrderStatusId = useAppSelector(selectorSelectedOrderStatusId);
+  const onSelectOrderStatusId = (id: number) => {
     dispatch(setSelectedOrderStatusId(id));
   };
 
   return (
-    <CheckBoxSection title={'Статусы заказов'}>
-      {orderStatusOptions.map((orderStatusOption) => (
-        <CheckBoxSquare
-          key={orderStatusOption.id!}
-          id={orderStatusOption.id!}
-          title={orderStatusOption.title}
-          checked={selectedOrderStatusId === orderStatusOption.id}
-          toolTip={orderStatusOption.toolTip}
-          toolTipVerticalShift={328}
-          onSelect={onSelect}
-        />
-      ))}
-    </CheckBoxSection>
+    <div className={classes.container}>
+      <OrderStatusSelector
+        orderStatusOptions={orderStatusOptions}
+        selectedOrderStatusId={selectedOrderStatusId}
+        onSelectOrderStatusId={onSelectOrderStatusId}
+      />
+    </div>
   );
 };
 
-export default OrderStatusSelector;
+export default UserOrderStatusSelector;

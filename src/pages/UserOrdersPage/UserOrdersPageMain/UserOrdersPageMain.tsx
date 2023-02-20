@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './OrdersPageMain.module.css';
+import classes from './UserOrdersPageMain.module.css';
 import OrdersList from './OrdersList/OrdersList';
 
-const OrdersPageMain: React.FC = () => {
+const UserOrdersPageMain: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.pageTitle}>{'Оформленные заказы'}</div>
@@ -11,4 +11,4 @@ const OrdersPageMain: React.FC = () => {
   );
 };
 
-export default OrdersPageMain;
+export default UserOrdersPageMain;

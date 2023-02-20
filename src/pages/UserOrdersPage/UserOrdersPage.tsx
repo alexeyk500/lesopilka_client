@@ -2,20 +2,20 @@ import React from 'react';
 import classes from '../NewOrderPage/NewOrderPage.module.css';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import MainColumn from '../../components/MainColumn/MainColumn';
-import OrdersPageControl from './OrdersPageControl/OrdersPageControl';
-import OrdersPageMain from './OrdersPageMain/OrdersPageMain';
+import UserOrdersPageControl from './UserOrdersPageControl/UserOrdersPageControl';
+import UserOrdersPageMain from './UserOrdersPageMain/UserOrdersPageMain';
 
-const OrdersPage: React.FC = () => {
+const UserOrdersPage: React.FC = () => {
   return (
     <div className={classes.container}>
       <LeftColumn title={`Заказы`}>
-        <OrdersPageControl />
+        <UserOrdersPageControl />
       </LeftColumn>
       <MainColumn noScroll>
-        <OrdersPageMain />
+        <UserOrdersPageMain />
       </MainColumn>
     </div>
   );
 };
 
-export default OrdersPage;
+export default UserOrdersPage;
