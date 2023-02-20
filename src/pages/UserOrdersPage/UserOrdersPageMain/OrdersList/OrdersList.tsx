@@ -11,7 +11,7 @@ import {
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
 import OrderItem from './OrderItem/OrderItem';
 import { dateDayShift } from '../../../../utils/dateTimeFunctions';
-import { orderStatusOptions } from '../../UserOrdersPageControl/UserOrderStatusSelector/UserOrderStatusSelector';
+import { orderStatusOptions } from '../../../../utils/constants';
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();

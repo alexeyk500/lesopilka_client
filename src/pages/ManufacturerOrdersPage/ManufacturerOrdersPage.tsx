@@ -1,7 +1,7 @@
 import React from 'react';
-import classes from './ManufacturerOrdersPage.module.css';
+import classes from './ManOrdersPage.module.css';
 import LeftColumn from '../../components/LeftColumn/LeftColumn';
-import ManufacturerOrdersPageControl from './ManufacturerOrdersPageControl/ManufacturerOrdersPageControl';
+import ManufacturerOrdersPageControl from './ManOrdersPageControl/ManufacturerOrdersPageControl';
 
 const ManufacturerOrdersPage: React.FC = () => {
   return (

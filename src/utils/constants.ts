@@ -1,4 +1,4 @@
-import { DriedEnum, SepticEnum } from '../types/types';
+import { DriedEnum, OptionsType, OrderStatusEnum, SepticEnum } from '../types/types';
 
 export const DEBOUNCE_TIME = 1000;
 export const CALIBER_PRODUCT_CATEGORIES = [6];
@@ -32,3 +32,30 @@ export const MAX_MONTH_SHIFT_FOR_USER_ORDERS = 1;
 
 export const MIN_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS = -4;
 export const MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS = 1;
+
+export const orderStatusOptions: OptionsType[] = [
+  { id: 0, title: 'Все', toolTip: '' },
+  { id: 1, title: OrderStatusEnum.onConfirming, toolTip: '' },
+  { id: 2, title: OrderStatusEnum.confirmedOrder, toolTip: '' },
+  { id: 3, title: OrderStatusEnum.canceledByUser, toolTip: '' },
+  { id: 4, title: OrderStatusEnum.canceledByManufacturer, toolTip: '' },
+  { id: 5, title: OrderStatusEnum.inArchive, toolTip: '' },
+];
+
+export const userOrderStatusOptionsToolTips: string[] = [
+  'Все ваши заказы',
+  'Заказы еще на рассмотрении у поставщика',
+  'Поставщик готов поставить вам эти заказы',
+  'Вы отменили эти заказы',
+  'Поставщик не готов поставить вам эти заказы',
+  'Заказы c датой поставки старше 30 дней',
+];
+
+export const manufacturerOrderStatusOptionsToolTips: string[] = [
+  'Все заказы от покупателей',
+  'Заказы которые находятся у вас на рассмотрении',
+  'Вы подтвердили готовность поставить эти заказы',
+  'Покупатель отменил эти заказы',
+  'Вы отказались поставлять эти заказы',
+  'Заказы c датой поставки старше 30 дней',
+];
