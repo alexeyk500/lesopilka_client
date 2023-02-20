@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import classes from './CheckBoxSquare.module.css';
 import checkStatusIco from '../../../img/checkStatusIco.svg';
 import classNames from 'classnames';
+import { SHOW_TOOLTIP_TIMEOUT } from '../../../utils/constants';
 
 type PropsType = {
   id: number;
@@ -22,7 +23,9 @@ const CheckBoxSquare: React.FC<PropsType> = ({
   toolTip,
   toolTipVerticalShift = 0,
 }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+  const refContainer = useRef<HTMLDivElement | null>(null);
+  const refTitle = useRef<HTMLDivElement | null>(null);
+
   const [showToolTip, setShowToolTip] = useState(false);
   let timeOutId: NodeJS.Timeout;
 
@@ -33,7 +36,7 @@ const CheckBoxSquare: React.FC<PropsType> = ({
   const setTimeOutId = () => {
     timeOutId = setTimeout(() => {
       setShowToolTip(true);
-    }, 750);
+    }, SHOW_TOOLTIP_TIMEOUT);
   };
 
   const onMouseEnterHandler = () => {
@@ -48,10 +51,13 @@ const CheckBoxSquare: React.FC<PropsType> = ({
   };
 
   const topValue = id * 32 + toolTipVerticalShift + 'px';
-  const leftValue = ref.current?.offsetWidth ? 115 + ref.current?.offsetWidth + 'px' : '0';
+  const leftValue =
+    refContainer.current && refTitle.current
+      ? 55 + refContainer.current?.offsetLeft + refTitle.current?.offsetWidth + 'px'
+      : '0';
 
   return (
-    <div className={classes.container}>
+    <div ref={refContainer} className={classes.container}>
       {checked ? (
         <div className={classes.checkedBox} onClick={onClick}>
           <img src={checkStatusIco} className={classes.checkStatusIco} alt="check status ico" />
@@ -60,7 +66,7 @@ const CheckBoxSquare: React.FC<PropsType> = ({
         <div className={classes.box} onClick={onClick} />
       )}
       <div className={classes.title} onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
-        <div className={classNames({ [classes.constantWidth]: amount })} ref={ref}>
+        <div ref={refTitle} className={classNames({ [classes.constantWidth]: amount })}>
           {title}
         </div>
         {amount && <div className={classes.amountTitle}>&nbsp;&nbsp;{amount}</div>}
