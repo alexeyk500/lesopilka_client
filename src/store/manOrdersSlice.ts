@@ -35,7 +35,7 @@ export const manOrdersSlice = createSlice({
       state.manOrderDateFrom = actions.payload;
     },
     setManDateTo: (state, actions) => {
-      state.manOrderDateFrom = actions.payload;
+      state.manOrderDateTo = actions.payload;
     },
   },
 });
