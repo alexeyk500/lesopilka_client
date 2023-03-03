@@ -68,10 +68,14 @@ export const orderApi = {
   },
 
   async getOrders({ orderDateFrom, orderDateTo, ordersStatus, token, isOrdersForManufacturer }: GetOrdersParamsType) {
-    const requestRoute = isOrdersForManufacturer ? '/orders/manufacturer' : '/orders';
     const response = await instanceAxios.post<GetOrderServerType[]>(
-      requestRoute,
-      { orderDateFrom: normalizeDate(orderDateFrom), orderDateTo: normalizeDate(orderDateTo), ordersStatus },
+      '/orders',
+      {
+        orderDateFrom: normalizeDate(orderDateFrom),
+        orderDateTo: normalizeDate(orderDateTo),
+        ordersStatus,
+        isOrdersForManufacturer,
+      },
       setAuthHeader(token)
     );
     return response.data;

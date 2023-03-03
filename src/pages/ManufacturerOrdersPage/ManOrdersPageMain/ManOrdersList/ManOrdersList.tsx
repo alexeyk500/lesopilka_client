@@ -9,8 +9,9 @@ import {
   selectorSelectedManOrderStatusId,
 } from '../../../../store/manOrdersSlice';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
-import { dateDayShift } from '../../../../utils/dateTimeFunctions';
+import { getEndOfTheDayDate } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
+import OrderItem from '../../../../components/commonComponents/OrderItem/OrderItem';
 
 const ManOrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,12 +25,12 @@ const ManOrdersList: React.FC = () => {
   const getManOrdersByParams = useCallback(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
-    const dateToWithShift = dateDayShift(new Date(manOrderDateTo), 1).toISOString();
-    if (manOrderDateFrom && dateToWithShift && serverOrdersStatus && token) {
+    const dateToEndOfTheDate = getEndOfTheDayDate(manOrderDateTo);
+    if (manOrderDateFrom && dateToEndOfTheDate && serverOrdersStatus && token) {
       dispatch(
         getManOrdersByParamsThunk({
           orderDateFrom: manOrderDateFrom,
-          orderDateTo: dateToWithShift,
+          orderDateTo: dateToEndOfTheDate,
           ordersStatus: serverOrdersStatus,
           token,
           isOrdersForManufacturer: true,
@@ -39,8 +40,6 @@ const ManOrdersList: React.FC = () => {
   }, [dispatch, manOrderDateFrom, manOrderDateTo, ordersStatus]);
 
   useEffect(getManOrdersByParams, [dispatch, manOrderDateTo, manOrderDateFrom, ordersStatus, getManOrdersByParams]);
-
-  console.log({ manOrders });
 
   return (
     <div className={classes.container}>
@@ -56,9 +55,9 @@ const ManOrdersList: React.FC = () => {
         <div className={classes.tableColumnStatus}>{'Статус'}</div>
       </div>
       <div className={classes.scrollContainer}>
-        {manOrders.map((manOrder) => {
-          return manOrder.order.orderDate;
-        })}
+        {manOrders.map((order) => (
+          <OrderItem key={order.order.id} order={order} updateOrders={getManOrdersByParams} isOrderForManufacturer />
+        ))}
       </div>
     </div>
   );

@@ -4,6 +4,13 @@ export const dateDayShift = (date: Date, days: number) => {
   return result;
 };
 
+export const getEndOfTheDayDate = (rawDate: Date | string) => {
+  const processDate = typeof rawDate === 'string' ? new Date(rawDate) : rawDate;
+  const processDateStr = processDate.toISOString();
+  const onlyProcessDate = processDateStr.split('T')[0];
+  return `${onlyProcessDate}T23:59:59.000Z`;
+};
+
 export const dateMonthShift = (startDate: Date, monthShift: number) => {
   let newDate = new Date(startDate);
   return new Date(newDate.setMonth(newDate.getMonth() + monthShift));

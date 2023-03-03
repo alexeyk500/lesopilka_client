@@ -94,6 +94,7 @@ export type OrderInfoType = {
   manufacturerConfirmedDate: string;
   deleteByUser: boolean;
   deleteByManufacturer: boolean;
+  userInfo?: { id: string } & UserType;
 };
 
 export type OrderType = {

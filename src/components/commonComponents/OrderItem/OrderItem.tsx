@@ -13,13 +13,17 @@ import { getDeliveryTitle } from '../../../utils/ordersFunctions';
 type PropsType = {
   order: OrderType;
   updateOrders: () => void;
+  isOrderForManufacturer?: boolean;
 };
 
-const OrderItem: React.FC<PropsType> = ({ order, updateOrders }) => {
+const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer }) => {
   const [isOpenDetails, setIsOpenDetails] = useState(false);
   const [isOpenChat, setIsOpenChat] = useState(false);
 
-  const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
+  const title = isOrderForManufacturer
+    ? order.order.userInfo?.name || order.order.userInfo?.email || ''
+    : order.products[0].manufacturer?.title ?? '';
+
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products, AmountTypeEnum.inOrder);
 
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice);
@@ -37,7 +41,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders }) => {
       <div className={classes.itemContainer}>
         <div className={listClasses.tableColumnDate}>{formatUTCtoDDMMYYYY(order.order.deliveryDate)}</div>
         <div className={listClasses.tableColumnNumber}>{order.order.id}</div>
-        <div className={listClasses.tableColumnManufacturer}>{manufacturerTitle}</div>
+        <div className={listClasses.tableColumnManufacturer}>{title}</div>
         <div className={listClasses.tableColumnWeight}>{`${totalWeight} кг.`}</div>
         <div className={listClasses.tableColumnVolume}>{`${totalVolume} м.куб.`}</div>
         <div className={listClasses.tableColumnCost}>{`${totalCost} руб.`}</div>

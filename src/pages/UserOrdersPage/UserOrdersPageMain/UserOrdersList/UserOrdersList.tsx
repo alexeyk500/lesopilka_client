@@ -10,7 +10,7 @@ import {
 } from '../../../../store/ordersSlice';
 import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
 import OrderItem from '../../../../components/commonComponents/OrderItem/OrderItem';
-import { dateDayShift } from '../../../../utils/dateTimeFunctions';
+import { getEndOfTheDayDate } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
 
 const UserOrdersList: React.FC = () => {
@@ -25,10 +25,15 @@ const UserOrdersList: React.FC = () => {
   const updateOrdersByParams = useCallback(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
-    const dateToWithShift = dateDayShift(new Date(orderDateTo), 1).toISOString();
-    if (orderDateFrom && dateToWithShift && serverOrdersStatus && token) {
+    const dateToEndOfTheDate = getEndOfTheDayDate(orderDateTo);
+    if (orderDateFrom && dateToEndOfTheDate && serverOrdersStatus && token) {
       dispatch(
-        getOrdersByParamsThunk({ orderDateFrom, orderDateTo: dateToWithShift, ordersStatus: serverOrdersStatus, token })
+        getOrdersByParamsThunk({
+          orderDateFrom,
+          orderDateTo: dateToEndOfTheDate,
+          ordersStatus: serverOrdersStatus,
+          token,
+        })
       );
     }
   }, [dispatch, orderDateFrom, orderDateTo, ordersStatus]);
