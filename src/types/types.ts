@@ -78,6 +78,7 @@ export type OrderInfoType = {
   contactPersonPhone: string;
   deliveryAddress: string;
   userId: number;
+  manufacturerId: number;
   paymentMethod: OptionsType;
   deliveryMethod: OptionsType;
   location: {
