@@ -9,6 +9,7 @@ import OrderStatus from '../OrderStatus/OrderStatus';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import classNames from 'classnames';
 import { getDeliveryTitle } from '../../../utils/ordersFunctions';
+import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
 
 type PropsType = {
   order: OrderType;
@@ -60,7 +61,8 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           <OrderStatus status={order.order.status} />
         </div>
       </div>
-      {isOpenDetails && <OrderDetails order={order} />}
+      {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} />}
+      {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
     </div>
   );
 };

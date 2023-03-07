@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.leftColumn {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.rightColumn {
+  display: flex;
+  margin-right: 5px;
+  width: 155px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titleRow {
+  display: flex;
+  width: calc(100% + 160px);
+  margin-bottom: 8px;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: pre-line;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.title {
+  width: 128px;
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.confirmButtonContainer {
+  margin-bottom: 24px;
+}
+
+.confirmedOrderTitle {
+  display: flex;
+  white-space: pre-line;
+  color: var(--green_color);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+}
+
+.archivedOrderTitle {
+  display: flex;
+  color: var(--gray_color_light);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  white-space: pre-line;
+}

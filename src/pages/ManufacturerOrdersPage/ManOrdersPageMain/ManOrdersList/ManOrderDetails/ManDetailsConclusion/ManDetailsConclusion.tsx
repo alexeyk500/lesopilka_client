@@ -1,14 +1,14 @@
 import React from 'react';
-import classes from './DetailsConclusion.module.css';
-import { getTotalLogisticInfo } from '../../../../../utils/functions';
-import { AmountTypeEnum, ProductType } from '../../../../../types/types';
+import classes from './ManDetailsConclusion.module.css';
+import { getTotalLogisticInfo } from '../../../../../../utils/functions';
+import { AmountTypeEnum, ProductType } from '../../../../../../types/types';
 
 type PropsType = {
   products: ProductType[];
   amountType: AmountTypeEnum;
 };
 
-const DetailsConclusion: React.FC<PropsType> = ({ products, amountType }) => {
+const ManDetailsConclusion: React.FC<PropsType> = ({ products, amountType }) => {
   let totalWeight;
   let totalVolume;
   let totalCost;
@@ -37,4 +37,4 @@ const DetailsConclusion: React.FC<PropsType> = ({ products, amountType }) => {
   );
 };
 
-export default DetailsConclusion;
+export default ManDetailsConclusion;

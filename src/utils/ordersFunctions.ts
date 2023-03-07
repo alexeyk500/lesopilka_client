@@ -12,9 +12,9 @@ export const getOrderDetailHeader = ({
   infoTab: AmountTypeEnum;
 }) => {
   if (infoTab === AmountTypeEnum.inConfirmation) {
-    return `Подтверждение от поставщика по Заказу № ${orderId} на ${date}`;
+    return `Подтверждение по заказу № ${orderId} на ${date}`;
   } else if (infoTab === AmountTypeEnum.inDivergence) {
-    return `Расхождения по Заказу № ${orderId} на ${date}`;
+    return `Расхождения по заказу № ${orderId} на ${date}`;
   }
   return `Заказ № ${orderId} на ${date}`;
 };

@@ -1,9 +1,9 @@
 import React from 'react';
-import classes from '../../OrderDetails.module.css';
-import { DeliveryMethodEnum, AmountTypeEnum, OrderType } from '../../../../../types/types';
-import { getDeliveryTitle, getOrderDetailHeader } from '../../../../../utils/ordersFunctions';
-import { formatUTCtoDDMMMMYYYY } from '../../../../../utils/dateTimeFunctions';
-import { getPaymentMethodTitle } from '../../../../../pages/NewOrderPage/NewOrderPageMainPart/PaymentMethodSection/PaymentMethodSection';
+import classes from '../OrderDetails.module.css';
+import { DeliveryMethodEnum, AmountTypeEnum, OrderType } from '../../../../types/types';
+import { getDeliveryTitle, getOrderDetailHeader } from '../../../../utils/ordersFunctions';
+import { formatUTCtoDDMMMMYYYY } from '../../../../utils/dateTimeFunctions';
+import { getPaymentMethodTitle } from '../../../../pages/NewOrderPage/NewOrderPageMainPart/PaymentMethodSection/PaymentMethodSection';
 
 type PropsType = {
   order: OrderType;
