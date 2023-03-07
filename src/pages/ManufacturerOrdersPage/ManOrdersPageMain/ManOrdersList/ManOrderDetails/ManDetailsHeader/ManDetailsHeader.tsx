@@ -40,8 +40,7 @@ const ManDetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
 
   const isShowRightColumn = getShowRightColumn(infoTab);
 
-  console.log('infoTab =', infoTab, order.order.status, isArchivedOrder, OrderStatusEnum.inArchive);
-
+  console.log(order.order.status, order.order.manufacturerConfirmedDate);
   return (
     <div className={classes.container}>
       <div className={classes.leftColumn}>
@@ -77,12 +76,12 @@ const ManDetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
       </div>
       {isShowRightColumn && (
         <div className={classes.rightColumn}>
-          {isArchivedOrder ? (
-            <div className={classes.archivedOrderTitle}>{`Заказ в Архиве\n\nподробности\nв переписке`}</div>
-          ) : isConfirmedOrder ? (
+          {isConfirmedOrder ? (
             <div className={classes.confirmedOrderTitle}>{`Заказ подтвержден\n${formatUTCtoDDMMMMYYYY(
               order.order.manufacturerConfirmedDate
             )}`}</div>
+          ) : isArchivedOrder ? (
+            <div className={classes.archivedOrderTitle}>{`Срок действия\nзаказа истек`}</div>
           ) : (
             <>
               <div className={classes.confirmButtonContainer}>
