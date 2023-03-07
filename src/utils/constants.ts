@@ -26,6 +26,7 @@ export const PRODUCTS_PAGE_SIZE = 32;
 export const MAX_BASKET_PRODUCT_AMOUNT = 10000;
 
 export const SHOW_TOOLTIP_TIMEOUT = 500;
+export const HIDE_TOOLTIP_TIMEOUT = 1000;
 
 export const MIN_MONTH_SHIFT_FOR_USER_ORDERS = -2;
 export const MAX_MONTH_SHIFT_FOR_USER_ORDERS = 1;

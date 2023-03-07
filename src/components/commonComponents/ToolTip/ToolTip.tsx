@@ -1,7 +1,7 @@
-import React, { ReactElement, useRef, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import classes from './ToolTip.module.css';
 import { CSSTransition } from 'react-transition-group';
-import { SHOW_TOOLTIP_TIMEOUT } from '../../../utils/constants';
+import { HIDE_TOOLTIP_TIMEOUT, SHOW_TOOLTIP_TIMEOUT } from '../../../utils/constants';
 
 const transitionClasses = {
   enter: classes.exampleEnter,
@@ -31,6 +31,14 @@ const ToolTip: React.FC<PropsType> = ({ children, customClass, text }) => {
     clearTimeout(refSetTimeout.current);
     setShowToolTip(false);
   };
+
+  useEffect(() => {
+    if (showToolTip) {
+      refSetTimeout.current = setTimeout(() => {
+        setShowToolTip(false);
+      }, HIDE_TOOLTIP_TIMEOUT);
+    }
+  }, [showToolTip]);
 
   return (
     <div className={classes.container} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
