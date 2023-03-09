@@ -30,9 +30,15 @@ type PropsType = {
   num: number;
   product: ProductType;
   amountType: AmountTypeEnum;
+  updateProductConfirmationAmount?: (product: ProductType, newAmount: number) => void;
 };
 
-const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, amountType }) => {
+const OrderToManufacturerItem: React.FC<PropsType> = ({
+  num,
+  product,
+  amountType,
+  updateProductConfirmationAmount,
+}) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
   const [amount, setAmount] = useState(getProductAmountByAmountType(product, amountType));
@@ -45,6 +51,14 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, amountType
   const { square, weight, volume, cost } = getLogisticInfo(product, amount);
 
   const onChangeAmount = (newValue: number | string) => {
+    if (amountType === AmountTypeEnum.inBasket) {
+      onChangeAmountInBasket(newValue);
+    } else if (amountType === AmountTypeEnum.inConfirmation) {
+      onChangeAmountInConfirmation(newValue);
+    }
+  };
+
+  const onChangeAmountInBasket = (newValue: number | string) => {
     if (typeof newValue === 'number') {
       if (newValue > 0 && newValue <= MAX_BASKET_PRODUCT_AMOUNT) {
         setAmount(newValue);
@@ -72,6 +86,23 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, amountType
     DEBOUNCE_TIME,
     true
   );
+
+  const onChangeAmountInConfirmation = (newValue: number | string) => {
+    if (typeof newValue === 'number') {
+      if (newValue > 0 && newValue <= MAX_BASKET_PRODUCT_AMOUNT && updateProductConfirmationAmount) {
+        updateProductConfirmationAmount(product, newValue);
+      }
+    } else {
+      const numberNewValue = Number(newValue);
+      if (numberNewValue) {
+        if (numberNewValue <= MAX_BASKET_PRODUCT_AMOUNT && updateProductConfirmationAmount) {
+          updateProductConfirmationAmount(product, numberNewValue);
+        }
+      } else {
+        updateProductConfirmationAmount && updateProductConfirmationAmount(product, numberNewValue);
+      }
+    }
+  };
 
   const onClickDeleteFromBasket = () => {
     if (product) {
@@ -138,10 +169,10 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({ num, product, amountType
       <div className={classes.amountColumn}>
         {product.publicationDate ? (
           <>
-            {amountType !== AmountTypeEnum.inBasket ? (
-              <div className={classes.amountRow}>{`${amount} шт.`}</div>
-            ) : (
+            {amountType === AmountTypeEnum.inBasket || amountType === AmountTypeEnum.inConfirmation ? (
               <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
+            ) : (
+              <div className={classes.amountRow}>{`${amount} шт.`}</div>
             )}
             {amount > 0 && (
               <div className={classes.amountInfo}>

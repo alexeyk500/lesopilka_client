@@ -67,17 +67,16 @@ const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab, isOrderForM
         {isOrderForManufacturer ? (
           <>
             <ConfirmationTab />
+            <DivergenceTab />
             <OrderTab />
           </>
         ) : (
           <>
-            <>
-              <OrderTab />
-              <ConfirmationTab />
-            </>
+            <OrderTab />
+            <ConfirmationTab />
+            <DivergenceTab />
           </>
         )}
-        <DivergenceTab />
       </div>
       <div className={classes.tabDelimiter} />
     </div>

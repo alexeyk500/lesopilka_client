@@ -98,3 +98,7 @@ export const getProductAmountByAmountType = (product: ProductType, amountType: A
   }
   return 0;
 };
+
+export const getIsArchivedOrder = (order: OrderType) =>
+  order.order.status ===
+  Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.inArchive)];

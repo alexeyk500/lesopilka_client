@@ -20,7 +20,9 @@ const AttentionSign: React.FC<PropsType> = ({ product, amountType }) => {
   return (
     <ToolTip text={text} customClass={classes.customToolTip}>
       <div className={classes.container}>
-        {showAttention && amountInDivergence > 0 && <img src={attentionIco} className={classes.ico} alt="attention" />}
+        {showAttention && amountInDivergence !== 0 && (
+          <img src={attentionIco} className={classes.ico} alt="attention" />
+        )}
       </div>
     </ToolTip>
   );
