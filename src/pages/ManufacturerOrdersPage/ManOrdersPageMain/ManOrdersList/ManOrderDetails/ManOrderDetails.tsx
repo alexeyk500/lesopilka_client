@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './ManOrderDetails.module.css';
 import { AmountTypeEnum, OrderType, ProductType } from '../../../../../types/types';
 import InfoTabSelector from '../../../../../components/commonComponents/InfoTabSelector/InfoTabSelector';
 import ManDetailsHeader from './ManDetailsHeader/ManDetailsHeader';
 import ManDetailsConclusion from './ManDetailsConclusion/ManDetailsConclusion';
-import { getProductsAllAmountsType } from '../../../../../utils/ordersFunctions';
+import { getIsArchivedOrder, getProductsAllAmountsType } from '../../../../../utils/ordersFunctions';
 import ManOrderProductsList from './ManOrderProductsList/ManOrderProductsList';
 
 type PropsType = {
@@ -26,13 +26,26 @@ const getIsShowNoDivergenceInOrder = (products: ProductType[], amountType: Amoun
 
 const ManOrderDetails: React.FC<PropsType> = ({ order }) => {
   const [amountType, setAmountType] = useState(AmountTypeEnum.inConfirmation);
-  const products = getProductsAllAmountsType(order);
+  const productsStore = getProductsAllAmountsType(order);
   const [confirmationProducts, setConfirmationProducts] = useState<ProductType[] | undefined>(undefined);
+  const products = confirmationProducts ? confirmationProducts : productsStore;
 
-  const isShowNoDivergenceInOrder = getIsShowNoDivergenceInOrder(
-    confirmationProducts ? confirmationProducts : products,
-    amountType
-  );
+  const isShowNoDivergenceInOrder = getIsShowNoDivergenceInOrder(products, amountType);
+
+  const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
+  const isConfirmationTab = amountType === AmountTypeEnum.inConfirmation;
+  const isArchivedOrder = getIsArchivedOrder(order);
+
+  const isSetConfirmationProducts = isConfirmationTab && !isConfirmedOrder && !isArchivedOrder && !confirmationProducts;
+
+  useEffect(() => {
+    if (isSetConfirmationProducts) {
+      const transformedProducts = products.map((product) => {
+        return { ...product, amountInConfirmation: product.amountInOrder, amountInDivergence: 0 };
+      });
+      setConfirmationProducts(transformedProducts);
+    }
+  }, [products, setConfirmationProducts, isSetConfirmationProducts]);
 
   return (
     <div className={classes.container}>
@@ -45,16 +58,12 @@ const ManOrderDetails: React.FC<PropsType> = ({ order }) => {
           <div className={classes.delimiter} />
           <ManOrderProductsList
             order={order}
-            products={confirmationProducts ? confirmationProducts : products}
+            products={products}
             amountType={amountType}
-            confirmationProducts={confirmationProducts}
             setConfirmationProducts={setConfirmationProducts}
           />
           <div className={classes.delimiter} />
-          <ManDetailsConclusion
-            products={confirmationProducts ? confirmationProducts : products}
-            amountType={amountType}
-          />
+          <ManDetailsConclusion products={products} amountType={amountType} />
         </>
       )}
     </div>

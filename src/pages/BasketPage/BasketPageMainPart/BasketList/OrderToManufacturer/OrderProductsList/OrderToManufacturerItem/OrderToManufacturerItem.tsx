@@ -31,6 +31,7 @@ type PropsType = {
   product: ProductType;
   amountType: AmountTypeEnum;
   updateProductConfirmationAmount?: (product: ProductType, newAmount: number) => void;
+  showAmountInput?: boolean;
 };
 
 const OrderToManufacturerItem: React.FC<PropsType> = ({
@@ -38,6 +39,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
   product,
   amountType,
   updateProductConfirmationAmount,
+  showAmountInput,
 }) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
@@ -169,7 +171,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
       <div className={classes.amountColumn}>
         {product.publicationDate ? (
           <>
-            {amountType === AmountTypeEnum.inBasket || amountType === AmountTypeEnum.inConfirmation ? (
+            {amountType === AmountTypeEnum.inBasket || showAmountInput ? (
               <AmountInput amount={amount} onChangeAmount={onChangeAmount} />
             ) : (
               <div className={classes.amountRow}>{`${amount} шт.`}</div>

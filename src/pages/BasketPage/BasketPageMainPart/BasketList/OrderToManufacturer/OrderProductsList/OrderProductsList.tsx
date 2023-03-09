@@ -10,6 +10,7 @@ type PropsType = {
   products: ProductType[];
   amountType: AmountTypeEnum;
   updateProductConfirmationAmount?: (product: ProductType, newAmount: number) => void;
+  showAmountInput?: boolean;
 };
 
 const getProductsToShow = (products: ProductType[], amountType: AmountTypeEnum, subCategories: SubCategoryType[]) => {
@@ -22,7 +23,12 @@ const getProductsToShow = (products: ProductType[], amountType: AmountTypeEnum, 
   return sortProducts(products, subCategories);
 };
 
-const OrderProductsList: React.FC<PropsType> = ({ products, amountType, updateProductConfirmationAmount }) => {
+const OrderProductsList: React.FC<PropsType> = ({
+  products,
+  amountType,
+  updateProductConfirmationAmount,
+  showAmountInput,
+}) => {
   const subCategories = useAppSelector(selectorSubCategories);
   const productsToShow = getProductsToShow(products, amountType, subCategories);
 
@@ -36,6 +42,7 @@ const OrderProductsList: React.FC<PropsType> = ({ products, amountType, updatePr
             product={product}
             amountType={amountType}
             updateProductConfirmationAmount={updateProductConfirmationAmount}
+            showAmountInput={showAmountInput}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AmountTypeEnum, OrderType, ProductType } from '../../../../../../types/types';
 import classes from './ManOrderProductsList.module.css';
 import OrderProductsList from '../../../../../BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/OrderProductsList/OrderProductsList';
@@ -9,58 +9,43 @@ type PropsType = {
   products: ProductType[];
   amountType: AmountTypeEnum;
   setConfirmationProducts?: (products: ProductType[] | undefined) => void;
-  confirmationProducts?: ProductType[];
+  // confirmationProducts?: ProductType[];
 };
 
-const ManOrderProductsList: React.FC<PropsType> = ({
-  order,
-  products,
-  amountType,
-  setConfirmationProducts,
-  confirmationProducts,
-}) => {
+const ManOrderProductsList: React.FC<PropsType> = ({ order, products, amountType, setConfirmationProducts }) => {
   const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
   const isConfirmationTab = amountType === AmountTypeEnum.inConfirmation;
   const isArchivedOrder = getIsArchivedOrder(order);
 
-  const isSetConfirmationProducts =
-    isConfirmationTab && !isConfirmedOrder && !isArchivedOrder && setConfirmationProducts && !confirmationProducts;
-
-  useEffect(() => {
-    if (isSetConfirmationProducts) {
-      const transformedProducts = products.map((product) => {
-        return { ...product, amountInConfirmation: product.amountInOrder, amountInDivergence: 0 };
-      });
-      setConfirmationProducts(transformedProducts);
-    }
-  }, [products, setConfirmationProducts, isSetConfirmationProducts]);
-
   const updateProductConfirmationAmount = (product: ProductType, newAmount: number) => {
-    const newConfirmationProducts = confirmationProducts?.map((curProduct) => {
-      if (curProduct.id === product.id) {
-        const divergence = product.amountInOrder ? newAmount - product.amountInOrder : -newAmount;
-        return {
-          ...curProduct,
-          amountInConfirmation: newAmount,
-          amountInDivergence: divergence,
-        };
-      } else {
-        return curProduct;
-      }
-    });
-    setConfirmationProducts && setConfirmationProducts(newConfirmationProducts);
+    if (setConfirmationProducts) {
+      const newConfirmationProducts = products?.map((curProduct) => {
+        if (curProduct.id === product.id) {
+          const divergence = product.amountInOrder ? newAmount - product.amountInOrder : -newAmount;
+          return {
+            ...curProduct,
+            amountInConfirmation: newAmount,
+            amountInDivergence: divergence,
+          };
+        } else {
+          return curProduct;
+        }
+      });
+      setConfirmationProducts(newConfirmationProducts);
+    }
   };
 
   return (
     <div className={classes.container}>
       {isConfirmedOrder || isArchivedOrder || !isConfirmationTab ? (
-        <OrderProductsList products={products} amountType={amountType} />
+        <OrderProductsList products={products} amountType={amountType} showAmountInput={false} />
       ) : (
-        confirmationProducts && (
+        setConfirmationProducts && (
           <OrderProductsList
-            products={confirmationProducts}
+            products={products}
             amountType={amountType}
             updateProductConfirmationAmount={updateProductConfirmationAmount}
+            showAmountInput={true}
           />
         )
       )}
