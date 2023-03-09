@@ -194,7 +194,6 @@ export const { resetUser, setAppSearchRegionId, setAppSearchLocationId } = userS
 export const selectorUser = (state: RootState) => state.user.user;
 export const selectorAppSearchRegionId = (state: RootState) => state.user.appSearchRegionId;
 export const selectorAppSearchLocationId = (state: RootState) => state.user.appSearchLocationId;
-export const selectorUserIsLoading = (state: RootState) => state.user.isLoading;
 export const selectorIsUserChecked = (state: RootState) => state.user.isUserChecked;
 
 export const selectorSearchRegionId = (state: RootState) =>
