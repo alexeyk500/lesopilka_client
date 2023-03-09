@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  margin-right: 5px;
+  width: 155px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.confirmButtonContainer {
+  margin-bottom: 24px;
+}
+
+.confirmedOrderTitle {
+  display: flex;
+  white-space: pre-line;
+  color: var(--green_color);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+}
+
+.archivedOrderTitle {
+  display: flex;
+  color: var(--gray_color_light);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  white-space: pre-line;
+}
