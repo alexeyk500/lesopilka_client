@@ -43,25 +43,6 @@ const ManDetailsHeaderRightColumn: React.FC<PropsType> = ({ order, infoTab }) =>
       ) : null}
     </div>
   );
-
-  // return isShowRightColumn ? (
-  //   <div className={classes.container}>
-  //     {isConfirmedOrder ? (
-  //       <div className={classes.confirmedOrderTitle}>{`Заказ подтвержден\n${formatUTCtoDDMMMMYYYY(
-  //         order.order.manufacturerConfirmedDate
-  //       )}`}</div>
-  //     ) : isArchivedOrder ? (
-  //       <div className={classes.archivedOrderTitle}>{`Срок подтверждения\nзаказа истек`}</div>
-  //     ) : (
-  //       <>
-  //         <div className={classes.confirmButtonContainer}>
-  //           <ButtonComponent buttonType={ButtonType.GREEN} title={'Подтвердить'} style={{ width: '155px' }} />
-  //         </div>
-  //         <ButtonComponent buttonType={ButtonType.RED} title={'Отказаться'} />
-  //       </>
-  //     )}
-  //   </div>
-  // ) : null;
 };
 
 export default ManDetailsHeaderRightColumn;
