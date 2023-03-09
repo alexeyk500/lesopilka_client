@@ -51,7 +51,10 @@ const ManOrderDetails: React.FC<PropsType> = ({ order }) => {
             setConfirmationProducts={setConfirmationProducts}
           />
           <div className={classes.delimiter} />
-          <ManDetailsConclusion products={products} amountType={amountType} />
+          <ManDetailsConclusion
+            products={confirmationProducts ? confirmationProducts : products}
+            amountType={amountType}
+          />
         </>
       )}
     </div>
