@@ -1,12 +1,13 @@
-import { OrderType } from '../types/types';
+import { OrderType, ProductType } from '../types/types';
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 
 import { MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS, MIN_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS } from '../utils/constants';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { GetOrderServerType } from '../api/serverResponseTypes';
-import { GetOrdersParamsType } from '../api/orderApi';
+import { ConfirmManufacturerOrdersParamsType, GetOrdersParamsType } from '../api/orderApi';
 import { serverApi } from '../api/serverApi';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type ManOrdersSliceType = {
   selectedManOrderStatusId: number;
@@ -31,11 +32,23 @@ export const getManOrdersByParamsThunk = createAsyncThunk<
   GetOrderServerType[],
   GetOrdersParamsType,
   { rejectValue: string }
->('user/getManufacturerOrdersThunk', async (getOrdersParams, { rejectWithValue }) => {
+>('manOrders/getManufacturerOrdersThunk', async (getOrdersParams, { rejectWithValue }) => {
   try {
     return await serverApi.getOrders(getOrdersParams);
   } catch (e) {
     return rejectWithValue('Ошибка получения списка заказов для производителя');
+  }
+});
+
+export const confirmManufacturerOrderThunk = createAsyncThunk<
+  ProductType[],
+  ConfirmManufacturerOrdersParamsType,
+  { rejectValue: string }
+>('manOrders/confirmManufacturerOrdersThunk', async (confirmManufacturerOrdersParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.confirmManufacturerOrder(confirmManufacturerOrdersParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка подтверждения заказа для поставщика');
   }
 });
 
@@ -62,9 +75,13 @@ export const manOrdersSlice = createSlice({
       .addMatcher(isAnyOf(getManOrdersByParamsThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getManOrdersByParamsThunk.rejected), (state) => {
-        state.isLoading = false;
-      });
+      .addMatcher(
+        isAnyOf(getManOrdersByParamsThunk.rejected, confirmManufacturerOrderThunk.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          showErrorPopUp(action.payload!);
+        }
+      );
   },
 });
 

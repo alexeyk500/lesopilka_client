@@ -7,13 +7,20 @@ import ManDetailsHeaderRightColumn from './ManDetailsHeaderRightColumn/ManDetail
 type PropsType = {
   order: OrderType;
   infoTab: AmountTypeEnum;
+  onConfirmClick: () => void;
+  onRejectClick: () => void;
 };
 
-const ManDetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
+const ManDetailsHeader: React.FC<PropsType> = ({ order, infoTab, onConfirmClick, onRejectClick }) => {
   return (
     <div className={classes.container}>
       <ManDetailsHeaderLeftColumn order={order} infoTab={infoTab} />
-      <ManDetailsHeaderRightColumn order={order} infoTab={infoTab} />
+      <ManDetailsHeaderRightColumn
+        order={order}
+        infoTab={infoTab}
+        onConfirmClick={onConfirmClick}
+        onRejectClick={onRejectClick}
+      />
     </div>
   );
 };

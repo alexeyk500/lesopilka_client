@@ -61,7 +61,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           <OrderStatus status={order.order.status} />
         </div>
       </div>
-      {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} />}
+      {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} updateOrders={updateOrders} />}
       {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
     </div>
   );

@@ -14,9 +14,11 @@ const getShowRightColumn = (infoTab: AmountTypeEnum) => {
 type PropsType = {
   order: OrderType;
   infoTab: AmountTypeEnum;
+  onConfirmClick: () => void;
+  onRejectClick: () => void;
 };
 
-const ManDetailsHeaderRightColumn: React.FC<PropsType> = ({ order, infoTab }) => {
+const ManDetailsHeaderRightColumn: React.FC<PropsType> = ({ order, infoTab, onConfirmClick, onRejectClick }) => {
   const isShowRightColumn = getShowRightColumn(infoTab);
   const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
   const isArchivedOrder = getIsArchivedOrder(order);
@@ -34,10 +36,15 @@ const ManDetailsHeaderRightColumn: React.FC<PropsType> = ({ order, infoTab }) =>
           <>
             {infoTab === AmountTypeEnum.inConfirmation && (
               <div className={classes.confirmButtonContainer}>
-                <ButtonComponent buttonType={ButtonType.GREEN} title={'Подтвердить'} style={{ width: '155px' }} />
+                <ButtonComponent
+                  buttonType={ButtonType.GREEN}
+                  title={'Подтвердить'}
+                  style={{ width: '155px' }}
+                  onClick={onConfirmClick}
+                />
               </div>
             )}
-            <ButtonComponent buttonType={ButtonType.RED} title={'Отказаться'} />
+            <ButtonComponent buttonType={ButtonType.RED} title={'Отказаться'} onClick={onRejectClick} />
           </>
         )
       ) : null}
