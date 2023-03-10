@@ -52,7 +52,6 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
   }, [products, setConfirmationProducts, isSetConfirmationProducts]);
 
   const onConfirmClick = () => {
-    console.log('onConfirmClick');
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (confirmationProducts && token) {
       const orderId = order.order.id;
@@ -66,8 +65,8 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
   };
 
   const onRejectClick = () => {
-    // updateOrders()
     console.log('onRejectClick');
+    // updateOrders()
   };
 
   return (
