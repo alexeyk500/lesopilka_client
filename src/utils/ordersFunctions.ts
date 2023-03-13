@@ -1,6 +1,13 @@
-import { AmountTypeEnum, OrderStatusEnum, OrderType, ProductType, ServerDeliveryMethodEnum } from '../types/types';
-import { getOrderStatusEnumValue } from '../components/commonComponents/OrderStatus/OrderStatus';
+import {
+  AmountTypeEnum,
+  OrderStatusEnum,
+  OrderType,
+  OrderViewEnum,
+  ProductType,
+  ServerDeliveryMethodEnum,
+} from '../types/types';
 import { formatPrice } from './functions';
+import { getOrderStatusEnumValue } from '../components/commonComponents/OrderStatus/OrderStatus';
 
 export const getOrderDetailHeader = ({
   orderId,
@@ -21,26 +28,6 @@ export const getOrderDetailHeader = ({
 
 export const checkIsPossibleCancelOrderAndReturnToBasket = (orderStatus: OrderStatusEnum) => {
   return getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming;
-};
-
-export const getDivergenceProducts = (order: OrderType) => {
-  const divergentProducts: ProductType[] = [];
-  order.products.forEach((product) => {
-    const confirmedProduct = order.confirmedProducts?.find(
-      (confirmedProduct) => confirmedProduct.confirmedProductId === product.id
-    );
-    if (
-      confirmedProduct &&
-      product.amountInOrder !== undefined &&
-      confirmedProduct.amountInConfirmation !== undefined
-    ) {
-      const divergenceAmount = product.amountInOrder - confirmedProduct.amountInConfirmation;
-      if (divergenceAmount > 0) {
-        divergentProducts.push({ ...product, amountInOrder: undefined, amountInDivergence: divergenceAmount });
-      }
-    }
-  });
-  return divergentProducts;
 };
 
 export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number, oneRow?: boolean) => {
@@ -99,6 +86,25 @@ export const getProductAmountByAmountType = (product: ProductType, amountType: A
   return 0;
 };
 
-export const getIsArchivedOrder = (order: OrderType) =>
-  order.order.status ===
-  Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.inArchive)];
+export const getIsArchivedOrder = (order: OrderType) => {
+  return order.order.inArchiveForUser || order.order.inArchiveForManufacturer;
+  // order.order.status ===
+  // Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.inArchive)];
+};
+
+export const convertOrdersViewToServerOrdersStatus = (orderView: string) => {
+  if (orderView === OrderViewEnum.active) {
+    return 'active';
+  } else if (orderView === OrderViewEnum.onConfirming) {
+    return 'onConfirming';
+  } else if (orderView === OrderViewEnum.confirmedOrder) {
+    return 'confirmedOrder';
+  } else if (orderView === OrderViewEnum.canceledByUser) {
+    return 'canceledByUser';
+  } else if (orderView === OrderViewEnum.canceledByManufacturer) {
+    return 'canceledByManufacturer';
+  } else if (orderView === OrderViewEnum.inArchive) {
+    return 'inArchive';
+  }
+  return 'all';
+};

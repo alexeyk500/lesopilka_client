@@ -8,10 +8,10 @@ import {
   selectorSelectedOrderDateTo,
   selectorSelectedOrderStatusId,
 } from '../../../../store/ordersSlice';
-import { convertOrdersStatusToServerOrdersStatus } from '../../../../utils/functions';
 import OrderItem from '../../../../components/commonComponents/OrderItem/OrderItem';
 import { getEndOfTheDayDate } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
+import { convertOrdersViewToServerOrdersStatus } from '../../../../utils/ordersFunctions';
 
 const UserOrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +24,7 @@ const UserOrdersList: React.FC = () => {
 
   const updateOrdersByParams = useCallback(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    const serverOrdersStatus = convertOrdersStatusToServerOrdersStatus(ordersStatus!);
+    const serverOrdersStatus = convertOrdersViewToServerOrdersStatus(ordersStatus!);
     const dateToEndOfTheDate = getEndOfTheDayDate(orderDateTo);
     if (orderDateFrom && dateToEndOfTheDate && serverOrdersStatus && token) {
       dispatch(

@@ -18,7 +18,7 @@ export type CreateNewOrderParamsType = {
 export type GetOrdersParamsType = {
   orderDateFrom: string;
   orderDateTo: string;
-  ordersStatus: ServerOrderStatusType | 'all' | 'inArchive';
+  ordersStatus: ServerOrderStatusType | 'all' | 'inArchive' | 'active';
   token: string;
   isOrdersForManufacturer?: boolean;
 };

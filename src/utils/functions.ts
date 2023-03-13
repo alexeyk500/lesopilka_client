@@ -1,48 +1,40 @@
-import {
-  AddressType,
-  AmountTypeEnum,
-  ManufacturerType,
-  OptionsType,
-  OrderStatusEnum,
-  ProductType,
-  QueryEnum,
-} from '../types/types';
+import { AddressType, AmountTypeEnum, ManufacturerType, OptionsType, ProductType, QueryEnum } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
 import { AppDispatch } from '../store/store';
 
-export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
-  const elements = myFormElement.elements;
-  for (let i = 0; i < elements.length; i++) {
-    if (elements[i] instanceof HTMLInputElement) {
-      const input = elements[i] as HTMLInputElement;
-      switch (input.type) {
-        case 'text':
-        case 'password':
-        case 'textarea':
-        case 'hidden':
-          input.value = '';
-          break;
-
-        case 'radio':
-        case 'checkbox':
-          if (input.checked) {
-            input.checked = false;
-          }
-          break;
-
-        case 'select-one':
-        case 'select-multi':
-          (input as unknown as HTMLSelectElement).selectedIndex = -1;
-          break;
-
-        default:
-          break;
-      }
-    }
-  }
-}
+// export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
+//   const elements = myFormElement.elements;
+//   for (let i = 0; i < elements.length; i++) {
+//     if (elements[i] instanceof HTMLInputElement) {
+//       const input = elements[i] as HTMLInputElement;
+//       switch (input.type) {
+//         case 'text':
+//         case 'password':
+//         case 'textarea':
+//         case 'hidden':
+//           input.value = '';
+//           break;
+//
+//         case 'radio':
+//         case 'checkbox':
+//           if (input.checked) {
+//             input.checked = false;
+//           }
+//           break;
+//
+//         case 'select-one':
+//         case 'select-multi':
+//           (input as unknown as HTMLSelectElement).selectedIndex = -1;
+//           break;
+//
+//         default:
+//           break;
+//       }
+//     }
+//   }
+// }
 
 export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[], emptyOptionTitle?: string) => {
   const options: OptionsType[] = [];
@@ -375,19 +367,4 @@ export const getSelectedOption = (optionId?: number, options?: OptionsType[]) =>
   } else {
     return undefined;
   }
-};
-
-export const convertOrdersStatusToServerOrdersStatus = (ordersStatus: string) => {
-  if (ordersStatus === OrderStatusEnum.onConfirming) {
-    return 'onConfirming';
-  } else if (ordersStatus === OrderStatusEnum.confirmedOrder) {
-    return 'confirmedOrder';
-  } else if (ordersStatus === OrderStatusEnum.canceledByUser) {
-    return 'canceledByUser';
-  } else if (ordersStatus === OrderStatusEnum.canceledByManufacturer) {
-    return 'canceledByManufacturer';
-  } else if (ordersStatus === OrderStatusEnum.inArchive) {
-    return 'inArchive';
-  }
-  return 'all';
 };
