@@ -55,6 +55,9 @@ const ManOrdersList: React.FC = () => {
         <div className={classes.tableColumnStatus}>{'Статус'}</div>
       </div>
       <div className={classes.scrollContainer}>
+        {manOrders.length === 0 && (
+          <div className={classes.emptyList}>{`список заказов со статусом "${ordersStatus}" пуст ...`}</div>
+        )}
         {manOrders.map((order) => (
           <OrderItem key={order.order.id} order={order} updateOrders={getManOrdersByParams} isOrderForManufacturer />
         ))}

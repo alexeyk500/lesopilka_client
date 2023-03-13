@@ -95,3 +95,10 @@
 .scrollContainer::-webkit-scrollbar-track {
   margin-bottom: 42px;
 }
+
+.emptyList {
+  display: flex;
+  margin-top: 3rem;
+  justify-content: center;
+  color: var(--orange_color);
+}
