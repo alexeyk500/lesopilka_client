@@ -92,8 +92,8 @@ export type OrderInfoType = {
   };
   deliveryPrice: number;
   manufacturerConfirmedDate: string;
-  deleteByUser: boolean;
-  deleteByManufacturer: boolean;
+  inArchiveForUser: boolean;
+  inArchiveForManufacturer: boolean;
   userInfo?: { id: string } & UserType;
 };
 
