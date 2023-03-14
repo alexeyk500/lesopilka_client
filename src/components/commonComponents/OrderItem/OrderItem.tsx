@@ -37,6 +37,16 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     setIsOpenChat((prev) => !prev);
   };
 
+  const onOrderStatusClick = () => {
+    if (isOpenDetails) {
+      setIsOpenDetails(false);
+      setIsOpenChat(false);
+    } else {
+      setIsOpenDetails(true);
+      setIsOpenChat(true);
+    }
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>
@@ -59,7 +69,11 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           />
         </div>
         <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
-          <OrderStatus order={order} isOrderForManufacturer={isOrderForManufacturer!} />
+          <OrderStatus
+            order={order}
+            onOrderStatusClick={onOrderStatusClick}
+            isOrderForManufacturer={isOrderForManufacturer!}
+          />
         </div>
       </div>
       {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} updateOrders={updateOrders} />}

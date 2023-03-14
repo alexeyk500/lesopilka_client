@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 type PropsType = {
   order: OrderType;
+  onOrderStatusClick: () => void;
   isOrderForManufacturer: boolean;
 };
 
@@ -12,7 +13,7 @@ export const getOrderStatusEnumValue = (status: OrderStatusEnum) => {
   return Object.entries(OrderStatusEnum).find(([key]) => key === status)?.[1] ?? '';
 };
 
-const OrderStatus: React.FC<PropsType> = ({ order, isOrderForManufacturer }) => {
+const OrderStatus: React.FC<PropsType> = ({ order, onOrderStatusClick, isOrderForManufacturer }) => {
   const status = order.order.status;
 
   let statusValue: OrderStatusEnum | '' = OrderStatusEnum.inArchive;
@@ -34,6 +35,10 @@ const OrderStatus: React.FC<PropsType> = ({ order, isOrderForManufacturer }) => 
     inArchive = false;
   }
 
+  const onClick = () => {
+    onOrderStatusClick && onOrderStatusClick();
+  };
+
   return (
     <div
       className={classNames(classes.container, {
@@ -43,6 +48,7 @@ const OrderStatus: React.FC<PropsType> = ({ order, isOrderForManufacturer }) => 
         [classes.canceledByManufacturer]: isCanceledByManufacturer,
         [classes.inArchive]: inArchive,
       })}
+      onClick={onClick}
     >
       <div className={classes.title}>{statusValue}</div>
     </div>
