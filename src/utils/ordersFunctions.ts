@@ -88,8 +88,22 @@ export const getProductAmountByAmountType = (product: ProductType, amountType: A
 
 export const getIsArchivedOrder = (order: OrderType) => {
   return order.order.inArchiveForUser || order.order.inArchiveForManufacturer;
-  // order.order.status ===
-  // Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.inArchive)];
+};
+
+export const getIsItUserOrderOnConfirming = ({
+  order,
+  isOrderForManufacturer,
+}: {
+  order: OrderType;
+  isOrderForManufacturer: boolean;
+}) => {
+  if (!isOrderForManufacturer) {
+    return (
+      order.order.status ===
+      Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.onConfirming)]
+    );
+  }
+  return false;
 };
 
 export const convertOrdersViewToServerOrdersStatus = (orderView: string) => {

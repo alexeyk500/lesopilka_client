@@ -8,6 +8,10 @@ import archiveIco from '../../../img/archiveIco.svg';
 import { OrderType } from '../../../types/types';
 
 import ToolTip from '../ToolTip/ToolTip';
+import { getIsArchivedOrder } from '../../../utils/ordersFunctions';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { archiveManufacturerOrderThunk } from '../../../store/manOrdersSlice';
+import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 
 type PropsType = {
   order: OrderType;
@@ -26,9 +30,39 @@ const ManOrderActions: React.FC<PropsType> = ({
   toggleChat,
   updateOrders,
 }) => {
+  const dispatch = useAppDispatch();
+
+  const onClickSendToArchive = () => {
+    showPortalPopUp({
+      popUpContent: (
+        <div className={classes.infoPopUpText}>
+          {'\nПодтвердите\nперемещение заказа в Архив?\n\n'}
+          <div className={classes.smallText}>{'все дальнейшие действия\nс заказом\nбудут невозможны\n\n\n'}</div>
+        </div>
+      ),
+      titleConfirmBtn: 'Архивировать',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        if (result) {
+          sendToArchive();
+        }
+      },
+    });
+  };
+
   const sendToArchive = () => {
     console.log('sendToArchive');
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (order.order.id && token) {
+      dispatch(archiveManufacturerOrderThunk({ orderId: order.order.id, isOrdersForManufacturer: true, token })).then(
+        () => {
+          updateOrders();
+        }
+      );
+    }
   };
+
+  const isArchivedOrder = getIsArchivedOrder(order);
 
   return (
     <div className={classes.container}>
@@ -50,9 +84,11 @@ const ManOrderActions: React.FC<PropsType> = ({
         />
       </ToolTip>
 
-      <ToolTip text={'Убрать заказ в архив'} customClass={classes.customTooltipArchive}>
-        <img src={archiveIco} className={classes.archiveIco} alt="archiveIco" onClick={sendToArchive} />
-      </ToolTip>
+      {!isArchivedOrder && (
+        <ToolTip text={'Убрать заказ в архив'} customClass={classes.customTooltipArchive}>
+          <img src={archiveIco} className={classes.archiveIco} alt="archiveIco" onClick={onClickSendToArchive} />
+        </ToolTip>
+      )}
     </div>
   );
 };

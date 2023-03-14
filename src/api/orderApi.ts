@@ -29,6 +29,12 @@ export type ConfirmManufacturerOrdersParamsType = {
   token: string;
 };
 
+export type ArchiveOrderParamsType = {
+  orderId: number;
+  isOrdersForManufacturer?: boolean;
+  token: string;
+};
+
 export const orderApi = {
   async getPaymentMethods() {
     const response = await instanceAxios.get<CategoryType[]>('/orders/payment_methods');
@@ -102,6 +108,18 @@ export const orderApi = {
       {
         orderId,
         requestProducts,
+      },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async archiveOrder({ orderId, isOrdersForManufacturer, token }: ArchiveOrderParamsType) {
+    const response = await instanceAxios.post<UniversalServerResponseType>(
+      '/orders/archive',
+      {
+        orderId,
+        isOrdersForManufacturer,
       },
       setAuthHeader(token)
     );

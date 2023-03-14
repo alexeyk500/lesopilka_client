@@ -28,12 +28,6 @@
   cursor: pointer;
 }
 
-.deleteIco {
-  height: 15px;
-  margin-top: 3px;
-  cursor: pointer;
-}
-
 .infoPopUpText {
   text-align: center;
   color: var(--blue_color);
@@ -50,7 +44,7 @@
 
 .customTooltipDetails {
   margin-top: -5px;
-  margin-left: -145px;
+  margin-left: -165px;
 }
 
 .customTooltipChat {
@@ -59,12 +53,18 @@
 }
 
 .customTooltipReturnToBasket {
-  margin-top: -4px;
+  margin-top: -5px;
   margin-left: -345px;
 }
 
 .customTooltipCancel {
-  margin-top: -7px;
-  margin-left: -143px;
+  margin-top: -5px;
+  margin-left: -153px;
+}
+
+.cancelIco {
+  height: 19px;
+  margin-top: 3px;
+  cursor: pointer;
 }
 
