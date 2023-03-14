@@ -10,7 +10,6 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import classNames from 'classnames';
 import { getDeliveryTitle } from '../../../utils/ordersFunctions';
 import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
-import ManOrderActions from '../ManOrderActions/ManOrderActions';
 
 type PropsType = {
   order: OrderType;
@@ -49,25 +48,15 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
         <div className={listClasses.tableColumnCost}>{`${totalCost} руб.`}</div>
         <div className={listClasses.tableColumnDelivery}>{deliveryTitle}</div>
         <div className={listClasses.tableColumnActions}>
-          {isOrderForManufacturer ? (
-            <ManOrderActions
-              order={order}
-              updateOrders={updateOrders}
-              isOpenDetails={isOpenDetails}
-              toggleDetails={toggleDetails}
-              isOpenChat={isOpenChat}
-              toggleChat={toggleChat}
-            />
-          ) : (
-            <OrderActions
-              order={order}
-              updateOrders={updateOrders}
-              isOpenDetails={isOpenDetails}
-              toggleDetails={toggleDetails}
-              isOpenChat={isOpenChat}
-              toggleChat={toggleChat}
-            />
-          )}
+          <OrderActions
+            order={order}
+            updateOrders={updateOrders}
+            isOpenDetails={isOpenDetails}
+            toggleDetails={toggleDetails}
+            isOpenChat={isOpenChat}
+            toggleChat={toggleChat}
+            isOrderForManufacturer={isOrderForManufacturer}
+          />
         </div>
         <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
           <OrderStatus order={order} isOrderForManufacturer={isOrderForManufacturer!} />

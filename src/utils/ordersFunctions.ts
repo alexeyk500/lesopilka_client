@@ -7,7 +7,6 @@ import {
   ServerDeliveryMethodEnum,
 } from '../types/types';
 import { formatPrice } from './functions';
-import { getOrderStatusEnumValue } from '../components/commonComponents/OrderStatus/OrderStatus';
 
 export const getOrderDetailHeader = ({
   orderId,
@@ -24,10 +23,6 @@ export const getOrderDetailHeader = ({
     return `Расхождения по заказу № ${orderId} на ${date}`;
   }
   return `Заказ № ${orderId} на ${date}`;
-};
-
-export const checkIsPossibleCancelOrderAndReturnToBasket = (orderStatus: OrderStatusEnum) => {
-  return getOrderStatusEnumValue(orderStatus) === OrderStatusEnum.onConfirming;
 };
 
 export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number, oneRow?: boolean) => {
@@ -90,20 +85,32 @@ export const getIsArchivedOrder = (order: OrderType) => {
   return order.order.inArchiveForUser || order.order.inArchiveForManufacturer;
 };
 
-export const getIsItUserOrderOnConfirming = ({
-  order,
-  isOrderForManufacturer,
-}: {
-  order: OrderType;
-  isOrderForManufacturer: boolean;
-}) => {
-  if (!isOrderForManufacturer) {
-    return (
-      order.order.status ===
-      Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.onConfirming)]
-    );
-  }
-  return false;
+export const getIsOrderOnConfirming = (order: OrderType) => {
+  return (
+    order.order.status ===
+    Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.onConfirming)]
+  );
+};
+
+export const getIsOrderConfirmed = (order: OrderType) => {
+  return (
+    order.order.status ===
+    Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.confirmedOrder)]
+  );
+};
+
+export const getIsOrderCanceledByUser = (order: OrderType) => {
+  return (
+    order.order.status ===
+    Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.canceledByUser)]
+  );
+};
+
+export const getIsOrderCanceledManufacturer = (order: OrderType) => {
+  return (
+    order.order.status ===
+    Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.canceledByManufacturer)]
+  );
 };
 
 export const convertOrdersViewToServerOrdersStatus = (orderView: string) => {

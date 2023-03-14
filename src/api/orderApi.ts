@@ -31,7 +31,7 @@ export type ConfirmManufacturerOrdersParamsType = {
 
 export type ArchiveOrderParamsType = {
   orderId: number;
-  isOrdersForManufacturer?: boolean;
+  isOrderForManufacturer?: boolean;
   token: string;
 };
 
@@ -114,12 +114,12 @@ export const orderApi = {
     return response.data;
   },
 
-  async archiveOrder({ orderId, isOrdersForManufacturer, token }: ArchiveOrderParamsType) {
+  async archiveOrder({ orderId, isOrderForManufacturer, token }: ArchiveOrderParamsType) {
     const response = await instanceAxios.post<UniversalServerResponseType>(
       '/orders/archive',
       {
         orderId,
-        isOrdersForManufacturer,
+        isOrderForManufacturer,
       },
       setAuthHeader(token)
     );

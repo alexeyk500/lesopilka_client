@@ -14,10 +14,13 @@ import { returnToBasketAndCancelOrderByIdThunk } from '../../../store/ordersSlic
 
 import ToolTip from '../ToolTip/ToolTip';
 import {
-  checkIsPossibleCancelOrderAndReturnToBasket,
   getIsArchivedOrder,
-  getIsItUserOrderOnConfirming,
+  getIsOrderOnConfirming,
+  getIsOrderConfirmed,
+  getIsOrderCanceledByUser,
+  getIsOrderCanceledManufacturer,
 } from '../../../utils/ordersFunctions';
+import { archiveManufacturerOrderThunk } from '../../../store/manOrdersSlice';
 
 type PropsType = {
   order: OrderType;
@@ -26,6 +29,7 @@ type PropsType = {
   toggleDetails: () => void;
   isOpenChat: boolean;
   toggleChat: () => void;
+  isOrderForManufacturer?: boolean;
 };
 
 const OrderActions: React.FC<PropsType> = ({
@@ -35,6 +39,7 @@ const OrderActions: React.FC<PropsType> = ({
   isOpenChat,
   toggleChat,
   updateOrders,
+  isOrderForManufacturer,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -58,13 +63,42 @@ const OrderActions: React.FC<PropsType> = ({
     });
   };
 
-  const isPossibleReturnToBasket = checkIsPossibleCancelOrderAndReturnToBasket(order.order.status);
-  const isArchivedOrder = getIsArchivedOrder(order);
-  const isItUserOrderOnConfirming = getIsItUserOrderOnConfirming({ order, isOrderForManufacturer: false });
-  const onClickSendToArchive = () => {};
+  const onClickSendToArchive = () => {
+    showPortalPopUp({
+      popUpContent: (
+        <div className={classes.infoPopUpText}>
+          {'\nПодтвердите\nперемещение заказа в Архив?\n\n'}
+          <div className={classes.smallText}>{'все дальнейшие действия\nс заказом\nбудут невозможны\n\n\n'}</div>
+        </div>
+      ),
+      titleConfirmBtn: 'Архивировать',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        if (result) {
+          sendToArchive();
+        }
+      },
+    });
+  };
 
-  return (
-    <div className={classes.container}>
+  const sendToArchive = () => {
+    console.log('sendToArchive');
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (order.order.id && token) {
+      dispatch(archiveManufacturerOrderThunk({ orderId: order.order.id, isOrderForManufacturer, token })).then(() => {
+        updateOrders();
+      });
+    }
+  };
+
+  const isArchivedOrder = getIsArchivedOrder(order);
+  const isOrderOnConfirming = getIsOrderOnConfirming(order);
+  const isOrderConfirmed = getIsOrderConfirmed(order);
+  const isOrderCanceledByUser = getIsOrderCanceledByUser(order);
+  const isOrderCanceledManufacturer = getIsOrderCanceledManufacturer(order);
+
+  const ViewOrderBtn: React.FC = () => {
+    return (
       <ToolTip text={'Просмотр заказа'} customClass={classes.customTooltipDetails}>
         <img
           src={isOpenDetails ? viewCloseIco : viewIco}
@@ -73,37 +107,89 @@ const OrderActions: React.FC<PropsType> = ({
           alt="view order"
         />
       </ToolTip>
-
+    );
+  };
+  const ViewMessagesBtn: React.FC = () => {
+    return (
       <ToolTip text={'Переписка по заказу'} customClass={classes.customTooltipChat}>
         <img
           src={isOpenChat ? chatIcoOff : chatIco}
           className={classes.chatIco}
           onClick={toggleChat}
-          alt="view order"
+          alt="view messages"
         />
       </ToolTip>
+    );
+  };
+  const ReturnToBasketBtn: React.FC = () => {
+    return (
+      <ToolTip text={'Вернуть товар в корзину и отменить заказ'} customClass={classes.customTooltipReturnToBasket}>
+        <img
+          src={returnToBasket}
+          className={classes.returnToBasketIco}
+          alt="return order to basket"
+          onClick={onCancelOrderAndReturnToBasket}
+        />
+      </ToolTip>
+    );
+  };
+  const CancelOrderBtn: React.FC = () => {
+    return (
+      <ToolTip text={'Отменить заказ'} customClass={classes.customTooltipCancel}>
+        <img src={cancelIco} className={classes.cancelIco} alt="cancel order" onClick={() => {}} />
+      </ToolTip>
+    );
+  };
+  const ArchiveOrderBtn: React.FC = () => {
+    return (
+      <ToolTip text={'Убрать заказ в архив'} customClass={classes.customTooltipArchive}>
+        <img src={archiveIco} className={classes.archiveIco} alt="archiveIco" onClick={onClickSendToArchive} />
+      </ToolTip>
+    );
+  };
 
-      {isPossibleReturnToBasket && (
-        <>
-          <ToolTip text={'Вернуть товар в корзину и отменить заказ'} customClass={classes.customTooltipReturnToBasket}>
-            <img
-              src={returnToBasket}
-              className={classes.returnToBasketIco}
-              alt="return order to basket"
-              onClick={onCancelOrderAndReturnToBasket}
-            />
-          </ToolTip>
-          <ToolTip text={'Отменить заказ'} customClass={classes.customTooltipCancel}>
-            <img src={cancelIco} className={classes.cancelIco} alt="cancel order" onClick={() => {}} />
-          </ToolTip>
-        </>
-      )}
+  const OrderOnConfirmingButtons: React.FC = () => {
+    return isOrderForManufacturer ? null : (
+      <>
+        <ReturnToBasketBtn />
+        <CancelOrderBtn />
+      </>
+    );
+  };
+  const OrderConfirmedButtons: React.FC = () => {
+    return isOrderForManufacturer ? (
+      <>
+        <ArchiveOrderBtn />
+      </>
+    ) : (
+      <>
+        <ArchiveOrderBtn />
+        <CancelOrderBtn />
+      </>
+    );
+  };
+  const OrderCanceledByUserButtons: React.FC = () => {
+    return <ArchiveOrderBtn />;
+  };
+  const OrderCanceledManufacturerButtons: React.FC = () => {
+    return <ArchiveOrderBtn />;
+  };
 
-      {!isArchivedOrder && !isItUserOrderOnConfirming && (
-        <ToolTip text={'Убрать заказ в архив'} customClass={classes.customTooltipArchive}>
-          <img src={archiveIco} className={classes.archiveIco} alt="archiveIco" onClick={onClickSendToArchive} />
-        </ToolTip>
-      )}
+  return (
+    <div className={classes.container}>
+      <ViewOrderBtn />
+      <ViewMessagesBtn />
+      {!isArchivedOrder ? (
+        isOrderOnConfirming ? (
+          <OrderOnConfirmingButtons />
+        ) : isOrderConfirmed ? (
+          <OrderConfirmedButtons />
+        ) : isOrderCanceledByUser ? (
+          <OrderCanceledByUserButtons />
+        ) : isOrderCanceledManufacturer ? (
+          <OrderCanceledManufacturerButtons />
+        ) : null
+      ) : null}
     </div>
   );
 };
