@@ -216,7 +216,9 @@ const CardControlAndInfo: React.FC = () => {
         </div>
       </div>
 
-      <LicensesMonitor />
+      <div className={classes.licensesMonitorContainer}>
+        <LicensesMonitor />
+      </div>
 
       <div className={classes.btnReadyContainer}>
         {priceEditProductId ? (

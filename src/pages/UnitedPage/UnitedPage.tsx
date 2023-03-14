@@ -46,11 +46,11 @@ const UnitedPage: React.FC = () => {
   return (
     <div className={classes.container}>
       {isShowFilterSelectors ? (
-        <LeftColumn title={'Фильтры поиска'}>
+        <LeftColumn title={'Фильтры поиска'} hasScroll>
           <FilterSelectors />
         </LeftColumn>
       ) : (
-        <LeftColumn title={'Каталог'}>
+        <LeftColumn title={'Каталог'} hasScroll>
           <Catalog onClickCatalogCategory={onClickCatalogCategory} />
         </LeftColumn>
       )}

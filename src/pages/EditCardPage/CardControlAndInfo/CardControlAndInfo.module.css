@@ -20,6 +20,8 @@
 }
 
 .cardContainer {
+  display: flex;
+  width: 256px;
   margin-top: -22px;
   scale: 0.85
 }
@@ -107,6 +109,10 @@
 
 .customClassBottomBtnGroupLogout {
   padding: 0 64px 0 64px;
+}
+
+.licensesMonitorContainer {
+  margin-left: -8px;
 }
 
 
