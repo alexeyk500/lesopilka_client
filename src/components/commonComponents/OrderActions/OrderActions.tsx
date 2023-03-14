@@ -10,7 +10,7 @@ import returnToBasket from '../../../img/returnToBasket.svg';
 import { OrderType } from '../../../types/types';
 import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { returnToBasketAndCancelOrderByIdThunk } from '../../../store/ordersSlice';
+import { archiveOrderThunk, cancelOrderThunk, returnToBasketAndCancelOrderByIdThunk } from '../../../store/ordersSlice';
 
 import ToolTip from '../ToolTip/ToolTip';
 import {
@@ -20,7 +20,6 @@ import {
   getIsOrderCanceledByUser,
   getIsOrderCanceledManufacturer,
 } from '../../../utils/ordersFunctions';
-import { archiveManufacturerOrderThunk } from '../../../store/manOrdersSlice';
 
 type PropsType = {
   order: OrderType;
@@ -82,10 +81,31 @@ const OrderActions: React.FC<PropsType> = ({
   };
 
   const sendToArchive = () => {
-    console.log('sendToArchive');
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (order.order.id && token) {
-      dispatch(archiveManufacturerOrderThunk({ orderId: order.order.id, isOrderForManufacturer, token })).then(() => {
+      dispatch(archiveOrderThunk({ orderId: order.order.id, isOrderForManufacturer, token })).then(() => {
+        updateOrders();
+      });
+    }
+  };
+
+  const onClickCancelOrder = () => {
+    showPortalPopUp({
+      popUpContent: <div className={classes.infoPopUpText}>{'\nПодтвердите\nотмену заказа\n\n\n'}</div>,
+      titleConfirmBtn: 'Отменить',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        if (result) {
+          cancelOrder();
+        }
+      },
+    });
+  };
+
+  const cancelOrder = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (order.order.id && token) {
+      dispatch(cancelOrderThunk({ orderId: order.order.id, isOrderForManufacturer, token })).then(() => {
         updateOrders();
       });
     }
@@ -136,7 +156,7 @@ const OrderActions: React.FC<PropsType> = ({
   const CancelOrderBtn: React.FC = () => {
     return (
       <ToolTip text={'Отменить заказ'} customClass={classes.customTooltipCancel}>
-        <img src={cancelIco} className={classes.cancelIco} alt="cancel order" onClick={() => {}} />
+        <img src={cancelIco} className={classes.cancelIco} alt="cancel order" onClick={onClickCancelOrder} />
       </ToolTip>
     );
   };

@@ -18,3 +18,17 @@
   margin: 2px 0;
   border-bottom: 1px solid var(--gray_color_light)
 }
+
+.infoPopUpText {
+  text-align: center;
+  color: var(--blue_color);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: pre;
+}
+
+.customPopUpBottomBtnGroup {
+  width: 378px;
+  padding: 0 32px !important;
+  margin-bottom: 0 !important;
+}

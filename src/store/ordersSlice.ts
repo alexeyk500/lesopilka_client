@@ -3,7 +3,7 @@ import { RootState } from './store';
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { serverApi } from '../api/serverApi';
 import { GetOrderServerType, UniversalServerResponseType } from '../api/serverResponseTypes';
-import { GetOrdersParamsType } from '../api/orderApi';
+import { ArchiveOrderParamsType, CancelOrderParamsType, GetOrdersParamsType } from '../api/orderApi';
 import { OrderType } from '../types/types';
 import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS } from '../utils/constants';
 
@@ -50,6 +50,30 @@ export const returnToBasketAndCancelOrderByIdThunk = createAsyncThunk<
   }
 });
 
+export const archiveOrderThunk = createAsyncThunk<
+  UniversalServerResponseType,
+  ArchiveOrderParamsType,
+  { rejectValue: string }
+>('archiveOrderThunk', async (archiveOrderParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.archiveOrder(archiveOrderParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка архивации заказа');
+  }
+});
+
+export const cancelOrderThunk = createAsyncThunk<
+  UniversalServerResponseType,
+  CancelOrderParamsType,
+  { rejectValue: string }
+>('cancelOrderThunk', async (cancelOrderParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.cancelOrder(cancelOrderParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка отмены заказа');
+  }
+});
+
 export const ordersSlice = createSlice({
   name: 'ordersSlice',
   initialState,
@@ -76,9 +100,17 @@ export const ordersSlice = createSlice({
       .addMatcher(isAnyOf(getOrdersByParamsThunk.pending, returnToBasketAndCancelOrderByIdThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getOrdersByParamsThunk.rejected, returnToBasketAndCancelOrderByIdThunk.rejected), (state) => {
-        state.isLoading = false;
-      });
+      .addMatcher(
+        isAnyOf(
+          getOrdersByParamsThunk.rejected,
+          returnToBasketAndCancelOrderByIdThunk.rejected,
+          archiveOrderThunk.rejected,
+          cancelOrderThunk.rejected
+        ),
+        (state) => {
+          state.isLoading = false;
+        }
+      );
   },
 });
 

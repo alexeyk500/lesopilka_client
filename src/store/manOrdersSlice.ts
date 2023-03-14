@@ -4,8 +4,8 @@ import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS, MIN_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS } from '../utils/constants';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { GetOrderServerType, UniversalServerResponseType } from '../api/serverResponseTypes';
-import { ArchiveOrderParamsType, ConfirmManufacturerOrdersParamsType, GetOrdersParamsType } from '../api/orderApi';
+import { GetOrderServerType } from '../api/serverResponseTypes';
+import { ConfirmManufacturerOrdersParamsType, GetOrdersParamsType } from '../api/orderApi';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
@@ -52,18 +52,6 @@ export const confirmManufacturerOrderThunk = createAsyncThunk<
   }
 });
 
-export const archiveManufacturerOrderThunk = createAsyncThunk<
-  UniversalServerResponseType,
-  ArchiveOrderParamsType,
-  { rejectValue: string }
->('manOrders/archiveManufacturerOrderThunk', async (archiveOrderParams, { rejectWithValue }) => {
-  try {
-    return await serverApi.archiveOrder(archiveOrderParams);
-  } catch (e) {
-    return rejectWithValue('Ошибка архивации заказа');
-  }
-});
-
 export const manOrdersSlice = createSlice({
   name: 'manOrdersSlice',
   initialState,
@@ -88,11 +76,7 @@ export const manOrdersSlice = createSlice({
         state.isLoading = true;
       })
       .addMatcher(
-        isAnyOf(
-          getManOrdersByParamsThunk.rejected,
-          confirmManufacturerOrderThunk.rejected,
-          archiveManufacturerOrderThunk.rejected
-        ),
+        isAnyOf(getManOrdersByParamsThunk.rejected, confirmManufacturerOrderThunk.rejected),
         (state, action) => {
           state.isLoading = false;
           showErrorPopUp(action.payload!);

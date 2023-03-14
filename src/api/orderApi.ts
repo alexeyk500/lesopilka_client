@@ -35,6 +35,8 @@ export type ArchiveOrderParamsType = {
   token: string;
 };
 
+export type CancelOrderParamsType = ArchiveOrderParamsType;
+
 export const orderApi = {
   async getPaymentMethods() {
     const response = await instanceAxios.get<CategoryType[]>('/orders/payment_methods');
@@ -117,6 +119,18 @@ export const orderApi = {
   async archiveOrder({ orderId, isOrderForManufacturer, token }: ArchiveOrderParamsType) {
     const response = await instanceAxios.post<UniversalServerResponseType>(
       '/orders/archive',
+      {
+        orderId,
+        isOrderForManufacturer,
+      },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async cancelOrder({ orderId, isOrderForManufacturer, token }: CancelOrderParamsType) {
+    const response = await instanceAxios.post<UniversalServerResponseType>(
+      '/orders/cancel',
       {
         orderId,
         isOrderForManufacturer,

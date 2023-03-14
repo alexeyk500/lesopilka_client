@@ -8,6 +8,8 @@ import { getIsArchivedOrder, getProductsAllAmountsType } from '../../../../../ut
 import ManOrderProductsList from './ManOrderProductsList/ManOrderProductsList';
 import { useAppDispatch } from '../../../../../hooks/hooks';
 import { confirmManufacturerOrderThunk } from '../../../../../store/manOrdersSlice';
+import { showPortalPopUp } from '../../../../../components/PortalPopUp/PortalPopUp';
+import { cancelOrderThunk } from '../../../../../store/ordersSlice';
 
 type PropsType = {
   order: OrderType;
@@ -65,8 +67,25 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
   };
 
   const onRejectClick = () => {
-    console.log('onRejectClick');
-    // updateOrders()
+    showPortalPopUp({
+      popUpContent: <div className={classes.infoPopUpText}>{'\nПодтвердите свой отказ\nот поставки заказа\n\n\n'}</div>,
+      titleConfirmBtn: 'Отказаться',
+      customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
+      onClosePopUp: (result?: boolean | FormData | undefined) => {
+        if (result) {
+          rejectOrder();
+        }
+      },
+    });
+  };
+
+  const rejectOrder = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (order.order.id && token) {
+      dispatch(cancelOrderThunk({ orderId: order.order.id, isOrderForManufacturer: true, token })).then(() => {
+        updateOrders();
+      });
+    }
   };
 
   return (

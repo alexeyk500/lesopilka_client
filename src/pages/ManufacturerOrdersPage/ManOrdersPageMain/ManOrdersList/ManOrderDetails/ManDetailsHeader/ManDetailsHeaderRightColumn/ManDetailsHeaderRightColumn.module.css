@@ -27,3 +27,21 @@
   font-weight: 600;
   white-space: pre-line;
 }
+
+.canceledManufacturerTitle {
+  display: flex;
+  color: var(--red_color);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  white-space: pre-line;
+}
+
+.canceledByUserTitle {
+  display: flex;
+  color: var(--orange_color);
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  white-space: pre-line;
+}
