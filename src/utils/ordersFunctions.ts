@@ -81,6 +81,8 @@ export const getProductAmountByAmountType = (product: ProductType, amountType: A
   return 0;
 };
 
+export const getIsConfirmedOrder = (order: OrderType) => !!order.order.manufacturerConfirmedDate;
+
 export const getIsArchivedOrder = (order: OrderType) => {
   return order.order.inArchiveForUser || order.order.inArchiveForManufacturer;
 };

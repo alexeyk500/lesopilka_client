@@ -7,11 +7,12 @@ import ButtonComponent, {
 import { AmountTypeEnum, OrderType } from '../../../../../../../types/types';
 import {
   getIsArchivedOrder,
+  getIsConfirmedOrder,
   getIsOrderCanceledByUser,
   getIsOrderCanceledManufacturer,
 } from '../../../../../../../utils/ordersFunctions';
 
-const getShowRightColumn = (infoTab: AmountTypeEnum) => {
+const getDisplayRightColumn = (infoTab: AmountTypeEnum) => {
   return infoTab === AmountTypeEnum.inConfirmation || infoTab === AmountTypeEnum.inOrder;
 };
 
@@ -23,11 +24,11 @@ type PropsType = {
 };
 
 const ManDetailsHeaderRightColumn: React.FC<PropsType> = ({ order, infoTab, onConfirmClick, onRejectClick }) => {
-  const isShowRightColumn = getShowRightColumn(infoTab);
-  const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
+  const isShowRightColumn = getDisplayRightColumn(infoTab);
   const isArchivedOrder = getIsArchivedOrder(order);
-  const isOrderCanceledManufacturer = getIsOrderCanceledManufacturer(order);
+  const isConfirmedOrder = getIsConfirmedOrder(order);
   const isOrderCanceledByUser = getIsOrderCanceledByUser(order);
+  const isOrderCanceledManufacturer = getIsOrderCanceledManufacturer(order);
 
   return (
     <div className={classes.container}>
