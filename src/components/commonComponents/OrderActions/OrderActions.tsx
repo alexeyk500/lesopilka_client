@@ -52,14 +52,19 @@ const OrderActions: React.FC<PropsType> = ({
       titleConfirmBtn: 'Отменить заказ',
       customClassBottomBtnGroup: classes.customPopUpBottomBtnGroup,
       onClosePopUp: (result?: boolean | FormData | undefined) => {
-        const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-        if (result && token) {
-          dispatch(returnToBasketAndCancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
-            updateOrders();
-          });
+        if (result) {
+          returnToBasketAndCancelOrder();
         }
       },
     });
+  };
+  const returnToBasketAndCancelOrder = () => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (token) {
+      dispatch(returnToBasketAndCancelOrderByIdThunk({ orderId: order.order.id, token })).then(() => {
+        updateOrders();
+      });
+    }
   };
 
   const onClickSendToArchive = () => {
@@ -79,7 +84,6 @@ const OrderActions: React.FC<PropsType> = ({
       },
     });
   };
-
   const sendToArchive = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (order.order.id && token) {
@@ -101,7 +105,6 @@ const OrderActions: React.FC<PropsType> = ({
       },
     });
   };
-
   const cancelOrder = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (order.order.id && token) {
@@ -112,8 +115,8 @@ const OrderActions: React.FC<PropsType> = ({
   };
 
   const isArchivedOrder = getIsArchivedOrder(order);
-  const isOrderOnConfirming = getIsOrderOnConfirming(order);
   const isOrderConfirmed = getIsOrderConfirmed(order);
+  const isOrderOnConfirming = getIsOrderOnConfirming(order);
   const isOrderCanceledByUser = getIsOrderCanceledByUser(order);
   const isOrderCanceledManufacturer = getIsOrderCanceledManufacturer(order);
 
