@@ -100,7 +100,7 @@ export type OrderInfoType = {
       title: string;
     };
   };
-  deliveryPrice: number;
+  deliveryPrice: number | null;
   manufacturerConfirmedDate: string;
   inArchiveForUser: boolean;
   inArchiveForManufacturer: boolean;

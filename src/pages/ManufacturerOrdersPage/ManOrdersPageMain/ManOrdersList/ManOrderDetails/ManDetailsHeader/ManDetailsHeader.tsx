@@ -9,12 +9,19 @@ type PropsType = {
   infoTab: AmountTypeEnum;
   onConfirmClick: () => void;
   onRejectClick: () => void;
+  confirmedDeliveryPrice: number | null;
 };
 
-const ManDetailsHeader: React.FC<PropsType> = ({ order, infoTab, onConfirmClick, onRejectClick }) => {
+const ManDetailsHeader: React.FC<PropsType> = ({
+  order,
+  infoTab,
+  onConfirmClick,
+  onRejectClick,
+  confirmedDeliveryPrice,
+}) => {
   return (
     <div className={classes.container}>
-      <ManDetailsHeaderLeftColumn order={order} infoTab={infoTab} />
+      <ManDetailsHeaderLeftColumn order={order} infoTab={infoTab} confirmedDeliveryPrice={confirmedDeliveryPrice} />
       <ManDetailsHeaderRightColumn
         order={order}
         infoTab={infoTab}

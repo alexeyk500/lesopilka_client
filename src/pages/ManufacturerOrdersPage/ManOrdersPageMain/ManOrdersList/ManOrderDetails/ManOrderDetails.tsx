@@ -4,12 +4,18 @@ import { AmountTypeEnum, OrderType, ProductType } from '../../../../../types/typ
 import InfoTabSelector from '../../../../../components/commonComponents/InfoTabSelector/InfoTabSelector';
 import ManDetailsHeader from './ManDetailsHeader/ManDetailsHeader';
 import ManDetailsConclusion from './ManDetailsConclusion/ManDetailsConclusion';
-import { getIsArchivedOrder, getProductsAllAmountsType } from '../../../../../utils/ordersFunctions';
+import {
+  getIsArchivedOrder,
+  getIsConfirmationTab,
+  getIsConfirmedOrder,
+  getProductsAllAmountsType,
+} from '../../../../../utils/ordersFunctions';
 import ManOrderProductsList from './ManOrderProductsList/ManOrderProductsList';
 import { useAppDispatch } from '../../../../../hooks/hooks';
 import { confirmManufacturerOrderThunk } from '../../../../../store/manOrdersSlice';
 import { showPortalPopUp } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { cancelOrderThunk } from '../../../../../store/ordersSlice';
+import ManDetailsDeliveryConfirmation from './ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
 
 type PropsType = {
   order: OrderType;
@@ -32,14 +38,22 @@ const getIsShowNoDivergenceInOrder = (products: ProductType[], amountType: Amoun
 const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
   const dispatch = useAppDispatch();
   const [amountType, setAmountType] = useState(AmountTypeEnum.inConfirmation);
-  const productsStore = getProductsAllAmountsType(order);
+  const [freeDelivery, setFreeDelivery] = useState(false);
+  const [confirmedDeliveryPrice, setConfirmedDeliveryPrice] = useState<number | null>(order.order.deliveryPrice);
   const [confirmationProducts, setConfirmationProducts] = useState<ProductType[] | undefined>(undefined);
-  const products = confirmationProducts ? confirmationProducts : productsStore;
 
+  useEffect(() => {
+    if (freeDelivery) {
+      setConfirmedDeliveryPrice(null);
+    }
+  }, [freeDelivery]);
+
+  const productsStore = getProductsAllAmountsType(order);
+  const products = confirmationProducts ? confirmationProducts : productsStore;
   const isShowNoDivergenceInOrder = getIsShowNoDivergenceInOrder(products, amountType);
 
-  const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
-  const isConfirmationTab = amountType === AmountTypeEnum.inConfirmation;
+  const isConfirmedOrder = getIsConfirmedOrder(order);
+  const isConfirmationTab = getIsConfirmationTab(amountType);
   const isArchivedOrder = getIsArchivedOrder(order);
 
   const isSetConfirmationProducts = isConfirmationTab && !isConfirmedOrder && !isArchivedOrder && !confirmationProducts;
@@ -100,6 +114,7 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
             infoTab={amountType}
             onConfirmClick={onConfirmClick}
             onRejectClick={onRejectClick}
+            confirmedDeliveryPrice={confirmedDeliveryPrice}
           />
           <div className={classes.delimiter} />
           <ManOrderProductsList
@@ -110,6 +125,13 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
           />
           <div className={classes.delimiter} />
           <ManDetailsConclusion products={products} amountType={amountType} />
+          {isConfirmationTab && (
+            <ManDetailsDeliveryConfirmation
+              order={order}
+              freeDelivery={freeDelivery}
+              setFreeDelivery={setFreeDelivery}
+            />
+          )}
         </>
       )}
     </div>

@@ -8,15 +8,13 @@ import {
 } from '../types/types';
 import { formatPrice } from './functions';
 
-export const getOrderDetailHeader = ({
-  orderId,
-  date,
-  infoTab,
-}: {
+type GetOrderDetailHeaderParamsType = {
   orderId: number;
   date: string;
   infoTab: AmountTypeEnum;
-}) => {
+};
+
+export const getOrderDetailHeader = ({ orderId, date, infoTab }: GetOrderDetailHeaderParamsType) => {
   if (infoTab === AmountTypeEnum.inConfirmation) {
     return `Подтверждение по заказу № ${orderId} на ${date}`;
   } else if (infoTab === AmountTypeEnum.inDivergence) {
@@ -25,20 +23,25 @@ export const getOrderDetailHeader = ({
   return `Заказ № ${orderId} на ${date}`;
 };
 
-export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number, oneRow?: boolean) => {
+export const getIsDeliveryMethodSelfPickUp = (order: OrderType) =>
+  order.order.deliveryMethod.title === ServerDeliveryMethodEnum.selfPickUp;
+
+export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: number | null, oneRow?: boolean) => {
   if (deliveryMethodTile === ServerDeliveryMethodEnum.selfPickUp) {
     return deliveryMethodTile;
   }
   if (deliveryMethodTile === ServerDeliveryMethodEnum.delivery) {
     if (deliveryPrice !== undefined) {
       if (deliveryPrice === null) {
-        return oneRow ? `${deliveryMethodTile}, стоимость доставки заказа - на подсчете у поставщика` : 'На подсчете';
+        return oneRow
+          ? `${deliveryMethodTile} силами поставщика, стоимость доставки - на подсчете у поставщика`
+          : 'На подсчете';
       }
       if (deliveryPrice === 0) {
         return oneRow ? `${deliveryMethodTile}. Поставщик доставит вам заказ бесплатно` : 'Бесплатно';
       } else {
         return oneRow
-          ? `${deliveryMethodTile}, стоимость доставки заказа - ${formatPrice(deliveryPrice)} руб.`
+          ? `${deliveryMethodTile} силами поставщика, стоимость доставки заказа - ${formatPrice(deliveryPrice)} руб.`
           : `${formatPrice(deliveryPrice)} руб.`;
       }
     }
@@ -81,8 +84,6 @@ export const getProductAmountByAmountType = (product: ProductType, amountType: A
   return 0;
 };
 
-export const getIsConfirmationTab = (amountType: AmountTypeEnum) => amountType === AmountTypeEnum.inConfirmation;
-
 export const getIsConfirmedOrder = (order: OrderType) => !!order.order.manufacturerConfirmedDate;
 
 export const getIsArchivedOrder = (order: OrderType) => {
@@ -116,6 +117,8 @@ export const getIsOrderCanceledManufacturer = (order: OrderType) => {
     Object.keys(OrderStatusEnum)[Object.values(OrderStatusEnum).indexOf(OrderStatusEnum.canceledByManufacturer)]
   );
 };
+
+export const getIsConfirmationTab = (amountType: AmountTypeEnum) => amountType === AmountTypeEnum.inConfirmation;
 
 export const convertOrdersViewToServerOrdersStatus = (orderView: string) => {
   if (orderView === OrderViewEnum.active) {
