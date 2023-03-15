@@ -2,20 +2,19 @@ import React from 'react';
 import { AmountTypeEnum, OrderType, ProductType } from '../../../../../../types/types';
 import classes from './ManOrderProductsList.module.css';
 import OrderProductsList from '../../../../../BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/OrderProductsList/OrderProductsList';
-import { getIsArchivedOrder } from '../../../../../../utils/ordersFunctions';
+import { getIsArchivedOrder, getIsConfirmationTab, getIsConfirmedOrder } from '../../../../../../utils/ordersFunctions';
 
 type PropsType = {
   order: OrderType;
   products: ProductType[];
   amountType: AmountTypeEnum;
   setConfirmationProducts?: (products: ProductType[] | undefined) => void;
-  // confirmationProducts?: ProductType[];
 };
 
 const ManOrderProductsList: React.FC<PropsType> = ({ order, products, amountType, setConfirmationProducts }) => {
-  const isConfirmedOrder = !!order.order.manufacturerConfirmedDate;
-  const isConfirmationTab = amountType === AmountTypeEnum.inConfirmation;
   const isArchivedOrder = getIsArchivedOrder(order);
+  const isConfirmedOrder = getIsConfirmedOrder(order);
+  const isConfirmationTab = getIsConfirmationTab(amountType);
 
   const updateProductConfirmationAmount = (product: ProductType, newAmount: number) => {
     if (setConfirmationProducts) {
