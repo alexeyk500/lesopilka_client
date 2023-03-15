@@ -38,7 +38,7 @@ export const getDeliveryTitle = (deliveryMethodTile: string, deliveryPrice?: num
           : 'На подсчете';
       }
       if (deliveryPrice === 0) {
-        return oneRow ? `${deliveryMethodTile}. Поставщик доставит вам заказ бесплатно` : 'Бесплатно';
+        return oneRow ? `${deliveryMethodTile} силами поставщика. Поставщик доставит вам заказ бесплатно` : 'Бесплатно';
       } else {
         return oneRow
           ? `${deliveryMethodTile} силами поставщика, стоимость доставки заказа - ${formatPrice(deliveryPrice)} руб.`

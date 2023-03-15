@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classes from './ManDetailsHeaderLeftColumn.module.css';
 import { getDeliveryTitle, getOrderDetailHeader } from '../../../../../../../utils/ordersFunctions';
 import { formatUTCtoDDMMMMYYYY } from '../../../../../../../utils/dateTimeFunctions';
@@ -8,12 +8,17 @@ import { AmountTypeEnum, DeliveryMethodEnum, OrderType } from '../../../../../..
 type PropsType = {
   order: OrderType;
   infoTab: AmountTypeEnum;
+  freeDelivery: boolean;
   confirmedDeliveryPrice: number | null;
 };
 
-const ManDetailsHeaderLeftColumn: React.FC<PropsType> = ({ order, infoTab, confirmedDeliveryPrice }) => {
+const ManDetailsHeaderLeftColumn: React.FC<PropsType> = ({ order, infoTab, freeDelivery, confirmedDeliveryPrice }) => {
   const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.deliveryDate);
-  const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, confirmedDeliveryPrice, true);
+  const deliveryTitle = getDeliveryTitle(
+    order.order.deliveryMethod.title,
+    freeDelivery ? 0 : confirmedDeliveryPrice,
+    true
+  );
   const paymentMethodTitle = getPaymentMethodTitle(
     order.order.deliveryMethod.title as DeliveryMethodEnum,
     order.order.paymentMethod.title

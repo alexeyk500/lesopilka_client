@@ -114,6 +114,7 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
             infoTab={amountType}
             onConfirmClick={onConfirmClick}
             onRejectClick={onRejectClick}
+            freeDelivery={freeDelivery}
             confirmedDeliveryPrice={confirmedDeliveryPrice}
           />
           <div className={classes.delimiter} />
@@ -130,6 +131,8 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
               order={order}
               freeDelivery={freeDelivery}
               setFreeDelivery={setFreeDelivery}
+              confirmedDeliveryPrice={confirmedDeliveryPrice}
+              setConfirmedDeliveryPrice={setConfirmedDeliveryPrice}
             />
           )}
         </>

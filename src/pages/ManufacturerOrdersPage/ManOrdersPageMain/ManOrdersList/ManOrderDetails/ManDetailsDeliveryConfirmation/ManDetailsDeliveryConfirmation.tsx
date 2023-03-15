@@ -1,25 +1,26 @@
 import React from 'react';
 import { OrderType } from '../../../../../../types/types';
-import {
-  getDeliveryTitle,
-  getIsDeliveryMethodSelfPickUp,
-  getIsOrderOnConfirming,
-} from '../../../../../../utils/ordersFunctions';
-import { formatUTCtoDDMMMMYYYY } from '../../../../../../utils/dateTimeFunctions';
+import { getIsDeliveryMethodSelfPickUp, getIsOrderOnConfirming } from '../../../../../../utils/ordersFunctions';
 import classes from './ManDetailsDeliveryConfirmation.module.css';
 import CheckBoxSquare from '../../../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
-import ToolTip from '../../../../../../components/commonComponents/ToolTip/ToolTip';
+import { regExpForPrice } from '../../../../../../utils/constants';
 
 type PropsType = {
   order: OrderType;
   freeDelivery: boolean;
   setFreeDelivery: (value: boolean) => void;
+  confirmedDeliveryPrice: number | null;
+  setConfirmedDeliveryPrice: (value: number | null) => void;
 };
 
-const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({ order, freeDelivery, setFreeDelivery }) => {
+const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({
+  order,
+  freeDelivery,
+  setFreeDelivery,
+  confirmedDeliveryPrice,
+  setConfirmedDeliveryPrice,
+}) => {
   const isOrderOnConfirming = getIsOrderOnConfirming(order);
-  const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.deliveryDate);
-  const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice, true);
   const isDeliveryMethodSelfPickUp = getIsDeliveryMethodSelfPickUp(order);
 
   if (!isOrderOnConfirming || isDeliveryMethodSelfPickUp) {
@@ -32,6 +33,17 @@ const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({ order, freeDelive
 
   const onClickSetPaidDelivery = () => {
     setFreeDelivery(false);
+  };
+
+  const onChangeInput: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newPrice = event.currentTarget.value ? event.currentTarget.value : undefined;
+    if (newPrice) {
+      if (regExpForPrice.test(newPrice) && Number(newPrice)) {
+        setConfirmedDeliveryPrice(Number(newPrice));
+      }
+    } else {
+      setConfirmedDeliveryPrice(null);
+    }
   };
 
   return (
@@ -50,8 +62,12 @@ const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({ order, freeDelive
               <>
                 <div className={classes.priceTitle}>Укажите стоимость доставки товара в рублях</div>
                 <div className={classes.priceInputContainer}>
-                  <input className={classes.priceCustomSizeInput} value={123 || ''} onChange={() => {}} type="text" />
-                  {/*<input className={classes.customSizeInput} value={price || ''} onChange={onChangeInput} type="text" />*/}
+                  <input
+                    className={classes.priceCustomSizeInput}
+                    value={confirmedDeliveryPrice || ''}
+                    onChange={onChangeInput}
+                    type="text"
+                  />
                   {'руб'}
                 </div>
               </>
@@ -59,15 +75,6 @@ const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({ order, freeDelive
           </div>
         </div>
       </div>
-
-      {/*<div className={classes.row}>*/}
-      {/*  <div className={classes.title}>{'Дата поставки:'}</div>*/}
-      {/*  <div className={classes.info}>{`${deliveryDate}`}</div>*/}
-      {/*</div>*/}
-      {/*<div className={classes.row}>*/}
-      {/*  <div className={classes.title}>{'Способ поставки:'}</div>*/}
-      {/*  <div className={classes.info}>{`${deliveryTitle}`}</div>*/}
-      {/*</div>*/}
     </div>
   );
 };
