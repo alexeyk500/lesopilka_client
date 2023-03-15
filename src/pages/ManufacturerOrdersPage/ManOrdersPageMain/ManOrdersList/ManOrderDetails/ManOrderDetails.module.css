@@ -32,3 +32,7 @@
   padding: 0 32px !important;
   margin-bottom: 0 !important;
 }
+
+.infoPopUpText {
+  margin: 6px 12px;
+}

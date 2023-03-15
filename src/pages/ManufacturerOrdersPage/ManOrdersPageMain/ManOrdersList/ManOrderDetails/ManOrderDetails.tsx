@@ -17,9 +17,14 @@ import { showPortalPopUp } from '../../../../../components/PortalPopUp/PortalPop
 import { cancelOrderThunk } from '../../../../../store/ordersSlice';
 import ManDetailsDeliveryConfirmation from './ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
 
-type PropsType = {
-  order: OrderType;
-  updateOrders: () => void;
+const getDeliveryPrice = (freeDelivery: boolean, confirmedDeliveryPrice: number | null) => {
+  let deliveryPrice;
+  if (freeDelivery) {
+    deliveryPrice = 0;
+  } else {
+    deliveryPrice = confirmedDeliveryPrice;
+  }
+  return deliveryPrice;
 };
 
 const getIsShowNoDivergenceInOrder = (products: ProductType[], amountType: AmountTypeEnum) => {
@@ -33,6 +38,11 @@ const getIsShowNoDivergenceInOrder = (products: ProductType[], amountType: Amoun
     return true;
   }
   return false;
+};
+
+type PropsType = {
+  order: OrderType;
+  updateOrders: () => void;
 };
 
 const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
@@ -68,14 +78,23 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
   }, [products, setConfirmationProducts, isSetConfirmationProducts]);
 
   const onConfirmClick = () => {
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (confirmationProducts && token) {
-      const orderId = order.order.id;
-      const requestProducts = confirmationProducts.map((product) => {
-        return { productId: product.id, amount: product.amountInConfirmation ?? 0 };
-      });
-      dispatch(confirmManufacturerOrderThunk({ orderId, requestProducts, token })).then(() => {
-        updateOrders();
+    const deliveryPrice = getDeliveryPrice(freeDelivery, confirmedDeliveryPrice);
+    if (deliveryPrice !== null && deliveryPrice >= 0) {
+      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+      if (confirmationProducts && token) {
+        const orderId = order.order.id;
+        const requestProducts = confirmationProducts.map((product) => {
+          return { productId: product.id, amount: product.amountInConfirmation ?? 0 };
+        });
+        dispatch(confirmManufacturerOrderThunk({ orderId, deliveryPrice, requestProducts, token })).then(() => {
+          updateOrders();
+        });
+      }
+    } else {
+      showPortalPopUp({
+        popUpContent: <div className={classes.infoPopUpText}>{'Укажите стоимость доставки заказа'}</div>,
+        oneCenterConfirmBtn: true,
+        titleConfirmBtn: 'Понятно',
       });
     }
   };

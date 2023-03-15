@@ -25,6 +25,7 @@ export type GetOrdersParamsType = {
 
 export type ConfirmManufacturerOrdersParamsType = {
   orderId: number;
+  deliveryPrice: number;
   requestProducts: { productId: number; amount: number }[];
   token: string;
 };
@@ -104,11 +105,17 @@ export const orderApi = {
     return response.data;
   },
 
-  async confirmManufacturerOrder({ orderId, requestProducts, token }: ConfirmManufacturerOrdersParamsType) {
+  async confirmManufacturerOrder({
+    orderId,
+    deliveryPrice,
+    requestProducts,
+    token,
+  }: ConfirmManufacturerOrdersParamsType) {
     const response = await instanceAxios.post<ProductType[]>(
       '/orders/confirm',
       {
         orderId,
+        deliveryPrice,
         requestProducts,
       },
       setAuthHeader(token)
