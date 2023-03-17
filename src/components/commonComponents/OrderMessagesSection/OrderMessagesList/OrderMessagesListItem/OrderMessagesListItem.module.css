@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.contentToRight {
+  justify-content: flex-end;
+}
+
+.content {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: var(--main_background);
+  color: var(--gray_color);
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+}

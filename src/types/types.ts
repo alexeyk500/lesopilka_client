@@ -262,3 +262,12 @@ export enum PaymentMethodEnum {
   card = 'Картой',
   cash = 'Наличными',
 }
+
+export type OrderMessageType = {
+  id: number;
+  messageDate: string;
+  messageText: string;
+  userId: number | null;
+  manufacturerId: number | null;
+  orderId: number;
+};

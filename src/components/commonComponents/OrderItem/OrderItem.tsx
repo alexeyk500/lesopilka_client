@@ -10,6 +10,7 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import classNames from 'classnames';
 import { getDeliveryTitle } from '../../../utils/ordersFunctions';
 import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
+import OrderMessagesSection from '../OrderMessagesSection/OrderMessagesSection';
 
 type PropsType = {
   order: OrderType;
@@ -19,7 +20,7 @@ type PropsType = {
 
 const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer }) => {
   const [isOpenDetails, setIsOpenDetails] = useState(false);
-  const [isOpenChat, setIsOpenChat] = useState(false);
+  const [isOpenMessage, setIsOpenMessage] = useState(false);
 
   const title = isOrderForManufacturer
     ? order.order.userInfo?.name || order.order.userInfo?.email || ''
@@ -34,16 +35,16 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
   };
 
   const toggleChat = () => {
-    setIsOpenChat((prev) => !prev);
+    setIsOpenMessage((prev) => !prev);
   };
 
   const onOrderStatusClick = () => {
     if (isOpenDetails) {
       setIsOpenDetails(false);
-      setIsOpenChat(false);
+      setIsOpenMessage(false);
     } else {
       setIsOpenDetails(true);
-      setIsOpenChat(true);
+      setIsOpenMessage(true);
     }
   };
 
@@ -63,7 +64,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
             updateOrders={updateOrders}
             isOpenDetails={isOpenDetails}
             toggleDetails={toggleDetails}
-            isOpenChat={isOpenChat}
+            isOpenChat={isOpenMessage}
             toggleChat={toggleChat}
             isOrderForManufacturer={isOrderForManufacturer}
           />
@@ -78,6 +79,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
       </div>
       {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} updateOrders={updateOrders} />}
       {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
+      {isOpenMessage && <OrderMessagesSection order={order} />}
     </div>
   );
 };

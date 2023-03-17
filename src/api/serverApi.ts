@@ -5,6 +5,7 @@ import { productApi } from './productApi';
 import { priceApi } from './priceApi';
 import { basketApi } from './basketApi';
 import { orderApi } from './orderApi';
+import { orderMessagesApi } from './orderMessagesApi';
 
 export const serverApi = {
   ...userApi,
@@ -14,4 +15,5 @@ export const serverApi = {
   ...priceApi,
   ...basketApi,
   ...orderApi,
+  ...orderMessagesApi,
 };

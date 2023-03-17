@@ -8,6 +8,7 @@ import basketReducer from './basketSlice';
 import newOrderReducer from './newOrderSlice';
 import ordersReducer from './ordersSlice';
 import manOrdersReducer from './manOrdersSlice';
+import orderMessagesReducer from './orderMessagesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     newOrder: newOrderReducer,
     orders: ordersReducer,
     manOrders: manOrdersReducer,
+    orderMessages: orderMessagesReducer,
   },
 });
 

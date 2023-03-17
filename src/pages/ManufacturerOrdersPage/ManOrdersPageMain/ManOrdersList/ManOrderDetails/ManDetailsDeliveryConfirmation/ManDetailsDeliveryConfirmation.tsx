@@ -52,7 +52,7 @@ const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({
       <div className={classes.sectionTile}>Доставка</div>
       <div className={classes.content}>
         <div className={classes.sectionDescription}>
-          {`Покупатель запросил доставку товара, оцените стоимость  ваших услуг по доставке`}
+          {`покупатель запросил доставку товара, оцените стоимость  ваших услуг по доставке`}
         </div>
         <div className={classes.checkBoxContainer}>
           <CheckBoxSquare id={1} title={'Бесплатная'} checked={freeDelivery} onSelect={onClickSetFreeDelivery} />

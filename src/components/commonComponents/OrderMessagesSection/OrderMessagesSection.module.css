@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 0 8px 0 18px;
+}
+
+.delimiter {
+  display: flex;
+  width: 100%;
+  margin: 2px 0;
+  border-bottom: 1px solid var(--gray_color_light)
+}
+
+
+.content {
+  margin-left: 12px;
+}
+
+.sectionTitle {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 6px 0;
+}
+
+.sectionDescription {
+  font-size: 14px;
+  color: var(--orange_color);
+  white-space: pre-line;
+  margin-bottom:6px;
+}
