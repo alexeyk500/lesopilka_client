@@ -11,6 +11,9 @@ import classNames from 'classnames';
 import { getDeliveryTitle } from '../../../utils/ordersFunctions';
 import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
 import OrderMessagesSection from '../OrderMessagesSection/OrderMessagesSection';
+import { CreateOrderMessagesParamsType } from '../../../api/orderMessagesApi';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { createOrderMessagesThunk, getOrderMessagesThunk } from '../../../store/orderMessagesSlice';
 
 type PropsType = {
   order: OrderType;
@@ -19,6 +22,7 @@ type PropsType = {
 };
 
 const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer }) => {
+  const dispatch = useAppDispatch();
   const [isOpenDetails, setIsOpenDetails] = useState(false);
   const [isOpenMessage, setIsOpenMessage] = useState(false);
 
@@ -45,6 +49,22 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     } else {
       setIsOpenDetails(true);
       setIsOpenMessage(true);
+    }
+  };
+
+  const sendNewOrderMessage = (message: string) => {
+    console.log('will send message ', message);
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (token && order.order.id && message.length > 0) {
+      const createOrderMessagesParams: CreateOrderMessagesParamsType = {
+        orderId: order.order.id,
+        isManufacturerMessage: !!isOrderForManufacturer,
+        messageText: message,
+        token,
+      };
+      dispatch(createOrderMessagesThunk(createOrderMessagesParams)).then(() => {
+        dispatch(getOrderMessagesThunk({ orderId: order.order.id, token }));
+      });
     }
   };
 
@@ -79,7 +99,13 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
       </div>
       {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} updateOrders={updateOrders} />}
       {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
-      {isOpenMessage && <OrderMessagesSection order={order} />}
+      {isOpenMessage && (
+        <OrderMessagesSection
+          order={order}
+          isOrderForManufacturer={isOrderForManufacturer}
+          sendNewOrderMessage={sendNewOrderMessage}
+        />
+      )}
     </div>
   );
 };

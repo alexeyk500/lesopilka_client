@@ -19,6 +19,8 @@ export const DRIED_OPTIONS = [
   { id: 2, title: DriedEnum.dried },
 ];
 
+export const MAX_MESSAGE_LENGTH = 1000;
+
 export const WEIGHT_ONE_CUBIC_METER_OF_WOOD = 550;
 
 export const PRODUCTS_PAGE_SIZE = 32;

@@ -1,8 +1,9 @@
 import { OrderMessageType } from '../types/types';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
-import { GetOrderMessagesParamsType } from '../api/orderMessagesApi';
+import { CreateOrderMessagesParamsType, GetOrderMessagesParamsType } from '../api/orderMessagesApi';
 import { RootState } from './store';
+import { UniversalServerResponseType } from '../api/serverResponseTypes';
 
 type OrderMessagesSliceType = {
   messages: OrderMessageType[];
@@ -26,6 +27,18 @@ export const getOrderMessagesThunk = createAsyncThunk<
   }
 });
 
+export const createOrderMessagesThunk = createAsyncThunk<
+  UniversalServerResponseType,
+  CreateOrderMessagesParamsType,
+  { rejectValue: string }
+>('orderMessages/createOrderMessagesThunk', async (createOrderMessagesParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.createOrderMessages(createOrderMessagesParams);
+  } catch (e) {
+    return rejectWithValue('Ошибка создания нового сообщения по заказу');
+  }
+});
+
 export const orderMessagesSlice = createSlice({
   name: 'orderMessagesSlice',
   initialState,
@@ -36,10 +49,10 @@ export const orderMessagesSlice = createSlice({
         state.messages = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getOrderMessagesThunk.pending), (state) => {
+      .addMatcher(isAnyOf(getOrderMessagesThunk.pending, createOrderMessagesThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getOrderMessagesThunk.rejected), (state) => {
+      .addMatcher(isAnyOf(getOrderMessagesThunk.rejected, createOrderMessagesThunk.pending), (state) => {
         state.isLoading = false;
       });
   },

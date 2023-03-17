@@ -31,7 +31,7 @@ const ButtonComponent: React.FC<PropsType> = ({
   const onClickHandler = () => {
     if (disabled && disabledPopUpMessage) {
       showErrorPopUp(disabledPopUpMessage);
-    } else {
+    } else if (!disabled) {
       onClick && onClick();
     }
   };

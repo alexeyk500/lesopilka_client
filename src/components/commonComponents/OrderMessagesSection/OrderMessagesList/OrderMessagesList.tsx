@@ -1,29 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { getOrderMessagesThunk, selectorOrderMessages } from '../../../../store/orderMessagesSlice';
-import { OrderType } from '../../../../types/types';
+import React from 'react';
+import { OrderMessageType } from '../../../../types/types';
 import classes from './OrderMessagesList.module.css';
 import OrderMessagesListItem from './OrderMessagesListItem/OrderMessagesListItem';
 
 type PropsType = {
-  order: OrderType;
+  orderMessages: OrderMessageType[];
 };
 
-const OrderMessagesList: React.FC<PropsType> = ({ order }) => {
-  const dispatch = useAppDispatch();
-  const orderMessages = useAppSelector(selectorOrderMessages);
-
-  const updateOrderMessages = useCallback(() => {
-    const orderId = order.order.id;
-    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    if (token && orderId) {
-      dispatch(getOrderMessagesThunk({ orderId, token }));
-    }
-  }, [order, dispatch]);
-
-  useEffect(() => {
-    updateOrderMessages();
-  }, [updateOrderMessages]);
+const OrderMessagesList: React.FC<PropsType> = ({ orderMessages }) => {
+  if (orderMessages.length === 0) {
+    return null;
+  }
 
   return (
     <div className={classes.container}>

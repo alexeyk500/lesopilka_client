@@ -10,7 +10,8 @@
 
 .content {
   display: flex;
-  width: 80%;
+  width: 85%;
+  padding: 6px 12px;
   flex-direction: column;
   flex-wrap: wrap;
   background-color: var(--main_background);
@@ -18,4 +19,31 @@
   font-size: 14px;
   border-radius: 12px;
   box-shadow: var(--box_shadow);
+}
+
+.infoRow {
+  display: flex;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: var(--green_color);
+}
+
+.userColor {
+  color: var(--orange_color);
+}
+
+.userTitle {
+  display: flex;
+  flex-grow: 1;
+}
+
+.dateTitle {
+  display: flex;
+}
+
+.messageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 6px;
+  white-space: pre-line;
 }
