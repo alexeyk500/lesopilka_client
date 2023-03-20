@@ -7,6 +7,8 @@ import chatIcoOff from '../../../img/chatIcoOff.svg';
 import cancelIco from '../../../img/cancelIco.svg';
 import archiveIco from '../../../img/archiveIco.svg';
 import returnToBasket from '../../../img/returnToBasket.svg';
+import deliveryIco from '../../../img/deliveryIco.svg';
+import deliveryIcoClose from '../../../img/deliveryIcoClose.svg';
 import { OrderType } from '../../../types/types';
 import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import { useAppDispatch } from '../../../hooks/hooks';
@@ -26,6 +28,8 @@ type PropsType = {
   updateOrders: () => void;
   isOpenDetails: boolean;
   toggleDetails: () => void;
+  isOpenManDelivery: boolean;
+  toggleManDelivery: () => void;
   isOpenChat: boolean;
   toggleChat: () => void;
   isOrderForManufacturer?: boolean;
@@ -35,6 +39,8 @@ const OrderActions: React.FC<PropsType> = ({
   order,
   isOpenDetails,
   toggleDetails,
+  isOpenManDelivery,
+  toggleManDelivery,
   isOpenChat,
   toggleChat,
   updateOrders,
@@ -132,6 +138,18 @@ const OrderActions: React.FC<PropsType> = ({
       </ToolTip>
     );
   };
+  const ViewManDelivery: React.FC = () => {
+    return (
+      <ToolTip text={'Согласование доставки'} customClass={classes.customManDelivery}>
+        <img
+          src={isOpenManDelivery ? deliveryIcoClose : deliveryIco}
+          className={classes.deliveryIco}
+          onClick={toggleManDelivery}
+          alt="view delivery"
+        />
+      </ToolTip>
+    );
+  };
   const ViewMessagesBtn: React.FC = () => {
     return (
       <ToolTip text={'Переписка по заказу'} customClass={classes.customTooltipChat}>
@@ -172,7 +190,9 @@ const OrderActions: React.FC<PropsType> = ({
   };
 
   const OrderOnConfirmingButtons: React.FC = () => {
-    return isOrderForManufacturer ? null : (
+    return isOrderForManufacturer ? (
+      <ViewManDelivery />
+    ) : (
       <>
         <ReturnToBasketBtn />
         <CancelOrderBtn />

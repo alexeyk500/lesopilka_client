@@ -12,6 +12,14 @@
   cursor: pointer;
 }
 
+.deliveryIco {
+  height: 26px;
+  width: 26px;
+  margin-top: 2px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 .chatIco {
   height: 22px;
   width: 22px;
@@ -50,6 +58,11 @@
 .customTooltipChat {
   margin-top: -2px;
   margin-left: -191px;
+}
+
+.customManDelivery {
+  margin-top: -2px;
+  margin-left: -212px;
 }
 
 .customTooltipReturnToBasket {

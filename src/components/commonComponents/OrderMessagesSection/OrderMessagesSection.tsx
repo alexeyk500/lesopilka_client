@@ -5,6 +5,8 @@ import OrderMessagesList from './OrderMessagesList/OrderMessagesList';
 import NewOrderMessage from './NewOrderMessage/NewOrderMessage';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { getOrderMessagesThunk, selectorOrderMessages } from '../../../store/orderMessagesSlice';
+import { getIsArchivedOrder } from '../../../utils/ordersFunctions';
+import OrderSubSectionSelector from '../../OrderSubSectionSelector/OrderSubSectionSelector';
 
 type PropsType = {
   order: OrderType;
@@ -15,6 +17,7 @@ type PropsType = {
 const OrderMessagesSection: React.FC<PropsType> = ({ order, isOrderForManufacturer, sendNewOrderMessage }) => {
   const dispatch = useAppDispatch();
   const orderMessages = useAppSelector(selectorOrderMessages);
+  const isArchivedOrder = getIsArchivedOrder(order);
 
   const updateOrderMessages = useCallback(() => {
     const orderId = order.order.id;
@@ -31,17 +34,20 @@ const OrderMessagesSection: React.FC<PropsType> = ({ order, isOrderForManufactur
   return (
     <div className={classes.container}>
       <div className={classes.delimiter} />
-      <div className={classes.sectionTitle}>Переписка по заказу</div>
-      <div className={classes.content}>
-        <OrderMessagesList orderMessages={orderMessages} />
-      </div>
-      {sendNewOrderMessage && (
-        <NewOrderMessage
-          isOrderForManufacturer={isOrderForManufacturer}
-          sendNewOrderMessage={sendNewOrderMessage}
-          showDelimiter={orderMessages.length > 0}
-        />
-      )}
+      <OrderSubSectionSelector title={'Переписка'}>
+        <>
+          <div className={classes.content}>
+            <OrderMessagesList orderMessages={orderMessages} showNoMessagesTitle={isArchivedOrder} />
+          </div>
+          {sendNewOrderMessage && (
+            <NewOrderMessage
+              isOrderForManufacturer={isOrderForManufacturer}
+              sendNewOrderMessage={sendNewOrderMessage}
+              showDelimiter={orderMessages.length > 0}
+            />
+          )}
+        </>
+      </OrderSubSectionSelector>
     </div>
   );
 };

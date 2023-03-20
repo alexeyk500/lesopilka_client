@@ -15,7 +15,7 @@ import { useAppDispatch } from '../../../../../hooks/hooks';
 import { confirmManufacturerOrderThunk } from '../../../../../store/manOrdersSlice';
 import { showPortalPopUp } from '../../../../../components/PortalPopUp/PortalPopUp';
 import { cancelOrderThunk } from '../../../../../store/ordersSlice';
-import ManDetailsDeliveryConfirmation from './ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
+import OrderSubSectionSelector from '../../../../../components/OrderSubSectionSelector/OrderSubSectionSelector';
 
 const getDeliveryPrice = (freeDelivery: boolean, confirmedDeliveryPrice: number | null) => {
   let deliveryPrice;
@@ -43,20 +43,14 @@ const getIsShowNoDivergenceInOrder = (products: ProductType[], amountType: Amoun
 type PropsType = {
   order: OrderType;
   updateOrders: () => void;
+  freeDelivery: boolean;
+  confirmedDeliveryPrice: number | null;
 };
 
-const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
+const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders, freeDelivery, confirmedDeliveryPrice }) => {
   const dispatch = useAppDispatch();
   const [amountType, setAmountType] = useState(AmountTypeEnum.inConfirmation);
-  const [freeDelivery, setFreeDelivery] = useState(false);
-  const [confirmedDeliveryPrice, setConfirmedDeliveryPrice] = useState<number | null>(order.order.deliveryPrice);
   const [confirmationProducts, setConfirmationProducts] = useState<ProductType[] | undefined>(undefined);
-
-  useEffect(() => {
-    if (freeDelivery) {
-      setConfirmedDeliveryPrice(null);
-    }
-  }, [freeDelivery]);
 
   const productsStore = getProductsAllAmountsType(order);
   const products = confirmationProducts ? confirmationProducts : productsStore;
@@ -123,39 +117,35 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders }) => {
 
   return (
     <div className={classes.container}>
-      <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} isOrderForManufacturer />
-      {isShowNoDivergenceInOrder ? (
-        <div className={classes.noDivergenceTitle}>Расхождений в Подтверждении и Заказе нет</div>
-      ) : (
+      <div className={classes.delimiter} />
+      <OrderSubSectionSelector title={'Товары'}>
         <>
-          <ManDetailsHeader
-            order={order}
-            infoTab={amountType}
-            onConfirmClick={onConfirmClick}
-            onRejectClick={onRejectClick}
-            freeDelivery={freeDelivery}
-            confirmedDeliveryPrice={confirmedDeliveryPrice}
-          />
-          <div className={classes.delimiter} />
-          <ManOrderProductsList
-            order={order}
-            products={products}
-            amountType={amountType}
-            setConfirmationProducts={setConfirmationProducts}
-          />
-          <div className={classes.delimiter} />
-          <ManDetailsConclusion products={products} amountType={amountType} />
-          {isConfirmationTab && (
-            <ManDetailsDeliveryConfirmation
-              order={order}
-              freeDelivery={freeDelivery}
-              setFreeDelivery={setFreeDelivery}
-              confirmedDeliveryPrice={confirmedDeliveryPrice}
-              setConfirmedDeliveryPrice={setConfirmedDeliveryPrice}
-            />
+          <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} isOrderForManufacturer />
+          {isShowNoDivergenceInOrder ? (
+            <div className={classes.noDivergenceTitle}>Расхождений в Подтверждении и Заказе нет</div>
+          ) : (
+            <>
+              <ManDetailsHeader
+                order={order}
+                infoTab={amountType}
+                onConfirmClick={onConfirmClick}
+                onRejectClick={onRejectClick}
+                freeDelivery={freeDelivery}
+                confirmedDeliveryPrice={confirmedDeliveryPrice}
+              />
+              <div className={classes.delimiter} />
+              <ManOrderProductsList
+                order={order}
+                products={products}
+                amountType={amountType}
+                setConfirmationProducts={setConfirmationProducts}
+              />
+              <div className={classes.delimiter} />
+              <ManDetailsConclusion products={products} amountType={amountType} />
+            </>
           )}
         </>
-      )}
+      </OrderSubSectionSelector>
     </div>
   );
 };

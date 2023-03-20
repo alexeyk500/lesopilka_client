@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.row {
+  display: flex;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 6px 12px 6px 0;
+  color: var(--blue_color);
+}
+
+.selectorArrowIco {
+  display: flex;
+  width: 14px;
+  height: 100%;
+  padding-top: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectorArrowIco * {
+  fill: var(--blue_color);
+}
+
+.rotate {
+  padding-bottom: 5px;
+  transform: rotate(180deg);
+}
+
+.dot {
+  display: flex;
+  width: 5px;
+  height: 5px;
+  background-color: var(--blue_color);
+  border-radius: 50%;
+}
+
+.dotContainer {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-right: 6px;
+}

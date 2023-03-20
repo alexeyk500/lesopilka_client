@@ -39,7 +39,7 @@ const NewOrderMessage: React.FC<PropsType> = ({ sendNewOrderMessage, isOrderForM
               <div className={classes.expandPart}>
                 {`Здесь вы можете написать сообщение ${
                   isOrderForManufacturer ? 'покупателю' : 'поставщику'
-                } (максимум ${MAX_MESSAGE_LENGTH} символов)`}
+                } (до ${MAX_MESSAGE_LENGTH} символов)`}
               </div>
               <div>{`${message ? message.length : 0} / ${MAX_MESSAGE_LENGTH}`}</div>
             </div>

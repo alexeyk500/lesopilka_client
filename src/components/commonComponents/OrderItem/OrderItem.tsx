@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './OrderItem.module.css';
 import listClasses from '../../../pages/UserOrdersPage/UserOrdersPageMain/UserOrdersList/UserOrdersList.module.css';
 import { AmountTypeEnum, OrderType } from '../../../types/types';
@@ -8,12 +8,13 @@ import OrderActions from '../OrderActions/OrderActions';
 import OrderStatus from '../OrderStatus/OrderStatus';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import classNames from 'classnames';
-import { getDeliveryTitle } from '../../../utils/ordersFunctions';
+import { getDeliveryTitle, getIsArchivedOrder, getIsOrderOnConfirming } from '../../../utils/ordersFunctions';
 import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
 import OrderMessagesSection from '../OrderMessagesSection/OrderMessagesSection';
 import { CreateOrderMessagesParamsType } from '../../../api/orderMessagesApi';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { createOrderMessagesThunk, getOrderMessagesThunk } from '../../../store/orderMessagesSlice';
+import ManDetailsDeliveryConfirmation from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
 
 type PropsType = {
   order: OrderType;
@@ -25,6 +26,19 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
   const dispatch = useAppDispatch();
   const [isOpenDetails, setIsOpenDetails] = useState(false);
   const [isOpenMessage, setIsOpenMessage] = useState(false);
+  const [isOpenManDelivery, setIsOpenManDelivery] = useState(false);
+
+  const [freeDelivery, setFreeDelivery] = useState(false);
+  const [confirmedDeliveryPrice, setConfirmedDeliveryPrice] = useState<number | null>(order.order.deliveryPrice);
+
+  useEffect(() => {
+    if (freeDelivery) {
+      setConfirmedDeliveryPrice(null);
+    }
+  }, [freeDelivery]);
+
+  const isArchivedOrder = getIsArchivedOrder(order);
+  const isOrderOnConfirming = getIsOrderOnConfirming(order);
 
   const title = isOrderForManufacturer
     ? order.order.userInfo?.name || order.order.userInfo?.email || ''
@@ -38,6 +52,10 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     setIsOpenDetails((prev) => !prev);
   };
 
+  const toggleManDelivery = () => {
+    setIsOpenManDelivery((prev) => !prev);
+  };
+
   const toggleChat = () => {
     setIsOpenMessage((prev) => !prev);
   };
@@ -46,14 +64,15 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     if (isOpenDetails) {
       setIsOpenDetails(false);
       setIsOpenMessage(false);
+      setIsOpenManDelivery(false);
     } else {
       setIsOpenDetails(true);
       setIsOpenMessage(true);
+      setIsOpenManDelivery(true);
     }
   };
 
   const sendNewOrderMessage = (message: string) => {
-    console.log('will send message ', message);
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token && order.order.id && message.length > 0) {
       const createOrderMessagesParams: CreateOrderMessagesParamsType = {
@@ -84,6 +103,8 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
             updateOrders={updateOrders}
             isOpenDetails={isOpenDetails}
             toggleDetails={toggleDetails}
+            isOpenManDelivery={isOpenManDelivery}
+            toggleManDelivery={toggleManDelivery}
             isOpenChat={isOpenMessage}
             toggleChat={toggleChat}
             isOrderForManufacturer={isOrderForManufacturer}
@@ -97,13 +118,29 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           />
         </div>
       </div>
-      {isOpenDetails && isOrderForManufacturer && <ManOrderDetails order={order} updateOrders={updateOrders} />}
+      {isOpenDetails && isOrderForManufacturer && (
+        <ManOrderDetails
+          order={order}
+          updateOrders={updateOrders}
+          freeDelivery={freeDelivery}
+          confirmedDeliveryPrice={confirmedDeliveryPrice}
+        />
+      )}
+      {isOpenManDelivery && isOrderOnConfirming && (
+        <ManDetailsDeliveryConfirmation
+          order={order}
+          freeDelivery={freeDelivery}
+          setFreeDelivery={setFreeDelivery}
+          confirmedDeliveryPrice={confirmedDeliveryPrice}
+          setConfirmedDeliveryPrice={setConfirmedDeliveryPrice}
+        />
+      )}
       {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
       {isOpenMessage && (
         <OrderMessagesSection
           order={order}
           isOrderForManufacturer={isOrderForManufacturer}
-          sendNewOrderMessage={sendNewOrderMessage}
+          sendNewOrderMessage={isArchivedOrder ? undefined : sendNewOrderMessage}
         />
       )}
     </div>

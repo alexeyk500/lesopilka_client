@@ -5,10 +5,14 @@ import OrderMessagesListItem from './OrderMessagesListItem/OrderMessagesListItem
 
 type PropsType = {
   orderMessages: OrderMessageType[];
+  showNoMessagesTitle?: boolean;
 };
 
-const OrderMessagesList: React.FC<PropsType> = ({ orderMessages }) => {
+const OrderMessagesList: React.FC<PropsType> = ({ orderMessages, showNoMessagesTitle }) => {
   if (orderMessages.length === 0) {
+    if (showNoMessagesTitle) {
+      return <div className={classes.noMessagesTitle}>{'Сообщений нет'}</div>;
+    }
     return null;
   }
 
