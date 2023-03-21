@@ -1,7 +1,6 @@
 .conclusionRow {
   display: flex;
-  margin-top: 4px;
-  margin-bottom: 12px;
+  margin: 4px 0;
   justify-content: center;
   font-size: 14px;
   font-weight: 600;

@@ -58,7 +58,7 @@ export const addressSlice = createSlice({
       })
       .addMatcher(isAnyOf(getRegionsThunk.rejected, getSearchLocationsByRegionIdThunk.rejected), (state, action) => {
         state.isLoading = false;
-        showErrorPopUp(action.payload!);
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - addressSlice');
       });
   },
 });

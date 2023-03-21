@@ -165,10 +165,6 @@ export const userSlice = createSlice({
           showConfirmPopUp(`Поставщик \n${action.payload.title}\n успешно создан`);
         }
       })
-      .addMatcher(isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected), (state, action) => {
-        state.isLoading = false;
-        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка в userSlice');
-      })
       .addMatcher(
         isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled, userUpdateThunk.fulfilled),
         (state, action) => {
@@ -185,7 +181,11 @@ export const userSlice = createSlice({
         (state) => {
           state.isLoading = true;
         }
-      );
+      )
+      .addMatcher(isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected), (state, action) => {
+        state.isLoading = false;
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - userSlice');
+      });
   },
 });
 

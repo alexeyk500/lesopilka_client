@@ -267,7 +267,7 @@ export const productsSlice = createSlice({
         ),
         (state, action) => {
           state.isSaving = false;
-          showErrorPopUp(action.payload!);
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - productsSlice');
         }
       );
   },

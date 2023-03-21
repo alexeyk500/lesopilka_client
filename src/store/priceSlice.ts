@@ -64,7 +64,7 @@ export const priceSlice = createSlice({
       })
       .addCase(getPriceProductsThunk.rejected, (state, action) => {
         state.isLoading = false;
-        showErrorPopUp(action.payload!);
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - priceSlice');
       });
   },
 });

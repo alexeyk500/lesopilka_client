@@ -87,6 +87,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     }
   };
 
+  console.log({ isOrderForManufacturer });
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>
@@ -126,7 +127,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           confirmedDeliveryPrice={confirmedDeliveryPrice}
         />
       )}
-      {isOpenManDelivery && isOrderOnConfirming && (
+      {isOrderForManufacturer && isOpenManDelivery && isOrderOnConfirming && (
         <ManDetailsDeliveryConfirmation
           order={order}
           freeDelivery={freeDelivery}

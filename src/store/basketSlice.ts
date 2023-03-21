@@ -71,7 +71,7 @@ export const basketSlice = createSlice({
       )
       .addMatcher(isAnyOf(getBasketProductsThunk.rejected, toggleProductForBasketThunk.rejected), (state, action) => {
         state.isLoading = false;
-        showErrorPopUp(action.payload!);
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - basketSlice');
       });
   },
 });

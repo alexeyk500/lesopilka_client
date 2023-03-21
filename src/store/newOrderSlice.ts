@@ -5,6 +5,7 @@ import { serverApi } from '../api/serverApi';
 import { GetOrderServerType } from '../api/serverResponseTypes';
 import { CreateNewOrderParamsType } from '../api/orderApi';
 import { dateDayShift } from '../utils/dateTimeFunctions';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 const minDateForNewOrder = dateDayShift(new Date(), 1).toISOString();
 
@@ -138,8 +139,9 @@ export const newOrderSlice = createSlice({
           getDeliveryMethodThunk.rejected,
           getManufacturerPickUpAddressThunk.rejected
         ),
-        (state) => {
+        (state, action) => {
           state.isLoading = false;
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - newOrderSlice');
         }
       );
   },

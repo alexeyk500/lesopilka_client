@@ -6,6 +6,7 @@ import { GetOrderServerType, UniversalServerResponseType } from '../api/serverRe
 import { ArchiveOrderParamsType, CancelOrderParamsType, GetOrdersParamsType } from '../api/orderApi';
 import { OrderType } from '../types/types';
 import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS } from '../utils/constants';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type OrdersSliceType = {
   selectedOrderStatusId: number;
@@ -107,8 +108,9 @@ export const ordersSlice = createSlice({
           archiveOrderThunk.rejected,
           cancelOrderThunk.rejected
         ),
-        (state) => {
+        (state, action) => {
           state.isLoading = false;
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - ordersSlice');
         }
       );
   },

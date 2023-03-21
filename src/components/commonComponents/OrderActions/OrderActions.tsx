@@ -1,7 +1,10 @@
 import React from 'react';
 import classes from './OrderActions.module.css';
-import viewIco from '../../../img/visibilityIcoOn.svg';
-import viewCloseIco from '../../../img/visibilityIcoOff.svg';
+// import viewIco from '../../../img/visibilityIcoOn.svg';
+// import viewCloseIco from '../../../img/visibilityIcoOff.svg';
+
+import orderListIco from '../../../img/orderListIco.svg';
+import orderListCloseIco from '../../../img/orderListCloseIco.svg';
 import chatIco from '../../../img/chatIco.svg';
 import chatIcoOff from '../../../img/chatIcoOff.svg';
 import cancelIco from '../../../img/cancelIco.svg';
@@ -128,10 +131,10 @@ const OrderActions: React.FC<PropsType> = ({
 
   const ViewOrderBtn: React.FC = () => {
     return (
-      <ToolTip text={'Просмотр заказа'} customClass={classes.customTooltipDetails}>
+      <ToolTip text={'Просмотр заказа'} customClass={classes.customTooltipOrderListIco}>
         <img
-          src={isOpenDetails ? viewCloseIco : viewIco}
-          className={classes.viewIco}
+          src={isOpenDetails ? orderListCloseIco : orderListIco}
+          className={classes.orderList}
           onClick={toggleDetails}
           alt="view order"
         />

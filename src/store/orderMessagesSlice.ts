@@ -4,6 +4,7 @@ import { serverApi } from '../api/serverApi';
 import { CreateOrderMessagesParamsType, GetOrderMessagesParamsType } from '../api/orderMessagesApi';
 import { RootState } from './store';
 import { UniversalServerResponseType } from '../api/serverResponseTypes';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type OrderMessagesSliceType = {
   messages: OrderMessageType[];
@@ -52,8 +53,9 @@ export const orderMessagesSlice = createSlice({
       .addMatcher(isAnyOf(getOrderMessagesThunk.pending, createOrderMessagesThunk.pending), (state) => {
         state.isLoading = true;
       })
-      .addMatcher(isAnyOf(getOrderMessagesThunk.rejected, createOrderMessagesThunk.pending), (state) => {
+      .addMatcher(isAnyOf(getOrderMessagesThunk.rejected, createOrderMessagesThunk.rejected), (state, action) => {
         state.isLoading = false;
+        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - orderMessagesSlice');
       });
   },
 });

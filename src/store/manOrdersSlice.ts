@@ -79,7 +79,7 @@ export const manOrdersSlice = createSlice({
         isAnyOf(getManOrdersByParamsThunk.rejected, confirmManufacturerOrderThunk.rejected),
         (state, action) => {
           state.isLoading = false;
-          showErrorPopUp(action.payload!);
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - manOrdersSlice');
         }
       );
   },
