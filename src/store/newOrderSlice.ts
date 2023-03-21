@@ -127,7 +127,8 @@ export const newOrderSlice = createSlice({
         isAnyOf(
           getPaymentMethodThunk.pending,
           getDeliveryMethodThunk.pending,
-          getManufacturerPickUpAddressThunk.pending
+          getManufacturerPickUpAddressThunk.pending,
+          createNewOrderThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -137,7 +138,8 @@ export const newOrderSlice = createSlice({
         isAnyOf(
           getPaymentMethodThunk.rejected,
           getDeliveryMethodThunk.rejected,
-          getManufacturerPickUpAddressThunk.rejected
+          getManufacturerPickUpAddressThunk.rejected,
+          createNewOrderThunk.rejected
         ),
         (state, action) => {
           state.isLoading = false;

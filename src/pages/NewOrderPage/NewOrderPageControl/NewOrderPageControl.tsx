@@ -110,7 +110,7 @@ const NewOrderPageControl: React.FC = () => {
     ) {
       const createNewOrderParams: CreateNewOrderParamsType = {
         mid: Number(mid),
-        date: orderDate.toISOString(),
+        deliveryDate: orderDate.toISOString(),
         contactPersonName,
         contactPersonPhone,
         deliveryAddress: deliveryAddress ? deliveryAddress : undefined,
@@ -119,20 +119,22 @@ const NewOrderPageControl: React.FC = () => {
         deliveryMethodId,
         token,
       };
-      dispatch(createNewOrderThunk(createNewOrderParams)).then(() => {
-        navigate(PageEnum.BasketPage);
-        showPortalPopUp({
-          popUpContent: (
-            <div className={classes.infoPopUpText}>
-              {'Заказ создан и отправлен поставщику.\n\n'}
-              <span className={classes.infoPopUpSmallText}>
-                {'Вы можете контролировать его \nперейдя в меню "Заказы"'}
-              </span>
-            </div>
-          ),
-          oneCenterConfirmBtn: true,
-          titleConfirmBtn: 'Понятно',
-        });
+      dispatch(createNewOrderThunk(createNewOrderParams)).then((result) => {
+        if (!result.type.includes('rejected')) {
+          navigate(PageEnum.BasketPage);
+          showPortalPopUp({
+            popUpContent: (
+              <div className={classes.infoPopUpText}>
+                {'Заказ создан и отправлен поставщику.\n\n'}
+                <span className={classes.infoPopUpSmallText}>
+                  {'Вы можете контролировать его \nперейдя в меню "Заказы"'}
+                </span>
+              </div>
+            ),
+            oneCenterConfirmBtn: true,
+            titleConfirmBtn: 'Понятно',
+          });
+        }
       });
     }
   };

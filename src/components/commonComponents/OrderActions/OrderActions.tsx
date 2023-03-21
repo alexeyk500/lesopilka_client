@@ -131,7 +131,7 @@ const OrderActions: React.FC<PropsType> = ({
 
   const ViewOrderBtn: React.FC = () => {
     return (
-      <ToolTip text={'Просмотр заказа'} customClass={classes.customTooltipOrderListIco}>
+      <ToolTip text={'Товары в заказе'} customClass={classes.customTooltipOrderListIco}>
         <img
           src={isOpenDetails ? orderListCloseIco : orderListIco}
           className={classes.orderList}

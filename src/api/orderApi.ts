@@ -5,7 +5,7 @@ import { normalizeDate } from '../utils/dateTimeFunctions';
 
 export type CreateNewOrderParamsType = {
   mid: number;
-  date: string;
+  deliveryDate: string;
   contactPersonName: string;
   contactPersonPhone: string;
   deliveryAddress: string | undefined;
@@ -56,7 +56,7 @@ export const orderApi = {
 
   async createNewOrder({
     mid,
-    date,
+    deliveryDate,
     contactPersonName,
     contactPersonPhone,
     deliveryAddress,
@@ -69,7 +69,7 @@ export const orderApi = {
       `/orders/new_order`,
       {
         mid,
-        date: normalizeDate(date),
+        deliveryDate: normalizeDate(deliveryDate),
         contactPersonName,
         contactPersonPhone,
         deliveryAddress,
