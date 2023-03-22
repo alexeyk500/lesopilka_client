@@ -61,9 +61,9 @@ const DetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
       <div className={classes.row}>
         <div className={classes.title}>{'Контактное лицо:'}</div>
         <div className={classes.info}>
-          {`${contactPersonName},`}
-          &nbsp;&nbsp;
           {`${contactPersonPhone},`}
+          &nbsp;&nbsp;
+          {`${contactPersonName}`}
         </div>
       </div>
     </div>
