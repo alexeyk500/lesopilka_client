@@ -27,6 +27,18 @@ const initialState: OrdersSliceType = {
   isLoading: false,
 };
 
+export const getOrderByOrderIdThunk = createAsyncThunk<
+  GetOrderServerType,
+  { orderId: number; token: string },
+  { rejectValue: string }
+>('user/getOrderByOrderIdThunk', async ({ orderId, token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.getOrderByOrderId({ orderId, token });
+  } catch (e) {
+    return rejectWithValue('Ошибка получения заказа');
+  }
+});
+
 export const getOrdersByParamsThunk = createAsyncThunk<
   GetOrderServerType[],
   GetOrdersParamsType,
@@ -95,18 +107,30 @@ export const ordersSlice = createSlice({
         state.orders = action.payload;
         state.isLoading = false;
       })
+      .addCase(getOrderByOrderIdThunk.fulfilled, (state, action) => {
+        state.orders = [action.payload];
+        state.isLoading = false;
+      })
       .addCase(returnToBasketAndCancelOrderByIdThunk.fulfilled, (state) => {
         state.isLoading = false;
       })
-      .addMatcher(isAnyOf(getOrdersByParamsThunk.pending, returnToBasketAndCancelOrderByIdThunk.pending), (state) => {
-        state.isLoading = true;
-      })
+      .addMatcher(
+        isAnyOf(
+          getOrdersByParamsThunk.pending,
+          returnToBasketAndCancelOrderByIdThunk.pending,
+          getOrderByOrderIdThunk.pending
+        ),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
       .addMatcher(
         isAnyOf(
           getOrdersByParamsThunk.rejected,
           returnToBasketAndCancelOrderByIdThunk.rejected,
           archiveOrderThunk.rejected,
-          cancelOrderThunk.rejected
+          cancelOrderThunk.rejected,
+          getOrderByOrderIdThunk.rejected
         ),
         (state, action) => {
           state.isLoading = false;

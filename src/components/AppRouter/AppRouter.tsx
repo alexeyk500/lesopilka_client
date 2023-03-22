@@ -10,6 +10,7 @@ import BasketPage from '../../pages/BasketPage/BasketPage';
 import NewOrderPage from '../../pages/NewOrderPage/NewOrderPage';
 import UserOrdersPage from '../../pages/UserOrdersPage/UserOrdersPage';
 import ManufacturerOrdersPage from '../../pages/ManufacturerOrdersPage/ManufacturerOrdersPage';
+import OrderItemPage from '../../pages/OrderItemPage/OrderItemPage';
 
 type RouteType = {
   path: string;
@@ -27,8 +28,10 @@ export enum PageEnum {
   EditProduct = '/edit_product',
   ManufacturerRegistration = '/manufacturer_registration',
   NewOrder = '/new_order',
-  OrdersPage = '/orders',
+  UserOrdersPage = '/orders',
   ManufacturerOrdersPage = '/manufacturer_orders',
+  UserOrderItemPage = '/order-item/:orderIdStr',
+  ManufacturerOrderItemPage = '/manufacturer-order-item/:orderIdStr',
 }
 
 const publicRoutes: RouteType[] = [
@@ -45,8 +48,10 @@ const protectedRoutes: RouteType[] = [
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
   { path: `${PageEnum.NewOrder}/:mid`, element: <NewOrderPage /> },
-  { path: PageEnum.OrdersPage, element: <UserOrdersPage /> },
+  { path: PageEnum.UserOrdersPage, element: <UserOrdersPage /> },
   { path: PageEnum.ManufacturerOrdersPage, element: <ManufacturerOrdersPage /> },
+  { path: PageEnum.UserOrderItemPage, element: <OrderItemPage /> },
+  { path: PageEnum.ManufacturerOrderItemPage, element: <OrderItemPage isManufacturerOrder /> },
 ];
 
 const AppRouter = () => {

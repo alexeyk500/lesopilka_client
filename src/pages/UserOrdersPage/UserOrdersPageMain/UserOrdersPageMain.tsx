@@ -5,7 +5,7 @@ import UserOrdersList from './UserOrdersList/UserOrdersList';
 const UserOrdersPageMain: React.FC = () => {
   return (
     <div className={classes.container}>
-      <div className={classes.pageTitle}>{'Оформленные заказы'}</div>
+      <div className={classes.pageTitle}>{'Список заказов поставщикам'}</div>
       <UserOrdersList />
     </div>
   );

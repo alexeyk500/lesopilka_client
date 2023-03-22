@@ -82,6 +82,11 @@ export const orderApi = {
     return response.data;
   },
 
+  async getOrderByOrderId({ orderId, token }: { orderId: number; token: string }) {
+    const response = await instanceAxios.get<GetOrderServerType>(`/orders/${orderId}`, setAuthHeader(token));
+    return response.data;
+  },
+
   async getOrders({ orderDateFrom, orderDateTo, ordersStatus, token, isOrdersForManufacturer }: GetOrdersParamsType) {
     const response = await instanceAxios.post<GetOrderServerType[]>(
       '/orders',

@@ -80,7 +80,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
 
   const onClickOrders = () => {
     if (user) {
-      navigate(PageEnum.OrdersPage);
+      navigate(PageEnum.UserOrdersPage);
     } else {
       loginUser();
     }

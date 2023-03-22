@@ -9,6 +9,8 @@ import { PageEnum } from '../AppRouter/AppRouter';
 export enum ReturnToEnum {
   catalog = 'В каталог',
   basket = 'В корзину',
+  userOrders = 'В заказы',
+  manufacturerOrders = 'В заказы ',
 }
 
 type PropsType = {
@@ -27,11 +29,17 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
     }
   };
 
+  console.log({ returnTo });
+
   const onClickHandler = () => {
     if (returnTo === ReturnToEnum.catalog) {
       returnToCatalog();
     } else if (returnTo === ReturnToEnum.basket) {
       navigate(PageEnum.BasketPage);
+    } else if (returnTo === ReturnToEnum.userOrders) {
+      navigate(PageEnum.UserOrdersPage);
+    } else if (returnTo === ReturnToEnum.manufacturerOrders) {
+      navigate(PageEnum.ManufacturerOrdersPage);
     }
   };
 

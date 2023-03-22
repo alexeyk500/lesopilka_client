@@ -31,7 +31,7 @@ const OrdersButton: React.FC = () => {
               preloaderPopUpRef.current?.closePopup();
             })
             .then(() => {
-              navigate(PageEnum.OrdersPage);
+              navigate(PageEnum.UserOrdersPage);
             });
         } catch (e: any) {
           preloaderPopUpRef.current?.closePopup();
@@ -62,7 +62,7 @@ const OrdersButton: React.FC = () => {
   const onClickOrders = () => {
     if (user) {
       dispatch(setCatalogSearchParams(searchParams.toString()));
-      navigate(PageEnum.OrdersPage);
+      navigate(PageEnum.UserOrdersPage);
     } else {
       loginUser();
     }

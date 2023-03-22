@@ -8,7 +8,7 @@ import UserOrdersPageMain from './UserOrdersPageMain/UserOrdersPageMain';
 const UserOrdersPage: React.FC = () => {
   return (
     <div className={classes.container}>
-      <LeftColumn title={`Заказы`}>
+      <LeftColumn title={`Заказы поставщикам`}>
         <UserOrdersPageControl />
       </LeftColumn>
       <MainColumn noScroll>

@@ -20,13 +20,14 @@ type PropsType = {
   order: OrderType;
   updateOrders: () => void;
   isOrderForManufacturer?: boolean;
+  openDetails?: boolean;
 };
 
-const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer }) => {
+const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer, openDetails }) => {
   const dispatch = useAppDispatch();
-  const [isOpenDetails, setIsOpenDetails] = useState(false);
-  const [isOpenMessage, setIsOpenMessage] = useState(false);
-  const [isOpenManDelivery, setIsOpenManDelivery] = useState(false);
+  const [isOpenDetails, setIsOpenDetails] = useState(!!openDetails);
+  const [isOpenMessage, setIsOpenMessage] = useState(!!openDetails);
+  const [isOpenManDelivery, setIsOpenManDelivery] = useState(!!openDetails);
 
   const [freeDelivery, setFreeDelivery] = useState(false);
   const [confirmedDeliveryPrice, setConfirmedDeliveryPrice] = useState<number | null>(order.order.deliveryPrice);
