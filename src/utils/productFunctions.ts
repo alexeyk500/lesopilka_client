@@ -78,7 +78,7 @@ export const sortBySize = (productsGroup: ProductType[][] | undefined) => {
         const sortedByLength = productGroup.sort((a, b) => {
           return Number(a.length) - Number(b.length);
         });
-        if (productGroup[0].caliber) {
+        if (productGroup[0]?.caliber) {
           const sortedByCaliber = sortedByLength.sort((a, b) => {
             return Number(a.caliber) - Number(b.caliber);
           });

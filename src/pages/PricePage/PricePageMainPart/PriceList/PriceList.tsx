@@ -86,9 +86,9 @@ const PriceList = () => {
 
         refs.current = [];
         separatedProducts?.forEach((productGroup, ind) => {
-          const subCategory = productGroup[0].subCategory;
-          const isDried = productGroup[0].isDried || false;
-          const isSeptic = productGroup[0].isSeptic || false;
+          const subCategory = productGroup[0]?.subCategory;
+          const isDried = productGroup[0]?.isDried || false;
+          const isSeptic = productGroup[0]?.isSeptic || false;
           priceNodes.push(
             <PriceListGroupTitle key={`${ind}sc`} subCategory={subCategory} isDried={isDried} isSeptic={isSeptic} />
           );

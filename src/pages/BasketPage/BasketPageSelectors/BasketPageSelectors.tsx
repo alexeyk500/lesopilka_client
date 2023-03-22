@@ -26,8 +26,8 @@ const BasketPageSelectors: React.FC<PropsType> = ({ productsByManufacturer, manu
               <IconButton
                 key={ind}
                 ico={warehouseWhiteIco}
-                title={manufacturerProduct[0].manufacturer?.title || ''}
-                secondRow={manufacturerProduct[0].manufacturer?.address.location.title || ''}
+                title={manufacturerProduct[0]?.manufacturer?.title || ''}
+                secondRow={manufacturerProduct[0]?.manufacturer?.address.location.title || ''}
                 customIconClasses={classes.warehouseWhiteIco}
                 onClick={() => onClickScrollTo(ind)}
               />

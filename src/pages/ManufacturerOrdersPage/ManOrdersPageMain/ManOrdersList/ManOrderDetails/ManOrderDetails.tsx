@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './ManOrderDetails.module.css';
-import { AmountTypeEnum, OrderType, ProductType } from '../../../../../types/types';
+import { AmountTypeEnum, DeliveryMethodEnum, OrderType, ProductType } from '../../../../../types/types';
 import InfoTabSelector from '../../../../../components/commonComponents/InfoTabSelector/InfoTabSelector';
 import ManDetailsHeader from './ManDetailsHeader/ManDetailsHeader';
 import ManDetailsConclusion from './ManDetailsConclusion/ManDetailsConclusion';
@@ -73,7 +73,10 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders, freeDeliver
 
   const onConfirmClick = () => {
     const deliveryPrice = getDeliveryPrice(freeDelivery, confirmedDeliveryPrice);
-    if (deliveryPrice !== null && deliveryPrice >= 0) {
+    if (
+      (deliveryPrice !== null && deliveryPrice >= 0) ||
+      order.order.deliveryMethod.title === DeliveryMethodEnum.pickup
+    ) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (confirmationProducts && token) {
         const orderId = order.order.id;

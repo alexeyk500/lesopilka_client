@@ -12,7 +12,7 @@ import archiveIco from '../../../img/archiveIco.svg';
 import returnToBasket from '../../../img/returnToBasket.svg';
 import deliveryIco from '../../../img/deliveryIco.svg';
 import deliveryIcoClose from '../../../img/deliveryIcoClose.svg';
-import { OrderType } from '../../../types/types';
+import { DeliveryMethodEnum, OrderType } from '../../../types/types';
 import { showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { archiveOrderThunk, cancelOrderThunk, returnToBasketAndCancelOrderByIdThunk } from '../../../store/ordersSlice';
@@ -194,7 +194,9 @@ const OrderActions: React.FC<PropsType> = ({
 
   const OrderOnConfirmingButtons: React.FC = () => {
     return isOrderForManufacturer ? (
-      <ViewManDelivery />
+      order.order.deliveryMethod.title === DeliveryMethodEnum.delivery ? (
+        <ViewManDelivery />
+      ) : null
     ) : (
       <>
         <ReturnToBasketBtn />

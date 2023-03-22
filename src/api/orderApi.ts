@@ -25,7 +25,7 @@ export type GetOrdersParamsType = {
 
 export type ConfirmManufacturerOrdersParamsType = {
   orderId: number;
-  deliveryPrice: number;
+  deliveryPrice: number | null;
   requestProducts: { productId: number; amount: number }[];
   token: string;
 };

@@ -42,7 +42,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
 
   const title = isOrderForManufacturer
     ? order.order.userInfo?.name || order.order.userInfo?.email || ''
-    : order.products[0].manufacturer?.title ?? '';
+    : order.products[0]?.manufacturer?.title ?? '';
 
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(order.products, AmountTypeEnum.inOrder);
 
@@ -87,7 +87,6 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     }
   };
 
-  console.log({ isOrderForManufacturer });
   return (
     <div className={classes.container}>
       <div className={classes.itemContainer}>

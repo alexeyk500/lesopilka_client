@@ -11,10 +11,10 @@ type PropsType = {
 };
 
 const DetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
-  const manufacturerTitle = order.products[0].manufacturer?.title ?? '';
-  const manufacturerLocationTitle = order.products[0].manufacturer?.address.location.title ?? '';
-  const manufacturerPhone = order.products[0].manufacturer?.phone ?? '';
-  const manufacturerEmail = order.products[0].manufacturer?.email ?? '';
+  const manufacturerTitle = order.products[0]?.manufacturer?.title ?? '';
+  const manufacturerLocationTitle = order.products[0]?.manufacturer?.address.location.title ?? '';
+  const manufacturerPhone = order.products[0]?.manufacturer?.phone ?? '';
+  const manufacturerEmail = order.products[0]?.manufacturer?.email ?? '';
 
   const deliveryDate = formatUTCtoDDMMMMYYYY(order.order.deliveryDate);
   const deliveryTitle = getDeliveryTitle(order.order.deliveryMethod.title, order.order.deliveryPrice, true);
