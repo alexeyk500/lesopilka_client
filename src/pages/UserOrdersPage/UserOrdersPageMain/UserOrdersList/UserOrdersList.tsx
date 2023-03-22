@@ -12,6 +12,7 @@ import OrderItem from '../../../../components/commonComponents/OrderItem/OrderIt
 import { getEndOfTheDayDate } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
 import { convertOrdersViewToServerOrdersStatus } from '../../../../utils/ordersFunctions';
+import OrderItemTableTile from '../../../../components/commonComponents/OrderItemTableTile/OrderItemTableTile';
 
 const UserOrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -42,17 +43,7 @@ const UserOrdersList: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.tableTitle}>
-        <div className={classes.tableColumnDate}>{'Поставка'}</div>
-        <div className={classes.tableColumnNumber}>{'Номер'}</div>
-        <div className={classes.tableColumnManufacturer}>{'Поставщик'}</div>
-        <div className={classes.tableColumnWeight}>{'Вес'}</div>
-        <div className={classes.tableColumnVolume}>{'Обьем'}</div>
-        <div className={classes.tableColumnCost}>{'Стоимость'}</div>
-        <div className={classes.tableColumnDelivery}>{'Доставка'}</div>
-        <div className={classes.tableColumnActions}>{'Действия'}</div>
-        <div className={classes.tableColumnStatus}>{'Статус'}</div>
-      </div>
+      <OrderItemTableTile />
       <div className={classes.scrollContainer}>
         {orders.length === 0 && (
           <div className={classes.emptyList}>{`список заказов со статусом "${ordersStatus}" пуст ...`}</div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './OrderItem.module.css';
-import listClasses from '../../../pages/UserOrdersPage/UserOrdersPageMain/UserOrdersList/UserOrdersList.module.css';
+import listClasses from '../../commonComponents/OrderItemTableTile/OrderItemTableTile.module.css';
 import { AmountTypeEnum, OrderType } from '../../../types/types';
 import { formatUTCtoDDMMYYYY } from '../../../utils/dateTimeFunctions';
 import { getTotalLogisticInfo } from '../../../utils/functions';
