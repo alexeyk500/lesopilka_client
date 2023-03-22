@@ -29,8 +29,6 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
     }
   };
 
-  console.log({ returnTo });
-
   const onClickHandler = () => {
     if (returnTo === ReturnToEnum.catalog) {
       returnToCatalog();
