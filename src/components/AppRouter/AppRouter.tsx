@@ -11,6 +11,9 @@ import NewOrderPage from '../../pages/NewOrderPage/NewOrderPage';
 import UserOrdersPage from '../../pages/UserOrdersPage/UserOrdersPage';
 import ManufacturerOrdersPage from '../../pages/ManufacturerOrdersPage/ManufacturerOrdersPage';
 import OrderItemPage from '../../pages/OrderItemPage/OrderItemPage';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectorUser } from '../../store/userSlice';
+import LoginPage from '../../pages/LoginPage/LoginPage';
 
 type RouteType = {
   path: string;
@@ -19,17 +22,18 @@ type RouteType = {
 
 export enum PageEnum {
   RootPage = '/',
+  UserPricePage = '/user-price-page',
+  SuccessRegistrationPage = '/success-registration',
+  LoginPage = '/login',
   UserPage = '/user',
-  SuccessRegistrationPage = '/success_registration',
-  ManufacturerPricePage = '/manufacturer_price_page',
-  UserPricePage = '/user_price_page',
-  BasketPage = '/basket_page',
+  ManufacturerPricePage = '/manufacturer-price-page',
+  BasketPage = '/basket-page',
   ManufacturerPage = '/manufacturer',
-  EditProduct = '/edit_product',
-  ManufacturerRegistration = '/manufacturer_registration',
-  NewOrder = '/new_order',
+  EditProduct = '/edit-product',
+  ManufacturerRegistration = '/manufacturer-registration',
+  NewOrder = '/new-order',
   UserOrdersPage = '/orders',
-  ManufacturerOrdersPage = '/manufacturer_orders',
+  ManufacturerOrdersPage = '/manufacturer-orders',
   UserOrderItemPage = '/order-item/:orderIdStr',
   ManufacturerOrderItemPage = '/manufacturer-order-item/:orderIdStr',
 }
@@ -38,6 +42,7 @@ const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
   { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
+  { path: PageEnum.LoginPage, element: <LoginPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
@@ -54,8 +59,19 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.ManufacturerOrderItemPage, element: <OrderItemPage isManufacturerOrder /> },
 ];
 
+export const isProtectedRoute = (incomeRoute: string) => {
+  for (let i = 0; i < protectedRoutes.length; i++) {
+    const route = protectedRoutes[i];
+    const headForPath = route.path.split('/')?.[1];
+    if (incomeRoute.includes(headForPath)) {
+      return incomeRoute;
+    }
+  }
+  return undefined;
+};
+
 const AppRouter = () => {
-  const isAuth = true;
+  const isAuth = !!useAppSelector(selectorUser);
 
   return (
     <>

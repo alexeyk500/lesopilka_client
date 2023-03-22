@@ -59,6 +59,8 @@ export const isFiltersSearchParams = (searchParams: URLSearchParams) => {
   const searchParamsClone = new URLSearchParams(searchParams.toString());
   searchParamsClone.delete(QueryEnum.SearchRegionId);
   searchParamsClone.delete(QueryEnum.SearchLocationId);
+  searchParamsClone.delete(QueryEnum.SortDirection);
+  searchParamsClone.delete(QueryEnum.Redirect);
   return !!searchParamsClone.toString().length;
 };
 
@@ -68,6 +70,7 @@ export const checkIsShowFilterSelectors = (searchParams: URLSearchParams) => {
   searchParamsClone.delete(QueryEnum.SearchLocationId);
   searchParamsClone.delete(QueryEnum.ManufacturerId);
   searchParamsClone.delete(QueryEnum.SortDirection);
+  searchParamsClone.delete(QueryEnum.Redirect);
   return searchParamsClone.toString().length > 0;
 };
 
@@ -83,6 +86,7 @@ export const checkIsShowFiltersRow = (searchParams: URLSearchParams) => {
   }
   searchParamsClone.delete(QueryEnum.ManufacturerId);
   searchParamsClone.delete(QueryEnum.SortDirection);
+  searchParamsClone.delete(QueryEnum.Redirect);
   return searchParamsClone.toString().length > 0;
 };
 

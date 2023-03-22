@@ -201,6 +201,7 @@ export enum QueryEnum {
   CurrentPage = 'page',
   PageSize = 'size',
   PageType = 'top',
+  Redirect = 'redirect',
 }
 
 export enum PageTypeEnum {
