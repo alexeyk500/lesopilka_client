@@ -162,8 +162,10 @@ const PriceList = () => {
         <div className={classes.preloaderContainer}>
           <Preloader />{' '}
         </div>
-      ) : (
+      ) : price.length > 0 ? (
         <div className={classes.listScrollContainer}>{price}</div>
+      ) : (
+        <div className={classes.emptyPrice}>Ваш прайс лист пуст...</div>
       )}
     </div>
   );

@@ -66,10 +66,10 @@ const CheckBoxSquare: React.FC<PropsType> = ({
         <div className={classes.box} onClick={onClick} />
       )}
       <div className={classes.title} onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
-        <div ref={refTitle} className={classNames({ [classes.constantWidth]: amount })}>
+        <div ref={refTitle} className={classNames({ [classes.constantWidth]: amount !== undefined })}>
           {title}
         </div>
-        {amount && <div className={classes.amountTitle}>&nbsp;&nbsp;{amount}</div>}
+        {amount !== undefined && <div className={classes.amountTitle}>&nbsp;&nbsp;{amount}</div>}
         {toolTip && showToolTip && (
           <div className={classes.toolTip} style={{ top: topValue, left: leftValue }}>
             {toolTip}

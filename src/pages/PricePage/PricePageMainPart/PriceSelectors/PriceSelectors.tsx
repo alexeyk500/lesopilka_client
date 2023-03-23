@@ -88,10 +88,6 @@ const PriceSelectors: React.FC = () => {
     navigate(returnInfo.url);
   };
 
-  // const onClickReturnToBasket = () => {
-  //   navigate(PageEnum.BasketPage);
-  // };
-
   return (
     <div className={classes.container}>
       {isManufacturerPage && (

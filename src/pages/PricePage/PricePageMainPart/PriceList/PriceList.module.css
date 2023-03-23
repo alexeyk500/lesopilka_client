@@ -79,3 +79,11 @@
   display: flex;
   height: 100%;
 }
+
+.emptyPrice {
+  display: flex;
+  width: 100%;
+  margin-top: 32px;
+  justify-content: center;
+  color: var(--orange_color);
+}
