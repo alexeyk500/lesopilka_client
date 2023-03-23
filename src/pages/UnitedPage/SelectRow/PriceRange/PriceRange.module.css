@@ -33,14 +33,14 @@
   border: none;
   outline: none;
   align-items: center;
-  color: var(--dark_blue_color);
+  color: var(--blue_color);
 }
 
 .priceFrom {
   display: flex;
   align-items: center;
   padding-left: 8px;
-  border: 1px solid var(--dark_blue_color);
+  border: 1px solid var(--blue_color);
   border-radius: 12px 0 0 12px;
 }
 
@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   padding: 0 8px;
-  border: 1px solid var(--dark_blue_color);
+  border: 1px solid var(--blue_color);
   border-left: none;
   border-radius: 0 12px 12px 0;
 }

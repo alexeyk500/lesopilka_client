@@ -31,7 +31,6 @@ a {
 }
 abbr[title] {
   border-bottom: none;
-  text-decoration: underline;
   text-decoration: underline dotted;
 }
 b,strong {
@@ -158,13 +157,13 @@ template {
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 *::-webkit-scrollbar-track {
   margin-bottom: 10px;
   background: inherit;
 }
 *::-webkit-scrollbar-thumb {
-  background-color: var(--gray_color_light_light_light);
-  border-radius: 12px;
+  background-color: var(--scrollbar_thumb);
+  border-radius: 6px;
 }

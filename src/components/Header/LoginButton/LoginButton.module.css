@@ -2,7 +2,7 @@
   display: flex;
   margin-right: 20px;
   font-weight: bold;
-  color: var(--dark_blue_color);
+  color: var(--blue_color);
   cursor: pointer;
 }
 

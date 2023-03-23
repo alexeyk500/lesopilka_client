@@ -10,7 +10,7 @@
   height: 42px;
   padding: 0 12px;
   align-items: center;
-  border: 1px solid var(--dark_blue_color);
+  border: 1px solid var(--blue_color);
   border-radius: 12px;
   color: var(--gray_color);
   background-color: var(--gray_color_light_light);
@@ -22,7 +22,7 @@
 }
 
 .titleBlue {
-  color: var(--dark_blue_color)
+  color: var(--blue_color)
 }
 
 .row {
@@ -53,7 +53,7 @@
   padding: 4px 12px;
   align-items: center;
   border-radius: 0 0 12px 12px;
-  border: 1px solid var(--dark_blue_color);
+  border: 1px solid var(--blue_color);
   border-top: none;
   opacity: 1;
   background-color: var(--main_background);

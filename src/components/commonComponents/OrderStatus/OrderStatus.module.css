@@ -30,8 +30,8 @@
 }
 
 .onConfirming {
-  border: 1px solid var(--dark_blue_color);
-  color: var(--dark_blue_color);
+  border: 1px solid var(--blue_color);
+  color: var(--blue_color);
 }
 
 .confirmedOrder {

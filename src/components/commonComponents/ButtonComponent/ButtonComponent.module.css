@@ -53,9 +53,9 @@
   min-width: 80px !important;
   font-size: 14px;
   font-weight: 400;
-  color: var(--dark_blue_color);
+  color: var(--blue_color);
   background-color: #FFFFFF;
-  border: solid 1px var(--dark_blue_color);
+  border: solid 1px var(--blue_color);
   cursor: default;
   margin-bottom: 4px;
 }
@@ -68,7 +68,7 @@
   justify-content: center;
   font-size: 17px;
   font-weight: 400;
-  color: var(--dark_blue_color);
+  color: var(--blue_color);
   border-radius: 50%;
   background-color: inherit;
   border: none;
