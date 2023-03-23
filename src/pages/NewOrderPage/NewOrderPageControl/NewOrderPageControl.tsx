@@ -3,7 +3,7 @@ import classes from './NewOrderPageControl.module.css';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
-import OrderInfo from './OrderInfo/OrderInfo';
+import NewOrderInfo from './NewOrderInfo/NewOrderInfo';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   createNewOrderThunk,
@@ -142,7 +142,7 @@ const NewOrderPageControl: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.infoSection}>
-        <OrderInfo />
+        <NewOrderInfo />
         <div className={classes.btnCreateContainer}>
           <ButtonComponent
             title={'Отправить'}

@@ -287,11 +287,11 @@ export const getLogisticInfo = (product: ProductType, amount: number) => {
   return { square, weight, volume, cost };
 };
 
-export const getTotalLogisticInfo = (products: ProductType[], amountType: AmountTypeEnum) => {
+export const getTotalLogisticInfo = (products: ProductType[] | undefined, amountType: AmountTypeEnum) => {
   let totalWeight = 0;
   let totalVolume = 0;
   let totalCost = 0;
-  products.forEach((product) => {
+  products?.forEach((product) => {
     if (product.publicationDate) {
       let amount = 0;
       if (amountType === AmountTypeEnum.inBasket && product.amountInBasket) {

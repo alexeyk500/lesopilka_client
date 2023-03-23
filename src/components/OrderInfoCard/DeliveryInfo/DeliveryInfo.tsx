@@ -1,19 +1,19 @@
 import React from 'react';
-import { DeliveryMethodEnum } from '../../../../../../types/types';
-import OrderInfoSection from '../OrderInfoSection';
-import locationGrayIco from '../../../../../../img/locationGrayIco.svg';
-import classes from '../../OrderInfo.module.css';
-import { getShortManufacturerTwoLineAddress } from '../../../../../../utils/functions';
-import { useAppSelector } from '../../../../../../hooks/hooks';
+import { DeliveryMethodEnum } from '../../../types/types';
+import OrderInfoSection from '../OrderInfoSection/OrderInfoSection';
+import locationGrayIco from '../../../img/locationGrayIco.svg';
+import classes from '../../../pages/NewOrderPage/NewOrderPageControl/NewOrderInfo/NewOrderInfo.module.css';
+import { getShortManufacturerTwoLineAddress } from '../../../utils/functions';
+import { useAppSelector } from '../../../hooks/hooks';
 import {
   selectorNewOrderDeliveryAddress,
   selectorNewOrderDeliveryLocation,
   selectorNewOrderDeliveryMethod,
-} from '../../../../../../store/newOrderSlice';
+} from '../../../store/newOrderSlice';
 import { useParams } from 'react-router-dom';
-import { filterProductsByManufacturerId } from '../../../../../../utils/productFunctions';
-import { selectorBasketProducts } from '../../../../../../store/basketSlice';
-import truckGrayIco from '../../../../../../img/truckGrayIco.svg';
+import { filterProductsByManufacturerId } from '../../../utils/productFunctions';
+import { selectorBasketProducts } from '../../../store/basketSlice';
+import truckGrayIco from '../../../img/truckGrayIco.svg';
 
 const DeliveryInfo: React.FC = () => {
   const { mid } = useParams();
