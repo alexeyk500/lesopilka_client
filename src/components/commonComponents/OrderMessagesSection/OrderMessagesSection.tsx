@@ -33,7 +33,7 @@ const OrderMessagesSection: React.FC<PropsType> = ({ order, isOrderForManufactur
 
   return (
     <div className={classes.container}>
-      <div className={classes.delimiter} />
+      <div className={classes.delimiterBlue} />
       <OrderSubSectionSelector title={'Переписка'}>
         <>
           <div className={classes.content}>

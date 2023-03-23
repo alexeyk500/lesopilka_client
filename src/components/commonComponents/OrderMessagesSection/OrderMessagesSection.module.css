@@ -5,11 +5,11 @@
   padding: 0 8px 0 18px;
 }
 
-.delimiter {
+.delimiterBlue {
   display: flex;
   width: 100%;
   margin: 2px 0;
-  border-bottom: 1px solid var(--gray_color_light)
+  border-bottom: 2px solid var(--blue_color)
 }
 
 .content {

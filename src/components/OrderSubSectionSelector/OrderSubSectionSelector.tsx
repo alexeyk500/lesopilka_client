@@ -23,10 +23,6 @@ const OrderSubSectionSelector: React.FC<PropsType> = ({ title, isOpen, onClick, 
   return (
     <div className={classes.container}>
       <div className={classes.row} onClick={onClickHandler}>
-        <div className={classes.dotContainer}>
-          <div className={classes.dot} />
-        </div>
-
         <div className={classes.title}>{`${title}`}</div>
         <SelectorArrowIco className={classNames(classes.selectorArrowIco, { [classes.rotate]: showContent })} />
       </div>

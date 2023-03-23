@@ -32,18 +32,3 @@
   padding-bottom: 5px;
   transform: rotate(180deg);
 }
-
-.dot {
-  display: flex;
-  width: 5px;
-  height: 5px;
-  background-color: var(--blue_color);
-  border-radius: 50%;
-}
-
-.dotContainer {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  margin-right: 6px;
-}

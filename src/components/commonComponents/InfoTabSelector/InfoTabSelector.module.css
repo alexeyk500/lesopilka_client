@@ -18,7 +18,7 @@
   color: var(--blue_color);
   font-size: 16px;
   font-weight: 600;
-  border: 1px solid var(--gray_color_light);
+  border: 2px solid var(--blue_color);
   border-radius: 6px 6px 0 0;
   cursor: pointer;
   z-index: 5;
@@ -26,13 +26,13 @@
 
 .activeTab {
   color: var(--green_color);
-  border-bottom: 1px solid var(--main_background);
+  border-bottom: 2px solid var(--main_background);
 }
 
 .tabDelimiter {
   display: flex;
   width: 100%;
-  margin-top: -1px;
-  border-bottom: 1px solid var(--gray_color_light);
+  margin-top: -2px;
+  border-bottom: 2px solid var(--blue_color);
   z-index: 4;
 }

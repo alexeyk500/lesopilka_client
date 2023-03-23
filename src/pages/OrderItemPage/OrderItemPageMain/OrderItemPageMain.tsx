@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from '../../UserOrdersPage/UserOrdersPageMain/UserOrdersPageMain.module.css';
-import OrderItem from '../../../components/commonComponents/OrderItem/OrderItem';
+import OrderItem from '../../../components/OrderItem/OrderItem';
 import OrderItemTableTile from '../../../components/commonComponents/OrderItemTableTile/OrderItemTableTile';
 import { OrderType } from '../../../types/types';
 

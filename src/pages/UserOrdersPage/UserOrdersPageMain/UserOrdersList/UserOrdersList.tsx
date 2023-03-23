@@ -8,7 +8,7 @@ import {
   selectorSelectedOrderDateTo,
   selectorSelectedOrderStatusId,
 } from '../../../../store/ordersSlice';
-import OrderItem from '../../../../components/commonComponents/OrderItem/OrderItem';
+import OrderItem from '../../../../components/OrderItem/OrderItem';
 import { getEndOfTheDayDate } from '../../../../utils/dateTimeFunctions';
 import { orderStatusOptions } from '../../../../utils/constants';
 import { convertOrdersViewToServerOrdersStatus } from '../../../../utils/ordersFunctions';

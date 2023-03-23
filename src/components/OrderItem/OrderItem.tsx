@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import classes from './OrderItem.module.css';
-import listClasses from '../../commonComponents/OrderItemTableTile/OrderItemTableTile.module.css';
-import { AmountTypeEnum, OrderType } from '../../../types/types';
-import { formatUTCtoDDMMYYYY } from '../../../utils/dateTimeFunctions';
-import { getTotalLogisticInfo } from '../../../utils/functions';
-import OrderActions from '../OrderActions/OrderActions';
-import OrderStatus from '../OrderStatus/OrderStatus';
-import OrderDetails from '../OrderDetails/OrderDetails';
+import listClasses from '../commonComponents/OrderItemTableTile/OrderItemTableTile.module.css';
+import { AmountTypeEnum, OrderType } from '../../types/types';
+import { formatUTCtoDDMMYYYY } from '../../utils/dateTimeFunctions';
+import { getTotalLogisticInfo } from '../../utils/functions';
+import OrderActions from '../commonComponents/OrderActions/OrderActions';
+import OrderStatus from '../commonComponents/OrderStatus/OrderStatus';
+import OrderDetails from '../commonComponents/OrderDetails/OrderDetails';
 import classNames from 'classnames';
-import { getDeliveryTitle, getIsArchivedOrder, getIsOrderOnConfirming } from '../../../utils/ordersFunctions';
-import ManOrderDetails from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
-import OrderMessagesSection from '../OrderMessagesSection/OrderMessagesSection';
-import { CreateOrderMessagesParamsType } from '../../../api/orderMessagesApi';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { createOrderMessagesThunk, getOrderMessagesThunk } from '../../../store/orderMessagesSlice';
-import ManDetailsDeliveryConfirmation from '../../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
+import { getDeliveryTitle, getIsArchivedOrder, getIsOrderOnConfirming } from '../../utils/ordersFunctions';
+import ManOrderDetails from '../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManOrderDetails';
+import OrderMessagesSection from '../commonComponents/OrderMessagesSection/OrderMessagesSection';
+import { CreateOrderMessagesParamsType } from '../../api/orderMessagesApi';
+import { useAppDispatch } from '../../hooks/hooks';
+import { createOrderMessagesThunk, getOrderMessagesThunk } from '../../store/orderMessagesSlice';
+import ManDetailsDeliveryConfirmation from '../../pages/ManufacturerOrdersPage/ManOrdersPageMain/ManOrdersList/ManOrderDetails/ManDetailsDeliveryConfirmation/ManDetailsDeliveryConfirmation';
 
 type PropsType = {
   order: OrderType;

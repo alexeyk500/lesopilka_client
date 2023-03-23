@@ -49,7 +49,7 @@ const ManDetailsDeliveryConfirmation: React.FC<PropsType> = ({
 
   return (
     <div className={classes.container}>
-      <div className={classes.delimiter} />
+      <div className={classes.delimiterBlue} />
       <OrderSubSectionSelector title={'Доставка'}>
         <div className={classes.content}>
           <div className={classes.sectionDescription}>
