@@ -1,8 +1,5 @@
 import React from 'react';
 import classes from './OrderActions.module.css';
-// import viewIco from '../../../img/visibilityIcoOn.svg';
-// import viewCloseIco from '../../../img/visibilityIcoOff.svg';
-
 import orderListIco from '../../../img/orderListIco.svg';
 import orderListCloseIco from '../../../img/orderListCloseIco.svg';
 import chatIco from '../../../img/chatIco.svg';
@@ -123,7 +120,7 @@ const OrderActions: React.FC<PropsType> = ({
     }
   };
 
-  const isArchivedOrder = getIsArchivedOrder(order);
+  const isArchivedOrder = getIsArchivedOrder(order, isOrderForManufacturer);
   const isOrderConfirmed = getIsOrderConfirmed(order);
   const isOrderOnConfirming = getIsOrderOnConfirming(order);
   const isOrderCanceledByUser = getIsOrderCanceledByUser(order);
