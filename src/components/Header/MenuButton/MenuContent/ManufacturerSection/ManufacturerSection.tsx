@@ -4,7 +4,6 @@ import catalogIco from '../../../../../img/catalogIco.svg';
 import priceIco from '../../../../../img/priceIco.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
 import idCardIco from '../../../../../img/idCardIco.svg';
-import documentsIco from '../../../../../img/documentsIco.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
@@ -45,7 +44,7 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       Продажи
       <button className={classes.menuButton} onClick={onClickCatalog}>
         <img src={catalogIco} className={classes.ico} alt="catalog button" />
-        Каталог продаж
+        Мои Товары
       </button>
       <button className={classes.menuButton} onClick={onClickPrice}>
         <img src={priceIco} className={classes.ico} alt="price button" />
@@ -58,10 +57,6 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       <button className={classes.menuButton}>
         <img src={idCardIco} className={classes.ico} alt="about page button" />
         Визитка
-      </button>
-      <button className={classes.menuButton}>
-        <img src={documentsIco} className={classes.ico} alt="documents button" />
-        Документы
       </button>
     </div>
   );
