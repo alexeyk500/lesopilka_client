@@ -1,7 +1,9 @@
 .container {
+  display: flex;
+  width: 200px;
+  padding-left: 12px;
   font-size: 22px;
   font-weight: bold;
   color: var(--blue_color);
-  margin-right: 24px;
   cursor: pointer;
 }

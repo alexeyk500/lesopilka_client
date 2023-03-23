@@ -7,6 +7,7 @@ import FavoritesSection from './FavoritesSection/FavoritesSection';
 import ReferenceSection from './ReferenceSection/ReferenceSection';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
+import MarketingSection from './MarketingSection/MarketingSection';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -18,7 +19,12 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
   return (
     <div ref={ref} className={classes.container}>
       <PurchasesSection closeMenuContent={closeMenuContent} />
-      {user?.manufacturer?.id && <ManufacturerSection closeMenuContent={closeMenuContent} />}
+      {user?.manufacturer?.id && (
+        <>
+          <ManufacturerSection closeMenuContent={closeMenuContent} />
+          <MarketingSection closeMenuContent={closeMenuContent} />
+        </>
+      )}
       <FavoritesSection />
       <PersonalSection closeMenuContent={closeMenuContent} />
       <ReferenceSection />
