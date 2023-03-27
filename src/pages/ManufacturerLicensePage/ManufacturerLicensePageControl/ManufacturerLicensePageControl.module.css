@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+.middleSpreadContainer {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+  height: 96px;
+}

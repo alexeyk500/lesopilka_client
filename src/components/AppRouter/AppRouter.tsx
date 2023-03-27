@@ -14,6 +14,7 @@ import OrderItemPage from '../../pages/OrderItemPage/OrderItemPage';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import LoginPage from '../../pages/LoginPage/LoginPage';
+import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
 
 type RouteType = {
   path: string;
@@ -36,6 +37,7 @@ export enum PageEnum {
   ManufacturerOrdersPage = '/manufacturer-orders',
   UserOrderItemPage = '/order-item/:orderIdStr',
   ManufacturerOrderItemPage = '/manufacturer-order-item/:orderIdStr',
+  ManufacturerLicensesPage = '/licenses',
 }
 
 const publicRoutes: RouteType[] = [
@@ -57,6 +59,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.ManufacturerOrdersPage, element: <ManufacturerOrdersPage /> },
   { path: PageEnum.UserOrderItemPage, element: <OrderItemPage /> },
   { path: PageEnum.ManufacturerOrderItemPage, element: <OrderItemPage isManufacturerOrder /> },
+  { path: PageEnum.ManufacturerLicensesPage, element: <ManufacturerLicensePage /> },
 ];
 
 export const isProtectedRoute = (incomeRoute: string) => {

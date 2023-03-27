@@ -3,8 +3,8 @@ import { normalizeDate } from '../../../utils/dateTimeFunctions';
 import DateIntervalSelector from '../DateIntervalSelector/DateIntervalSelector';
 
 type PropsType = {
-  minDate: Date;
-  maxDate: Date;
+  minDate?: Date;
+  maxDate?: Date;
   dateFrom: Date;
   dateTo: Date;
   onSelectDateFrom: (newDate: string) => void;
@@ -29,6 +29,7 @@ const OrdersDateIntervalSelector: React.FC<PropsType> = ({
 
   return (
     <DateIntervalSelector
+      title={'Пероид поставки'}
       dateFrom={dateFrom}
       onSelectDateFrom={handleSetDateFrom}
       dateTo={dateTo}

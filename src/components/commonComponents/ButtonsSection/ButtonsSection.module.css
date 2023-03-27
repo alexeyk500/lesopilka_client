@@ -8,6 +8,7 @@
   justify-content: center;
   background-color: var(--main_background);
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .title {

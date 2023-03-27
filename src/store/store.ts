@@ -9,6 +9,7 @@ import newOrderReducer from './newOrderSlice';
 import ordersReducer from './ordersSlice';
 import manOrdersReducer from './manOrdersSlice';
 import orderMessagesReducer from './orderMessagesSlice';
+import manufacturerLicensesReducer from './manLicensesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     orders: ordersReducer,
     manOrders: manOrdersReducer,
     orderMessages: orderMessagesReducer,
+    manufacturerLicenses: manufacturerLicensesReducer,
   },
 });
 

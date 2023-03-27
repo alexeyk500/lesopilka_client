@@ -3,6 +3,7 @@ import classes from './DateIntervalSelector.module.css';
 import DatePickerComponent from '../DatePickerComponent/DatePickerComponent';
 
 type PropsType = {
+  title?: string;
   dateFrom: Date | null;
   onSelectDateFrom: (date: Date) => void;
   dateTo: Date | null;
@@ -14,6 +15,7 @@ type PropsType = {
 };
 
 const DateIntervalSelector: React.FC<PropsType> = ({
+  title,
   dateFrom,
   onSelectDateFrom,
   dateTo,
@@ -25,7 +27,7 @@ const DateIntervalSelector: React.FC<PropsType> = ({
 }) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{'Период поставки'}</div>
+      {title && <div className={classes.title}>{title}</div>}
       <div className={classes.dateSelectorRow}>
         <div className={classes.rowTitle}>{'c'}</div>
         <DatePickerComponent

@@ -2,6 +2,7 @@ import React from 'react';
 import classes from '../MenuContent.module.css';
 import catalogIco from '../../../../../img/catalogIco.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
+import licenseIco from '../../../../../img/licenseIco.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
@@ -30,6 +31,13 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     closeMenuContent();
   };
 
+  const onClickLicenses = () => {
+    if (user?.manufacturer?.id) {
+      navigate(PageEnum.ManufacturerLicensesPage);
+    }
+    closeMenuContent();
+  };
+
   return (
     <div className={classes.section}>
       Продажи
@@ -40,6 +48,10 @@ const ManufacturerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       <button className={classes.menuButton} onClick={onClickManufacturersOrder}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />
         Заказы мне
+      </button>
+      <button className={classes.menuButton} onClick={onClickLicenses}>
+        <img src={licenseIco} className={classes.ico} alt="licenses button" />
+        Лицензии
       </button>
     </div>
   );

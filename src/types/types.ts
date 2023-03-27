@@ -272,3 +272,14 @@ export type OrderMessageType = {
   manufacturerId: number | null;
   orderId: number;
 };
+
+export type LicenceAction = {
+  id: number;
+  actionDate: string;
+  restLicenseAmount?: number | null;
+  redeemLicenseAmount?: number | null;
+  purchaseLicenseAmount?: number | null;
+  activeProductCardAmount?: number | null;
+  draftProductCardAmount?: number | null;
+  receiptTransactionId?: number | null;
+};

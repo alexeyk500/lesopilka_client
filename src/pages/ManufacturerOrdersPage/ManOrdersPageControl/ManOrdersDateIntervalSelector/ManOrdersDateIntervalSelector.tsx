@@ -1,6 +1,4 @@
 import React from 'react';
-import classes from './ManOrdersDateIntervalSelector.module.css';
-import OrdersDateIntervalSelector from '../../../../components/commonComponents/OrdersDateIntervalSelector/OrdersDateIntervalSelector';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import {
   selectorSelectedManOrderDateFrom,
@@ -13,6 +11,7 @@ import {
   MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS,
   MIN_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS,
 } from '../../../../utils/constants';
+import DateIntervalSelector from '../../../../components/commonComponents/DateIntervalSelector/DateIntervalSelector';
 
 const ManOrdersDateIntervalSelector: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -22,25 +21,26 @@ const ManOrdersDateIntervalSelector: React.FC = () => {
   const minDate = dateMonthShift(new Date(), MIN_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS);
   const maxDate = dateMonthShift(new Date(), MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS);
 
-  const handleSetDateFrom = (dateStr: string) => {
-    dispatch(setManDateFrom(dateStr));
+  const handleSetDateFrom = (date: Date) => {
+    dispatch(setManDateFrom(date.toISOString()));
   };
 
-  const handleSetDateTo = (dateStr: string) => {
-    dispatch(setManDateTo(dateStr));
+  const handleSetDateTo = (date: Date) => {
+    dispatch(setManDateTo(date.toISOString()));
   };
 
   return (
-    <div className={classes.container}>
-      <OrdersDateIntervalSelector
-        minDate={minDate}
-        maxDate={maxDate}
-        dateFrom={dateFrom}
-        dateTo={dateTo}
-        onSelectDateFrom={handleSetDateFrom}
-        onSelectDateTo={handleSetDateTo}
-      />
-    </div>
+    <DateIntervalSelector
+      title={'Пероид поставки'}
+      dateFrom={dateFrom}
+      onSelectDateFrom={handleSetDateFrom}
+      dateTo={dateTo}
+      onSelectDateTo={handleSetDateTo}
+      minDateFrom={minDate}
+      maxDateFrom={maxDate}
+      minDateTo={minDate}
+      maxDateTo={maxDate}
+    />
   );
 };
 
