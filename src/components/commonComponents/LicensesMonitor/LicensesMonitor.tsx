@@ -36,7 +36,7 @@ const LicensesMonitor = () => {
           <span className={classes.amount}>&nbsp;&nbsp;{activeProducts}</span>
         </div>
         <div className={classes.rowContainer}>
-          <span className={classes.title}>Лицензий осталось</span>-
+          <span className={classes.title}>Лицензий в наличии</span>-
           <span className={classes.amount}>&nbsp;&nbsp;{licenseCount}</span>
         </div>
         {publicationsDayAmount && (

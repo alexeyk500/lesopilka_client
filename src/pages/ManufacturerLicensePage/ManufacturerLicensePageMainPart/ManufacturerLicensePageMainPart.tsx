@@ -30,7 +30,9 @@ const ManufacturerLicensePageMainPart: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Использование лицензий'}</div>
-      <LicenseActionsList dates={dates} licensesActions={licensesActions} />
+      <div className={classes.scrollContainer}>
+        <LicenseActionsList dates={dates} licensesActions={licensesActions} />
+      </div>
     </div>
   );
 };

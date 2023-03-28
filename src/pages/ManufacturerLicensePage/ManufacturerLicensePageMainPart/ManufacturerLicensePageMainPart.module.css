@@ -5,6 +5,7 @@
   padding: 0 8px;
   flex-direction: column;
   overflow: hidden;
+  margin-bottom: 24px;
 }
 
 .title {
@@ -15,4 +16,9 @@
   font-weight: 600;
   line-height: 32px;
   margin-bottom: 24px;
+}
+
+.scrollContainer {
+  display: flex;
+  overflow-y: scroll;
 }

@@ -1,6 +1,6 @@
 .container {
   display: flex;
-  padding: 0 12px;
+  padding: 0 8px 0 12px;
 }
 
 .listContainer {
@@ -8,4 +8,5 @@
   flex-wrap: wrap;
   column-gap: 40px;
   row-gap: 32px;
+  margin-bottom: 24px;
 }
