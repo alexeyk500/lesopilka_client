@@ -30,6 +30,7 @@ import { getPriceProductsThunk, selectorPriceEditProductId, setPriceEditProductI
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import LicensesMonitor from '../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
 import { formatUTC } from '../../../utils/dateTimeFunctions';
+import { getManufacturerLicensesInfoThunk } from '../../../store/manLicensesSlice';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -148,7 +149,7 @@ const CardControlAndInfo: React.FC = () => {
         publicationDate,
       };
       dispatch(updateProductThunk({ token, updateData })).then(() => {
-        updatePriceList();
+        dispatch(getManufacturerLicensesInfoThunk({ token }));
       });
     }
   };
@@ -162,7 +163,7 @@ const CardControlAndInfo: React.FC = () => {
         publicationDate,
       };
       dispatch(updateProductThunk({ token, updateData })).then(() => {
-        updatePriceList();
+        dispatch(getManufacturerLicensesInfoThunk({ token }));
       });
     }
   };

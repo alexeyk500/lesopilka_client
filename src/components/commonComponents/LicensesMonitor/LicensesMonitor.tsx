@@ -44,7 +44,7 @@ const LicensesMonitor = () => {
             <div className={classes.delimiter} />
             <div className={classes.rowCentered}>
               <span className={classes.title}>
-                Осталось на
+                Достаточно на
                 <span className={classes.amount}>{publicationsDayAmount}</span>
                 {lastDigitToDayWord(publicationsDayAmount)}
               </span>
