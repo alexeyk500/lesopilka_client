@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.listContainer {
+  display: flex;
+  width: 336px;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.infoRow {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: flex-end;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 8px;
+  color: var(--orange_color);
+}

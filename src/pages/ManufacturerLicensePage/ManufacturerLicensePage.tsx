@@ -11,11 +11,11 @@ import ManufacturerLicensePageMainPart from './ManufacturerLicensePageMainPart/M
 
 const ManufacturerLicensePage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Лицензии для публикации' }];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Лицензии на публикацию' }];
 
   return (
     <div className={classes.container}>
-      <LeftColumn title={`Лицензии\nдля публикации`}>
+      <LeftColumn title={`Лицензии\nна публикацию`}>
         <ManufacturerLicensePageControl />
       </LeftColumn>
       <MainColumn noScroll crumbs={crumbs}>

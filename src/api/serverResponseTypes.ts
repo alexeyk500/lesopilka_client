@@ -36,3 +36,8 @@ export type GetOrderServerType = {
 export type UniversalServerResponseType = {
   message: string;
 };
+
+export type GetManufacturerLicensesInfoType = {
+  activeProductCardAmount: number | null | undefined;
+  restLicenseAmount: number | null | undefined;
+};

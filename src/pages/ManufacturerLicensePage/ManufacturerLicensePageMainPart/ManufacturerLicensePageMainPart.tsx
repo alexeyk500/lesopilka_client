@@ -17,8 +17,6 @@ const ManufacturerLicensePageMainPart: React.FC = () => {
   const licensesActions = useAppSelector(selectorManufacturerLicensesActions);
 
   const dates = getDatesBetweenDates(normalizeDate(dateFromSelector), normalizeDate(dateToSelector));
-  console.log({ dates });
-  console.log({ licensesActions });
 
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
@@ -32,7 +30,7 @@ const ManufacturerLicensePageMainPart: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Использование лицензий'}</div>
-      <LicenseActionsList />
+      <LicenseActionsList dates={dates} licensesActions={licensesActions} />
     </div>
   );
 };

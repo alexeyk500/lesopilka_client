@@ -26,7 +26,7 @@ const ManLicensesDateIntervalSelector: React.FC = () => {
   return (
     <div className={classes.container}>
       <DateIntervalSelector
-        title={'Период публикаций'}
+        title={'Период публикации'}
         dateFrom={dateFrom}
         dateTo={dateTo}
         onSelectDateFrom={handleSetDateFrom}

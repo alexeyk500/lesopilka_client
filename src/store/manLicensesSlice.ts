@@ -6,11 +6,14 @@ import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { getManufacturerLicensesActionsParamsType } from '../api/licensesApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { GetManufacturerLicensesInfoType } from '../api/serverResponseTypes';
 
 type ManufacturerLicensesSlice = {
   licensesDateFrom: string;
   licensesDateTo: string;
   licensesActions: LicenceAction[];
+  activeProductCardAmount?: number | null;
+  restLicenseAmount?: number | null;
   isLoading: boolean;
 };
 
@@ -21,6 +24,8 @@ const initialState: ManufacturerLicensesSlice = {
   licensesDateFrom,
   licensesDateTo,
   licensesActions: [],
+  activeProductCardAmount: undefined,
+  restLicenseAmount: undefined,
   isLoading: false,
 };
 
@@ -39,6 +44,18 @@ export const getManufacturerLicensesActionsThunk = createAsyncThunk<
   }
 );
 
+export const getManufacturerLicensesInfoThunk = createAsyncThunk<
+  GetManufacturerLicensesInfoType,
+  { token: string },
+  { rejectValue: string }
+>('manufacturerLicenses/getManufacturerLicensesInfoThunk', async ({ token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.getManufacturerLicensesInfo(token);
+  } catch (e) {
+    return rejectWithValue('Ошибка получения онформации лицензиях поставщика');
+  }
+});
+
 export const manufacturerLicensesSlice = createSlice({
   name: 'manufacturerLicensesSlice',
   initialState,
@@ -54,6 +71,11 @@ export const manufacturerLicensesSlice = createSlice({
     builder
       .addCase(getManufacturerLicensesActionsThunk.fulfilled, (state, action) => {
         state.licensesActions = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getManufacturerLicensesInfoThunk.fulfilled, (state, action) => {
+        state.activeProductCardAmount = action.payload.activeProductCardAmount;
+        state.restLicenseAmount = action.payload.restLicenseAmount;
         state.isLoading = false;
       })
       .addMatcher(isAnyOf(getManufacturerLicensesActionsThunk.pending), (state) => {
@@ -72,3 +94,6 @@ export const { setLicensesDateFrom, setLicensesDateTo } = manufacturerLicensesSl
 export const selectorManufacturerLicensesDateFrom = (state: RootState) => state.manufacturerLicenses.licensesDateFrom;
 export const selectorManufacturerLicensesDateTo = (state: RootState) => state.manufacturerLicenses.licensesDateTo;
 export const selectorManufacturerLicensesActions = (state: RootState) => state.manufacturerLicenses.licensesActions;
+export const selectorManufacturerRestLicenseAmount = (state: RootState) => state.manufacturerLicenses.restLicenseAmount;
+export const selectorManufacturerActiveProductCardAmount = (state: RootState) =>
+  state.manufacturerLicenses.activeProductCardAmount;

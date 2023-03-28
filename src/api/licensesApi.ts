@@ -1,5 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { LicenceAction } from '../types/types';
+import { GetManufacturerLicensesInfoType } from './serverResponseTypes';
 
 export type getManufacturerLicensesActionsParamsType = {
   dateFrom: string;
@@ -14,6 +15,11 @@ export const licensesApi = {
       { dateFrom, dateTo },
       setAuthHeader(token)
     );
+    return response.data;
+  },
+
+  async getManufacturerLicensesInfo(token: string) {
+    const response = await instanceAxios.get<GetManufacturerLicensesInfoType>(`/licenses`, setAuthHeader(token));
     return response.data;
   },
 };

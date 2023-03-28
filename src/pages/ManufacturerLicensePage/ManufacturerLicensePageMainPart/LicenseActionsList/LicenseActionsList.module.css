@@ -1,3 +1,11 @@
 .container {
   display: flex;
+  padding: 0 12px;
+}
+
+.listContainer {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 32px;
 }

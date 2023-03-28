@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './LicensesMonitor.module.css';
 import IconButton from '../IconButton/IconButton';
 import buyLicenses from '../../../img/buyLicensesWhiteIco.svg';
 import ButtonsSection from '../ButtonsSection/ButtonsSection';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import {
+  getManufacturerLicensesInfoThunk,
+  selectorManufacturerActiveProductCardAmount,
+  selectorManufacturerRestLicenseAmount,
+} from '../../../store/manLicensesSlice';
+import { lastDigitToDayWord } from '../../../utils/dateTimeFunctions';
 
 const LicensesMonitor = () => {
-  const licenseCount = 1250;
-  const activeProducts = 130;
+  const dispatch = useAppDispatch();
+  const licenseCount = useAppSelector(selectorManufacturerRestLicenseAmount);
+  const activeProducts = useAppSelector(selectorManufacturerActiveProductCardAmount);
+
+  useEffect(() => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (token) {
+      dispatch(getManufacturerLicensesInfoThunk({ token }));
+    }
+  }, [dispatch]);
+
+  let publicationsDayAmount;
+  if (licenseCount && activeProducts) {
+    publicationsDayAmount = Math.floor(licenseCount / activeProducts);
+  }
 
   return (
     <ButtonsSection title={'Лицензии'}>
@@ -19,14 +39,18 @@ const LicensesMonitor = () => {
           <span className={classes.title}>Лицензий осталось</span>-
           <span className={classes.amount}>&nbsp;&nbsp;{licenseCount}</span>
         </div>
-        <div className={classes.delimiter} />
-        <div className={classes.rowCentered}>
-          <span className={classes.title}>
-            Осталось на
-            <span className={classes.amount}>{Math.floor(licenseCount / activeProducts)}</span>
-            на дней
-          </span>
-        </div>
+        {publicationsDayAmount && (
+          <>
+            <div className={classes.delimiter} />
+            <div className={classes.rowCentered}>
+              <span className={classes.title}>
+                Осталось на
+                <span className={classes.amount}>{publicationsDayAmount}</span>
+                {lastDigitToDayWord(publicationsDayAmount)}
+              </span>
+            </div>
+          </>
+        )}
       </div>
       <IconButton ico={buyLicenses} title={'Купить лицензии'} customIconClasses={classes.buyLicenses} />
     </ButtonsSection>

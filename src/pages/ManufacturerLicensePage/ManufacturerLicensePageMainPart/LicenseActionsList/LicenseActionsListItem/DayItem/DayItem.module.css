@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  border: 1px solid var(--blue_color);
+  background-color: var(--gray_color_light_light);
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--blue_color);
+  font-size: 16px;
+  font-weight: 600;
+  padding-top: 1px;
+}
+
+.licenseAmount {
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green_color);
+  margin-bottom: 1px;
+}
+
+.noData {
+  display: flex;
+  height: 100%;
+  margin-bottom: 3px;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray_color_light);
+}
