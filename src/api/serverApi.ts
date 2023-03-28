@@ -6,6 +6,7 @@ import { priceApi } from './priceApi';
 import { basketApi } from './basketApi';
 import { orderApi } from './orderApi';
 import { orderMessagesApi } from './orderMessagesApi';
+import { licensesApi } from './licensesApi';
 
 export const serverApi = {
   ...userApi,
@@ -16,4 +17,5 @@ export const serverApi = {
   ...basketApi,
   ...orderApi,
   ...orderMessagesApi,
+  ...licensesApi,
 };

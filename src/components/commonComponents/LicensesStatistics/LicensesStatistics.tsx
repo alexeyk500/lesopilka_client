@@ -1,26 +1,34 @@
 import React from 'react';
 import classes from './LicensesStatistics.module.css';
 import ButtonsSection from '../ButtonsSection/ButtonsSection';
+import { getDatesBetweenDates, normalizeDate } from '../../../utils/dateTimeFunctions';
+import { useAppSelector } from '../../../hooks/hooks';
+import {
+  selectorManufacturerLicensesActions,
+  selectorManufacturerLicensesDateFrom,
+  selectorManufacturerLicensesDateTo,
+} from '../../../store/manLicensesSlice';
 
-const LicensesStatistics = () => {
-  const daysAmount = 65;
-  const licenseAmount = 1234;
+const LicensesStatistics: React.FC = () => {
+  const dateFrom = normalizeDate(useAppSelector(selectorManufacturerLicensesDateFrom));
+  const dateTo = normalizeDate(useAppSelector(selectorManufacturerLicensesDateTo));
+  const licensesActions = useAppSelector(selectorManufacturerLicensesActions);
+
+  const dates = getDatesBetweenDates(dateFrom, dateTo);
+
+  const daysAmount = dates.length;
+  const licenseAmount = licensesActions.reduce((acc, licenseAction) => acc + licenseAction?.redeemLicenseAmount!, 0);
 
   return (
-    <ButtonsSection title={'Статистика'}>
+    <ButtonsSection title={'Статистика за период'}>
       <div className={classes.infoContainer}>
         <div className={classes.rowContainer}>
-          <span className={classes.title}>Количество дней</span>-
+          <span className={classes.title}>Кол-во дней в периоде</span>-
           <span className={classes.amount}>&nbsp;&nbsp;{daysAmount}</span>
         </div>
         <div className={classes.rowContainer}>
-          <span className={classes.title}>Использовано лицензий</span>-
+          <span className={classes.title}>Лицензий использовано</span>-
           <span className={classes.amount}>&nbsp;&nbsp;{licenseAmount}</span>
-        </div>
-        <div className={classes.delimiter} />
-        <div className={classes.rowContainer}>
-          <span className={classes.title}>В среднем за день</span>-
-          <span className={classes.amount}>&nbsp;&nbsp;{Math.ceil(licenseAmount / daysAmount)}</span>
         </div>
       </div>
     </ButtonsSection>

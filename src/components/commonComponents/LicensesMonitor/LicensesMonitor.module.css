@@ -10,6 +10,13 @@
   margin: 0 18px;
 }
 
+.rowCentered {
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  margin-left: 12px;
+}
+
 .title {
   display: flex;
   align-items: center;
@@ -20,9 +27,9 @@
 
 .amount {
   display: flex;
+  margin: 0 4px;
   align-items: center;
-  font-size: 14px;
-  width: 50px;
+  font-size: 12px;
   font-weight: 600;
 }
 

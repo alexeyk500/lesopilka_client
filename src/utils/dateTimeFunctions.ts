@@ -41,10 +41,19 @@ export const formatUTC = (utcData: string | undefined) => {
   return null;
 };
 
+export const getOnlyDateInStr = (data: Date | string) => {
+  let dataStr;
+  if (data instanceof Date) {
+    const newData = new Date(data);
+    dataStr = newData.toISOString();
+  } else {
+    dataStr = data;
+  }
+  return dataStr.split('T')[0];
+};
+
 export const normalizeDate = (data: Date | string) => {
-  const newData = new Date(data);
-  const newDataStr = newData.toISOString();
-  const onlyDataStr = newDataStr.split('T')[0];
+  const onlyDataStr = getOnlyDateInStr(data);
   return new Date(onlyDataStr);
 };
 
@@ -57,4 +66,15 @@ export const formatUTCtoDDMMYYYY = (utcData: string | undefined) => {
     });
   }
   return '';
+};
+
+export const getDatesBetweenDates = (startDate: Date, endDate: Date) => {
+  let dates: Date[] = [];
+  const curDate = new Date(startDate);
+  while (curDate < endDate) {
+    dates = [...dates, new Date(curDate)];
+    curDate.setDate(curDate.getDate() + 1);
+  }
+  dates = [...dates, endDate];
+  return dates;
 };

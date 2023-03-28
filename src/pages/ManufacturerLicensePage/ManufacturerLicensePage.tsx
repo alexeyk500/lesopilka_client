@@ -7,6 +7,7 @@ import { getManufacturerOrUserName } from '../UserPage/UserPage';
 import MainColumn from '../../components/MainColumn/MainColumn';
 import classes from './ManufacturerLicensePage.module.css';
 import ManufacturerLicensePageControl from './ManufacturerLicensePageControl/ManufacturerLicensePageControl';
+import ManufacturerLicensePageMainPart from './ManufacturerLicensePageMainPart/ManufacturerLicensePageMainPart';
 
 const ManufacturerLicensePage: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -18,7 +19,7 @@ const ManufacturerLicensePage: React.FC = () => {
         <ManufacturerLicensePageControl />
       </LeftColumn>
       <MainColumn noScroll crumbs={crumbs}>
-        MainColumn
+        <ManufacturerLicensePageMainPart />
       </MainColumn>
     </div>
   );
