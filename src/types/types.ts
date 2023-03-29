@@ -173,6 +173,7 @@ export type ProductType = {
   amountInOrder?: number;
   amountInConfirmation?: number;
   amountInDivergence?: number;
+  isFavorite?: boolean;
 };
 
 export enum AmountTypeEnum {

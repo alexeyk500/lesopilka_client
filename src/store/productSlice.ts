@@ -1,5 +1,5 @@
 import { ProductType, QueryEnum } from '../types/types';
-import { createAsyncThunk, createSelector, createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
@@ -287,18 +287,5 @@ export const selectorTotalProducts = (state: RootState) => state.products.totalP
 
 export const selectorRawProducts = (state: RootState) => state.products.products;
 export const selectorBasketProducts = (state: RootState) => state.basket.products;
-
-export const selectorProducts = createSelector(
-  [selectorRawProducts, selectorBasketProducts],
-  (products, basketProducts) => {
-    return products.map((product) => {
-      const basketProduct = basketProducts.find((basketProduct) => basketProduct.id === product.id);
-      if (basketProduct) {
-        return basketProduct;
-      }
-      return product;
-    });
-  }
-);
 
 export default productsSlice.reducer;

@@ -9,7 +9,6 @@ import {
   getProductThunk,
   selectorBasketProducts,
   selectorCurrentPage,
-  selectorProducts,
   selectorProductsAdding,
   selectorProductsLoading,
   selectorTotalPages,
@@ -25,6 +24,7 @@ import {
 } from '../../../components/DetailProductCard/DetailProductCard';
 import { isFulfilled } from '@reduxjs/toolkit';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import { selectorProducts } from '../../../store/productsCombineSelector';
 
 const ProductList = () => {
   const location = useLocation();

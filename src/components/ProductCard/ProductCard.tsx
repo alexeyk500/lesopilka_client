@@ -4,6 +4,7 @@ import addCardButton from '../../img/addCardButton.svg';
 import { DriedEnum, ProductType, SepticEnum } from '../../types/types';
 import noImageIco from './../../img/fotoIco.svg';
 import starIco from '../../img/starIcoBlueStroke.svg';
+import starIcoSelected from '../../img/starIcoSelected.svg';
 import cartIco from './../../img/cartIcoBlueStroke.svg';
 import cartIcoSelected from './../../img/cartIcoSelected.svg';
 import dimensionsIco from './../../img/dimensionsIco.svg';
@@ -16,6 +17,11 @@ import { formatPrice, getProductSizesStr } from '../../utils/functions';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleProductForBasketThunk } from '../../store/basketSlice';
 import { showPopUpDeleteProductFromBasket } from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import {
+  createFavoriteProductThunk,
+  deleteFavoriteProductThunk,
+  getFavoriteProductsThunk,
+} from '../../store/favoriteSlice';
 
 type PropsType = {
   product?: ProductType;
@@ -57,6 +63,18 @@ const ProductCard: React.FC<PropsType> = ({
 
   const onClickToFavorite = (event: React.MouseEvent<HTMLImageElement>) => {
     event.stopPropagation();
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (product?.id && token) {
+      if (product.isFavorite) {
+        dispatch(deleteFavoriteProductThunk({ productId: product.id, token })).then(() => {
+          dispatch(getFavoriteProductsThunk(token));
+        });
+      } else {
+        dispatch(createFavoriteProductThunk({ productId: product.id, token })).then(() => {
+          dispatch(getFavoriteProductsThunk(token));
+        });
+      }
+    }
   };
 
   return (
@@ -85,7 +103,12 @@ const ProductCard: React.FC<PropsType> = ({
                 {!isManufacturerProductCard && (
                   <div className={classes.btnGroup}>
                     <div className={classes.starIcoContainer}>
-                      <img src={starIco} className={classes.starIco} onClick={onClickToFavorite} alt="to favorite" />
+                      <img
+                        src={product?.isFavorite ? starIcoSelected : starIco}
+                        className={classes.starIco}
+                        onClick={onClickToFavorite}
+                        alt="to favorite"
+                      />
                     </div>
                     <img
                       src={product?.amountInBasket ? cartIcoSelected : cartIco}

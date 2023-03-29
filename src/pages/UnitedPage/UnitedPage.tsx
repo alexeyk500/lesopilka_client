@@ -11,6 +11,7 @@ import UnitedPageMainPart from './UnitedPageMainPart/UnitedPageMainPart';
 import { checkIsManufacturerPage, checkIsShowFilterSelectors } from '../../utils/functions';
 import { getBasketProductsThunk } from '../../store/basketSlice';
 import { selectorUser } from '../../store/userSlice';
+import { getFavoriteProductsThunk } from '../../store/favoriteSlice';
 
 const UnitedPage: React.FC = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const UnitedPage: React.FC = () => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (user && token) {
         dispatch(getBasketProductsThunk(token));
+        dispatch(getFavoriteProductsThunk(token));
       }
       dispatch(getProductsThunk(searchParamsClone));
     }

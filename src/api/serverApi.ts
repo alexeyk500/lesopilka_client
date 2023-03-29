@@ -7,6 +7,7 @@ import { basketApi } from './basketApi';
 import { orderApi } from './orderApi';
 import { orderMessagesApi } from './orderMessagesApi';
 import { licensesApi } from './licensesApi';
+import { favoriteApi } from './favoriteApi';
 
 export const serverApi = {
   ...userApi,
@@ -18,4 +19,5 @@ export const serverApi = {
   ...orderApi,
   ...orderMessagesApi,
   ...licensesApi,
+  ...favoriteApi,
 };
