@@ -19,6 +19,7 @@ import cartIco from '../../../../../img/cartIcoBlueStroke.svg';
 import cartIcoSelected from '../../../../../img/cartIcoSelected.svg';
 import { showPopUpDeleteProductFromBasket } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { toggleProductForBasketThunk } from '../../../../../store/basketSlice';
+import { selectorFavoriteProducts } from '../../../../../store/favoriteSlice';
 
 type PropsType = {
   product: ProductType;
@@ -30,6 +31,7 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
   const navigate = useNavigate();
   const location = useLocation();
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
   const isManufacturerPage = checkIsManufacturerPage(location);
   const productSizes = getProductSizesStr(product);
 
@@ -39,13 +41,13 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts);
+    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
   };
 
   const onClickView = () => {
     dispatch(getProductThunk(product.id)).then((result) => {
       if (isFulfilled(result)) {
-        showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+        showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
       }
     });
   };

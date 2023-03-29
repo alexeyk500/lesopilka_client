@@ -25,6 +25,7 @@ import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../../u
 import classNames from 'classnames';
 import AttentionSign from './AttentionSign/AttentionSign';
 import { getProductAmountByAmountType } from '../../../../../../../utils/ordersFunctions';
+import { selectorFavoriteProducts } from '../../../../../../../store/favoriteSlice';
 
 type PropsType = {
   num: number;
@@ -43,6 +44,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
 }) => {
   const dispatch = useAppDispatch();
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
   const [amount, setAmount] = useState(getProductAmountByAmountType(product, amountType));
 
   useEffect(() => {
@@ -113,7 +115,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts);
+    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
   };
 
   const onClickViewProduct = () => {
@@ -126,7 +128,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
     if (productId) {
       dispatch(getProductThunk(productId)).then((result) => {
         if (isFulfilled(result)) {
-          showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+          showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
         }
       });
     }

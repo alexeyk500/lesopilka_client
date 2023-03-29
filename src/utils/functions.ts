@@ -3,38 +3,11 @@ import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
 import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
 import { toggleProductForBasketThunk } from '../store/basketSlice';
 import { AppDispatch } from '../store/store';
-
-// export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
-//   const elements = myFormElement.elements;
-//   for (let i = 0; i < elements.length; i++) {
-//     if (elements[i] instanceof HTMLInputElement) {
-//       const input = elements[i] as HTMLInputElement;
-//       switch (input.type) {
-//         case 'text':
-//         case 'password':
-//         case 'textarea':
-//         case 'hidden':
-//           input.value = '';
-//           break;
-//
-//         case 'radio':
-//         case 'checkbox':
-//           if (input.checked) {
-//             input.checked = false;
-//           }
-//           break;
-//
-//         case 'select-one':
-//         case 'select-multi':
-//           (input as unknown as HTMLSelectElement).selectedIndex = -1;
-//           break;
-//
-//         default:
-//           break;
-//       }
-//     }
-//   }
-// }
+import {
+  createFavoriteProductThunk,
+  deleteFavoriteProductThunk,
+  getFavoriteProductsThunk,
+} from '../store/favoriteSlice';
 
 export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[], emptyOptionTitle?: string) => {
   const options: OptionsType[] = [];
@@ -243,7 +216,8 @@ export const getProductSizesStr = (product: ProductType | undefined) => {
 export const onCloseDetailCard = (
   { productId, isFavorite, isInBasket }: CloseDetailCardType,
   dispatch: AppDispatch,
-  basketProducts: ProductType[]
+  basketProducts: ProductType[],
+  favoriteProducts: ProductType[]
 ) => {
   const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
   if (basketProductIds.includes(productId)) {
@@ -259,6 +233,22 @@ export const onCloseDetailCard = (
       if (token) {
         dispatch(toggleProductForBasketThunk({ productId, token }));
       }
+    }
+  }
+
+  const favoriteProduct = favoriteProducts.find((favProduct) => favProduct.id === productId);
+  const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+  if (favoriteProduct) {
+    if (!isFavorite && token) {
+      dispatch(deleteFavoriteProductThunk({ productId, token })).then(() => {
+        dispatch(getFavoriteProductsThunk(token));
+      });
+    }
+  } else {
+    if (isFavorite && token) {
+      dispatch(createFavoriteProductThunk({ productId, token })).then(() => {
+        dispatch(getFavoriteProductsThunk(token));
+      });
     }
   }
 };
@@ -376,3 +366,35 @@ export const getSelectedOption = (optionId?: number, options?: OptionsType[]) =>
 export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+// export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
+//   const elements = myFormElement.elements;
+//   for (let i = 0; i < elements.length; i++) {
+//     if (elements[i] instanceof HTMLInputElement) {
+//       const input = elements[i] as HTMLInputElement;
+//       switch (input.type) {
+//         case 'text':
+//         case 'password':
+//         case 'textarea':
+//         case 'hidden':
+//           input.value = '';
+//           break;
+//
+//         case 'radio':
+//         case 'checkbox':
+//           if (input.checked) {
+//             input.checked = false;
+//           }
+//           break;
+//
+//         case 'select-one':
+//         case 'select-multi':
+//           (input as unknown as HTMLSelectElement).selectedIndex = -1;
+//           break;
+//
+//         default:
+//           break;
+//       }
+//     }
+//   }
+// }

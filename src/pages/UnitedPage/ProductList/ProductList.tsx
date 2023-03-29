@@ -25,6 +25,7 @@ import {
 import { isFulfilled } from '@reduxjs/toolkit';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import { selectorProducts } from '../../../store/productsCombineSelector';
+import { selectorFavoriteProducts } from '../../../store/favoriteSlice';
 
 const ProductList = () => {
   const location = useLocation();
@@ -35,6 +36,7 @@ const ProductList = () => {
   const totalPagesStore = useAppSelector(selectorTotalPages);
   const isAddingProducts = useAppSelector(selectorProductsAdding);
   const basketProducts = useAppSelector(selectorBasketProducts);
+  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -56,7 +58,7 @@ const ProductList = () => {
   };
 
   const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts);
+    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
   };
 
   const onClick = (id: number | undefined) => {
@@ -69,7 +71,7 @@ const ProductList = () => {
       if (id) {
         dispatch(getProductThunk(id)).then((result) => {
           if (isFulfilled(result)) {
-            showDetailProductCardPopUp(result.payload, basketProducts, onCloseDetailCardHandler);
+            showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
           }
         });
       }
