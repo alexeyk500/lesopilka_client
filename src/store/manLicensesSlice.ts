@@ -1,4 +1,4 @@
-import { LicenceAction } from '../types/types';
+import { LicenceAction, LicenseActionTypeEnum } from '../types/types';
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { MONTH_SHIFT_FOR_MANUFACTURER_LICENSE } from '../utils/constants';
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
@@ -12,6 +12,7 @@ type ManufacturerLicensesSlice = {
   licensesDateFrom: string;
   licensesDateTo: string;
   licensesActions: LicenceAction[];
+  licenseActionType: LicenseActionTypeEnum;
   activeProductCardAmount?: number | null;
   restLicenseAmount?: number | null;
   isLoading: boolean;
@@ -24,6 +25,7 @@ const initialState: ManufacturerLicensesSlice = {
   licensesDateFrom,
   licensesDateTo,
   licensesActions: [],
+  licenseActionType: LicenseActionTypeEnum.redeem,
   activeProductCardAmount: undefined,
   restLicenseAmount: undefined,
   isLoading: false,
@@ -66,6 +68,9 @@ export const manufacturerLicensesSlice = createSlice({
     setLicensesDateTo: (state, actions) => {
       state.licensesDateTo = actions.payload;
     },
+    setLicenseActionType: (state, actions) => {
+      state.licenseActionType = actions.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -90,10 +95,11 @@ export const manufacturerLicensesSlice = createSlice({
 
 export default manufacturerLicensesSlice.reducer;
 
-export const { setLicensesDateFrom, setLicensesDateTo } = manufacturerLicensesSlice.actions;
+export const { setLicensesDateFrom, setLicensesDateTo, setLicenseActionType } = manufacturerLicensesSlice.actions;
 export const selectorManufacturerLicensesDateFrom = (state: RootState) => state.manufacturerLicenses.licensesDateFrom;
 export const selectorManufacturerLicensesDateTo = (state: RootState) => state.manufacturerLicenses.licensesDateTo;
 export const selectorManufacturerLicensesActions = (state: RootState) => state.manufacturerLicenses.licensesActions;
 export const selectorManufacturerRestLicenseAmount = (state: RootState) => state.manufacturerLicenses.restLicenseAmount;
+export const selectorManufacturerLicenseActionType = (state: RootState) => state.manufacturerLicenses.licenseActionType;
 export const selectorManufacturerActiveProductCardAmount = (state: RootState) =>
   state.manufacturerLicenses.activeProductCardAmount;

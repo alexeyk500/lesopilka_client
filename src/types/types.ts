@@ -273,6 +273,11 @@ export type OrderMessageType = {
   orderId: number;
 };
 
+export enum LicenseActionTypeEnum {
+  redeem = 'licenseRedeem',
+  purchase = 'licensePurchase',
+}
+
 export type LicenceAction = {
   id: number;
   actionDate: string;

@@ -4,11 +4,13 @@ import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomBu
 import LicensesMonitor from '../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
 import LicensesStatistics from '../../../components/commonComponents/LicensesStatistics/LicensesStatistics';
 import classes from './ManufacturerLicensePageControl.module.css';
+import LicenseActionTypeSelector from './LicenseActionTypeSelector/LicenseActionTypeSelector';
 
 const ManufacturerLicensePageControl: React.FC = () => {
   return (
     <div className={classes.container}>
       <ManLicensesDateIntervalSelector />
+      <LicenseActionTypeSelector />
       <div className={classes.middleSpreadContainer}>
         <LicensesStatistics />
         <LicensesMonitor />

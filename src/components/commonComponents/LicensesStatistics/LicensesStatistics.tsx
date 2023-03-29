@@ -17,7 +17,14 @@ const LicensesStatistics: React.FC = () => {
   const dates = getDatesBetweenDates(dateFrom, dateTo);
 
   const daysAmount = dates.length;
-  const licenseAmount = licensesActions.reduce((acc, licenseAction) => acc + licenseAction?.redeemLicenseAmount!, 0);
+  const licenseRedeemAmount = licensesActions.reduce(
+    (acc, licenseAction) => acc + licenseAction?.redeemLicenseAmount!,
+    0
+  );
+  const licensePurchaseAmount = licensesActions.reduce(
+    (acc, licenseAction) => acc + licenseAction?.purchaseLicenseAmount!,
+    0
+  );
 
   return (
     <ButtonsSection title={'Статистика за период'}>
@@ -27,8 +34,12 @@ const LicensesStatistics: React.FC = () => {
           <span className={classes.amount}>&nbsp;&nbsp;{daysAmount}</span>
         </div>
         <div className={classes.rowContainer}>
+          <span className={classes.title}>Лицензий куплено</span>-
+          <span className={classes.amount}>&nbsp;&nbsp;{licensePurchaseAmount}</span>
+        </div>
+        <div className={classes.rowContainer}>
           <span className={classes.title}>Лицензий использовано</span>-
-          <span className={classes.amount}>&nbsp;&nbsp;{licenseAmount}</span>
+          <span className={classes.amount}>&nbsp;&nbsp;{licenseRedeemAmount}</span>
         </div>
       </div>
     </ButtonsSection>
