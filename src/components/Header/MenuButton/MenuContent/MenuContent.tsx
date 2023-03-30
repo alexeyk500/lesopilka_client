@@ -3,7 +3,6 @@ import classes from './MenuContent.module.css';
 import PurchasesSection from './PurchasesSection/PurchasesSection';
 import ManufacturerSection from './ManufacturerSection/ManufacturerSection';
 import PersonalSection from './PersonalSection/PersonalSection';
-import FavoritesSection from './FavoritesSection/FavoritesSection';
 import ReferenceSection from './ReferenceSection/ReferenceSection';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
@@ -25,7 +24,6 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
           <MarketingSection closeMenuContent={closeMenuContent} />
         </>
       )}
-      <FavoritesSection />
       <PersonalSection closeMenuContent={closeMenuContent} />
       <ReferenceSection />
     </div>

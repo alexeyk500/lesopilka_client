@@ -3,6 +3,7 @@ import classes from '../MenuContent.module.css';
 import catalogIco from '../../../../../img/catalogIco.svg';
 import cartIcoOutlined from '../../../../../img/cartIcoOutlined.svg';
 import ordersIco from '../../../../../img/ordersIco.svg';
+import starIcoGrayStroke from '../../../../../img/starIcoGrayStroke.svg';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../AppRouter/AppRouter';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
@@ -78,6 +79,15 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     closeMenuContent();
   };
 
+  const onClickFavoriteProducts = () => {
+    if (user) {
+      navigate(PageEnum.FavoriteProductPage);
+    } else {
+      loginUser();
+    }
+    closeMenuContent();
+  };
+
   const onClickOrders = () => {
     if (user) {
       navigate(PageEnum.UserOrdersPage);
@@ -101,6 +111,10 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       <button className={classes.menuButton} onClick={onClickOrders}>
         <img src={ordersIco} className={classes.ico} alt="orders button" />
         Заказы
+      </button>
+      <button className={classes.menuButton} onClick={onClickFavoriteProducts}>
+        <img src={starIcoGrayStroke} className={classes.ico} alt="favorites goods button" />
+        Избранное
       </button>
     </div>
   );

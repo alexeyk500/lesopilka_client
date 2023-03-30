@@ -68,9 +68,9 @@ const Header: React.FC = () => {
         <SearchLocationSelector />
         <Search />
         <CatalogButton />
-        <FavoriteButton />
         <BasketButton />
         <OrdersButton />
+        <FavoriteButton />
         <LoginButton />
       </div>
     </div>
