@@ -1,63 +1,19 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import cartIco from '../../../img/cartIco.svg';
 import classes from './BasketButton.module.css';
 import { PageEnum } from '../../AppRouter/AppRouter';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
-import { selectorUser, userLoginByPasswordThunk } from '../../../store/userSlice';
-import { PopupRef, showPortalPopUp } from '../../PortalPopUp/PortalPopUp';
-import LoginForm from '../LoginButton/LoginForm/LoginForm';
-import RegistrationButton from '../LoginButton/RegistrationForm/RegistrationButton/RegistrationButton';
-import ForgotPasswordButton from '../LoginButton/RegistrationForm/ForgotPasswordButton/ForgotPasswordButton';
-import { showErrorPopUp, showPreloaderPopUp } from '../../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { selectorUser } from '../../../store/userSlice';
 import { setCatalogSearchParams } from '../../../store/productSlice';
+import useLoginUser from '../../../hooks/useLoginUser';
 
 const BasketButton: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);
-  const preloaderPopUpRef = useRef<PopupRef | null>(null);
-
-  const onCloseLoginPopUp = async (response: boolean | FormData | undefined) => {
-    if (response instanceof FormData) {
-      const email = response.get('email')!.toString();
-      const password = response.get('password')!.toString();
-      if (email && password) {
-        try {
-          showPreloaderPopUp('Вход в систему...', preloaderPopUpRef);
-          dispatch(userLoginByPasswordThunk({ email, password }))
-            .then(() => {
-              preloaderPopUpRef.current?.closePopup();
-            })
-            .then(() => {
-              navigate(PageEnum.BasketPage);
-            });
-        } catch (e: any) {
-          preloaderPopUpRef.current?.closePopup();
-          const message =
-            `${email} - Ошибка входа в систему` + e.message
-              ? `\n${e.message}`
-              : '' + e.response.data.message
-              ? `\n${e.response.data.message}`
-              : '';
-          showErrorPopUp(message);
-        }
-      }
-    }
-  };
-
-  const loginUser = () => {
-    showPortalPopUp({
-      popUpContent: <LoginForm />,
-      onClosePopUp: onCloseLoginPopUp,
-      titleConfirmBtn: 'Войти',
-      hideCancelBottomBtn: true,
-      customBottomBtn: <RegistrationButton />,
-      customBottomBtnTwo: <ForgotPasswordButton />,
-      customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
-    });
-  };
+  const loginUser = useLoginUser();
 
   const onClickBasket = () => {
     if (user) {

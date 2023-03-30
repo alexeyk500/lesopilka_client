@@ -18,10 +18,10 @@ const PersonalSection: React.FC<PropsType> = ({ closeMenuContent }) => {
 
   return (
     <div className={classes.section}>
-      Личный кабинет
+      Профиль
       <button className={classes.menuButton} onClick={onClick}>
         <img src={userIco} className={classes.ico} alt="user profile button" />
-        Профиль
+        Личный кабинет
       </button>
     </div>
   );

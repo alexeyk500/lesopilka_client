@@ -45,3 +45,14 @@
 .ico {
   margin-right: 16px;
 }
+
+.personalSection {
+  display: flex;
+  height: 100%;
+  align-items: flex-start;
+  margin-top: 64px;
+}
+
+.sectionWrapper {
+  margin-top: 64px;
+}

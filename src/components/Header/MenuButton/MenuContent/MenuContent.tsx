@@ -20,11 +20,19 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
       <PurchasesSection closeMenuContent={closeMenuContent} />
       {user?.manufacturer?.id && (
         <>
-          <ManufacturerSection closeMenuContent={closeMenuContent} />
-          <MarketingSection closeMenuContent={closeMenuContent} />
+          <div className={classes.sectionWrapper}>
+            <ManufacturerSection closeMenuContent={closeMenuContent} />
+          </div>
+          <div className={classes.sectionWrapper}>
+            <MarketingSection closeMenuContent={closeMenuContent} />
+          </div>
         </>
       )}
-      <PersonalSection closeMenuContent={closeMenuContent} />
+      {user && (
+        <div className={classes.personalSection}>
+          <PersonalSection closeMenuContent={closeMenuContent} />
+        </div>
+      )}
       <ReferenceSection />
     </div>
   );
