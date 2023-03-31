@@ -1,13 +1,5 @@
 import { AddressType, AmountTypeEnum, ManufacturerType, OptionsType, ProductType, QueryEnum } from '../types/types';
 import { WEIGHT_ONE_CUBIC_METER_OF_WOOD } from './constants';
-import { CloseDetailCardType } from '../components/DetailProductCard/DetailProductCard';
-import { toggleProductForBasketThunk } from '../store/basketSlice';
-import { AppDispatch } from '../store/store';
-import {
-  createFavoriteProductThunk,
-  deleteFavoriteProductThunk,
-  getFavoriteProductsThunk,
-} from '../store/favoriteSlice';
 
 export const getOptionsWithFirstEmptyOption = (optionsStore: OptionsType[], emptyOptionTitle?: string) => {
   const options: OptionsType[] = [];
@@ -211,46 +203,6 @@ export const getProductSizesStr = (product: ProductType | undefined) => {
     }
   }
   return sizes;
-};
-
-export const onCloseDetailCard = (
-  { productId, isFavorite, isInBasket }: CloseDetailCardType,
-  dispatch: AppDispatch,
-  basketProducts: ProductType[],
-  favoriteProducts: ProductType[]
-) => {
-  const basketProductIds = basketProducts.map((basketProduct) => basketProduct.id);
-  if (basketProductIds.includes(productId)) {
-    if (!isInBasket) {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (token) {
-        dispatch(toggleProductForBasketThunk({ productId, token }));
-      }
-    }
-  } else {
-    if (isInBasket) {
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (token) {
-        dispatch(toggleProductForBasketThunk({ productId, token }));
-      }
-    }
-  }
-
-  const favoriteProduct = favoriteProducts.find((favProduct) => favProduct.id === productId);
-  const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-  if (favoriteProduct) {
-    if (!isFavorite && token) {
-      dispatch(deleteFavoriteProductThunk({ productId, token })).then(() => {
-        dispatch(getFavoriteProductsThunk(token));
-      });
-    }
-  } else {
-    if (isFavorite && token) {
-      dispatch(createFavoriteProductThunk({ productId, token })).then(() => {
-        dispatch(getFavoriteProductsThunk(token));
-      });
-    }
-  }
 };
 
 export const toStrWithDelimiter = (value: number | string) => {

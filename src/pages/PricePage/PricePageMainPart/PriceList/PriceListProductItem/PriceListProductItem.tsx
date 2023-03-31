@@ -1,25 +1,20 @@
 import React from 'react';
 import { ProductType } from '../../../../../types/types';
 import classes from './PriceListProductItem.module.css';
-import { checkIsManufacturerPage, getProductSizesStr, onCloseDetailCard } from '../../../../../utils/functions';
+import { checkIsManufacturerPage, getProductSizesStr } from '../../../../../utils/functions';
 import visibilityIcoOn from '../../../../../img/visibilityIcoOn.svg';
 import editBlueIco from '../../../../../img/editBlueIco.svg';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { setPriceEditProductId } from '../../../../../store/priceSlice';
-import { getProductThunk, selectorBasketProducts } from '../../../../../store/productSlice';
-import { isFulfilled } from '@reduxjs/toolkit';
-import {
-  CloseDetailCardType,
-  showDetailProductCardPopUp,
-} from '../../../../../components/DetailProductCard/DetailProductCard';
+import { selectorBasketProducts } from '../../../../../store/productSlice';
 import classNames from 'classnames';
 import cartIco from '../../../../../img/cartIcoBlueStroke.svg';
 import cartIcoSelected from '../../../../../img/cartIcoSelected.svg';
 import { showPopUpDeleteProductFromBasket } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { toggleProductForBasketThunk } from '../../../../../store/basketSlice';
-import { selectorFavoriteProducts } from '../../../../../store/favoriteSlice';
+import useShowDetailProductCardPopUp from '../../../../../hooks/useShowDetailProductCardPopUp';
 
 type PropsType = {
   product: ProductType;
@@ -31,25 +26,18 @@ const PriceListProductItem: React.FC<PropsType> = ({ product, highlighted }) => 
   const navigate = useNavigate();
   const location = useLocation();
   const basketProducts = useAppSelector(selectorBasketProducts);
-  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
   const isManufacturerPage = checkIsManufacturerPage(location);
   const productSizes = getProductSizesStr(product);
+
+  const showDetailProductCardPopUp = useShowDetailProductCardPopUp(product);
 
   const onClickEdit = () => {
     dispatch(setPriceEditProductId(product.id));
     navigate(`${PageEnum.EditProduct}/${product.id}`);
   };
 
-  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
-  };
-
   const onClickView = () => {
-    dispatch(getProductThunk(product.id)).then((result) => {
-      if (isFulfilled(result)) {
-        showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
-      }
-    });
+    showDetailProductCardPopUp();
   };
 
   const isProductInBasket = !!basketProducts.find((basketProduct) => basketProduct.id === product.id);

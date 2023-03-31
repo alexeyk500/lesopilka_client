@@ -5,27 +5,20 @@ import {
   formatPrice,
   getLogisticInfo,
   getProductSizesStr,
-  onCloseDetailCard,
   toStrWithDelimiter,
 } from '../../../../../../../utils/functions';
 import AmountInput from '../../../../../../../components/AmountInput/AmountInput';
 import deleteIco from '../../../../../../../img/deleteBlueIco.svg';
 import deleteRedIco from '../../../../../../../img/deleteRedIco.svg';
 import { updateBasketProductAmountThunk } from '../../../../../../../store/basketSlice';
-import { useAppDispatch, useAppSelector } from '../../../../../../../hooks/hooks';
+import { useAppDispatch } from '../../../../../../../hooks/hooks';
 import { showPopUpDeleteProductFromBasket } from '../../../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { getProductThunk, selectorBasketProducts } from '../../../../../../../store/productSlice';
-import { isFulfilled } from '@reduxjs/toolkit';
-import {
-  CloseDetailCardType,
-  showDetailProductCardPopUp,
-} from '../../../../../../../components/DetailProductCard/DetailProductCard';
 import useDebouncedFunction from '../../../../../../../hooks/useDebounceFunction';
 import { DEBOUNCE_TIME, MAX_BASKET_PRODUCT_AMOUNT } from '../../../../../../../utils/constants';
 import classNames from 'classnames';
 import AttentionSign from './AttentionSign/AttentionSign';
 import { getProductAmountByAmountType } from '../../../../../../../utils/ordersFunctions';
-import { selectorFavoriteProducts } from '../../../../../../../store/favoriteSlice';
+import useShowDetailProductCardPopUp from '../../../../../../../hooks/useShowDetailProductCardPopUp';
 
 type PropsType = {
   num: number;
@@ -43,9 +36,9 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
   showAmountInput,
 }) => {
   const dispatch = useAppDispatch();
-  const basketProducts = useAppSelector(selectorBasketProducts);
-  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
   const [amount, setAmount] = useState(getProductAmountByAmountType(product, amountType));
+
+  const showDetailProductCardPopUp = useShowDetailProductCardPopUp(product);
 
   useEffect(() => {
     setAmount(getProductAmountByAmountType(product, amountType));
@@ -114,10 +107,6 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
     }
   };
 
-  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
-  };
-
   const onClickViewProduct = () => {
     let productId;
     if (amountType === AmountTypeEnum.inConfirmation) {
@@ -126,11 +115,7 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
       productId = product.id;
     }
     if (productId) {
-      dispatch(getProductThunk(productId)).then((result) => {
-        if (isFulfilled(result)) {
-          showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
-        }
-      });
+      showDetailProductCardPopUp();
     }
   };
 
