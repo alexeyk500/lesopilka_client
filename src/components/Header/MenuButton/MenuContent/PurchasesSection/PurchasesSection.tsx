@@ -16,8 +16,10 @@ type PropsType = {
 
 const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
-  const loginUser = useLoginUser();
   const user = useAppSelector(selectorUser);
+  const loginUserToBasketPage = useLoginUser(PageEnum.BasketPage);
+  const loginUserToUserOrdersPage = useLoginUser(PageEnum.UserOrdersPage);
+  const loginUserToFavoriteProductPage = useLoginUser(PageEnum.FavoriteProductPage);
 
   const onClickCatalog = () => {
     navigate(PageEnum.RootPage);
@@ -28,7 +30,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     if (user) {
       navigate(PageEnum.BasketPage);
     } else {
-      loginUser();
+      loginUserToBasketPage();
     }
     closeMenuContent();
   };
@@ -37,7 +39,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     if (user) {
       navigate(PageEnum.FavoriteProductPage);
     } else {
-      loginUser();
+      loginUserToFavoriteProductPage();
     }
     closeMenuContent();
   };
@@ -46,7 +48,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     if (user) {
       navigate(PageEnum.UserOrdersPage);
     } else {
-      loginUser();
+      loginUserToUserOrdersPage();
     }
     closeMenuContent();
   };

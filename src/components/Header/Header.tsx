@@ -43,7 +43,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (!isAuth && isUserChecked && redirectRouteRef.current) {
-      navigate(`${PageEnum.LoginPage}?redirect=${redirectRouteRef.current}&srid=&slid=`);
+      navigate(`${PageEnum.RedirectPageWithLogin}?redirect=${redirectRouteRef.current}&srid=&slid=`);
       redirectRouteRef.current = undefined;
     } else if (isAuth && isUserChecked && redirectRouteRef.current) {
       navigate(redirectRouteRef.current);

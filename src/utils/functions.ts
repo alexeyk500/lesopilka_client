@@ -367,6 +367,16 @@ export const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
+export const getRedirectRoute = (searchParams: URLSearchParams) => {
+  let redirectRoute;
+  searchParams.forEach((value, key) => {
+    if (key === QueryEnum.Redirect) {
+      redirectRoute = value;
+    }
+  });
+  return redirectRoute;
+};
+
 // export function clearFormAfterSubmit(myFormElement: HTMLFormElement) {
 //   const elements = myFormElement.elements;
 //   for (let i = 0; i < elements.length; i++) {

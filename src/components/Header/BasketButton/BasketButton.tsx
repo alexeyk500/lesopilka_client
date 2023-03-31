@@ -13,7 +13,7 @@ const BasketButton: React.FC = () => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);
-  const loginUser = useLoginUser();
+  const loginUser = useLoginUser(PageEnum.BasketPage);
 
   const onClickBasket = () => {
     if (user) {

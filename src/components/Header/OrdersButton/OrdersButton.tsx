@@ -11,9 +11,9 @@ import useLoginUser from '../../../hooks/useLoginUser';
 const OrdersButton: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const loginUser = useLoginUser();
   const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);
+  const loginUser = useLoginUser(PageEnum.UserOrdersPage);
 
   const onClickOrders = () => {
     if (user) {

@@ -11,9 +11,9 @@ import { PageEnum } from '../../AppRouter/AppRouter';
 const FavoriteButton: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const loginUser = useLoginUser();
   const [searchParams] = useSearchParams();
   const user = useAppSelector(selectorUser);
+  const loginUser = useLoginUser(PageEnum.FavoriteProductPage);
 
   const onClickFavoriteProducts = () => {
     if (user) {

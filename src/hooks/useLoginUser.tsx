@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useAppDispatch } from './hooks';
 import { useNavigate } from 'react-router-dom';
 
-export default function useLoginUser() {
+export default function useLoginUser(redirectRoute = PageEnum.RootPage) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const preloaderPopUpRef = useRef<PopupRef | null>(null);
@@ -22,13 +22,10 @@ export default function useLoginUser() {
       if (email && password) {
         try {
           showPreloaderPopUp('Вход в систему...', preloaderPopUpRef);
-          dispatch(userLoginByPasswordThunk({ email, password }))
-            .then(() => {
-              preloaderPopUpRef.current?.closePopup();
-            })
-            .then(() => {
-              navigate(PageEnum.BasketPage);
-            });
+          dispatch(userLoginByPasswordThunk({ email, password })).then(() => {
+            preloaderPopUpRef.current?.closePopup();
+            navigate(redirectRoute);
+          });
         } catch (e: any) {
           preloaderPopUpRef.current?.closePopup();
           const message =

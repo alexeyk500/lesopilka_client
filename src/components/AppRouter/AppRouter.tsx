@@ -13,7 +13,7 @@ import ManufacturerOrdersPage from '../../pages/ManufacturerOrdersPage/Manufactu
 import OrderItemPage from '../../pages/OrderItemPage/OrderItemPage';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
-import LoginPage from '../../pages/LoginPage/LoginPage';
+import RedirectPageWithLogin from '../../pages/RedirectPageWithLogin/RedirectPageWithLogin';
 import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
 import FavoriteProductPage from '../../pages/FavoriteProductPage/FavoriteProductPage';
 
@@ -26,7 +26,7 @@ export enum PageEnum {
   RootPage = '/',
   UserPricePage = '/user-price-page',
   SuccessRegistrationPage = '/success-registration',
-  LoginPage = '/login',
+  RedirectPageWithLogin = '/redirect-with-login',
   UserPage = '/user',
   ManufacturerPricePage = '/manufacturer-price-page',
   BasketPage = '/basket-page',
@@ -46,7 +46,6 @@ const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
   { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
-  { path: PageEnum.LoginPage, element: <LoginPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
@@ -85,7 +84,11 @@ const AppRouter = () => {
         {publicRoutes.map((route, ind) => (
           <Route key={ind} path={route.path} element={route.element} />
         ))}
-        {isAuth && protectedRoutes.map((route, ind) => <Route key={ind} path={route.path} element={route.element} />)}
+        {isAuth ? (
+          protectedRoutes.map((route, ind) => <Route key={ind} path={route.path} element={route.element} />)
+        ) : (
+          <Route key={'redirectWithLogin'} path={PageEnum.RedirectPageWithLogin} element={<RedirectPageWithLogin />} />
+        )}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
