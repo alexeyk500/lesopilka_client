@@ -13,6 +13,7 @@ const FavoriteProductsPageMainPart: React.FC = () => {
       dispatch(getFavoriteProductsThunk(token));
     }
   }, [dispatch]);
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>Список избранных товаров</div>
