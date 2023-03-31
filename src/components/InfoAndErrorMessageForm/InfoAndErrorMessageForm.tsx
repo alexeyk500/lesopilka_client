@@ -6,6 +6,7 @@ import { AppDispatch } from '../../store/store';
 import { ProductType } from '../../types/types';
 import { getProductSizesStr } from '../../utils/functions';
 import { toggleProductForBasketThunk } from '../../store/basketSlice';
+import { deleteFavoriteProductThunk, getFavoriteProductsThunk } from '../../store/favoriteSlice';
 
 type PropsType = {
   message: string;
@@ -69,6 +70,44 @@ export const showPopUpDeleteProductFromBasket = (
   showPortalPopUp({
     popUpContent: (
       <InfoAndErrorMessageForm message={`${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из корзины`} />
+    ),
+    titleConfirmBtn: 'Подтвердить',
+    customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
+    onClosePopUp: onConfirmDelete,
+  });
+};
+
+export const showPopUpDeleteProductFromFavorite = (
+  product: ProductType,
+  dispatch?: AppDispatch,
+  forDetailCardActions?: () => void,
+  setAllowToClose?: () => void
+) => {
+  const productSizes = getProductSizesStr(product);
+  const onConfirmDelete = (result: boolean | FormData | undefined) => {
+    if (dispatch) {
+      if (result) {
+        const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+        if (product?.id && token) {
+          dispatch(deleteFavoriteProductThunk({ productId: product.id, token })).then(() => {
+            dispatch(getFavoriteProductsThunk(token));
+          });
+        }
+      }
+    } else {
+      if (forDetailCardActions && setAllowToClose) {
+        if (result) {
+          forDetailCardActions();
+        }
+        setAllowToClose();
+      }
+    }
+  };
+  showPortalPopUp({
+    popUpContent: (
+      <InfoAndErrorMessageForm
+        message={`${product?.subCategory?.title}\n${productSizes}\n\nбудет удален из избранных товаров`}
+      />
     ),
     titleConfirmBtn: 'Подтвердить',
     customClassBottomBtnGroup: classes.customClassBottomBtnGroup,

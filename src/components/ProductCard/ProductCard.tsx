@@ -16,12 +16,11 @@ import classNames from 'classnames';
 import { formatPrice, getProductSizesStr } from '../../utils/functions';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleProductForBasketThunk } from '../../store/basketSlice';
-import { showPopUpDeleteProductFromBasket } from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import {
-  createFavoriteProductThunk,
-  deleteFavoriteProductThunk,
-  getFavoriteProductsThunk,
-} from '../../store/favoriteSlice';
+  showPopUpDeleteProductFromBasket,
+  showPopUpDeleteProductFromFavorite,
+} from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { createFavoriteProductThunk, getFavoriteProductsThunk } from '../../store/favoriteSlice';
 
 type PropsType = {
   product?: ProductType;
@@ -66,9 +65,10 @@ const ProductCard: React.FC<PropsType> = ({
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (product?.id && token) {
       if (product.isFavorite) {
-        dispatch(deleteFavoriteProductThunk({ productId: product.id, token })).then(() => {
-          dispatch(getFavoriteProductsThunk(token));
-        });
+        showPopUpDeleteProductFromFavorite(product, dispatch);
+        // dispatch(deleteFavoriteProductThunk({ productId: product.id, token })).then(() => {
+        //   dispatch(getFavoriteProductsThunk(token));
+        // });
       } else {
         dispatch(createFavoriteProductThunk({ productId: product.id, token })).then(() => {
           dispatch(getFavoriteProductsThunk(token));

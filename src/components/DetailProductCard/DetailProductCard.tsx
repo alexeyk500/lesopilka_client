@@ -8,7 +8,10 @@ import SectionSizeInfo from './SectionSizeInfo/SectionSizeInfo';
 import SectionDescription from './SectionDescription/SectionDescription';
 import SectionPriceInfo from './SectionPriceInfo/SectionPriceInfo';
 import SectionReviews from './SectionReviews/SectionReviews';
-import { showPopUpDeleteProductFromBasket } from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import {
+  showPopUpDeleteProductFromBasket,
+  showPopUpDeleteProductFromFavorite,
+} from '../InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type PropsType = {
   divId: string;
@@ -69,8 +72,17 @@ export const DetailProductCard: React.FC<PropsType> = ({
     }
   }, [product, favoriteProducts]);
 
-  const onClickToggleFavorite = () => {
+  const toggleFavorite = () => {
     setIsFavorite((prev) => !prev);
+  };
+
+  const onClickToggleFavorite = () => {
+    if (isFavorite) {
+      setIsOpenAnyPopUp(true);
+      showPopUpDeleteProductFromFavorite(product, undefined, toggleFavorite, setAllowToClose);
+    } else {
+      toggleFavorite();
+    }
   };
 
   const toggleBasket = () => {
