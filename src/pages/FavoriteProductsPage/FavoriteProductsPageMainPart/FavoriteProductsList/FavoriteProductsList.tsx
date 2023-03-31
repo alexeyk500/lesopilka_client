@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import classes from './FavoriteProductsList.module.css';
 import { useAppSelector } from '../../../../hooks/hooks';
-import { selectorFavoriteProducts, selectorFavoriteProductsSelectedCategoryId } from '../../../../store/favoriteSlice';
+import { selectorFavoriteProductsSelectedCategoryId } from '../../../../store/favoriteSlice';
 import { ProductType } from '../../../../types/types';
-import ProductCard from '../../../../components/ProductCard/ProductCard';
 import { selectorCategories, selectorSubCategories } from '../../../../store/catalogSlice';
+import FavoriteProductsListItem from './FavoriteProductsListItem';
+import { selectorFavoriteProductsCombine } from '../../../../store/productsCombineSelector';
 
 const FavoriteProductsList: React.FC = () => {
-  const products = useAppSelector(selectorFavoriteProducts);
+  const products = useAppSelector(selectorFavoriteProductsCombine);
   const categories = useAppSelector(selectorCategories);
   const subCategories = useAppSelector(selectorSubCategories);
   const selectedCategoryId = useAppSelector(selectorFavoriteProductsSelectedCategoryId);
@@ -32,7 +33,7 @@ const FavoriteProductsList: React.FC = () => {
     <div className={classes.container}>
       <div className={classes.scrollContainer}>
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => <ProductCard key={product.id} product={product} onClick={() => {}} />)
+          filteredProducts.map((product) => <FavoriteProductsListItem key={product.id} product={product} />)
         ) : (
           <div className={classes.emptyList}>
             {selectedCategory
@@ -40,7 +41,6 @@ const FavoriteProductsList: React.FC = () => {
               : 'Ваш список избранных товаров пока еще пустой...'}
           </div>
         )}
-        {}
       </div>
     </div>
   );

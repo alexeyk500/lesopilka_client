@@ -21,3 +21,16 @@ export const selectorProducts = createSelector(
     });
   }
 );
+
+export const selectorFavoriteProductsCombine = createSelector(
+  [selectorBasketProducts, selectorFavoriteProducts],
+  (basketProducts, favoriteProducts) => {
+    return favoriteProducts.map((product) => {
+      const basketProduct = basketProducts.find((basketProduct) => basketProduct.id === product.id);
+      if (basketProduct) {
+        return { ...product, isFavorite: true, amountInBasket: basketProduct.amountInBasket };
+      }
+      return { ...product, isFavorite: true };
+    });
+  }
+);

@@ -19,7 +19,7 @@ type PropsType = {
   onClose: (result: CloseDetailCardType) => void;
 };
 
-const DetailProductCard: React.FC<PropsType> = ({
+export const DetailProductCard: React.FC<PropsType> = ({
   divId,
   popUpRoot,
   product,

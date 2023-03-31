@@ -1,13 +1,11 @@
 import React, { useCallback, useRef } from 'react';
 import classes from './ProductList.module.css';
 import ProductCard from '../../../components/ProductCard/ProductCard';
-import { checkIsManufacturerPage, isFiltersSearchParams, onCloseDetailCard } from '../../../utils/functions';
+import { checkIsManufacturerPage, isFiltersSearchParams } from '../../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
   addProductsThunk,
   createProductThunk,
-  getProductThunk,
-  selectorBasketProducts,
   selectorCurrentPage,
   selectorProductsAdding,
   selectorProductsLoading,
@@ -18,14 +16,9 @@ import Preloader from '../../../components/Preloader/Preloader';
 import SelectRow from '../SelectRow/SelectRow';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ProductType, QueryEnum } from '../../../types/types';
-import {
-  CloseDetailCardType,
-  showDetailProductCardPopUp,
-} from '../../../components/DetailProductCard/DetailProductCard';
-import { isFulfilled } from '@reduxjs/toolkit';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import { selectorProducts } from '../../../store/productsCombineSelector';
-import { selectorFavoriteProducts } from '../../../store/favoriteSlice';
+import ProductListItem from './ProductListItem/ProductListItem';
 
 const ProductList = () => {
   const location = useLocation();
@@ -35,14 +28,12 @@ const ProductList = () => {
   const currentPageStore = useAppSelector(selectorCurrentPage);
   const totalPagesStore = useAppSelector(selectorTotalPages);
   const isAddingProducts = useAppSelector(selectorProductsAdding);
-  const basketProducts = useAppSelector(selectorBasketProducts);
-  const favoriteProducts = useAppSelector(selectorFavoriteProducts);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isSalesPage = checkIsManufacturerPage(location);
   const isSearchParams = isFiltersSearchParams(searchParams);
+  const isManufacturerPage = checkIsManufacturerPage(location);
 
   const onClickAddProductCard = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
@@ -54,27 +45,6 @@ const ProductList = () => {
           navigate(`${PageEnum.EditProduct}/${id}`);
         }
       });
-    }
-  };
-
-  const onCloseDetailCardHandler = (result: CloseDetailCardType) => {
-    onCloseDetailCard(result, dispatch, basketProducts, favoriteProducts);
-  };
-
-  const onClick = (id: number | undefined) => {
-    if (isSalesPage) {
-      if (id) {
-        dispatch(setCatalogSearchParams(searchParams.toString()));
-        navigate(`${PageEnum.EditProduct}/${id}`);
-      }
-    } else {
-      if (id) {
-        dispatch(getProductThunk(id)).then((result) => {
-          if (isFulfilled(result)) {
-            showDetailProductCardPopUp(result.payload, basketProducts, favoriteProducts, onCloseDetailCardHandler);
-          }
-        });
-      }
     }
   };
 
@@ -120,29 +90,17 @@ const ProductList = () => {
           </div>
         ) : (
           <>
-            {isSalesPage && <ProductCard isAddProductCard onClick={onClickAddProductCard} />}
+            {isManufacturerPage && <ProductCard isAddProductCard onClick={onClickAddProductCard} />}
             {products.length > 0 ? (
               products.map((product, index) => {
                 if (index === products.length - 1) {
                   return (
                     <div ref={lastProductRef} key={index + 'div'}>
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        onClick={onClick}
-                        isManufacturerProductCard={isSalesPage}
-                      />
+                      <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />
                     </div>
                   );
                 } else {
-                  return (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onClick={onClick}
-                      isManufacturerProductCard={isSalesPage}
-                    />
-                  );
+                  return <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />;
                 }
               })
             ) : (
