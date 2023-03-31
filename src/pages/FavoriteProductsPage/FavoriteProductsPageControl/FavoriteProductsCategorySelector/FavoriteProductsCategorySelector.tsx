@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './FavoriteProductsCategorySelector.module.css';
 import { QueryEnum } from '../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
@@ -9,6 +9,10 @@ import FilterSelectorItem from '../../../UnitedPage/FilterSelectors/FilterSelect
 const FavoriteProductsCategorySelector: React.FC = () => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectorCategories);
+
+  useEffect(() => {
+    dispatch(setSelectedCategoryId(undefined));
+  }, [dispatch]);
 
   const onSelect = (id: number | undefined) => {
     dispatch(setSelectedCategoryId(id));
