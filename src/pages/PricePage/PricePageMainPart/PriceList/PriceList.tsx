@@ -5,7 +5,7 @@ import { selectorUser } from '../../../../store/userSlice';
 import { PageTypeEnum, PriceSelectedTypeEnum, ProductType, QueryEnum } from '../../../../types/types';
 import {
   getPriceProductsThunk,
-  selectorPriceDownloading,
+  selectorIsPriceDownloading,
   selectorPriceEditProductId,
   selectorPriceProducts,
   selectorSelectedPriceType,
@@ -36,7 +36,7 @@ const PriceList = () => {
   const subCategories = useAppSelector(selectorSubCategories);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
   const priceEditProductId = useAppSelector(selectorPriceEditProductId);
-  const priceDownloading = useAppSelector(selectorPriceDownloading);
+  const priceDownloading = useAppSelector(selectorIsPriceDownloading);
   const isManufacturerPage = checkIsManufacturerPage(location);
 
   const refs = useRef<HTMLDivElement[]>([]);

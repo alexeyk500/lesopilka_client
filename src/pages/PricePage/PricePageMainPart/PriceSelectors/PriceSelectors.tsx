@@ -3,9 +3,6 @@ import classes from './PriceSelectors.module.css';
 import IconButton from '../../../../components/commonComponents/IconButton/IconButton';
 
 import downloadIco from '../../../../img/downloadFileWhiteIco.svg';
-import getLinkIco from '../../../../img/getLinkWhiteIco.svg';
-import printIco from '../../../../img/printWhiteIco.svg';
-import downloadPrice from '../../../../img/downloadPriceWhiteIco.svg';
 
 import ButtonsSection from '../../../../components/commonComponents/ButtonsSection/ButtonsSection';
 import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
@@ -19,6 +16,7 @@ import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
 import {
+  downLoadPriceThunk,
   selectorPriceProducts,
   selectorPriceReturnTo,
   selectorSelectedPriceType,
@@ -122,18 +120,18 @@ const PriceSelectors: React.FC = () => {
           customIconClasses={classes.downloadIco}
           onClick={onClickDownload}
         />
-        {isManufacturerPage && (
-          <>
-            <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />
-            <IconButton ico={printIco} title={'Печать'} />
-          </>
-        )}
+        {/*{isManufacturerPage && (*/}
+        {/*  <>*/}
+        {/*    <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />*/}
+        {/*    <IconButton ico={printIco} title={'Печать'} />*/}
+        {/*  </>*/}
+        {/*)}*/}
       </ButtonsSection>
       {isManufacturerPage && (
         <>
-          <ButtonsSection title={'Цены'}>
-            <IconButton ico={downloadPrice} title={'Загрузить'} customIconClasses={classes.downloadPrice} />
-          </ButtonsSection>
+          {/*<ButtonsSection title={'Цены'}>*/}
+          {/*  <IconButton ico={downloadPrice} title={'Загрузить'} customIconClasses={classes.downloadPrice} />*/}
+          {/*</ButtonsSection>*/}
           <LicensesMonitor />
         </>
       )}

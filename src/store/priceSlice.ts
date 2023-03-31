@@ -1,5 +1,5 @@
 import { PriceSelectedTypeEnum, ProductType } from '../types/types';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { GetProductsServerType } from '../api/serverResponseTypes';
 import { serverApi } from '../api/serverApi';
@@ -11,7 +11,7 @@ type PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum;
   isLoading: boolean;
   editProductId: number | undefined;
-  priceDownloading: boolean;
+  isPriceDownloading: boolean;
   returnTo: string;
 };
 
@@ -20,7 +20,7 @@ const initialState: PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum.published,
   isLoading: false,
   editProductId: undefined,
-  priceDownloading: false,
+  isPriceDownloading: false,
   returnTo: PageEnum.RootPage,
 };
 
@@ -28,11 +28,23 @@ export const getPriceProductsThunk = createAsyncThunk<
   GetProductsServerType,
   URLSearchParams | undefined,
   { rejectValue: string }
->('product/getPriceProductsThunk', async (urlSearchParams, { rejectWithValue }) => {
+>('price/getPriceProductsThunk', async (urlSearchParams, { rejectWithValue }) => {
   try {
     return await serverApi.getProducts(urlSearchParams);
   } catch (e: any) {
     return rejectWithValue('Ошибка получения списка товаров\n' + e.response?.data?.message);
+  }
+});
+
+export const downLoadPriceThunk = createAsyncThunk<
+  { response: BlobPart },
+  { manufacturerId: number },
+  { rejectValue: string }
+>('price/downLoadPriceThunk', async ({ manufacturerId }, { rejectWithValue }) => {
+  try {
+    return await serverApi.getPrice(manufacturerId);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка получения списка Прайса\n' + e.response?.data?.message);
   }
 });
 
@@ -47,7 +59,7 @@ export const priceSlice = createSlice({
       state.editProductId = actions.payload;
     },
     setPriceDownLoading: (state, actions) => {
-      state.priceDownloading = actions.payload;
+      state.isPriceDownloading = actions.payload;
     },
     setPriceReturnTo: (state, actions) => {
       state.returnTo = actions.payload;
@@ -55,15 +67,22 @@ export const priceSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPriceProductsThunk.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(getPriceProductsThunk.fulfilled, (state, action) => {
         state.products = action.payload.products;
         state.isLoading = false;
       })
-      .addCase(getPriceProductsThunk.rejected, (state, action) => {
+      .addCase(downLoadPriceThunk.fulfilled, (state) => {
+        state.isPriceDownloading = false;
+      })
+      .addCase(getPriceProductsThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(downLoadPriceThunk.pending, (state) => {
+        state.isPriceDownloading = true;
+      })
+      .addMatcher(isAnyOf(getPriceProductsThunk.rejected, downLoadPriceThunk.rejected), (state, action) => {
         state.isLoading = false;
+        state.isPriceDownloading = false;
         showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - priceSlice');
       });
   },
@@ -74,7 +93,7 @@ export const { setSelectedType, setPriceEditProductId, setPriceDownLoading, setP
 export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;
 export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
-export const selectorPriceDownloading = (state: RootState) => state.price.priceDownloading;
+export const selectorIsPriceDownloading = (state: RootState) => state.price.isPriceDownloading;
 export const selectorPriceReturnTo = (state: RootState) => state.price.returnTo;
 
 export default priceSlice.reducer;
