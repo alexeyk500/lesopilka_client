@@ -7,11 +7,13 @@ import { UniversalServerResponseType } from '../api/serverResponseTypes';
 
 type FavoriteSliceType = {
   products: ProductType[];
+  selectedCategoryId?: number;
   isLoading: boolean;
 };
 
 const initialState: FavoriteSliceType = {
   products: [],
+  selectedCategoryId: undefined,
   isLoading: false,
 };
 
@@ -53,7 +55,11 @@ export const deleteFavoriteProductThunk = createAsyncThunk<
 export const favoriteSlice = createSlice({
   name: 'favoriteSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCategoryId: (state, actions) => {
+      state.selectedCategoryId = actions.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getFavoriteProductsThunk.fulfilled, (state, action) => {
@@ -87,6 +93,9 @@ export const favoriteSlice = createSlice({
   },
 });
 
+export const { setSelectedCategoryId } = favoriteSlice.actions;
+
 export const selectorFavoriteProducts = (state: RootState) => state.favorite.products;
+export const selectorFavoriteProductsSelectedCategoryId = (state: RootState) => state.favorite.selectedCategoryId;
 
 export default favoriteSlice.reducer;

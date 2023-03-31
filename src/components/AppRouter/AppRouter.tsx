@@ -15,7 +15,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import RedirectPageWithLogin from '../../pages/RedirectPageWithLogin/RedirectPageWithLogin';
 import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
-import FavoriteProductPage from '../../pages/FavoriteProductPage/FavoriteProductPage';
+import FavoriteProductsPage from '../../pages/FavoriteProductsPage/FavoriteProductsPage';
 
 type RouteType = {
   path: string;
@@ -61,7 +61,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.UserOrderItemPage, element: <OrderItemPage /> },
   { path: PageEnum.ManufacturerOrderItemPage, element: <OrderItemPage isManufacturerOrder /> },
   { path: PageEnum.ManufacturerLicensesPage, element: <ManufacturerLicensePage /> },
-  { path: PageEnum.FavoriteProductPage, element: <FavoriteProductPage /> },
+  { path: PageEnum.FavoriteProductPage, element: <FavoriteProductsPage /> },
 ];
 
 export const isProtectedRoute = (incomeRoute: string) => {
