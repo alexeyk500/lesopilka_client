@@ -16,6 +16,7 @@ import { selectorUser } from '../../store/userSlice';
 import RedirectPageWithLogin from '../../pages/RedirectPageWithLogin/RedirectPageWithLogin';
 import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
 import FavoriteProductsPage from '../../pages/FavoriteProductsPage/FavoriteProductsPage';
+import ManufacturerWindowCasePage from '../../pages/ManufacturerWindowCasePage/ManufacturerWindowCasePage';
 
 type RouteType = {
   path: string;
@@ -40,12 +41,14 @@ export enum PageEnum {
   ManufacturerOrderItemPage = '/manufacturer-order-item/:orderIdStr',
   ManufacturerLicensesPage = '/licenses',
   FavoriteProductPage = '/favorite-product',
+  ManufacturerWindowCasePage = '/manufacturer-window-case',
 }
 
 const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
   { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
+  { path: PageEnum.ManufacturerWindowCasePage, element: <ManufacturerWindowCasePage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
@@ -64,7 +67,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.FavoriteProductPage, element: <FavoriteProductsPage /> },
 ];
 
-export const isProtectedRoute = (incomeRoute: string) => {
+export const getProtectedRoute = (incomeRoute: string) => {
   for (let i = 0; i < protectedRoutes.length; i++) {
     const route = protectedRoutes[i];
     const headForPath = route.path.split('/')?.[1];

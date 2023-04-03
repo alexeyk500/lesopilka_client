@@ -19,7 +19,7 @@ import SearchLocationSelector from '../commonComponents/SearchLocationSelector/S
 import CatalogButton from './CatalogButton/CatalogButton';
 import OrdersButton from './OrdersButton/OrdersButton';
 import { useNavigate } from 'react-router-dom';
-import { isProtectedRoute, PageEnum } from '../AppRouter/AppRouter';
+import { getProtectedRoute, PageEnum } from '../AppRouter/AppRouter';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,18 +32,18 @@ const Header: React.FC = () => {
   const redirectRouteRef = useRef<string | undefined>(undefined);
 
   if (incomeRouteRef.current === undefined) {
-    const redirectRoute = isProtectedRoute(window.location.pathname);
+    const redirectRoute = getProtectedRoute(window.location.pathname);
     if (redirectRoute) {
-      incomeRouteRef.current = redirectRoute;
-      redirectRouteRef.current = redirectRoute;
+      incomeRouteRef.current = `${redirectRoute}${window.location.search ? window.location.search : ''}`;
+      redirectRouteRef.current = `${redirectRoute}${window.location.search ? window.location.search : ''}`;
     } else {
-      incomeRouteRef.current = window.location.pathname;
+      incomeRouteRef.current = `${window.location.pathname}${window.location.search ? window.location.search : ''}`;
     }
   }
 
   useEffect(() => {
     if (!isAuth && isUserChecked && redirectRouteRef.current) {
-      navigate(`${PageEnum.RedirectPageWithLogin}?redirect=${redirectRouteRef.current}&srid=&slid=`);
+      navigate(`${PageEnum.RedirectPageWithLogin}?redirect=${redirectRouteRef.current}`);
       redirectRouteRef.current = undefined;
     } else if (isAuth && isUserChecked && redirectRouteRef.current) {
       navigate(redirectRouteRef.current);
