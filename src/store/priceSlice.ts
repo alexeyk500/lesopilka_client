@@ -11,7 +11,7 @@ type PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum;
   isLoading: boolean;
   editProductId: number | undefined;
-  isPriceDownloading: boolean;
+  isPDFDownloading: boolean;
   returnTo: string;
 };
 
@@ -20,7 +20,7 @@ const initialState: PriceSliceType = {
   selectedPriceType: PriceSelectedTypeEnum.published,
   isLoading: false,
   editProductId: undefined,
-  isPriceDownloading: false,
+  isPDFDownloading: false,
   returnTo: PageEnum.RootPage,
 };
 
@@ -36,18 +36,6 @@ export const getPriceProductsThunk = createAsyncThunk<
   }
 });
 
-export const downLoadPriceThunk = createAsyncThunk<
-  { response: BlobPart },
-  { manufacturerId: number },
-  { rejectValue: string }
->('price/downLoadPriceThunk', async ({ manufacturerId }, { rejectWithValue }) => {
-  try {
-    return await serverApi.getPrice(manufacturerId);
-  } catch (e: any) {
-    return rejectWithValue('Ошибка получения списка Прайса\n' + e.response?.data?.message);
-  }
-});
-
 export const priceSlice = createSlice({
   name: 'priceSlice',
   initialState,
@@ -59,7 +47,7 @@ export const priceSlice = createSlice({
       state.editProductId = actions.payload;
     },
     setPriceDownLoading: (state, actions) => {
-      state.isPriceDownloading = actions.payload;
+      state.isPDFDownloading = actions.payload;
     },
     setPriceReturnTo: (state, actions) => {
       state.returnTo = actions.payload;
@@ -71,18 +59,12 @@ export const priceSlice = createSlice({
         state.products = action.payload.products;
         state.isLoading = false;
       })
-      .addCase(downLoadPriceThunk.fulfilled, (state) => {
-        state.isPriceDownloading = false;
-      })
       .addCase(getPriceProductsThunk.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(downLoadPriceThunk.pending, (state) => {
-        state.isPriceDownloading = true;
-      })
-      .addMatcher(isAnyOf(getPriceProductsThunk.rejected, downLoadPriceThunk.rejected), (state, action) => {
+      .addMatcher(isAnyOf(getPriceProductsThunk.rejected), (state, action) => {
         state.isLoading = false;
-        state.isPriceDownloading = false;
+        state.isPDFDownloading = false;
         showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - priceSlice');
       });
   },
@@ -93,7 +75,7 @@ export const { setSelectedType, setPriceEditProductId, setPriceDownLoading, setP
 export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;
 export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
-export const selectorIsPriceDownloading = (state: RootState) => state.price.isPriceDownloading;
+export const selectorIsPriceDownloading = (state: RootState) => state.price.isPDFDownloading;
 export const selectorPriceReturnTo = (state: RootState) => state.price.returnTo;
 
 export default priceSlice.reducer;

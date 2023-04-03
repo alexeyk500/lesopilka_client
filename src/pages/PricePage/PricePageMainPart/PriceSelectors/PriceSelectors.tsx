@@ -16,7 +16,6 @@ import { selectorUser } from '../../../../store/userSlice';
 import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
 import {
-  downLoadPriceThunk,
   selectorPriceProducts,
   selectorPriceReturnTo,
   selectorSelectedPriceType,
@@ -24,8 +23,8 @@ import {
   setPriceReturnTo,
   setSelectedType,
 } from '../../../../store/priceSlice';
-import { serverApi } from '../../../../api/serverApi';
 import { PageEnum } from '../../../../components/AppRouter/AppRouter';
+import { serverApi } from '../../../../api/serverApi';
 
 const getReturnInfo = (returnTo?: string) => {
   if (returnTo?.includes(PageEnum.BasketPage)) {
@@ -65,12 +64,13 @@ const PriceSelectors: React.FC = () => {
   const onClickDownload = async () => {
     if (user?.manufacturer?.id) {
       dispatch(setPriceDownLoading(true));
-      const priceRaw = await serverApi.getPrice(user.manufacturer.id);
-      const blob = new Blob([priceRaw], { type: 'application/pdf' });
+      const response = await serverApi.getPricePDF(user.manufacturer.id);
+      const blob = new Blob([response], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(blob);
       window.open(fileURL, '_blank_');
       dispatch(setPriceDownLoading(false));
     }
+    // window.open('http://localhost:5500/api/price/9', '_blank');
   };
 
   const returnToCatalog = () => {
