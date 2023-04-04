@@ -17,6 +17,7 @@ import RedirectPageWithLogin from '../../pages/RedirectPageWithLogin/RedirectPag
 import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
 import FavoriteProductsPage from '../../pages/FavoriteProductsPage/FavoriteProductsPage';
 import ManufacturerShowCasePage from '../../pages/ManufacturerShowCasePage/ManufacturerShowCasePage';
+import UserPricePage from '../../pages/UserPricePage/UserPricePage';
 
 type RouteType = {
   path: string;
@@ -47,7 +48,7 @@ export enum PageEnum {
 
 const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
-  { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
+  { path: `${PageEnum.UserPricePage}/:mid`, element: <UserPricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
   { path: PageEnum.ManufacturerShowCasePage, element: <ManufacturerShowCasePage /> },
 ];

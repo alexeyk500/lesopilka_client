@@ -39,6 +39,7 @@ const ManufacturerShowCaseControl: React.FC<PropsType> = ({ isAddToBasketPage })
         <FilterSelectors />
       </div>
       <div className={classes.bottomContainer}>
+        {isAddToBasketPage && <BottomButtonReturnTo returnTo={ReturnToEnum.priceForUser} />}
         <BottomButtonReturnTo returnTo={isAddToBasketPage ? ReturnToEnum.basket : ReturnToEnum.catalog} />
       </div>
     </div>
