@@ -25,4 +25,23 @@
   display: flex;
   margin: 32px 0;
 }
+.productsSectionContainer {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.priceSectionContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 64px;
+  flex-shrink: 0;
+}
+
+.middleSpreadContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+}
 

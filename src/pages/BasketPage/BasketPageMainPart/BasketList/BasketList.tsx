@@ -14,7 +14,7 @@ const BasketList: React.FC<PropsType> = ({ productsByManufacturer, manufacturers
     <div className={classes.container}>
       {!!productsByManufacturer.length ? (
         <>
-          <div className={classes.title}>{'Пиломатериалы по поставщикам'}</div>
+          <div className={classes.title}>{'Заказы по поставщикам'}</div>
           <div className={classes.scrollContainer}>
             {productsByManufacturer.map((products, ind) => {
               const getRef = (element: HTMLDivElement) => manufacturersRef.current.push(element);

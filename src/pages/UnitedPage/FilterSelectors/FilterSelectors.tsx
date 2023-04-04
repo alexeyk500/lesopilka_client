@@ -82,6 +82,14 @@ const FilterSelectors: React.FC = () => {
           const queryFromQueryFilters = queryFilters[cid];
           if (queryFromQueryFilters) {
             setSearchParams(queryFromQueryFilters);
+          } else {
+            const newSearchParams = new URLSearchParams();
+            newSearchParams.append(QueryEnum.CatalogCategory, cid.toString());
+            const mid = searchParams.get(QueryEnum.ManufacturerId);
+            if (mid) {
+              newSearchParams.append(QueryEnum.ManufacturerId, mid.toString());
+            }
+            setSearchParams(newSearchParams);
           }
         } else {
           const queryFromQueryFilters = queryFilters[0];

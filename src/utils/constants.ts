@@ -1,5 +1,7 @@
 import { DriedEnum, OptionsType, OrderViewEnum, SepticEnum } from '../types/types';
 
+export const HELP_DESK_EMAIL = 'lesopilka-support@yandex.ru';
+
 export const DEBOUNCE_TIME = 1000;
 export const CALIBER_PRODUCT_CATEGORIES = [6];
 

@@ -1,17 +1,14 @@
 import React from 'react';
 import classes from './OrderToManufacturer.module.css';
 import addToBasketIco from '../../../../../img/addToBasketIco.svg';
-import downloadFileIco from '../../../../../img/downloadFileIco.svg';
 import ButtonComponent, {
   ButtonType,
 } from '../../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { AmountTypeEnum, ProductType } from '../../../../../types/types';
+import { AmountTypeEnum, ProductType, QueryEnum } from '../../../../../types/types';
 import { getTotalLogisticInfo, isAllProductAvailable } from '../../../../../utils/functions';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../../components/AppRouter/AppRouter';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../../../../hooks/hooks';
-import { setPriceReturnTo } from '../../../../../store/priceSlice';
 import OrderProductsList from './OrderProductsList/OrderProductsList';
 
 type PropsType = {
@@ -20,18 +17,15 @@ type PropsType = {
 };
 
 const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const manufacturer = products?.[0]?.manufacturer;
 
   const { totalWeight, totalVolume, totalCost } = getTotalLogisticInfo(products, AmountTypeEnum.inBasket);
   const allProductAvailable = isAllProductAvailable(products);
 
-  const goToPrice = () => {
+  const addToBasketClick = () => {
     if (manufacturer?.id) {
-      dispatch(setPriceReturnTo(location.pathname + location.search));
-      navigate(`${PageEnum.UserPricePage}/${manufacturer.id}`);
+      navigate(`${PageEnum.AddToBasketPage}?${QueryEnum.ManufacturerId}=${manufacturer.id}`);
     }
   };
 
@@ -56,13 +50,18 @@ const OrderToManufacturer: React.FC<PropsType> = ({ products, hideButtons }) => 
         </div>
         <div className={classNames(classes.infoRowActions, { [classes.infoRowActionsSingleButton]: hideButtons })}>
           <div className={classes.actionContainer}>
-            <img src={addToBasketIco} className={classes.addToBasketIco} onClick={goToPrice} alt="add to basket" />
+            <img
+              src={addToBasketIco}
+              className={classes.addToBasketIco}
+              onClick={addToBasketClick}
+              alt="add to basket"
+            />
           </div>
-          {!hideButtons && (
-            <div className={classes.actionContainer}>
-              <img src={downloadFileIco} className={classes.downloadFileIco} alt="download" />
-            </div>
-          )}
+          {/*{!hideButtons && (*/}
+          {/*  <div className={classes.actionContainer}>*/}
+          {/*    <img src={downloadFileIco} className={classes.downloadFileIco} alt="download" />*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </div>
         {!hideButtons && (
           <div className={classes.btnContainer}>

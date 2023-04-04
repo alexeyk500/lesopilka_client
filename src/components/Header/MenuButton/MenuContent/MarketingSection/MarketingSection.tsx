@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from '../MenuContent.module.css';
 import priceIco from '../../../../../img/priceIco.svg';
-import warehouseWindowCaseIco from '../../../../../img/warehouseWindowCaseIco.svg';
+import warehouseGrayIco from '../../../../../img/warehouseGrayIco.svg';
 import { PageEnum } from '../../../../AppRouter/AppRouter';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
@@ -18,7 +18,7 @@ const MarketingSection: React.FC<PropsType> = ({ closeMenuContent }) => {
 
   const onClickWindowCase = () => {
     if (user?.manufacturer?.id) {
-      navigate(`${PageEnum.ManufacturerWindowCasePage}?${QueryEnum.ManufacturerId}=${user.manufacturer.id}`);
+      navigate(`${PageEnum.ManufacturerShowCasePage}?${QueryEnum.ManufacturerId}=${user.manufacturer.id}`);
       closeMenuContent();
     }
   };
@@ -34,7 +34,7 @@ const MarketingSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     <div className={classes.section}>
       Маркетинг
       <button className={classes.menuButton} onClick={onClickWindowCase}>
-        <img src={warehouseWindowCaseIco} className={classes.ico} alt="manufacturer window-case button" />
+        <img src={warehouseGrayIco} className={classes.warehouseIco} alt="manufacturer window-case button" />
         Витрина
       </button>
       <button className={classes.menuButton} onClick={onClickPrice}>

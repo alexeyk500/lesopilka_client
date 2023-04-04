@@ -3,14 +3,20 @@ import classes from './ManufacturerData.module.css';
 import SectionContainer from '../../../../components/commonComponents/SectionContainer/SectionContainer';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
+import { HELP_DESK_EMAIL } from '../../../../utils/constants';
 
 const ManufacturerData: React.FC = () => {
   const user = useAppSelector(selectorUser);
 
+  const href = `mailto:${HELP_DESK_EMAIL}?subject=Учетные данные поставщика`;
+
   return (
     <SectionContainer title={'Поставщик'}>
       <div className={classes.description}>
-        {`Пользователь зарегестрирован как поставщик пиломатериалов. Теперь его учетные данные как поставщика, можно изменить только через электронное письмо в нашу службу поддержки.`}
+        {`Пользователь зарегестрирован как поставщик пиломатериалов.\nУчетные данные поставщика, можно изменить через нашу службу поддержки:\n`}
+        <a className={classes.email} href={href} target={'_blank'} rel="noreferrer">
+          {`${HELP_DESK_EMAIL}`}
+        </a>
       </div>
       <div className={classes.content}>
         <div className={classes.rowContainer}>

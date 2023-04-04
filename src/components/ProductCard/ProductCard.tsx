@@ -66,9 +66,6 @@ const ProductCard: React.FC<PropsType> = ({
     if (product?.id && token) {
       if (product.isFavorite) {
         showPopUpDeleteProductFromFavorite(product, dispatch);
-        // dispatch(deleteFavoriteProductThunk({ productId: product.id, token })).then(() => {
-        //   dispatch(getFavoriteProductsThunk(token));
-        // });
       } else {
         dispatch(createFavoriteProductThunk({ productId: product.id, token })).then(() => {
           dispatch(getFavoriteProductsThunk(token));

@@ -55,18 +55,19 @@ const MainInformation: React.FC = () => {
         <div className={classes.rowContainer}>
           <div className={classes.dataContainer}>
             <div className={classes.rowDataContainer}>
-              <div className={classes.title}>{'Эл.почта пользователя :'}</div>
-              <div className={classes.value}>{user?.email}</div>
-            </div>
-            <div className={classes.rowDataContainer}>
-              <div className={classes.title}>{'Имя пользователя :'}</div>
+              <div className={classes.title}>{'Имя :'}</div>
               <div className={classes.value}>
                 {user?.name}
                 <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditName} />
               </div>
             </div>
             <div className={classes.rowDataContainer}>
-              <div className={classes.title}>{'Телефон пользователя :'}</div>
+              <div className={classes.title}>{'Эл.почта :'}</div>
+              <div className={classes.value}>{user?.email}</div>
+            </div>
+
+            <div className={classes.rowDataContainer}>
+              <div className={classes.title}>{'Телефон :'}</div>
               <div className={classes.value}>
                 {user?.phone}
                 <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditPhone} />

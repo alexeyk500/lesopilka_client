@@ -193,6 +193,9 @@ export const productsSlice = createSlice({
         state.queryFilters[0] = action.payload;
       }
     },
+    resetQueryFilters: (state) => {
+      state.queryFilters = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -273,7 +276,8 @@ export const productsSlice = createSlice({
   },
 });
 
-export const { clearEditProduct, setCatalogSearchParams, updateQueryFilters } = productsSlice.actions;
+export const { clearEditProduct, setCatalogSearchParams, updateQueryFilters, resetQueryFilters } =
+  productsSlice.actions;
 
 export const selectorCurrentPage = (state: RootState) => state.products.currentPage;
 export const selectorTotalPages = (state: RootState) => state.products.totalPages;

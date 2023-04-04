@@ -12,6 +12,10 @@
   margin-bottom: 16px;
 }
 
+.email {
+  color: var(--orange_color);
+}
+
 .dataContainer {
   display: flex;
   flex-direction: column;
@@ -53,6 +57,7 @@
   margin-top: 8px;
   margin-left: 28px;
   font-size: 14px;
-  max-width: 360px;
-  color: var(--blue_color)
+  max-width: 540px;
+  color: var(--blue_color);
+  white-space: pre-line;
 }

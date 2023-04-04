@@ -16,7 +16,7 @@ import { selectorUser } from '../../store/userSlice';
 import RedirectPageWithLogin from '../../pages/RedirectPageWithLogin/RedirectPageWithLogin';
 import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/ManufacturerLicensePage';
 import FavoriteProductsPage from '../../pages/FavoriteProductsPage/FavoriteProductsPage';
-import ManufacturerWindowCasePage from '../../pages/ManufacturerWindowCasePage/ManufacturerWindowCasePage';
+import ManufacturerShowCasePage from '../../pages/ManufacturerShowCasePage/ManufacturerShowCasePage';
 
 type RouteType = {
   path: string;
@@ -41,14 +41,15 @@ export enum PageEnum {
   ManufacturerOrderItemPage = '/manufacturer-order-item/:orderIdStr',
   ManufacturerLicensesPage = '/licenses',
   FavoriteProductPage = '/favorite-product',
-  ManufacturerWindowCasePage = '/manufacturer-window-case',
+  ManufacturerShowCasePage = '/showcase',
+  AddToBasketPage = '/add-to-basket',
 }
 
 const publicRoutes: RouteType[] = [
   { path: PageEnum.RootPage, element: <UnitedPage /> },
   { path: `${PageEnum.UserPricePage}/:mid`, element: <PricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
-  { path: PageEnum.ManufacturerWindowCasePage, element: <ManufacturerWindowCasePage /> },
+  { path: PageEnum.ManufacturerShowCasePage, element: <ManufacturerShowCasePage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
@@ -65,6 +66,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.ManufacturerOrderItemPage, element: <OrderItemPage isManufacturerOrder /> },
   { path: PageEnum.ManufacturerLicensesPage, element: <ManufacturerLicensePage /> },
   { path: PageEnum.FavoriteProductPage, element: <FavoriteProductsPage /> },
+  { path: PageEnum.AddToBasketPage, element: <ManufacturerShowCasePage isAddToBasketPage /> },
 ];
 
 export const getProtectedRoute = (incomeRoute: string) => {

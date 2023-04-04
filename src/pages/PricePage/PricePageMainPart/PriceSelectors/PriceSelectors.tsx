@@ -89,50 +89,53 @@ const PriceSelectors: React.FC = () => {
   return (
     <div className={classes.container}>
       {isManufacturerPage && (
-        <CheckBoxSection title={'Товары'}>
-          <CheckBoxSquare
-            id={1}
-            title={'Опубликованные'}
-            checked={selectedPriceType === PriceSelectedTypeEnum.published}
-            onSelect={onSelect}
-            amount={publishedProductsCount}
-          />
-          <CheckBoxSquare
-            id={2}
-            title={'Черновики'}
-            checked={selectedPriceType === PriceSelectedTypeEnum.draft}
-            onSelect={onSelect}
-            amount={productsCount - publishedProductsCount}
-          />
-          <CheckBoxSquare
-            id={3}
-            title={'Все'}
-            checked={selectedPriceType === PriceSelectedTypeEnum.all}
-            onSelect={onSelect}
-            amount={productsCount}
-          />
-        </CheckBoxSection>
+        <div className={classes.productsSectionContainer}>
+          <CheckBoxSection title={'Товары'}>
+            <CheckBoxSquare
+              id={1}
+              title={'Опубликованные'}
+              checked={selectedPriceType === PriceSelectedTypeEnum.published}
+              onSelect={onSelect}
+              amount={publishedProductsCount}
+            />
+            <CheckBoxSquare
+              id={2}
+              title={'Черновики'}
+              checked={selectedPriceType === PriceSelectedTypeEnum.draft}
+              onSelect={onSelect}
+              amount={productsCount - publishedProductsCount}
+            />
+            <CheckBoxSquare
+              id={3}
+              title={'Все'}
+              checked={selectedPriceType === PriceSelectedTypeEnum.all}
+              onSelect={onSelect}
+              amount={productsCount}
+            />
+          </CheckBoxSection>
+        </div>
       )}
-      <ButtonsSection title={'Прайс'}>
-        <IconButton
-          ico={downloadIco}
-          title={'Скачать'}
-          customIconClasses={classes.downloadIco}
-          onClick={onClickDownload}
-        />
-        {/*{isManufacturerPage && (*/}
-        {/*  <>*/}
-        {/*    <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />*/}
-        {/*    <IconButton ico={printIco} title={'Печать'} />*/}
-        {/*  </>*/}
-        {/*)}*/}
-      </ButtonsSection>
+      <div className={classes.priceSectionContainer}>
+        <ButtonsSection title={'Прайс'}>
+          <IconButton
+            ico={downloadIco}
+            title={'Скачать'}
+            customIconClasses={classes.downloadIco}
+            onClick={onClickDownload}
+          />
+          {/*{isManufacturerPage && (*/}
+          {/*  <>*/}
+          {/*    <IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />*/}
+          {/*    <IconButton ico={printIco} title={'Печать'} />*/}
+          {/*  </>*/}
+          {/*)}*/}
+        </ButtonsSection>
+      </div>
       {isManufacturerPage && (
         <>
-          {/*<ButtonsSection title={'Цены'}>*/}
-          {/*  <IconButton ico={downloadPrice} title={'Загрузить'} customIconClasses={classes.downloadPrice} />*/}
-          {/*</ButtonsSection>*/}
-          <LicensesMonitor />
+          <div className={classes.middleSpreadContainer}>
+            <LicensesMonitor />
+          </div>
         </>
       )}
       {isManufacturerPage ? (

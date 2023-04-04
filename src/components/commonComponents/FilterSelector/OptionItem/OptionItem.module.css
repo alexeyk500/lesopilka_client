@@ -15,6 +15,7 @@
   appearance: none;
   outline: none;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .title {
