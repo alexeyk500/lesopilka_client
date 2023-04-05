@@ -7,9 +7,12 @@ import { useAppDispatch } from '../../../../hooks/hooks';
 import { userCreateManufacturerThunk, userLoginByTokenThunk } from '../../../../store/userSlice';
 import { showErrorPopUp } from '../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { getInputFormData } from '../../../../utils/functions';
+import { PageEnum } from '../../../../components/AppRouter/AppRouter';
+import { useNavigate } from 'react-router-dom';
 
 const ManufacturerRegistrationData = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,6 +38,10 @@ const ManufacturerRegistrationData = () => {
     }
   };
 
+  const onClickCancel = () => {
+    navigate(PageEnum.UserPage);
+  };
+
   return (
     <SectionContainer title={'Поставщик'}>
       <div className={classes.content}>
@@ -56,7 +63,7 @@ const ManufacturerRegistrationData = () => {
             <ManufacturerAddressData />
             <div className={classes.btnGroup}>
               <ButtonComponent title={'Регистрация'} type={'submit'} />
-              <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={() => {}} />
+              <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={onClickCancel} />
             </div>
           </form>
         </div>

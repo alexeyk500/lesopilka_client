@@ -30,7 +30,8 @@
   flex-wrap: wrap;
 }
 
-.rowDataContainer + .rowDataContainer {
+.addSpace {
+  display: flex;
   margin-top: 12px;
 }
 

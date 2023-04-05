@@ -1,6 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { ProductType } from '../types/types';
-import { UniversalServerResponseType } from './serverResponseTypes';
+import { UniversalServerType } from './serverResponseTypes';
 
 export const favoriteApi = {
   async getFavoriteProducts(token: string) {
@@ -9,16 +9,12 @@ export const favoriteApi = {
   },
 
   async createFavoriteProduct(productId: number, token: string) {
-    const response = await instanceAxios.post<UniversalServerResponseType>(
-      `/favorite`,
-      { productId },
-      setAuthHeader(token)
-    );
+    const response = await instanceAxios.post<UniversalServerType>(`/favorite`, { productId }, setAuthHeader(token));
     return response.data;
   },
 
   async deleteFavoriteProduct(productId: number, token: string) {
-    const response = await instanceAxios.delete<UniversalServerResponseType>(`/favorite`, {
+    const response = await instanceAxios.delete<UniversalServerType>(`/favorite`, {
       data: { productId },
       headers: { Authorization: `Bearer ${token}` },
     });

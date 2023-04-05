@@ -20,6 +20,7 @@ import ManufacturerShowCasePage from '../../pages/ManufacturerShowCasePage/Manuf
 import UserPricePage from '../../pages/UserPricePage/UserPricePage';
 import RulesPage from '../../pages/RulesPage/RulesPage';
 import ContactsPage from '../../pages/ContactsPage/ContactsPage';
+import ResellerRegistrationPage from '../../pages/ResellerRegistrationPage/ResellerRegistrationPage';
 
 type RouteType = {
   path: string;
@@ -48,6 +49,7 @@ export enum PageEnum {
   AddToBasketPage = '/add-to-basket',
   RulesPage = '/rules',
   ContactsPage = '/contacts',
+  ResellerRegistration = '/reseller-registration',
 }
 
 const publicRoutes: RouteType[] = [
@@ -66,6 +68,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.BasketPage, element: <BasketPage /> },
   { path: `${PageEnum.EditProduct}/:id`, element: <EditCardPage /> },
   { path: PageEnum.ManufacturerRegistration, element: <ManufacturerRegistrationPage /> },
+  { path: PageEnum.ResellerRegistration, element: <ResellerRegistrationPage /> },
   { path: `${PageEnum.NewOrder}/:mid`, element: <NewOrderPage /> },
   { path: PageEnum.UserOrdersPage, element: <UserOrdersPage /> },
   { path: PageEnum.ManufacturerOrdersPage, element: <ManufacturerOrdersPage /> },

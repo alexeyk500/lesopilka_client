@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { serverApi } from '../api/serverApi';
-import { GetOrderServerType, UniversalServerResponseType } from '../api/serverResponseTypes';
+import { GetOrderServerType, UniversalServerType } from '../api/serverResponseTypes';
 import { ArchiveOrderParamsType, CancelOrderParamsType, GetOrdersParamsType } from '../api/orderApi';
 import { OrderType } from '../types/types';
 import { MAX_MONTH_SHIFT_FOR_USER_ORDERS, MIN_MONTH_SHIFT_FOR_USER_ORDERS } from '../utils/constants';
@@ -52,7 +52,7 @@ export const getOrdersByParamsThunk = createAsyncThunk<
 });
 
 export const returnToBasketAndCancelOrderByIdThunk = createAsyncThunk<
-  UniversalServerResponseType,
+  UniversalServerType,
   { orderId: number; token: string },
   { rejectValue: string }
 >('user/returnToBasketAndCancelOrderById', async ({ orderId, token }, { rejectWithValue }) => {
@@ -63,29 +63,27 @@ export const returnToBasketAndCancelOrderByIdThunk = createAsyncThunk<
   }
 });
 
-export const archiveOrderThunk = createAsyncThunk<
-  UniversalServerResponseType,
-  ArchiveOrderParamsType,
-  { rejectValue: string }
->('archiveOrderThunk', async (archiveOrderParams, { rejectWithValue }) => {
-  try {
-    return await serverApi.archiveOrder(archiveOrderParams);
-  } catch (e) {
-    return rejectWithValue('Ошибка архивации заказа');
+export const archiveOrderThunk = createAsyncThunk<UniversalServerType, ArchiveOrderParamsType, { rejectValue: string }>(
+  'archiveOrderThunk',
+  async (archiveOrderParams, { rejectWithValue }) => {
+    try {
+      return await serverApi.archiveOrder(archiveOrderParams);
+    } catch (e) {
+      return rejectWithValue('Ошибка архивации заказа');
+    }
   }
-});
+);
 
-export const cancelOrderThunk = createAsyncThunk<
-  UniversalServerResponseType,
-  CancelOrderParamsType,
-  { rejectValue: string }
->('cancelOrderThunk', async (cancelOrderParams, { rejectWithValue }) => {
-  try {
-    return await serverApi.cancelOrder(cancelOrderParams);
-  } catch (e) {
-    return rejectWithValue('Ошибка отмены заказа');
+export const cancelOrderThunk = createAsyncThunk<UniversalServerType, CancelOrderParamsType, { rejectValue: string }>(
+  'cancelOrderThunk',
+  async (cancelOrderParams, { rejectWithValue }) => {
+    try {
+      return await serverApi.cancelOrder(cancelOrderParams);
+    } catch (e) {
+      return rejectWithValue('Ошибка отмены заказа');
+    }
   }
-});
+);
 
 export const ordersSlice = createSlice({
   name: 'ordersSlice',

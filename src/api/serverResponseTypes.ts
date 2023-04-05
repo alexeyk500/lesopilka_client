@@ -5,7 +5,7 @@ export type UserLoginServerType = {
   token: string;
 };
 
-export type CreateManufacturerType = {
+export type CreateManufacturerServerType = {
   id: number;
   userId: number;
   title: string;
@@ -15,7 +15,7 @@ export type CreateManufacturerType = {
   approved: boolean;
 };
 
-export type DeleteResultType = {
+export type DeleteResultServerType = {
   fileName: string;
   result: number;
 };
@@ -33,7 +33,7 @@ export type GetOrderServerType = {
   products: ProductType[];
 };
 
-export type UniversalServerResponseType = {
+export type UniversalServerType = {
   message: string;
 };
 

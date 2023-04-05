@@ -1,8 +1,8 @@
 import React from 'react';
-import SectionContainer from '../../../../../components/commonComponents/SectionContainer/SectionContainer';
+import SectionContainer from '../commonComponents/SectionContainer/SectionContainer';
 import classes from './UserInformationSection.module.css';
-import { useAppSelector } from '../../../../../hooks/hooks';
-import { selectorUser } from '../../../../../store/userSlice';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectorUser } from '../../store/userSlice';
 
 const UserInformationSection: React.FC = () => {
   const user = useAppSelector(selectorUser);
@@ -19,6 +19,10 @@ const UserInformationSection: React.FC = () => {
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Имя пользователя :'}</div>
               <div className={classes.value}>{user?.name}</div>
+            </div>
+            <div className={classes.rowDataContainer}>
+              <div className={classes.title}>{'Телефон пользователя :'}</div>
+              <div className={classes.value}>{user?.phone}</div>
             </div>
           </div>
         </div>

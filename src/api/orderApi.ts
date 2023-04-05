@@ -1,6 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { AddressType, CategoryType, ProductType, ServerOrderStatusType } from '../types/types';
-import { GetOrderServerType, UniversalServerResponseType } from './serverResponseTypes';
+import { GetOrderServerType, UniversalServerType } from './serverResponseTypes';
 import { normalizeDate } from '../utils/dateTimeFunctions';
 
 export type CreateNewOrderParamsType = {
@@ -102,7 +102,7 @@ export const orderApi = {
   },
 
   async returnToBasketAndCancelOrderById(orderId: number, token: string) {
-    const response = await instanceAxios.post<UniversalServerResponseType>(
+    const response = await instanceAxios.post<UniversalServerType>(
       '/orders/cancel_order_return_to_basket',
       { orderId },
       setAuthHeader(token)
@@ -129,7 +129,7 @@ export const orderApi = {
   },
 
   async archiveOrder({ orderId, isOrderForManufacturer, token }: ArchiveOrderParamsType) {
-    const response = await instanceAxios.post<UniversalServerResponseType>(
+    const response = await instanceAxios.post<UniversalServerType>(
       '/orders/archive',
       {
         orderId,
@@ -141,7 +141,7 @@ export const orderApi = {
   },
 
   async cancelOrder({ orderId, isOrderForManufacturer, token }: CancelOrderParamsType) {
-    const response = await instanceAxios.post<UniversalServerResponseType>(
+    const response = await instanceAxios.post<UniversalServerType>(
       '/orders/cancel',
       {
         orderId,

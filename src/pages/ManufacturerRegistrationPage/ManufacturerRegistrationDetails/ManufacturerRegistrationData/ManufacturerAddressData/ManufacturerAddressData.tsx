@@ -1,73 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import classes from './ManufacturerAddressData.module.css';
-import Selector from '../../../../../components/commonComponents/Selector/Selector';
-import { getOptionsWithFirstEmptyOption } from '../../../../../utils/functions';
-import { useAppSelector } from '../../../../../hooks/hooks';
-import { selectorRegions } from '../../../../../store/addressSlice';
-import { serverApi } from '../../../../../api/serverApi';
-import { showErrorPopUp } from '../../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { LocationType } from '../../../../../types/types';
-
-const getLocationsByRegionId = async (regionId: number) => {
-  try {
-    return await serverApi.getLocationsByRegionId(regionId);
-  } catch (e) {
-    showErrorPopUp(`Ошибка получения Поисковых Локаций для Региона - ${regionId}`);
-  }
-};
+import RegionLocationInputs from '../../../../../components/RegionLocationInputs/RegionLocationInputs';
 
 const ManufacturerAddressData: React.FC = () => {
-  const regions = useAppSelector(selectorRegions);
-
-  const [locationsByRegionId, setLocationsByRegionId] = useState<LocationType[]>([]);
-  const [regionId, setRegionId] = useState<number | undefined>(undefined);
-  const [locationId, setLocationId] = useState<number | undefined>(undefined);
-
-  const locationsOptions = getOptionsWithFirstEmptyOption(locationsByRegionId);
-  const regionsOptions = getOptionsWithFirstEmptyOption(regions);
-
-  const getSelectedRegionOption = useCallback(() => {
-    if (regionId && regionId > 0) {
-      return regionsOptions.find((option) => option.id === regionId);
-    } else {
-      return undefined;
-    }
-  }, [regionId, regionsOptions]);
-
-  const getSelectedLocationOption = useCallback(() => {
-    if (locationId && locationId > 0) {
-      return locationsOptions.find((option) => option.id === locationId);
-    } else {
-      return undefined;
-    }
-  }, [locationId, locationsOptions]);
-
-  const selectedRegionOption = getSelectedRegionOption();
-  const selectedLocationOption = getSelectedLocationOption();
-
-  const onChangeRegion = (id: number) => {
-    if (id > 0) {
-      setRegionId(id);
-      setLocationId(undefined);
-    }
-  };
-
-  const onChangeLocationLocal = (id: number) => {
-    if (id > 0) {
-      setLocationId(id);
-    }
-  };
-
-  useEffect(() => {
-    if (regionId) {
-      getLocationsByRegionId(regionId).then((locations) => {
-        if (locations) {
-          setLocationsByRegionId(locations);
-        }
-      });
-    }
-  }, [regionId]);
-
   return (
     <div className={classes.container}>
       <div className={classes.title}>Юридический адрес:</div>
@@ -75,43 +10,7 @@ const ManufacturerAddressData: React.FC = () => {
         <div className={classes.titleSelector}>{'Почтовый индекс :'}</div>
         <input className={classes.input} name="p0st1nd6x" type="text" placeholder={'Введите индекс'} required />
       </div>
-
-      <div className={classes.selectorContainer}>
-        <div className={classes.titleSelector}>Регион</div>
-        <Selector
-          options={regionsOptions}
-          selectedOption={selectedRegionOption}
-          onChange={onChangeRegion}
-          customClassName={classes.selector}
-        />
-        <input
-          className={classes.invisibleInput}
-          tabIndex={-1}
-          name="r6g1onId"
-          autoComplete="off"
-          value={regionId || ''}
-          onChange={(e) => setRegionId(Number(e.target.value))}
-          required
-        />
-      </div>
-      <div className={classes.selectorContainer}>
-        <div className={classes.titleSelector}>Населенный пункт</div>
-        <Selector
-          options={locationsOptions}
-          selectedOption={selectedLocationOption}
-          onChange={onChangeLocationLocal}
-          customClassName={classes.selector}
-        />
-        <input
-          className={classes.invisibleInput}
-          tabIndex={-1}
-          name="l0cat10n"
-          autoComplete="off"
-          value={locationId || ''}
-          required
-          onChange={(e) => setLocationId(Number(e.target.value))}
-        />
-      </div>
+      <RegionLocationInputs />
       <div className={classes.rowDataContainer}>
         <div className={classes.titleSelector}>{'Улица :'}</div>
         <input className={classes.input} name="str66t" type="text" placeholder={'Введите улицу'} required />

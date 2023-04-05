@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './RuleItem.module.css';
 import { RuleType } from '../../../types/types';
-import { Link } from 'react-router-dom';
 
 type PropsType = {
   rule: RuleType;
@@ -16,9 +15,9 @@ const RuleItem: React.FC<PropsType> = ({ rule }) => {
           <div key={ind} className={classes.ruleItem}>
             - {item.description}
             {item.url && (
-              <Link to={item.url} className={classes.link}>
+              <a href={item.url} className={classes.link}>
                 {item.urlDescription}
-              </Link>
+              </a>
             )}
           </div>
         );

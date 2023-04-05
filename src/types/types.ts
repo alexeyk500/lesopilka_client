@@ -10,9 +10,9 @@ export type AddressType = {
   id: number;
   region: RegionType;
   location: LocationType;
-  street: string;
-  building: string;
-  office: string;
+  street?: string;
+  building?: string;
+  office?: string;
 };
 
 export type ManufacturerType = {
@@ -24,6 +24,15 @@ export type ManufacturerType = {
   address: AddressType;
 };
 
+export type ResellerType = {
+  id: number;
+  family: string;
+  name: string;
+  middleName: string;
+  phone: string;
+  address: AddressType;
+};
+
 export type UserType = {
   name: string;
   email: string;
@@ -31,6 +40,7 @@ export type UserType = {
   searchRegion?: RegionType;
   searchLocation?: LocationType;
   manufacturer?: ManufacturerType;
+  reseller?: ResellerType;
 };
 
 export type CategoryType = {
@@ -302,4 +312,34 @@ export type ContactType = {
   urlDescription?: string;
   email?: string;
   emailDescription?: string;
+};
+
+export type CreateResellerParamsType = {
+  family: string;
+  name: string;
+  middleName: string;
+  phone: string;
+  locationId: number;
+  token: string;
+};
+
+export type CreateManufacturerParamsType = {
+  token: string;
+  inn: string;
+  title: string;
+  phone: string;
+  locationId: number;
+  street: string;
+  building: string;
+  postIndex: string;
+  office?: string;
+};
+
+export type UserUpdateParamsType = {
+  token: string;
+  name?: string;
+  phone?: string | null;
+  password?: string;
+  searchRegionId?: number | null;
+  searchLocationId?: number | null;
 };

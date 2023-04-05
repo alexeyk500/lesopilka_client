@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { UserType } from '../types/types';
-import { CreateManufacturerType, UserLoginServerType } from '../api/serverResponseTypes';
+import { CreateManufacturerParamsType, CreateResellerParamsType, UserType, UserUpdateParamsType } from '../types/types';
+import { CreateManufacturerServerType, UserLoginServerType } from '../api/serverResponseTypes';
 import { showConfirmPopUp, showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { serverApi } from '../api/serverApi';
 
@@ -58,22 +58,11 @@ export const userLoginByTokenThunk = createAsyncThunk<UserLoginServerType, undef
   }
 );
 
-export const userUpdateThunk = createAsyncThunk<
-  UserLoginServerType,
-  {
-    token: string;
-    name?: string;
-    phone?: string | null;
-    password?: string;
-    searchRegionId?: number | null;
-    searchLocationId?: number | null;
-  },
-  { rejectValue: string }
->(
-  'user/userUpdateNameOrPasswordThunk',
-  async ({ token, name, phone, password, searchRegionId, searchLocationId }, { rejectWithValue }) => {
+export const userUpdateThunk = createAsyncThunk<UserLoginServerType, UserUpdateParamsType, { rejectValue: string }>(
+  'user/userUpdateThunk',
+  async (userUpdateParams, { rejectWithValue }) => {
     try {
-      return await serverApi.updateUser(token, name, phone, password, searchRegionId, searchLocationId);
+      return await serverApi.updateUser(userUpdateParams);
     } catch (e) {
       return rejectWithValue('Ошибка обновления данных пользователя');
     }
@@ -81,47 +70,44 @@ export const userUpdateThunk = createAsyncThunk<
 );
 
 export const userCreateManufacturerThunk = createAsyncThunk<
-  CreateManufacturerType,
-  {
-    token: string;
-    inn: string;
-    title: string;
-    phone: string;
-    locationId: number;
-    street: string;
-    building: string;
-    office: string | undefined;
-    postIndex: string;
-  },
+  CreateManufacturerServerType,
+  CreateManufacturerParamsType,
   { rejectValue: string }
->(
-  'user/userCreateManufacturerThunk',
-  async ({ token, inn, title, phone, locationId, street, building, office, postIndex }, { rejectWithValue }) => {
-    try {
-      return await serverApi.createManufacturer(
-        token,
-        inn,
-        title,
-        phone,
-        locationId,
-        street,
-        building,
-        office,
-        postIndex
-      );
-    } catch (e: any) {
-      let message = `Ошибка создания Поставщика.\n`;
-      if (e?.response?.data?.message) {
-        if (e?.response?.data?.message.includes('already has been registered')) {
-          message += `поставщик с ИНН ${inn} уже зарегестрирован в системе`;
-        } else {
-          message += e?.response?.data?.message;
-        }
+>('user/userCreateManufacturerThunk', async (createManufacturerParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.createManufacturer(createManufacturerParams);
+  } catch (e: any) {
+    let message = `Ошибка создания Поставщика.\n`;
+    if (e?.response?.data?.message) {
+      if (e?.response?.data?.message.includes('already has been registered')) {
+        message += `поставщик с ИНН ${createManufacturerParams.inn} уже зарегестрирован в системе`;
+      } else {
+        message += e?.response?.data?.message;
       }
-      return rejectWithValue(message);
     }
+    return rejectWithValue(message);
   }
-);
+});
+
+export const userCreateResellerThunk = createAsyncThunk<
+  UserLoginServerType,
+  CreateResellerParamsType,
+  { rejectValue: string }
+>('user/userCreateResellerThunk', async (createResellerParams, { rejectWithValue }) => {
+  try {
+    return await serverApi.createReseller(createResellerParams);
+  } catch (e: any) {
+    let message = `Ошибка создания Реселлера.\n`;
+    if (e?.response?.data?.message) {
+      if (e?.response?.data?.message.includes('already has been registered')) {
+        message += `реселлер с телефоном ${createResellerParams.phone} уже зарегестрирован в системе`;
+      } else {
+        message += e?.response?.data?.message;
+      }
+    }
+    return rejectWithValue(message);
+  }
+});
 
 export const userSlice = createSlice({
   name: 'userSlice',
@@ -166,7 +152,12 @@ export const userSlice = createSlice({
         }
       })
       .addMatcher(
-        isAnyOf(userLoginByPasswordThunk.fulfilled, userLoginByTokenThunk.fulfilled, userUpdateThunk.fulfilled),
+        isAnyOf(
+          userLoginByPasswordThunk.fulfilled,
+          userLoginByTokenThunk.fulfilled,
+          userUpdateThunk.fulfilled,
+          userCreateResellerThunk.fulfilled
+        ),
         (state, action) => {
           state.user = action.payload.user;
           state.appSearchRegionId = undefined;
@@ -177,15 +168,24 @@ export const userSlice = createSlice({
         }
       )
       .addMatcher(
-        isAnyOf(userLoginByPasswordThunk.pending, userLoginByTokenThunk.pending, userUpdateThunk.pending),
+        isAnyOf(
+          userLoginByPasswordThunk.pending,
+          userLoginByTokenThunk.pending,
+          userUpdateThunk.pending,
+          userCreateManufacturerThunk.pending,
+          userCreateResellerThunk.pending
+        ),
         (state) => {
           state.isLoading = true;
         }
       )
-      .addMatcher(isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected), (state, action) => {
-        state.isLoading = false;
-        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - userSlice');
-      });
+      .addMatcher(
+        isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected, userCreateResellerThunk.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - userSlice');
+        }
+      );
   },
 });
 

@@ -20,7 +20,7 @@ export const getManufacturerOrUserName = (user: UserType | undefined) => {
 
 const UserPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'профиль пользователя' }];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'личный кабинет' }];
 
   return (
     <div className={classes.container}>

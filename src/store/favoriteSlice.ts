@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { RootState } from './store';
-import { UniversalServerResponseType } from '../api/serverResponseTypes';
+import { UniversalServerType } from '../api/serverResponseTypes';
 
 type FavoriteSliceType = {
   products: ProductType[];
@@ -29,7 +29,7 @@ export const getFavoriteProductsThunk = createAsyncThunk<ProductType[], string, 
 );
 
 export const createFavoriteProductThunk = createAsyncThunk<
-  UniversalServerResponseType,
+  UniversalServerType,
   { productId: number; token: string },
   { rejectValue: string }
 >('favoriteSlice/createFavoriteProductThunk', async ({ productId, token }, { rejectWithValue }) => {
@@ -41,7 +41,7 @@ export const createFavoriteProductThunk = createAsyncThunk<
 });
 
 export const deleteFavoriteProductThunk = createAsyncThunk<
-  UniversalServerResponseType,
+  UniversalServerType,
   { productId: number; token: string },
   { rejectValue: string }
 >('favoriteSlice/deleteFavoriteProductThunk', async ({ productId, token }, { rejectWithValue }) => {

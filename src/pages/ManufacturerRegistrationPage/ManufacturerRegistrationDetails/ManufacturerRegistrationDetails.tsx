@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './ManufacturerRegistrationDetails.module.css';
 import ManufacturerRegistrationData from './ManufacturerRegistrationData/ManufacturerRegistrationData';
-import UserInformationSection from '../../UserPage/UserDetails/RegistrationAsManufacturer/UserInformationSection/UserInformationSection';
+import UserInformationSection from '../../../components/UserInformationSection/UserInformationSection';
 
 const ManufacturerRegistrationDetails: React.FC = () => {
   return (

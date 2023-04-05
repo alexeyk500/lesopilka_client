@@ -1,5 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CreateManufacturerType, UniversalServerResponseType, UserLoginServerType } from './serverResponseTypes';
+import { CreateManufacturerServerType, UniversalServerType, UserLoginServerType } from './serverResponseTypes';
+import { CreateManufacturerParamsType, CreateResellerParamsType, UserUpdateParamsType } from '../types/types';
 
 export const userApi = {
   async userLoginByPassword(email: string, password: string) {
@@ -16,7 +17,7 @@ export const userApi = {
   },
 
   async sendConfirmationEmail(email: string, password: string) {
-    const response = await instanceAxios.post<UniversalServerResponseType>('/user/send_confirmation_email', {
+    const response = await instanceAxios.post<UniversalServerType>('/user/send_confirmation_email', {
       email,
       password,
     });
@@ -24,28 +25,21 @@ export const userApi = {
   },
 
   async sendRecoveryPasswordEmail(email: string) {
-    const response = await instanceAxios.post<UniversalServerResponseType>('/user/send_recovery_password_email', {
+    const response = await instanceAxios.post<UniversalServerType>('/user/send_recovery_password_email', {
       email,
     });
     return response.data;
   },
 
   async sendConfirmedRecoveryPasswordCode(code: string, password: string) {
-    const response = await instanceAxios.post<UniversalServerResponseType>('/user/confirm_recovery_password_code', {
+    const response = await instanceAxios.post<UniversalServerType>('/user/confirm_recovery_password_code', {
       code,
       password,
     });
     return response.data;
   },
 
-  async updateUser(
-    token: string,
-    name?: string,
-    phone?: string | null,
-    password?: string,
-    searchRegionId?: number | null,
-    searchLocationId?: number | null
-  ) {
+  async updateUser({ token, name, phone, password, searchRegionId, searchLocationId }: UserUpdateParamsType) {
     const response = await instanceAxios.put<UserLoginServerType>(
       '/user',
       {
@@ -60,18 +54,18 @@ export const userApi = {
     return response.data;
   },
 
-  async createManufacturer(
-    token: string,
-    inn: string,
-    title: string,
-    phone: string,
-    locationId: number,
-    street: string,
-    building: string,
-    office: string | undefined,
-    postIndex: string
-  ) {
-    const response = await instanceAxios.post<CreateManufacturerType>(
+  async createManufacturer({
+    inn,
+    title,
+    phone,
+    locationId,
+    street,
+    building,
+    office,
+    postIndex,
+    token,
+  }: CreateManufacturerParamsType) {
+    const response = await instanceAxios.post<CreateManufacturerServerType>(
       '/manufacturer',
       {
         inn,
@@ -85,6 +79,21 @@ export const userApi = {
       },
       setAuthHeader(token)
     );
+    return response.data;
+  },
+
+  // async createReseller({ family, name, middleName, phone, locationId, token }: CreateResellerParamsType) {
+  //   const response = await instanceAxios.post<UserLoginServerType>(
+  //     '/reseller',
+  //     { family, name, middleName, phone, locationId },
+  //     setAuthHeader(token)
+  //   );
+  //   return response.data;
+  // },
+
+  async createReseller(createResellerParams: CreateResellerParamsType) {
+    const { token, ...resellerParams } = createResellerParams;
+    const response = await instanceAxios.post<UserLoginServerType>('/reseller', resellerParams, setAuthHeader(token));
     return response.data;
   },
 };

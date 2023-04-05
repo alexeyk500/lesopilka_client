@@ -1,6 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { OrderMessageType } from '../types/types';
-import { UniversalServerResponseType } from './serverResponseTypes';
+import { UniversalServerType } from './serverResponseTypes';
 
 export type GetOrderMessagesParamsType = {
   orderId: number;
@@ -21,7 +21,7 @@ export const orderMessagesApi = {
   },
 
   async createOrderMessages({ orderId, isManufacturerMessage, messageText, token }: CreateOrderMessagesParamsType) {
-    const response = await instanceAxios.post<UniversalServerResponseType>(
+    const response = await instanceAxios.post<UniversalServerType>(
       `order_message/`,
       { orderId, isManufacturerMessage, messageText },
       setAuthHeader(token)

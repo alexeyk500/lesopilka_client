@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { serverApi } from '../api/serverApi';
 import { CreateOrderMessagesParamsType, GetOrderMessagesParamsType } from '../api/orderMessagesApi';
 import { RootState } from './store';
-import { UniversalServerResponseType } from '../api/serverResponseTypes';
+import { UniversalServerType } from '../api/serverResponseTypes';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type OrderMessagesSliceType = {
@@ -29,7 +29,7 @@ export const getOrderMessagesThunk = createAsyncThunk<
 });
 
 export const createOrderMessagesThunk = createAsyncThunk<
-  UniversalServerResponseType,
+  UniversalServerType,
   CreateOrderMessagesParamsType,
   { rejectValue: string }
 >('orderMessages/createOrderMessagesThunk', async (createOrderMessagesParams, { rejectWithValue }) => {

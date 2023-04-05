@@ -7,6 +7,7 @@ import ReferenceSection from './ReferenceSection/ReferenceSection';
 import { useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
 import MarketingSection from './MarketingSection/MarketingSection';
+import ResellerSection from './ResellerSection/RsellerSection';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -18,7 +19,7 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
   return (
     <div ref={ref} className={classes.container}>
       <PurchasesSection closeMenuContent={closeMenuContent} />
-      {user?.manufacturer?.id && (
+      {user?.manufacturer && (
         <>
           <div className={classes.sectionWrapper}>
             <ManufacturerSection closeMenuContent={closeMenuContent} />
@@ -27,6 +28,11 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
             <MarketingSection closeMenuContent={closeMenuContent} />
           </div>
         </>
+      )}
+      {user?.reseller && (
+        <div className={classes.sectionWrapper}>
+          <ResellerSection closeMenuContent={closeMenuContent} />
+        </div>
       )}
       {user && (
         <div className={classes.personalSection}>

@@ -1,0 +1,54 @@
+.container {
+  position: relative;
+  display: flex;
+  margin-top: 4px;
+  flex-direction: column;
+}
+
+.selectorContainer {
+  position: relative;
+  display: flex;
+  min-width: 240px;
+  max-width: 306px;
+  flex-direction: column;
+}
+
+.selectorContainer + .selectorContainer {
+  margin-top: 8px;
+}
+
+.selector {
+  width: 100% !important;
+}
+
+.titleSelector {
+  display: flex;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: var(--blue_color)
+}
+
+.input {
+  display: flex;
+  flex-grow: 1;
+  padding: 4px 12px;
+  min-width: 280px;
+  font-weight: 600;
+  font-size: 16px;
+  outline: none;
+  border: solid 1px var(--blue_color);
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  color: var(--blue_color);
+}
+
+.invisibleInput {
+  position: absolute;
+  top: 60px;
+  left: 120px;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  border: none;
+  outline: none;
+}

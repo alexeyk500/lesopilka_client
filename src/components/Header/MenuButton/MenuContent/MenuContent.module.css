@@ -58,8 +58,8 @@
 .personalSection {
   display: flex;
   height: 100%;
-  align-items: flex-start;
-  margin-top: 64px;
+  align-items: flex-end;
+  margin: 64px 0;
 }
 
 .sectionWrapper {

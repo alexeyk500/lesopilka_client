@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { DeleteResultType, GetProductsServerType } from '../api/serverResponseTypes';
+import { DeleteResultServerType, GetProductsServerType } from '../api/serverResponseTypes';
 import { PRODUCTS_PAGE_SIZE } from '../utils/constants';
 
 const emptyProduct: ProductType = {
@@ -162,7 +162,7 @@ export const deleteProductPictureThunk = createAsyncThunk<
 });
 
 export const deleteProductThunk = createAsyncThunk<
-  DeleteResultType,
+  DeleteResultServerType,
   { token: string; productId: number },
   { rejectValue: string }
 >('product/deleteProductThunk', async ({ token, productId }, { rejectWithValue }) => {

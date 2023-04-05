@@ -13,7 +13,7 @@ const ManufacturerData: React.FC = () => {
   return (
     <SectionContainer title={'Поставщик'}>
       <div className={classes.description}>
-        {`Пользователь зарегестрирован как поставщик пиломатериалов.\nУчетные данные поставщика, можно изменить через нашу службу поддержки:\n`}
+        {`Пользователь зарегестрирован на площадке как Поставщик пиломатериалов.\nУчетные данные поставщика, можно изменить через нашу службу поддержки:\n`}
         <a className={classes.email} href={href} target={'_blank'} rel="noreferrer">
           {`${HELP_DESK_EMAIL}`}
         </a>
