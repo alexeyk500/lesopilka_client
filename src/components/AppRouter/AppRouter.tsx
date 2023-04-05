@@ -18,6 +18,8 @@ import ManufacturerLicensePage from '../../pages/ManufacturerLicensePage/Manufac
 import FavoriteProductsPage from '../../pages/FavoriteProductsPage/FavoriteProductsPage';
 import ManufacturerShowCasePage from '../../pages/ManufacturerShowCasePage/ManufacturerShowCasePage';
 import UserPricePage from '../../pages/UserPricePage/UserPricePage';
+import RulesPage from '../../pages/RulesPage/RulesPage';
+import ContactsPage from '../../pages/ContactsPage/ContactsPage';
 
 type RouteType = {
   path: string;
@@ -44,6 +46,8 @@ export enum PageEnum {
   FavoriteProductPage = '/favorite-product',
   ManufacturerShowCasePage = '/showcase',
   AddToBasketPage = '/add-to-basket',
+  RulesPage = '/rules',
+  ContactsPage = '/contacts',
 }
 
 const publicRoutes: RouteType[] = [
@@ -51,6 +55,8 @@ const publicRoutes: RouteType[] = [
   { path: `${PageEnum.UserPricePage}/:mid`, element: <UserPricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
   { path: PageEnum.ManufacturerShowCasePage, element: <ManufacturerShowCasePage /> },
+  { path: PageEnum.RulesPage, element: <RulesPage /> },
+  { path: PageEnum.ContactsPage, element: <ContactsPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [

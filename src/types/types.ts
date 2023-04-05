@@ -289,3 +289,17 @@ export type LicenceAction = {
   draftProductCardAmount?: number | null;
   receiptTransactionId?: number | null;
 };
+
+export type RuleType = {
+  title: string;
+  items: { description: string; url?: string; urlDescription?: string }[];
+};
+
+export type ContactType = {
+  title: string;
+  description: string;
+  url?: string;
+  urlDescription?: string;
+  email?: string;
+  emailDescription?: string;
+};

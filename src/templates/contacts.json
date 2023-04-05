@@ -1,0 +1,29 @@
+{
+  "contacts" : [
+    {
+      "title" : "Наш канал в Telegram",
+      "description": "Новости площадки и общение пользователей.",
+      "url": "https://t.me/s/lesopilka24",
+      "urlDescription": "https://t.me/s/lesopilka24"
+    },
+    {
+      "title" : "Служба технической поддержки",
+      "description": "Ответчем на технические вопросы и чиним баги: lesopilka24.support@mail.ru ",
+      "email": "lesopilka24.support@mail.ru",
+      "emailDescription": "Письмо в техподдержку"
+    },
+    {
+      "title" : "Финансовая служба",
+      "description": "Ответчем на финансовые вопросы и решаем вопросы по выплатам и лицензиям: lesopilka24.finance@mail.ru ",
+      "email": "lesopilka24.finance@mail.ru",
+      "emailDescription": "Письмо в финслужбу"
+    },
+    {
+      "title" : "Администрация площадки",
+      "description": "Ответчем на организационные вопросы, решаем общие и юридические вопросы: lesopilka24.authority@mail.ru ",
+      "email": "lesopilka24.authority@mail.ru",
+      "emailDescription": "Письмо в администрацию"
+    }
+
+  ]
+}

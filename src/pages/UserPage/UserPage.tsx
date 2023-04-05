@@ -5,7 +5,6 @@ import UserDetails from './UserDetails/UserDetails';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import { CrumbType, UserType } from '../../types/types';
-import { PageEnum } from '../../components/AppRouter/AppRouter';
 
 export const getManufacturerOrUserName = (user: UserType | undefined) => {
   if (user) {
@@ -21,10 +20,7 @@ export const getManufacturerOrUserName = (user: UserType | undefined) => {
 
 const UserPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [
-    { title: getManufacturerOrUserName(user), route: PageEnum.RootPage },
-    { title: 'профиль пользователя' },
-  ];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'профиль пользователя' }];
 
   return (
     <div className={classes.container}>

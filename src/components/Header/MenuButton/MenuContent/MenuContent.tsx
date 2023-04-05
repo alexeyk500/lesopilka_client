@@ -33,7 +33,7 @@ const MenuContent = React.forwardRef<HTMLDivElement, PropsType>(({ closeMenuCont
           <PersonalSection closeMenuContent={closeMenuContent} />
         </div>
       )}
-      <ReferenceSection />
+      <ReferenceSection closeMenuContent={closeMenuContent} />
     </div>
   );
 });
