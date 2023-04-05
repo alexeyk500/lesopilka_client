@@ -80,7 +80,7 @@ export const userCreateManufacturerThunk = createAsyncThunk<
     let message = `Ошибка создания Поставщика.\n`;
     if (e?.response?.data?.message) {
       if (e?.response?.data?.message.includes('already has been registered')) {
-        message += `поставщик с ИНН ${createManufacturerParams.inn} уже зарегестрирован в системе`;
+        message += `поставщик уже зарегестрирован в системе`;
       } else {
         message += e?.response?.data?.message;
       }
@@ -100,7 +100,7 @@ export const userCreateResellerThunk = createAsyncThunk<
     let message = `Ошибка создания Реселлера.\n`;
     if (e?.response?.data?.message) {
       if (e?.response?.data?.message.includes('already has been registered')) {
-        message += `реселлер с телефоном ${createResellerParams.phone} уже зарегестрирован в системе`;
+        message += `реселлер уже зарегестрирован в системе`;
       } else {
         message += e?.response?.data?.message;
       }

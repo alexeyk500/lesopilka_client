@@ -24,19 +24,22 @@ const UnitedPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
 
   useEffect(() => {
-    if (!!searchParams.toString().length) {
-      const searchParamsClone = new URLSearchParams(searchParams.toString());
+    if (searchParams.toString().length > 0) {
+      const searchParamsClone = new URLSearchParams(searchParams);
       if (isManufacturerPage) {
         searchParamsClone.append(QueryEnum.PageType, PageTypeEnum.manufacturerPage);
       }
-      const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      if (user && token) {
-        dispatch(getBasketProductsThunk(token));
-        dispatch(getFavoriteProductsThunk(token));
-      }
       dispatch(getProductsThunk(searchParamsClone));
     }
-  }, [dispatch, searchParams, isManufacturerPage, user]);
+  }, [dispatch, searchParams, isManufacturerPage]);
+
+  useEffect(() => {
+    const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
+    if (user && token) {
+      dispatch(getBasketProductsThunk(token));
+      dispatch(getFavoriteProductsThunk(token));
+    }
+  }, [user, dispatch]);
 
   const onClickCatalogCategory = (id: number) => {
     if (id) {

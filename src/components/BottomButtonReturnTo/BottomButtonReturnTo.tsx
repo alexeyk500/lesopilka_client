@@ -1,18 +1,16 @@
 import React from 'react';
 import classes from './BottomButtonReturnTo.module.css';
 import ButtonComponent, { ButtonType } from '../commonComponents/ButtonComponent/ButtonComponent';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorCatalogSearchParams } from '../../store/productSlice';
 import { PageEnum } from '../AppRouter/AppRouter';
-import { QueryEnum } from '../../types/types';
 
 export enum ReturnToEnum {
   catalog = 'В каталог',
   basket = 'В корзину',
   userOrders = 'В заказы',
   manufacturerOrders = 'В заказы ',
-  priceForUser = 'В прайс поставщика',
 }
 
 type PropsType = {
@@ -21,8 +19,6 @@ type PropsType = {
 
 const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const mid = searchParams.get(QueryEnum.ManufacturerId);
   const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const returnToCatalog = () => {
@@ -42,20 +38,12 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
       navigate(PageEnum.UserOrdersPage);
     } else if (returnTo === ReturnToEnum.manufacturerOrders) {
       navigate(PageEnum.ManufacturerOrdersPage);
-    } else if (returnTo === ReturnToEnum.priceForUser) {
-      if (mid) {
-        navigate(`${PageEnum.UserPricePage}/${mid}`);
-      }
     }
   };
 
   return (
     <div className={classes.container}>
-      <ButtonComponent
-        title={returnTo}
-        onClick={onClickHandler}
-        buttonType={returnTo === ReturnToEnum.priceForUser ? ButtonType.SECONDARY : ButtonType.DEFAULT}
-      />
+      <ButtonComponent title={returnTo} onClick={onClickHandler} buttonType={ButtonType.SECONDARY} />
     </div>
   );
 };

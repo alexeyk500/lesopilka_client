@@ -39,57 +39,21 @@ export const userApi = {
     return response.data;
   },
 
-  async updateUser({ token, name, phone, password, searchRegionId, searchLocationId }: UserUpdateParamsType) {
-    const response = await instanceAxios.put<UserLoginServerType>(
-      '/user',
-      {
-        name,
-        phone,
-        password,
-        searchRegionId,
-        searchLocationId,
-      },
-      setAuthHeader(token)
-    );
+  async updateUser(userUpdateParams: UserUpdateParamsType) {
+    const { token, ...userParams } = userUpdateParams;
+    const response = await instanceAxios.put<UserLoginServerType>('/user', userParams, setAuthHeader(token));
     return response.data;
   },
 
-  async createManufacturer({
-    inn,
-    title,
-    phone,
-    locationId,
-    street,
-    building,
-    office,
-    postIndex,
-    token,
-  }: CreateManufacturerParamsType) {
+  async createManufacturer(createManufacturerParams: CreateManufacturerParamsType) {
+    const { token, ...manufacturerParams } = createManufacturerParams;
     const response = await instanceAxios.post<CreateManufacturerServerType>(
       '/manufacturer',
-      {
-        inn,
-        title,
-        phone,
-        locationId,
-        street,
-        building,
-        office,
-        postIndex,
-      },
+      manufacturerParams,
       setAuthHeader(token)
     );
     return response.data;
   },
-
-  // async createReseller({ family, name, middleName, phone, locationId, token }: CreateResellerParamsType) {
-  //   const response = await instanceAxios.post<UserLoginServerType>(
-  //     '/reseller',
-  //     { family, name, middleName, phone, locationId },
-  //     setAuthHeader(token)
-  //   );
-  //   return response.data;
-  // },
 
   async createReseller(createResellerParams: CreateResellerParamsType) {
     const { token, ...resellerParams } = createResellerParams;

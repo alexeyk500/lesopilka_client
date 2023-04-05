@@ -11,6 +11,17 @@
 
 .bottomContainer {
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
+}
+
+.priceButtonContainer {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-end;
+  padding-left: 12px;
+  margin: 32px 0;
+}
+
+.priceIco {
+  margin-left: 2px;
 }
