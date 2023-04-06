@@ -63,7 +63,12 @@ const ManufacturerRegistrationData = () => {
             <ManufacturerAddressData />
             <div className={classes.btnGroup}>
               <ButtonComponent title={'Регистрация'} type={'submit'} />
-              <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={onClickCancel} />
+              <ButtonComponent
+                title={'Отмена'}
+                buttonType={ButtonType.SECONDARY}
+                type={'button'}
+                onClick={onClickCancel}
+              />
             </div>
           </form>
         </div>

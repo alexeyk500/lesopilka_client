@@ -61,6 +61,9 @@ const ResellerRegistrationData: React.FC = () => {
             </div>
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Контактный Телефон :'}</div>
+              <div className={classes.subtitleInner}>
+                {'Выплаты вознаграждения реселлера будут производится\nна карту привязанную к этому номеру телефона'}
+              </div>
               <input className={classes.input} name="ph0n6" type="text" placeholder={'Введите телефон'} required />
             </div>
             <div className={classes.rowDataContainer}>
@@ -69,7 +72,12 @@ const ResellerRegistrationData: React.FC = () => {
             </div>
             <div className={classes.btnGroup}>
               <ButtonComponent title={'Регистрация'} type={'submit'} />
-              <ButtonComponent title={'Отмена'} buttonType={ButtonType.SECONDARY} onClick={onClickCancel} />
+              <ButtonComponent
+                title={'Отмена'}
+                buttonType={ButtonType.SECONDARY}
+                type={'button'}
+                onClick={onClickCancel}
+              />
             </div>
           </form>
         </div>

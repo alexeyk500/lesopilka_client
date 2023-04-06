@@ -68,4 +68,13 @@
   margin-top: 8px;
   font-size: 14px;
   color: var(--blue_color);
+  white-space: pre-line;
+}
+
+.subtitleInner {
+  margin-bottom: 4px;
+  margin-left: 12px;
+  font-size: 14px;
+  color: var(--blue_color);
+  white-space: pre-line;
 }
