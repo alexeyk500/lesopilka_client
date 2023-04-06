@@ -23,7 +23,6 @@ const ResellerRegistrationData: React.FC = () => {
     if (family && name && middleName && phone && locationId) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token) {
-        console.log({ token, family, name, middleName, phone, locationId });
         dispatch(userCreateResellerThunk({ token, family, name, middleName, phone, locationId })).then(() => {
           navigate(PageEnum.UserPage);
         });

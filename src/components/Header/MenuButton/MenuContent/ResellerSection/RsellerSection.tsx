@@ -14,7 +14,17 @@ const ResellerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
 
   const onClickCabinet = () => {
-    navigate(PageEnum.ContactsPage);
+    navigate(PageEnum.ResellerCabinetPage);
+    closeMenuContent();
+  };
+
+  const onClickReport = () => {
+    navigate(PageEnum.ResellerReportPage);
+    closeMenuContent();
+  };
+
+  const onClickReportDetails = () => {
+    navigate(PageEnum.ResellerReportDetailsPage);
     closeMenuContent();
   };
 
@@ -25,12 +35,12 @@ const ResellerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
         <img src={resellerCabinetIco} className={classes.ico} alt="reseller cabinet button" />
         Кабинет
       </button>
-      <button className={classes.menuButton} onClick={onClickCabinet}>
+      <button className={classes.menuButton} onClick={onClickReport}>
         <img src={resellerReportIco} className={classes.ico} alt="reseller report button" />
         Отчет
       </button>
-      <button className={classes.menuButton} onClick={onClickCabinet}>
-        <img src={resellerDetailsReportIco} className={classes.ico} alt="reseller detailing button" />
+      <button className={classes.menuButton} onClick={onClickReportDetails}>
+        <img src={resellerDetailsReportIco} className={classes.ico} alt="reseller report details button" />
         Детализация
       </button>
     </div>

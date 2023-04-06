@@ -21,6 +21,9 @@ import UserPricePage from '../../pages/UserPricePage/UserPricePage';
 import RulesPage from '../../pages/RulesPage/RulesPage';
 import ContactsPage from '../../pages/ContactsPage/ContactsPage';
 import ResellerRegistrationPage from '../../pages/ResellerRegistrationPage/ResellerRegistrationPage';
+import ResellerCabinetPage from '../../pages/ResellerCabinetPage/ResellerCabinetPage';
+import ResellerReportPage from '../../pages/ResellerReportPage/ResellerReportPage';
+import ResellerReportDetailsPage from '../../pages/ResellerReportDetailsPage/ResellerReportDetailsPage';
 
 type RouteType = {
   path: string;
@@ -50,6 +53,9 @@ export enum PageEnum {
   RulesPage = '/rules',
   ContactsPage = '/contacts',
   ResellerRegistration = '/reseller-registration',
+  ResellerCabinetPage = '/reseller-cabinet',
+  ResellerReportPage = '/reseller-report',
+  ResellerReportDetailsPage = '/reseller-report-details',
 }
 
 const publicRoutes: RouteType[] = [
@@ -77,6 +83,9 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.ManufacturerLicensesPage, element: <ManufacturerLicensePage /> },
   { path: PageEnum.FavoriteProductPage, element: <FavoriteProductsPage /> },
   { path: PageEnum.AddToBasketPage, element: <ManufacturerShowCasePage isAddToBasketPage /> },
+  { path: PageEnum.ResellerCabinetPage, element: <ResellerCabinetPage /> },
+  { path: PageEnum.ResellerReportPage, element: <ResellerReportPage /> },
+  { path: PageEnum.ResellerReportDetailsPage, element: <ResellerReportDetailsPage /> },
 ];
 
 export const getProtectedRoute = (incomeRoute: string) => {
