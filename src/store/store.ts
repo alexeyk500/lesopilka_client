@@ -11,6 +11,7 @@ import manOrdersReducer from './manOrdersSlice';
 import orderMessagesReducer from './orderMessagesSlice';
 import manufacturerLicensesReducer from './manLicensesSlice';
 import favoriteReducer from './favoriteSlice';
+import resellerReducer from './resellerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     orderMessages: orderMessagesReducer,
     manufacturerLicenses: manufacturerLicensesReducer,
     favorite: favoriteReducer,
+    reseller: resellerReducer,
   },
 });
 

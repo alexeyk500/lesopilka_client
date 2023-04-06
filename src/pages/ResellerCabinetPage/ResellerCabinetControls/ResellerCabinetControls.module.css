@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.dateTitle {
+  display: flex;
+  margin-top: 32px;
+  margin-bottom: 4px;
+  justify-content: center;
+  color: var(--green_color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.publicationAmountTitle {
+  display: flex;
+  margin-bottom: 32px;
+  justify-content: center;
+  color: var(--orange_color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-end;
+  padding: 0 12px;
+  margin: 32px 0;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+}

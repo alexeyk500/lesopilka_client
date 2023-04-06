@@ -9,7 +9,9 @@ import {
   selectorManufacturerActiveProductCardAmount,
   selectorManufacturerRestLicenseAmount,
 } from '../../../store/manLicensesSlice';
-import { lastDigitToDayWord } from '../../../utils/dateTimeFunctions';
+import { lastDigitToWord } from '../../../utils/dateTimeFunctions';
+
+const dayWords = ['день', 'дня', 'дней'];
 
 const LicensesMonitor = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,8 @@ const LicensesMonitor = () => {
   if (licenseCount && activeProducts) {
     publicationsDayAmount = Math.floor(licenseCount / activeProducts);
   }
+
+  const monthDaysAmountWord = lastDigitToWord(publicationsDayAmount, dayWords);
 
   return (
     <ButtonsSection title={'Лицензии'}>
@@ -46,7 +50,7 @@ const LicensesMonitor = () => {
               <span className={classes.title}>
                 Достаточно на
                 <span className={classes.amount}>{publicationsDayAmount}</span>
-                {lastDigitToDayWord(publicationsDayAmount)}
+                {monthDaysAmountWord}
               </span>
             </div>
           </>

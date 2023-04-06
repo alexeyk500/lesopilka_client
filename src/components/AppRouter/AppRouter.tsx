@@ -24,6 +24,7 @@ import ResellerRegistrationPage from '../../pages/ResellerRegistrationPage/Resel
 import ResellerCabinetPage from '../../pages/ResellerCabinetPage/ResellerCabinetPage';
 import ResellerReportPage from '../../pages/ResellerReportPage/ResellerReportPage';
 import ResellerReportDetailsPage from '../../pages/ResellerReportDetailsPage/ResellerReportDetailsPage';
+import ResellerCreateManufacturerPage from '../../pages/ResellerCreateManufacturerPage/ResellerCreateManufacturerPage';
 
 type RouteType = {
   path: string;
@@ -56,6 +57,7 @@ export enum PageEnum {
   ResellerCabinetPage = '/reseller-cabinet',
   ResellerReportPage = '/reseller-report',
   ResellerReportDetailsPage = '/reseller-report-details',
+  ResellerCreateManufacturerPage = '/reseller-create-manufacturer',
 }
 
 const publicRoutes: RouteType[] = [
@@ -86,6 +88,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.ResellerCabinetPage, element: <ResellerCabinetPage /> },
   { path: PageEnum.ResellerReportPage, element: <ResellerReportPage /> },
   { path: PageEnum.ResellerReportDetailsPage, element: <ResellerReportDetailsPage /> },
+  { path: PageEnum.ResellerCreateManufacturerPage, element: <ResellerCreateManufacturerPage /> },
 ];
 
 export const getProtectedRoute = (incomeRoute: string) => {

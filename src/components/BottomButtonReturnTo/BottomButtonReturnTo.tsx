@@ -7,6 +7,7 @@ import { selectorCatalogSearchParams } from '../../store/productSlice';
 import { PageEnum } from '../AppRouter/AppRouter';
 
 export enum ReturnToEnum {
+  rootPage = 'На главную',
   catalog = 'В каталог',
   basket = 'В корзину',
   userOrders = 'В заказы',
@@ -30,14 +31,16 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
   };
 
   const onClickHandler = () => {
-    if (returnTo === ReturnToEnum.catalog) {
-      returnToCatalog();
+    if (returnTo === ReturnToEnum.rootPage) {
+      navigate(PageEnum.RootPage);
     } else if (returnTo === ReturnToEnum.basket) {
       navigate(PageEnum.BasketPage);
     } else if (returnTo === ReturnToEnum.userOrders) {
       navigate(PageEnum.UserOrdersPage);
     } else if (returnTo === ReturnToEnum.manufacturerOrders) {
       navigate(PageEnum.ManufacturerOrdersPage);
+    } else if (returnTo === ReturnToEnum.catalog) {
+      returnToCatalog();
     }
   };
 

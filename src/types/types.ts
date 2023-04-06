@@ -89,6 +89,12 @@ export enum OrderViewEnum {
   all = ' Все',
 }
 
+export enum manufacturerLicensesStatusEnum {
+  normal = 'В порядке',
+  attention = 'Внимание',
+  noPublication = 'Без публикаций',
+}
+
 export type OrderInfoType = {
   id: number;
   orderDate: string;

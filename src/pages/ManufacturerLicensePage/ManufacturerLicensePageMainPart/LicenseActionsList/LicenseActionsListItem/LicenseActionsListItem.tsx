@@ -1,11 +1,7 @@
 import React from 'react';
 import classes from './LicenseActionsListItem.module.css';
 import DayItem from './DayItem/DayItem';
-import {
-  formatUTCtoMMMMYYYY,
-  lastDigitToDayWord,
-  lastDigitToLicenseWord,
-} from '../../../../../utils/dateTimeFunctions';
+import { formatUTCtoMMMMYYYY, lastDigitToWord } from '../../../../../utils/dateTimeFunctions';
 import { LicenceAction, LicenseActionTypeEnum } from '../../../../../types/types';
 
 export const getLicenseAmount = (licenseActionType: LicenseActionTypeEnum, licensesActions: LicenceAction[]) => {
@@ -22,13 +18,18 @@ type PropsType = {
   licenseActionType: LicenseActionTypeEnum;
 };
 
+const dayWords = ['день', 'дня', 'дней'];
+const licenseWords = ['публикация', 'публикации', 'публикаций'];
+
 const LicenseActionsListItem: React.FC<PropsType> = ({ monthDates, licensesActions, licenseActionType }) => {
   const title = formatUTCtoMMMMYYYY(monthDates[0]?.toISOString());
   const monthDaysAmount = monthDates.length;
+  const monthDaysAmountWord = lastDigitToWord(monthDaysAmount, dayWords);
   const monthLicensesActions = licensesActions.filter(
     (licenseAction) => new Date(licenseAction.actionDate).getMonth() === monthDates[0]?.getMonth()
   );
   const monthLicenseAmount = getLicenseAmount(licenseActionType, monthLicensesActions);
+  const licenseAmountWord = lastDigitToWord(monthLicenseAmount, licenseWords);
 
   return (
     <div className={classes.container}>
@@ -46,9 +47,7 @@ const LicenseActionsListItem: React.FC<PropsType> = ({ monthDates, licensesActio
         })}
       </div>
       <div className={classes.infoRow}>
-        {`${monthDaysAmount} ${lastDigitToDayWord(monthDaysAmount)} / ${monthLicenseAmount} ${lastDigitToLicenseWord(
-          monthLicenseAmount
-        )}`}
+        {`${monthDaysAmount} ${monthDaysAmountWord} / ${monthLicenseAmount} ${licenseAmountWord}`}
       </div>
     </div>
   );

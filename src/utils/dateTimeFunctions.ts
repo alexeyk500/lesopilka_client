@@ -120,30 +120,19 @@ export const splitDatesArrayByMonth = (dates: Date[]) => {
   return;
 };
 
-export const lastDigitToDayWord = (digit: number) => {
-  if (digit >= 11 && digit < 15) {
-    return 'дней';
-  } else {
-    const lastDigit = parseInt(digit.toString().slice(-1));
-    if (lastDigit === 1) {
-      return 'день';
-    } else if (lastDigit > 1 && lastDigit < 5) {
-      return 'дня';
-    }
-    return 'дней';
+export const lastDigitToWord = (digit: number | undefined, words: string[]) => {
+  if (!digit) {
+    return '';
   }
-};
-
-export const lastDigitToLicenseWord = (digit: number) => {
   if (digit >= 11 && digit < 15) {
-    return 'лицензий';
+    return words[2];
   } else {
     const lastDigit = parseInt(digit.toString().slice(-1));
     if (lastDigit === 1) {
-      return 'лицензия';
+      return words[0];
     } else if (lastDigit > 1 && lastDigit < 5) {
-      return 'лицензии';
+      return words[1];
     }
-    return 'лицензий';
+    return words[2];
   }
 };
