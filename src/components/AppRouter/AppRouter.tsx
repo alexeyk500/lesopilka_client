@@ -25,6 +25,7 @@ import ResellerCabinetPage from '../../pages/ResellerCabinetPage/ResellerCabinet
 import ResellerReportPage from '../../pages/ResellerReportPage/ResellerReportPage';
 import ResellerReportDetailsPage from '../../pages/ResellerReportDetailsPage/ResellerReportDetailsPage';
 import ResellerCreateManufacturerPage from '../../pages/ResellerCreateManufacturerPage/ResellerCreateManufacturerPage';
+import ManufacturerActivationPage from '../../pages/ManufacturerActivationPage/ManufacturerActivationPage';
 
 type RouteType = {
   path: string;
@@ -58,6 +59,7 @@ export enum PageEnum {
   ResellerReportPage = '/reseller-report',
   ResellerReportDetailsPage = '/reseller-report-details',
   ResellerCreateManufacturerPage = '/reseller-create-manufacturer',
+  ManufacturerActivationPage = '/manufacturer-activation',
 }
 
 const publicRoutes: RouteType[] = [
@@ -67,6 +69,7 @@ const publicRoutes: RouteType[] = [
   { path: PageEnum.ManufacturerShowCasePage, element: <ManufacturerShowCasePage /> },
   { path: PageEnum.RulesPage, element: <RulesPage /> },
   { path: PageEnum.ContactsPage, element: <ContactsPage /> },
+  { path: `${PageEnum.ManufacturerActivationPage}/:code`, element: <ManufacturerActivationPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [
@@ -92,14 +95,16 @@ const protectedRoutes: RouteType[] = [
 ];
 
 export const getProtectedRoute = (incomeRoute: string) => {
-  for (let i = 0; i < protectedRoutes.length; i++) {
-    const route = protectedRoutes[i];
-    const headForPath = route.path.split('/')?.[1];
-    if (incomeRoute.includes(headForPath)) {
-      return incomeRoute;
+  const firstPartIncomeRoute = incomeRoute.split('/')?.[1];
+  if (firstPartIncomeRoute) {
+    for (let i = 0; i < protectedRoutes.length; i++) {
+      const route = protectedRoutes[i];
+      const headForPath = route.path.split('/')?.[1];
+      if (firstPartIncomeRoute === headForPath) {
+        return incomeRoute;
+      }
     }
   }
-  return undefined;
 };
 
 const AppRouter = () => {

@@ -18,4 +18,11 @@ export const resellerApi = {
     );
     return response.data;
   },
+
+  async activateCandidateManufacturer(code: string) {
+    const response = await instanceAxios.post<UniversalServerType>('/reseller/manufacturer-candidate-activate', {
+      code,
+    });
+    return response.data;
+  },
 };

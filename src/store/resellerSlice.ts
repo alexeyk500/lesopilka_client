@@ -23,15 +23,19 @@ export const createCandidateManufacturerThunk = createAsyncThunk<
   try {
     return await serverApi.createCandidateManufacturer(createCandidateManufacturerParams);
   } catch (e: any) {
-    let message = `Ошибка создания поставщика пиломатериалов.\n`;
-    if (e?.response?.data?.message) {
-      if (e?.response?.data?.message.includes('already has been registered')) {
-        message += `пользователь с такими учетными данными\nуже зарегестрирован в системе`;
-      } else {
-        message += e?.response?.data?.message;
-      }
-    }
-    return rejectWithValue(message);
+    return rejectWithValue('Ошибка создания поставщика\n' + e.response?.data?.message);
+  }
+});
+
+export const activateCandidateManufacturerThunk = createAsyncThunk<
+  UniversalServerType,
+  { code: string },
+  { rejectValue: string }
+>('reseller/activateCandidateManufacturerThunk', async ({ code }, { rejectWithValue }) => {
+  try {
+    return await serverApi.activateCandidateManufacturer(code);
+  } catch (e: any) {
+    return rejectWithValue('Ошибка активации поставщика\n' + e.response?.data?.message);
   }
 });
 
@@ -45,16 +49,25 @@ export const resellerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(createCandidateManufacturerThunk.fulfilled), (state) => {
-        state.isLoading = false;
-      })
-      .addMatcher(isAnyOf(createCandidateManufacturerThunk.pending), (state) => {
-        state.isLoading = true;
-      })
-      .addMatcher(isAnyOf(createCandidateManufacturerThunk.rejected), (state, action) => {
-        state.isLoading = false;
-        showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - resellerSlice');
-      });
+      .addMatcher(
+        isAnyOf(createCandidateManufacturerThunk.fulfilled, activateCandidateManufacturerThunk.fulfilled),
+        (state) => {
+          state.isLoading = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(createCandidateManufacturerThunk.pending, activateCandidateManufacturerThunk.pending),
+        (state) => {
+          state.isLoading = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(createCandidateManufacturerThunk.rejected, activateCandidateManufacturerThunk.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - resellerSlice');
+        }
+      );
   },
 });
 
