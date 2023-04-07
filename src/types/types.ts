@@ -329,12 +329,25 @@ export type CreateResellerParamsType = {
   token: string;
 };
 
+export type CreateCandidateManufacturerParamsType = {
+  title: string;
+  inn: string;
+  phone: string;
+  email: string;
+  locationId: string;
+  street: string;
+  building: string;
+  office: string;
+  postIndex: string;
+  token: string;
+};
+
 export type CreateManufacturerParamsType = {
   token: string;
   inn: string;
   title: string;
   phone: string;
-  locationId: number;
+  locationId: string;
   street: string;
   building: string;
   postIndex: string;

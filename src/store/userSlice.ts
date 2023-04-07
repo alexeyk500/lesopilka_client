@@ -195,6 +195,7 @@ export const selectorUser = (state: RootState) => state.user.user;
 export const selectorAppSearchRegionId = (state: RootState) => state.user.appSearchRegionId;
 export const selectorAppSearchLocationId = (state: RootState) => state.user.appSearchLocationId;
 export const selectorIsUserChecked = (state: RootState) => state.user.isUserChecked;
+export const selectorIsUserLoading = (state: RootState) => state.user.isLoading;
 
 export const selectorSearchRegionId = (state: RootState) =>
   state.user.user?.searchRegion?.id ? state.user.user.searchRegion.id : state.user.appSearchRegionId;

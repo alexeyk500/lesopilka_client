@@ -1,6 +1,6 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { CreateManufacturerServerType, UniversalServerType, UserLoginServerType } from './serverResponseTypes';
-import { CreateManufacturerParamsType, CreateResellerParamsType, UserUpdateParamsType } from '../types/types';
+import { CreateManufacturerParamsType, UserUpdateParamsType } from '../types/types';
 
 export const userApi = {
   async userLoginByPassword(email: string, password: string) {
@@ -52,12 +52,6 @@ export const userApi = {
       manufacturerParams,
       setAuthHeader(token)
     );
-    return response.data;
-  },
-
-  async createReseller(createResellerParams: CreateResellerParamsType) {
-    const { token, ...resellerParams } = createResellerParams;
-    const response = await instanceAxios.post<UserLoginServerType>('/reseller', resellerParams, setAuthHeader(token));
     return response.data;
   },
 };

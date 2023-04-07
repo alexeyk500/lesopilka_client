@@ -8,6 +8,7 @@ import { orderApi } from './orderApi';
 import { orderMessagesApi } from './orderMessagesApi';
 import { licensesApi } from './licensesApi';
 import { favoriteApi } from './favoriteApi';
+import { resellerApi } from './resellerApi';
 
 export const serverApi = {
   ...userApi,
@@ -20,4 +21,5 @@ export const serverApi = {
   ...orderMessagesApi,
   ...licensesApi,
   ...favoriteApi,
+  ...resellerApi,
 };

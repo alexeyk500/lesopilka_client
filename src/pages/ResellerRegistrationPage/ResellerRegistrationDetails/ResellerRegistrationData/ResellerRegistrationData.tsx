@@ -4,10 +4,10 @@ import classes from './ResellerRegistrationData.module.css';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import RegionLocationInputs from '../../../../components/RegionLocationInputs/RegionLocationInputs';
 import { getInputFormData } from '../../../../utils/functions';
-import { userCreateResellerThunk } from '../../../../store/userSlice';
 import { useAppDispatch } from '../../../../hooks/hooks';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../components/AppRouter/AppRouter';
+import { userCreateResellerThunk } from '../../../../store/userSlice';
 
 const ResellerRegistrationData: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const ResellerRegistrationData: React.FC = () => {
             <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Контактный Телефон :'}</div>
               <div className={classes.subtitleInner}>
-                {'Выплаты вознаграждения реселлера будут производится\nна карту привязанную к этому номеру телефона'}
+                {'Выплаты вознаграждения реселлера будут производится\nна карту привязанную к данному номеру телефона'}
               </div>
               <input className={classes.input} name="ph0n6" type="text" placeholder={'Введите телефон'} required />
             </div>

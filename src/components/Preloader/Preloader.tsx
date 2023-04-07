@@ -1,7 +1,11 @@
 import React from 'react';
 import classes from './Preloader.module.css';
+type PropsType = {
+  title?: string;
+};
 
-const Preloader = () => {
+const Preloader: React.FC<PropsType> = ({ title }) => {
+  const preloaderTitle = title || 'Загрузка...';
   return (
     <div className={classes.container}>
       <div className={classes.lds_spinner}>
@@ -18,7 +22,7 @@ const Preloader = () => {
         <div />
         <div />
       </div>
-      Загрузка...
+      {preloaderTitle}
     </div>
   );
 };
