@@ -7,6 +7,7 @@ import Preloader from '../../components/Preloader/Preloader';
 import { activateCandidateManufacturerThunk, selectorResellerIsLoading } from '../../store/resellerSlice';
 import { showPortalPopUp } from '../../components/PortalPopUp/PortalPopUp';
 import { PageEnum } from '../../components/AppRouter/AppRouter';
+import SuccessActivateManufacturerForm from './SuccessActivateManufacturerForm/SuccessActivateManufacturerForm';
 
 const ManufacturerActivationPage: React.FC = () => {
   const { code } = useParams();
@@ -27,7 +28,7 @@ const ManufacturerActivationPage: React.FC = () => {
       dispatch(activateCandidateManufacturerThunk({ code })).then((result) => {
         if (!result.type.includes('/rejected')) {
           showPortalPopUp({
-            popUpContent: <div>Успешная Активация</div>,
+            popUpContent: <SuccessActivateManufacturerForm />,
             onClosePopUp: () => {
               navigate(PageEnum.RootPage);
               // dispatch(userLoginByTokenThunk())
