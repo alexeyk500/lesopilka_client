@@ -19,6 +19,7 @@ const ManufacturerShowCaseMainPart: React.FC = () => {
 
   const products = useAppSelector(selectorProducts);
 
+  const isEmptyShowCase = !(products?.length > 0);
   const manufacturerTitle = `${products?.[0]?.manufacturer?.title}, ${products?.[0]?.manufacturer?.address.location.title}`;
 
   useEffect(() => {
@@ -35,13 +36,17 @@ const ManufacturerShowCaseMainPart: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      {user && <div className={classes.titleRow}>{manufacturerTitle}</div>}
+      {!isEmptyShowCase && <div className={classes.titleRow}>{manufacturerTitle}</div>}
       {isShowFiltersRow && (
         <div className={classes.filtersRowContainer}>
           <FiltersRow />
         </div>
       )}
-      <ProductList />
+      {isEmptyShowCase ? (
+        <div className={classes.emptyShowCase}>{'Витрина производителя пуста ...'}</div>
+      ) : (
+        <ProductList />
+      )}
     </div>
   );
 };

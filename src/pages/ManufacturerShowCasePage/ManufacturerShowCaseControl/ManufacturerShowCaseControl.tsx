@@ -59,6 +59,7 @@ const ManufacturerShowCaseControl: React.FC<PropsType> = ({ isAddToBasketPage })
           />
         </div>
       )}
+
       <div className={classes.bottomContainer}>
         <BottomButtonReturnTo returnTo={isAddToBasketPage ? ReturnToEnum.basket : ReturnToEnum.catalog} />
       </div>

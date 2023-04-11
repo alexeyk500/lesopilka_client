@@ -21,10 +21,6 @@
   margin-bottom: 2px;
 }
 
-.btnReadyContainer {
-  display: flex;
-  margin: 32px 0;
-}
 .productsSectionContainer {
   display: flex;
   flex-direction: column;
@@ -43,5 +39,10 @@
   flex-direction: column;
   justify-content: flex-end;
   margin-bottom: 32px;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
 }
 

@@ -1,19 +1,12 @@
 import React from 'react';
 import classes from './PriceSelectors.module.css';
 import IconButton from '../../../../components/commonComponents/IconButton/IconButton';
-
-import downloadIco from '../../../../img/downloadFileWhiteIco.svg';
-
 import ButtonsSection from '../../../../components/commonComponents/ButtonsSection/ButtonsSection';
 import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
 import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSection/CheckBoxSection';
 import LicensesMonitor from '../../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
-import ButtonComponent from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
-import { getBackwardRouteToManufacturerCatalog } from '../../../../utils/functions';
-import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorUser } from '../../../../store/userSlice';
-import { selectorCatalogSearchParams } from '../../../../store/productSlice';
 import { PriceSelectedTypeEnum } from '../../../../types/types';
 import {
   selectorPriceProducts,
@@ -22,14 +15,14 @@ import {
   setSelectedType,
 } from '../../../../store/priceSlice';
 import { serverApi } from '../../../../api/serverApi';
+import BottomButtonReturnTo, { ReturnToEnum } from '../../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
+import downloadIco from '../../../../img/downloadFileWhiteIco.svg';
 
 const PriceSelectors: React.FC = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectorUser);
   const products = useAppSelector(selectorPriceProducts);
   const selectedPriceType = useAppSelector(selectorSelectedPriceType);
-  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const productsCount = products.length;
   const publishedProductsCount = products.filter((product) => product.publicationDate).length;
@@ -53,15 +46,6 @@ const PriceSelectors: React.FC = () => {
       window.open(fileURL, '_blank_');
       dispatch(setPriceDownLoading(false));
     }
-    // window.open('http://localhost:5500/api/price/9', '_blank');
-  };
-
-  const returnToCatalog = () => {
-    const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
-    navigate(getBackwardRoute);
-  };
-  const onClickReadyBtn = () => {
-    returnToCatalog();
   };
 
   return (
@@ -106,8 +90,8 @@ const PriceSelectors: React.FC = () => {
       <div className={classes.middleSpreadContainer}>
         <LicensesMonitor />
       </div>
-      <div className={classes.btnReadyContainer}>
-        <ButtonComponent title={'В каталог'} onClick={onClickReadyBtn} />
+      <div className={classes.bottomContainer}>
+        <BottomButtonReturnTo returnTo={ReturnToEnum.catalog} />
       </div>
     </div>
   );
