@@ -4,7 +4,6 @@ import { RootState } from './store';
 import { GetProductsServerType } from '../api/serverResponseTypes';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
-import { PageEnum } from '../components/AppRouter/AppRouter';
 
 type PriceSliceType = {
   products: ProductType[];
@@ -12,7 +11,6 @@ type PriceSliceType = {
   isLoading: boolean;
   editProductId: number | undefined;
   isPDFDownloading: boolean;
-  returnTo: string;
 };
 
 const initialState: PriceSliceType = {
@@ -21,7 +19,6 @@ const initialState: PriceSliceType = {
   isLoading: false,
   editProductId: undefined,
   isPDFDownloading: false,
-  returnTo: PageEnum.RootPage,
 };
 
 export const getPriceProductsThunk = createAsyncThunk<
@@ -49,9 +46,6 @@ export const priceSlice = createSlice({
     setPriceDownLoading: (state, actions) => {
       state.isPDFDownloading = actions.payload;
     },
-    setPriceReturnTo: (state, actions) => {
-      state.returnTo = actions.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,12 +64,11 @@ export const priceSlice = createSlice({
   },
 });
 
-export const { setSelectedType, setPriceEditProductId, setPriceDownLoading, setPriceReturnTo } = priceSlice.actions;
+export const { setSelectedType, setPriceEditProductId, setPriceDownLoading } = priceSlice.actions;
 
 export const selectorSelectedPriceType = (state: RootState) => state.price.selectedPriceType;
 export const selectorPriceProducts = (state: RootState) => state.price.products;
 export const selectorPriceEditProductId = (state: RootState) => state.price.editProductId;
 export const selectorIsPriceDownloading = (state: RootState) => state.price.isPDFDownloading;
-export const selectorPriceReturnTo = (state: RootState) => state.price.returnTo;
 
 export default priceSlice.reducer;

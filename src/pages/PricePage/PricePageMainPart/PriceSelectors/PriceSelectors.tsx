@@ -17,6 +17,7 @@ import {
 import { serverApi } from '../../../../api/serverApi';
 import BottomButtonReturnTo, { ReturnToEnum } from '../../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
 import downloadIco from '../../../../img/downloadFileWhiteIco.svg';
+import { showErrorPopUp } from '../../../../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 const PriceSelectors: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,11 +41,16 @@ const PriceSelectors: React.FC = () => {
   const onClickDownload = async () => {
     if (user?.manufacturer?.id) {
       dispatch(setPriceDownLoading(true));
-      const response = await serverApi.getPricePDF(user.manufacturer.id);
-      const blob = new Blob([response], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(blob);
-      window.open(fileURL, '_blank_');
-      dispatch(setPriceDownLoading(false));
+      try {
+        const response = await serverApi.getPricePDF(user.manufacturer.id);
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(blob);
+        window.open(fileURL, '_blank_');
+      } catch (e: any) {
+        showErrorPopUp(e.message ? `Ошибка при загрузке прайса\n\n${e.message}` : 'Ошибка при загрузке прайса');
+      } finally {
+        dispatch(setPriceDownLoading(false));
+      }
     }
   };
 
@@ -75,18 +81,19 @@ const PriceSelectors: React.FC = () => {
           />
         </CheckBoxSection>
       </div>
-      <div className={classes.priceSectionContainer}>
-        <ButtonsSection title={'Прайс'}>
-          <IconButton
-            ico={downloadIco}
-            title={'Скачать'}
-            customIconClasses={classes.downloadIco}
-            onClick={onClickDownload}
-          />
-          {/*<IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />*/}
-          {/*<IconButton ico={printIco} title={'Печать'} />*/}
-        </ButtonsSection>
-      </div>
+      {productsCount > 0 && (
+        <div className={classes.priceSectionContainer}>
+          <ButtonsSection title={'Прайс'}>
+            <IconButton
+              ico={downloadIco}
+              title={'Скачать'}
+              customIconClasses={classes.downloadIco}
+              onClick={onClickDownload}
+            />
+            {/*<IconButton ico={getLinkIco} title={'Ссылка'} customIconClasses={classes.getLinkIco} />*/}
+          </ButtonsSection>
+        </div>
+      )}
       <div className={classes.middleSpreadContainer}>
         <LicensesMonitor />
       </div>
