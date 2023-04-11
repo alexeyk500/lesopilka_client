@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../../../../hooks/hooks';
 import { selectorUser } from '../../../../../store/userSlice';
 import { QueryEnum } from '../../../../../types/types';
+import licenseIco from '../../../../../img/licenseIco.svg';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -30,6 +31,13 @@ const MarketingSection: React.FC<PropsType> = ({ closeMenuContent }) => {
     closeMenuContent();
   };
 
+  const onClickLicenses = () => {
+    if (user?.manufacturer?.id) {
+      navigate(PageEnum.ManufacturerLicensesPage);
+    }
+    closeMenuContent();
+  };
+
   return (
     <div className={classes.section}>
       Маркетинг
@@ -40,6 +48,10 @@ const MarketingSection: React.FC<PropsType> = ({ closeMenuContent }) => {
       <button className={classes.menuButton} onClick={onClickPrice}>
         <img src={priceIco} className={classes.ico} alt="price button" />
         Прайс лист
+      </button>
+      <button className={classes.menuButton} onClick={onClickLicenses}>
+        <img src={licenseIco} className={classes.ico} alt="licenses button" />
+        Лицензии
       </button>
     </div>
   );

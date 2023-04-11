@@ -40,6 +40,8 @@ export const MAX_MONTH_SHIFT_FOR_MANUFACTURER_ORDERS = 1;
 
 export const MONTH_SHIFT_FOR_MANUFACTURER_LICENSE = -3;
 
+export const WELCOME_LICENSES_AMOUNT = 500;
+
 export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: OrderViewEnum.active, toolTip: '' },
   { id: 1, title: OrderViewEnum.onConfirming, toolTip: '' },
