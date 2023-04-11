@@ -165,7 +165,7 @@ const PriceList = () => {
       ) : price.length > 0 ? (
         <div className={classes.listScrollContainer}>{price}</div>
       ) : (
-        <div className={classes.emptyPrice}>Ваш прайс лист пуст...</div>
+        <div className={classes.emptyPrice}>Прайс лист производителя пуст...</div>
       )}
     </div>
   );
