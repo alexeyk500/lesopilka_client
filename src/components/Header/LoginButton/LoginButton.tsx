@@ -39,7 +39,7 @@ const LoginButton: React.FC = () => {
   };
 
   return (
-    <div className={classes.container} onClick={onClickLogin}>
+    <div className={classes.container} onClick={onClickLogin} data-test-id={'loginButtonId'}>
       {user ? user.name : 'Войти'}
     </div>
   );
