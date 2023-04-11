@@ -64,12 +64,12 @@ const ChangePassword: React.FC = () => {
   };
 
   return (
-    <SectionContainer title={'Смена пароля'}>
+    <SectionContainer title={'Изменение пароля'}>
       <div className={classes.content}>
         <div className={classes.rowContainer}>
-          <div className={classes.title}>Сменить пароль</div>
+          <div className={classes.title}>Изменить пароль</div>
           <div className={classes.value}>
-            <ButtonComponent title={'Сменить'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
+            <ButtonComponent title={'Изменить'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
           </div>
         </div>
       </div>

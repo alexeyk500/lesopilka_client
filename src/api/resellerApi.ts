@@ -20,7 +20,7 @@ export const resellerApi = {
   },
 
   async activateCandidateManufacturer(code: string) {
-    const response = await instanceAxios.post<UniversalServerType>('/reseller/manufacturer-candidate-activate', {
+    const response = await instanceAxios.post<UserLoginServerType>('/reseller/manufacturer-candidate-activate', {
       code,
     });
     return response.data;

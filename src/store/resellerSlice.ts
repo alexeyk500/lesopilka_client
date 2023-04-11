@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { UniversalServerType } from '../api/serverResponseTypes';
+import { UniversalServerType, UserLoginServerType } from '../api/serverResponseTypes';
 import { CreateCandidateManufacturerParamsType } from '../types/types';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
@@ -28,7 +28,7 @@ export const createCandidateManufacturerThunk = createAsyncThunk<
 });
 
 export const activateCandidateManufacturerThunk = createAsyncThunk<
-  UniversalServerType,
+  UserLoginServerType,
   { code: string },
   { rejectValue: string }
 >('reseller/activateCandidateManufacturerThunk', async ({ code }, { rejectWithValue }) => {

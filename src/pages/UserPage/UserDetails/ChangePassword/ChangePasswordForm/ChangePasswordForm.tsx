@@ -18,8 +18,8 @@ const ChangePasswordForm: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.mainPart}>
-        <div className={classes.titleBold}>{'Смена пароля у пользователя'}</div>
-        <div className={classes.title}>{'для смены пароля потребуется текущий пароль пользователя'}</div>
+        <div className={classes.titleBold}>{'Изменение пароля у пользователя'}</div>
+        <div className={classes.title}>{'для замены пароля требуется текущий пароль пользователя'}</div>
         <div className={classes.field}>
           <img src={passwordIco} className={classes.ico} alt="email" />
           <label className={classes.label}>

@@ -4,6 +4,7 @@ import { CreateManufacturerParamsType, CreateResellerParamsType, UserType, UserU
 import { CreateManufacturerServerType, UserLoginServerType } from '../api/serverResponseTypes';
 import { showConfirmPopUp, showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { serverApi } from '../api/serverApi';
+import { activateCandidateManufacturerThunk } from './resellerSlice';
 
 type UserSliceType = {
   user?: UserType;
@@ -156,9 +157,11 @@ export const userSlice = createSlice({
           userLoginByPasswordThunk.fulfilled,
           userLoginByTokenThunk.fulfilled,
           userUpdateThunk.fulfilled,
-          userCreateResellerThunk.fulfilled
+          userCreateResellerThunk.fulfilled,
+          activateCandidateManufacturerThunk.fulfilled
         ),
         (state, action) => {
+          console.log('action.payload.user =', action.payload.user);
           state.user = action.payload.user;
           state.appSearchRegionId = undefined;
           state.appSearchLocationId = undefined;

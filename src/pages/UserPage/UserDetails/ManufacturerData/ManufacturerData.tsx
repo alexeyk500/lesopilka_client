@@ -46,6 +46,10 @@ const ManufacturerData: React.FC = () => {
               </div>
             </div>
             <div className={classes.rowDataContainer}>
+              <div className={classes.title}>{'Элетронная почта :'}</div>
+              <div className={classes.value}>{user?.manufacturer?.email}</div>
+            </div>
+            <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Телефон :'}</div>
               <div className={classes.value}>{user?.manufacturer?.phone}</div>
             </div>

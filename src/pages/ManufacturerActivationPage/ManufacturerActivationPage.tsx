@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './ManufacturerActivationPage.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -15,27 +15,23 @@ const ManufacturerActivationPage: React.FC = () => {
   const navigate = useNavigate();
   const user = useAppSelector(selectorUser);
   const isProcessing = useAppSelector(selectorResellerIsLoading);
+  const [doActivate, setDoActivate] = useState(0);
 
   useEffect(() => {
-    if (user) {
-      dispatch(resetUser());
-    }
-  }, [dispatch, user]);
+    dispatch(resetUser());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!user && code) {
-      console.log('will do manufacturer activate code =', code);
+    setDoActivate(1);
+  }, []);
+
+  useEffect(() => {
+    if (!user && code && doActivate === 1) {
       dispatch(activateCandidateManufacturerThunk({ code })).then((result) => {
         if (!result.type.includes('/rejected')) {
           showPortalPopUp({
             popUpContent: <SuccessActivateManufacturerForm />,
-            onClosePopUp: () => {
-              navigate(PageEnum.RootPage);
-              // dispatch(userLoginByTokenThunk())
-              //   .then(()=>{
-              //     navigate(PageEnum.RootPage);
-              //   })
-            },
+            oneCenterConfirmBtn: true,
             titleConfirmBtn: 'Понятно',
           });
         } else {
@@ -44,8 +40,15 @@ const ManufacturerActivationPage: React.FC = () => {
           }, 1500);
         }
       });
+      setDoActivate(2);
     }
-  }, [user, code, dispatch, navigate]);
+  }, [user, code, doActivate, dispatch, navigate]);
+
+  useEffect(() => {
+    if (user && doActivate === 2) {
+      navigate(PageEnum.UserPage);
+    }
+  }, [user, doActivate, navigate]);
 
   return (
     <div className={classes.container}>
