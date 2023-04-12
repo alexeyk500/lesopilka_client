@@ -26,6 +26,7 @@ import ResellerReportPage from '../../pages/ResellerReportPage/ResellerReportPag
 import ResellerReportDetailsPage from '../../pages/ResellerReportDetailsPage/ResellerReportDetailsPage';
 import ResellerCreateManufacturerPage from '../../pages/ResellerCreateManufacturerPage/ResellerCreateManufacturerPage';
 import ManufacturerActivationPage from '../../pages/ManufacturerActivationPage/ManufacturerActivationPage';
+import UserActivationPage from '../../pages/UserActivationPage/UserActivationPage';
 
 type RouteType = {
   path: string;
@@ -60,6 +61,7 @@ export enum PageEnum {
   ResellerReportDetailsPage = '/reseller-report-details',
   ResellerCreateManufacturerPage = '/reseller-create-manufacturer',
   ManufacturerActivationPage = '/manufacturer-activation',
+  UserActivationPage = '/user-activation',
 }
 
 const publicRoutes: RouteType[] = [
@@ -70,6 +72,7 @@ const publicRoutes: RouteType[] = [
   { path: PageEnum.RulesPage, element: <RulesPage /> },
   { path: PageEnum.ContactsPage, element: <ContactsPage /> },
   { path: `${PageEnum.ManufacturerActivationPage}/:code`, element: <ManufacturerActivationPage /> },
+  { path: `${PageEnum.UserActivationPage}/:code`, element: <UserActivationPage /> },
 ];
 
 const protectedRoutes: RouteType[] = [

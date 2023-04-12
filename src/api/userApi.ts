@@ -16,8 +16,8 @@ export const userApi = {
     return response.data;
   },
 
-  async createUnconfirmedUser(email: string, password: string) {
-    const response = await instanceAxios.post<UniversalServerType>('/user/create-unconfirmed-user', {
+  async createUserCandidate(email: string, password: string) {
+    const response = await instanceAxios.post<UniversalServerType>('/user/create-user-candidate', {
       email,
       password,
     });
@@ -52,6 +52,13 @@ export const userApi = {
       manufacturerParams,
       setAuthHeader(token)
     );
+    return response.data;
+  },
+
+  async activateCandidateUser(code: string) {
+    const response = await instanceAxios.post<UserLoginServerType>('/user/activate-user-candidate', {
+      code,
+    });
     return response.data;
   },
 };

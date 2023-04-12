@@ -110,6 +110,20 @@ export const userCreateResellerThunk = createAsyncThunk<
   }
 });
 
+export const activateCandidateUserThunk = createAsyncThunk<
+  UserLoginServerType,
+  { code: string },
+  { rejectValue: string }
+>('user/activateCandidateUserThunk', async ({ code }, { rejectWithValue }) => {
+  try {
+    return await serverApi.activateCandidateUser(code);
+  } catch (e: any) {
+    return rejectWithValue(
+      `Ошибка активации пользователя\n ${e.response?.data?.message ? e.response?.data?.message : ''}`
+    );
+  }
+});
+
 export const userSlice = createSlice({
   name: 'userSlice',
   initialState,
@@ -158,10 +172,10 @@ export const userSlice = createSlice({
           userLoginByTokenThunk.fulfilled,
           userUpdateThunk.fulfilled,
           userCreateResellerThunk.fulfilled,
-          activateCandidateManufacturerThunk.fulfilled
+          activateCandidateManufacturerThunk.fulfilled,
+          activateCandidateUserThunk.fulfilled
         ),
         (state, action) => {
-          console.log('action.payload.user =', action.payload.user);
           state.user = action.payload.user;
           state.appSearchRegionId = undefined;
           state.appSearchLocationId = undefined;
@@ -176,14 +190,20 @@ export const userSlice = createSlice({
           userLoginByTokenThunk.pending,
           userUpdateThunk.pending,
           userCreateManufacturerThunk.pending,
-          userCreateResellerThunk.pending
+          userCreateResellerThunk.pending,
+          activateCandidateUserThunk.pending
         ),
         (state) => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(userUpdateThunk.rejected, userCreateManufacturerThunk.rejected, userCreateResellerThunk.rejected),
+        isAnyOf(
+          userUpdateThunk.rejected,
+          userCreateManufacturerThunk.rejected,
+          userCreateResellerThunk.rejected,
+          activateCandidateUserThunk.rejected
+        ),
         (state, action) => {
           state.isLoading = false;
           showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - userSlice');

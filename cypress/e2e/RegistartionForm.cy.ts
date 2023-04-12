@@ -9,14 +9,14 @@ describe('example to-do app', () => {
   //   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
   //   cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
   // });
-
+  //
   // it('RegistrationForm -> show/cancel', () => {
   //   cy.goToRegisterForm();
   //   cy.get('button[class^="ButtonComponent_container"]').contains('Отмена').click();
   //   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
   //   cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
   // });
-
+  //
   // it('RegistrationForm -> show/hide password letters', () => {
   //   cy.goToRegisterForm();
   //
@@ -28,7 +28,7 @@ describe('example to-do app', () => {
   //   cy.get('img[class^="PasswordInputFields_visibilityIco"]').click();
   //   cy.get('input[name="password"]').should('have.attr', 'type').and('match', /text/);
   // });
-
+  //
   // it('RegistrationForm -> match/mismatch passwords', () => {
   //   cy.goToRegisterForm();
   //
@@ -40,19 +40,19 @@ describe('example to-do app', () => {
   //   cy.get('input[name="passwordRepeated"]').type('-12345');
   //   cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').contains('Пароли совпадают');
   // });
-
-  it('RegistrationForm -> register new unconfirmed user and send confirm letter', () => {
-    cy.goToRegisterForm();
-
-    cy.get('input[name="email"]').type('test-unconfirmed-user@email.com');
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
-    cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
-    cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
-    cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
-    cy.get('div[class^="ConfirmEmailForm_subTitle"]').contains('зарегестрирован');
-  });
-
+  //
+  // it('RegistrationForm -> register new unconfirmed user and send confirm letter', () => {
+  //   cy.goToRegisterForm();
+  //
+  //   cy.get('input[name="email"]').type('test-unconfirmed-user@email.com');
+  //   cy.get('input[name="password"]').type('Пароль-123');
+  //   cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+  //   cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
+  //   cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
+  //   cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
+  //   cy.get('div[class^="ConfirmEmailForm_subTitle"]').contains('зарегестрирован');
+  // });
+  //
   // it('RegistrationForm -> register existing unconfirmedUser  ', () => {
   //   cy.goToRegisterForm();
   //
@@ -66,8 +66,8 @@ describe('example to-do app', () => {
   //
   //   cy.deleteTestUser({ email: 'test-unconfirmed-user@email.com', isUnconfirmed: true });
   // });
-
-  // it('RegistrationForm -> try to double register user with existing email ', () => {
+  //
+  // it('RegistrationForm -> try to double register confirmed user by email ', () => {
   //   cy.goToRegisterForm();
   //
   //   cy.get('input[name="email"]').type('test.user@email.com');
@@ -79,23 +79,33 @@ describe('example to-do app', () => {
   //   cy.get('div[class^="PortalPopUp_content"]').contains('уже зарегестрирован на площадке');
   // });
 
-  // it('RegistrationForm -> user activation by link in email', () => {
-  //   cy.goToRegisterForm();
-  //
-  //   cy.get('input[name="email"]').type('test-full-user-registration@email.com');
-  //   cy.get('input[name="password"]').type('Пароль-111');
-  //   cy.get('input[name="passwordRepeated"]').type('Пароль-111');
-  //   cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
-  //   cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
-  //   cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
-  //   cy.get('div[class^="ConfirmEmailForm_subTitle"]').contains('зарегестрирован');
-  //
-  //   // cy.intercept(
-  //   //   {
-  //   //     method: 'GET', // Route all GET requests
-  //   //     url: '/users/*', // that have a URL that matches '/users/*'
-  //   //   },
-  //   //   [] // and force the response to be: []
-  //   // ).as('getUsers') // and assign an alias
-  // });
+  it('RegistrationForm -> user registration and activation by link in email', () => {
+    cy.intercept({
+      method: 'POST',
+      url: 'http://localhost:5500/api/user/create-user-candidate',
+    }).as('registrationResult');
+
+    cy.goToRegisterForm();
+
+    cy.get('input[name="email"]').type('test-user-full-registration@email.com');
+    cy.get('input[name="password"]').type('Пароль-123');
+    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
+    cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
+    cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
+    cy.get('div[class^="ConfirmEmailForm_subTitle"]').contains('зарегестрирован');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Понятно');
+
+    cy.wait('@registrationResult')
+      .its('response.body')
+      .then((body) => {
+        const code = body.message.split('$')[1];
+        if (code) {
+          console.log('will make request with code=', code);
+          cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+          cy.visit(`/user-activation/${code}`);
+          // cy.request(`http://localhost:3000/user-activation/${code}`).as('activationResult');
+        }
+      });
+  });
 });
