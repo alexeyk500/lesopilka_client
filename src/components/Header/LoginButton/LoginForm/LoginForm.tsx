@@ -50,7 +50,7 @@ const LoginForm = () => {
           </label>
           <img
             src={typePasswordInput === 'password' ? visibilityIcoOn : visibilityIcoOff}
-            className={classes.eyeIco}
+            className={classes.visibilityIco}
             onClick={onClickShowPassword}
             alt="visibility"
           />

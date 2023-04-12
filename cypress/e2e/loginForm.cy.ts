@@ -13,14 +13,14 @@ describe('example to-do app', () => {
     cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
   });
 
-  it('loginForm show/hide -> password', () => {
+  it('loginForm -> show/hide password letters', () => {
     cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
     cy.get('input[name="password"]').type('Пароль-123');
     cy.get('input[name="password"]').should('have.value', 'Пароль-123');
     cy.get('input[name="password"]')
       .should('have.attr', 'type')
       .and('match', /password/);
-    cy.get('img[class^="LoginForm_eyeIco"]').click();
+    cy.get('img[class^="LoginForm_visibilityIco"]').click();
     cy.get('input[name="password"]').should('have.attr', 'type').and('match', /text/);
   });
 

@@ -4,6 +4,8 @@ declare global {
     interface Chainable {
       login({ email, password }: { email: string; password: string }): Chainable<void>;
       logout(): Chainable<void>;
+      goToRegisterForm(): Chainable<void>;
+      deleteTestUser({ email, isUnconfirmed }: { email: string; isUnconfirmed?: boolean });
     }
   }
 }

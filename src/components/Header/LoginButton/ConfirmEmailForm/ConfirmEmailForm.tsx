@@ -15,7 +15,7 @@ const ConfirmEmailForm: React.FC<PropsType> = ({ email }) => {
         <div className={classes.subTitle}>{` зарегестрирован`}</div>
       </div>
       <div className={classes.bottomTitle}>
-        {`На электронную почту пользователя отправлено письмо\nс инструкциями по активации аккаунта`}
+        {`Письмо с инструкциями по активации аккаунта и входу в личный кабинет\nотправлено электронную почту пользователя`}
       </div>
     </div>
   );

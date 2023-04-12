@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import classes from './PasswordInputFields.module.css';
 import passwordIco from '../../../../img/password.svg';
-import eyeIco from '../../../../img/eyeIco.svg';
 import classNames from 'classnames';
+import visibilityIcoOn from '../../../../img/visibilityIcoOn.svg';
+import visibilityIcoOff from '../../../../img/visibilityIcoOff.svg';
 
 type PropsType = {
   password: string;
@@ -61,7 +62,12 @@ const PasswordInputFields: React.FC<PropsType> = ({
             required
           />
         </label>
-        <img src={eyeIco} className={classes.eyeIco} alt="email" onClick={onClickShowPassword} />
+        <img
+          src={typePasswordInput === 'password' ? visibilityIcoOn : visibilityIcoOff}
+          className={classes.visibilityIco}
+          onClick={onClickShowPassword}
+          alt="visibility"
+        />
       </div>
       <div className={classes.field}>
         <img src={passwordIco} className={classes.ico} alt="password" />

@@ -33,9 +33,17 @@ const RegistrationButton: React.FC = () => {
           showPortalPopUp({
             popUpContent: (
               <>
-                <h3 style={{ color: '#4A90E2', marginTop: 32 }}>{`${email} - Ошибка регистрации`}</h3>
-                <br />
-                {e.response.data.message && <h4 style={{ color: '#FF0000' }}>{e.response.data.message}</h4>}
+                <h3
+                  style={{ color: '#FF0000', marginTop: 32, whiteSpace: 'pre-line', textAlign: 'center' }}
+                >{`Ошибка регистрации пользователя`}</h3>
+                <h4
+                  style={{ color: '#FF8E00', marginTop: 12, whiteSpace: 'pre-line', textAlign: 'center' }}
+                >{`${email}`}</h4>
+                {e.response.data.message && (
+                  <h4 style={{ color: '#4A90E2', whiteSpace: 'pre-line', textAlign: 'center', padding: '0 24px' }}>
+                    {e.response.data.message}
+                  </h4>
+                )}
               </>
             ),
             titleConfirmBtn: 'Понятно',

@@ -8,9 +8,8 @@
 // commands please read more here:
 // https://on.cypress.io/custom-commands
 // ***********************************************
-//
-//
-// -- This is a parent command --
+
+const baseApiUrl = 'http://localhost:5500/api';
 
 Cypress.Commands.add('login', ({ email, password }) => {
   const userName = email.split('@')[0];
@@ -31,6 +30,25 @@ Cypress.Commands.add('logout', () => {
   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
   cy.get('div[class^="LoginButton_containerLogout"]').should('not.exist');
   cy.get('div[class^="LoginButton_container"]').contains('Войти');
+});
+
+Cypress.Commands.add('goToRegisterForm', () => {
+  cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+  cy.get('div[class^="LoginForm_container"]').should('be.visible');
+
+  cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
+  cy.get('div[class^="LoginForm_container"]').should('not.exist');
+  cy.get('div[class^="RegistrationForm_container"]').should('be.visible');
+});
+
+Cypress.Commands.add('deleteTestUser', ({ email, isUnconfirmed }) => {
+  cy.request('POST', `${baseApiUrl}/user/delete-test-user`, { email, isUnconfirmed }).then((response) => {
+    if (isUnconfirmed) {
+      expect(response.body).to.have.property('message', 'testUnconfirmedUser - deleted');
+    } else {
+      expect(response.body).to.have.property('message', 'testUser - deleted');
+    }
+  });
 });
 
 //
