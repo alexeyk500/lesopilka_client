@@ -3,36 +3,46 @@ describe('example to-do app', () => {
     cy.visit('/');
   });
 
-  // it('test.user@email.com = login->logout', () => {
-  //   cy.login({ email: 'test.user@email.com', password: 'secret' });
-  //   cy.logout();
-  // });
-  //
-  // it('test.user@email.com = login->close logout PopUp', () => {
-  //   cy.login({ email: 'test.user@email.com', password: 'secret' });
-  //
-  //   cy.get('div[class^="LoginButton_container"]').click();
-  //   cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
-  //   cy.get('div[class^="LoginButton_containerLogout"]').should('be.visible');
-  //
-  //   cy.get('button[class^="PortalPopUp_topCloseBtn"]').click();
-  //   cy.get('div[class^="LoginForm_container"]').should('not.exist');
-  //   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
-  //   cy.get('div[class^="LoginButton_container"]').contains('test.user');
-  // });
-  //
-  // it('test.user@email.com = login->cancel logout', () => {
-  //   cy.login({ email: 'test.user@email.com', password: 'secret' });
-  //
-  //   cy.get('div[class^="LoginButton_container"]').click();
-  //   cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
-  //   cy.get('div[class^="LoginButton_containerLogout"]').should('be.visible');
-  //
-  //   cy.get('button[class^="ButtonComponent_container"]').contains('Отмена').click();
-  //   cy.get('div[class^="LoginForm_container"]').should('not.exist');
-  //   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
-  //   cy.get('div[class^="LoginButton_container"]').contains('test.user');
-  // });
+  it('loginForm loginPopUp -> show/hide', () => {
+    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+    cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
+    cy.get('div[class^="PortalPopUp_content"]').should('be.visible');
+
+    cy.get('button[class^="PortalPopUp_topCloseBtn"]').click();
+    cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
+    cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
+  });
+
+  it('test.user@email.com = login->logout', () => {
+    cy.login({ email: 'test.user@email.com', password: 'secret' });
+    cy.logout();
+  });
+
+  it('test.user@email.com = login->close logout PopUp', () => {
+    cy.login({ email: 'test.user@email.com', password: 'secret' });
+
+    cy.get('div[class^="LoginButton_container"]').click();
+    cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
+    cy.get('div[class^="LoginButton_containerLogout"]').should('be.visible');
+
+    cy.get('button[class^="PortalPopUp_topCloseBtn"]').click();
+    cy.get('div[class^="LoginForm_container"]').should('not.exist');
+    cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
+    cy.get('div[class^="LoginButton_container"]').contains('test.user');
+  });
+
+  it('test.user@email.com = login->cancel logout', () => {
+    cy.login({ email: 'test.user@email.com', password: 'secret' });
+
+    cy.get('div[class^="LoginButton_container"]').click();
+    cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
+    cy.get('div[class^="LoginButton_containerLogout"]').should('be.visible');
+
+    cy.get('button[class^="ButtonComponent_container"]').contains('Отмена').click();
+    cy.get('div[class^="LoginForm_container"]').should('not.exist');
+    cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
+    cy.get('div[class^="LoginButton_container"]').contains('test.user');
+  });
 
   it('loginForm show/hide -> password', () => {
     cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
