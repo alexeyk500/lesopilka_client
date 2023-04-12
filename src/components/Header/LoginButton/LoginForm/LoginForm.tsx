@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import classes from './LoginForm.module.css';
 import emailIco from '../../../../img/mail.svg';
 import passwordIco from '../../../../img/password.svg';
-import eyeIco from '../../../../img/eyeIco.svg';
+import visibilityIcoOn from '../../../../img/visibilityIcoOn.svg';
+import visibilityIcoOff from '../../../../img/visibilityIcoOff.svg';
 
 const LoginForm = () => {
   const [typePasswordInput, setTypePasswordInput] = useState<string>('password');
@@ -47,7 +48,12 @@ const LoginForm = () => {
               required
             />
           </label>
-          <img src={eyeIco} className={classes.eyeIco} alt="email" onClick={onClickShowPassword} />
+          <img
+            src={typePasswordInput === 'password' ? visibilityIcoOn : visibilityIcoOff}
+            className={classes.eyeIco}
+            onClick={onClickShowPassword}
+            alt="visibility"
+          />
         </div>
       </div>
     </div>

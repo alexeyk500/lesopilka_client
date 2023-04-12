@@ -11,7 +11,28 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+
+Cypress.Commands.add('login', ({ email, password }) => {
+  const userName = email.split('@')[0];
+  cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+  cy.get('input[name="email"]').type(email);
+  cy.get('input[name="password"]').type(password);
+  cy.get('button').contains('Войти').click();
+  cy.get('div[class^="LoginForm_container"]').should('not.exist');
+  cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
+  cy.get('div[class^="LoginButton_container"]').contains(userName);
+});
+
+Cypress.Commands.add('logout', () => {
+  cy.get('div[class^="LoginButton_container"]').click();
+  cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
+  cy.get('div[class^="LoginButton_containerLogout"]').should('be.visible');
+  cy.get('button[class^="ButtonComponent_container"]').contains('Выйти').click();
+  cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
+  cy.get('div[class^="LoginButton_containerLogout"]').should('not.exist');
+  cy.get('div[class^="LoginButton_container"]').contains('Войти');
+});
+
 //
 //
 // -- This is a child command --
