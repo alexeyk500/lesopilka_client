@@ -20,7 +20,7 @@ const RegistrationButton: React.FC = () => {
             withoutButtons: true,
             ref: preloaderPopUpRef,
           });
-          await serverApi.sendConfirmationEmail(email, password);
+          await serverApi.createUnconfirmedUser(email, password);
           preloaderPopUpRef.current?.closePopup();
           showPortalPopUp({
             popUpContent: <ConfirmEmailForm email={email} />,

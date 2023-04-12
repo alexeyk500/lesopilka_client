@@ -12,11 +12,12 @@
   margin-bottom: 32px;
   font-weight: 600;
   font-size: 24px;
+  color: var(--green_color);
 }
 
 .email {
   margin-bottom: 4px;
-  color: var(--blue_color)
+  color: var(--orange_color)
 }
 
 .register{

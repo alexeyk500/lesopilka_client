@@ -16,8 +16,8 @@ export const userApi = {
     return response.data;
   },
 
-  async sendConfirmationEmail(email: string, password: string) {
-    const response = await instanceAxios.post<UniversalServerType>('/user/send_confirmation_email', {
+  async createUnconfirmedUser(email: string, password: string) {
+    const response = await instanceAxios.post<UniversalServerType>('/user/create-unconfirmed-user', {
       email,
       password,
     });

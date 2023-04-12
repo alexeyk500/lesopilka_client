@@ -8,14 +8,14 @@ type PropsType = {
 const ConfirmEmailForm: React.FC<PropsType> = ({ email }) => {
   return (
     <div className={classes.container}>
-      <div className={classes.title}>{`Пользователь`}</div>
+      <div className={classes.title}>{`Успешная регистрация пользователя`}</div>
       <div>
-        <div className={classes.subTitle}>{`с электроной почтой `}</div>
+        <div className={classes.subTitle}>{`пользователь с электроной почтой `}</div>
         <div className={classes.email}>{email}</div>
-        <div className={classes.subTitle}>{` зарегестрирован`}</div>
+        <div className={classes.subTitle}>{`успешно зарегестрирован`}</div>
       </div>
       <div className={classes.bottomTitle}>
-        {`Письмо с инструкциями по активации аккаунта и входу в личный кабинет\nотправлено электронную почту пользователя`}
+        {`Письмо с инструкцией по активации аккаунта\nи входу в личный кабинет\nотправлено электронную почту пользователя`}
       </div>
     </div>
   );
