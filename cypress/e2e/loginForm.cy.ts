@@ -13,6 +13,17 @@ describe('example to-do app', () => {
     cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
   });
 
+  it('loginForm show/hide -> password', () => {
+    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+    cy.get('input[name="password"]').type('Пароль-123');
+    cy.get('input[name="password"]').should('have.value', 'Пароль-123');
+    cy.get('input[name="password"]')
+      .should('have.attr', 'type')
+      .and('match', /password/);
+    cy.get('img[class^="LoginForm_eyeIco"]').click();
+    cy.get('input[name="password"]').should('have.attr', 'type').and('match', /text/);
+  });
+
   it('test.user@email.com = login->logout', () => {
     cy.login({ email: 'test.user@email.com', password: 'secret' });
     cy.logout();
@@ -42,16 +53,5 @@ describe('example to-do app', () => {
     cy.get('div[class^="LoginForm_container"]').should('not.exist');
     cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
     cy.get('div[class^="LoginButton_container"]').contains('test.user');
-  });
-
-  it('loginForm show/hide -> password', () => {
-    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="password"]').should('have.value', 'Пароль-123');
-    cy.get('input[name="password"]')
-      .should('have.attr', 'type')
-      .and('match', /password/);
-    cy.get('img[class^="LoginForm_eyeIco"]').click();
-    cy.get('input[name="password"]').should('have.attr', 'type').and('match', /text/);
   });
 });
