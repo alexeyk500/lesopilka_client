@@ -76,7 +76,7 @@ describe('test for registration form', () => {
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
 
     cy.get('div[class^="PortalPopUp_content"]').contains('Ошибка регистрации');
-    cy.get('div[class^="PortalPopUp_content"]').contains('уже зарегестрирован на площадке');
+    cy.get('div[class^="PortalPopUp_content"]').contains('уже прошел предварительную регистрацию');
   });
 
   it('RegistrationForm -> user full flow from registration and activation by link in email', () => {
