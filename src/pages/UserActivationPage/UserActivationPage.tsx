@@ -26,7 +26,6 @@ const UserActivationPage: React.FC = () => {
 
   useEffect(() => {
     if (!user && code && doActivate === 1) {
-      console.log('activateCandidateUserThunk code=', code, code.length);
       dispatch(activateCandidateUserThunk({ code })).then((result) => {
         if (!result.type.includes('/rejected')) {
           showPortalPopUp({
