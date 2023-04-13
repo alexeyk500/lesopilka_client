@@ -8,9 +8,10 @@ type PropsType = {
   onChange: (value: number) => void;
   selectedOption?: OptionsType;
   customClassName?: string;
+  dataTestId?: string;
 };
 
-const Selector: React.FC<PropsType> = ({ options, selectedOption, onChange, customClassName }) => {
+const Selector: React.FC<PropsType> = ({ options, selectedOption, onChange, customClassName, dataTestId }) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.currentTarget.value) {
       onChange && onChange(Number(e.currentTarget.value));
@@ -19,7 +20,12 @@ const Selector: React.FC<PropsType> = ({ options, selectedOption, onChange, cust
 
   return (
     <div className={classNames(classes.container, { [customClassName!]: customClassName })}>
-      <select value={selectedOption ? selectedOption.id : 0} className={classes.select} onChange={onChangeHandler}>
+      <select
+        value={selectedOption ? selectedOption.id : 0}
+        className={classes.select}
+        onChange={onChangeHandler}
+        data-test-id={dataTestId}
+      >
         {options.map((option, ind) => {
           return (
             <option key={ind} value={option.id}>

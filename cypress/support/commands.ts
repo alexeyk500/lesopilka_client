@@ -69,6 +69,18 @@ Cypress.Commands.add('deleteTestUserSearchRegionAndLocation', ({ email }) => {
   });
 });
 
+Cypress.Commands.add('deleteTestUserManufacturer', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-manufacturer`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserManufacturer - deleted');
+  });
+});
+
+Cypress.Commands.add('deleteTestUserManufacturerAddress', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-manufacturer-address`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserManufacturerAddress - deleted');
+  });
+});
+
 //
 //
 // -- This is a child command --

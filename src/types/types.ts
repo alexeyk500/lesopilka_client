@@ -333,8 +333,8 @@ export type CreateResellerParamsType = {
 export type CreateCandidateManufacturerParamsType = {
   title: string;
   inn: string;
-  phone: string;
   email: string;
+  phone: string;
   locationId: string;
   street: string;
   building: string;
@@ -347,6 +347,7 @@ export type CreateManufacturerParamsType = {
   token: string;
   inn: string;
   title: string;
+  email: string;
   phone: string;
   locationId: string;
   street: string;

@@ -1,5 +1,5 @@
 import { instanceAxios, setAuthHeader } from './instanceAxios';
-import { CreateManufacturerServerType, UniversalServerType, UserLoginServerType } from './serverResponseTypes';
+import { UniversalServerType, UserLoginServerType } from './serverResponseTypes';
 import { CreateManufacturerParamsType, UserUpdateParamsType } from '../types/types';
 
 export const userApi = {
@@ -47,8 +47,8 @@ export const userApi = {
 
   async createManufacturer(createManufacturerParams: CreateManufacturerParamsType) {
     const { token, ...manufacturerParams } = createManufacturerParams;
-    const response = await instanceAxios.post<CreateManufacturerServerType>(
-      '/manufacturer',
+    const response = await instanceAxios.post<UserLoginServerType>(
+      '/manufacturer/create',
       manufacturerParams,
       setAuthHeader(token)
     );

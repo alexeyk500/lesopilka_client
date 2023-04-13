@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { CreateManufacturerParamsType, CreateResellerParamsType, UserType, UserUpdateParamsType } from '../types/types';
-import { CreateManufacturerServerType, UserLoginServerType } from '../api/serverResponseTypes';
-import { showConfirmPopUp, showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { UserLoginServerType } from '../api/serverResponseTypes';
+import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 import { serverApi } from '../api/serverApi';
 import { activateCandidateManufacturerThunk } from './resellerSlice';
 
@@ -71,7 +71,7 @@ export const userUpdateThunk = createAsyncThunk<UserLoginServerType, UserUpdateP
 );
 
 export const userCreateManufacturerThunk = createAsyncThunk<
-  CreateManufacturerServerType,
+  UserLoginServerType,
   CreateManufacturerParamsType,
   { rejectValue: string }
 >('user/userCreateManufacturerThunk', async (createManufacturerParams, { rejectWithValue }) => {
@@ -160,12 +160,12 @@ export const userSlice = createSlice({
           showErrorPopUp(action.payload);
         }
       })
-      .addCase(userCreateManufacturerThunk.fulfilled, (state, action) => {
-        state.isLoading = false;
-        if (action.payload) {
-          showConfirmPopUp(`Поставщик \n${action.payload.title}\n успешно создан`);
-        }
-      })
+      // .addCase(userCreateManufacturerThunk.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   if (action.payload) {
+      //     showConfirmPopUp(`Поставщик \n${action.payload.user.manufacturer?.title}\n успешно создан`);
+      //   }
+      // })
       .addMatcher(
         isAnyOf(
           userLoginByPasswordThunk.fulfilled,
@@ -173,7 +173,8 @@ export const userSlice = createSlice({
           userUpdateThunk.fulfilled,
           userCreateResellerThunk.fulfilled,
           activateCandidateManufacturerThunk.fulfilled,
-          activateCandidateUserThunk.fulfilled
+          activateCandidateUserThunk.fulfilled,
+          userCreateManufacturerThunk.fulfilled
         ),
         (state, action) => {
           state.user = action.payload.user;

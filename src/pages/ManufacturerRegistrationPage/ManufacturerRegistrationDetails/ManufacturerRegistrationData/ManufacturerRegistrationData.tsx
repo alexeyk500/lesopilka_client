@@ -4,7 +4,7 @@ import SectionContainer from '../../../../components/commonComponents/SectionCon
 import ManufacturerAddressData from './ManufacturerAddressData/ManufacturerAddressData';
 import ButtonComponent, { ButtonType } from '../../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
-import { selectorIsUserLoading, userCreateManufacturerThunk, userLoginByTokenThunk } from '../../../../store/userSlice';
+import { selectorIsUserLoading, userCreateManufacturerThunk } from '../../../../store/userSlice';
 import { getInputFormData } from '../../../../utils/functions';
 import { PageEnum } from '../../../../components/AppRouter/AppRouter';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp'
 import SuccessCandidateManufacturerForm from '../../../ResellerCreateManufacturerPage/SuccessCandidateManufacturerForm/SuccessCandidateManufacturerForm';
 import Preloader from '../../../../components/Preloader/Preloader';
 import classNames from 'classnames';
+import SuccessRegistrationManufacturerForm from './SuccessRegistarationManufacturerForm/SuccessRegistrationManufacturerForm';
 
 type PropsType = {
   isFromReseller?: boolean;
@@ -38,8 +39,8 @@ const ManufacturerRegistrationData: React.FC<PropsType> = ({ isFromReseller }) =
     const office = getInputFormData(event.currentTarget, 'off1c6');
     const postIndex = getInputFormData(event.currentTarget, 'p0st1nd6x');
 
-    if (isFromReseller) {
-      if (title && inn && phone && email && locationId && street && building && postIndex) {
+    if (title && inn && email && phone && locationId && street && building && postIndex) {
+      if (isFromReseller) {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (!isLoading && token) {
           dispatch(
@@ -67,15 +68,29 @@ const ManufacturerRegistrationData: React.FC<PropsType> = ({ isFromReseller }) =
             }
           });
         }
-      }
-    } else {
-      if (title && inn && phone && locationId && street && building && postIndex) {
+      } else {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (!isLoading && token) {
           dispatch(
-            userCreateManufacturerThunk({ token, title, inn, phone, locationId, street, building, office, postIndex })
+            userCreateManufacturerThunk({
+              token,
+              title,
+              inn,
+              email,
+              phone,
+              locationId,
+              street,
+              building,
+              office,
+              postIndex,
+            })
           ).then(() => {
-            dispatch(userLoginByTokenThunk());
+            navigate(PageEnum.UserPage);
+            showPortalPopUp({
+              popUpContent: <SuccessRegistrationManufacturerForm />,
+              oneCenterConfirmBtn: true,
+              titleConfirmBtn: 'Понятно',
+            });
           });
         }
       }
@@ -105,21 +120,19 @@ const ManufacturerRegistrationData: React.FC<PropsType> = ({ isFromReseller }) =
               <input className={classes.input} name="inn" type="text" placeholder={'Введите ИНН'} required />
             </div>
             <div className={classes.rowDataContainer}>
+              <div className={classes.title}>{'Электронная почта организации :'}</div>
+              <input
+                className={classes.input}
+                name="ema1l"
+                type="text"
+                placeholder={'Введите электронную почту'}
+                required
+              />
+            </div>
+            <div className={classes.rowDataContainer}>
               <div className={classes.title}>{'Телефон организации :'}</div>
               <input className={classes.input} name="ph0n6" type="text" placeholder={'Введите телефон'} required />
             </div>
-            {isFromReseller && (
-              <div className={classes.rowDataContainer}>
-                <div className={classes.title}>{'Электронная почта организации :'}</div>
-                <input
-                  className={classes.input}
-                  name="ema1l"
-                  type="text"
-                  placeholder={'Введите электронную почту'}
-                  required
-                />
-              </div>
-            )}
             <ManufacturerAddressData />
             <div className={classes.btnGroup}>
               <ButtonComponent title={'Регистрация'} type={'submit'} />

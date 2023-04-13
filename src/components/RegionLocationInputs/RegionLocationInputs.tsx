@@ -77,6 +77,7 @@ const RegionLocationInputs: React.FC = () => {
           selectedOption={selectedRegionOption}
           onChange={onChangeRegion}
           customClassName={classes.selector}
+          dataTestId={'selectorRegion'}
         />
         <input
           className={classes.invisibleInput}
@@ -95,6 +96,7 @@ const RegionLocationInputs: React.FC = () => {
           selectedOption={selectedLocationOption}
           onChange={onChangeLocationLocal}
           customClassName={classes.selector}
+          dataTestId={'selectorLocation'}
         />
         <input
           className={classes.invisibleInput}

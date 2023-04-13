@@ -36,7 +36,12 @@ const RegistrationAsManufacturer = () => {
           <div className={classes.titleContainer}>{`Хочу получить доступ к созданию карточек и продажам товаров.`}</div>
         </div>
         <div className={classes.value}>
-          <ButtonComponent title={'Доступ'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
+          <ButtonComponent
+            title={'Доступ'}
+            buttonType={ButtonType.SECONDARY}
+            onClick={onClick}
+            data-test-id={'registerAsManufacturer'}
+          />
         </div>
       </div>
     </SectionContainer>
