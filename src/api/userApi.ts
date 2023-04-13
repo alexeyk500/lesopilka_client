@@ -12,7 +12,7 @@ export const userApi = {
   },
 
   async userLoginByToken(token: string) {
-    const response = await instanceAxios.get<UserLoginServerType>('/user/get_user', setAuthHeader(token));
+    const response = await instanceAxios.get<UserLoginServerType>('/user/get-user', setAuthHeader(token));
     return response.data;
   },
 
@@ -25,14 +25,14 @@ export const userApi = {
   },
 
   async sendRecoveryPasswordEmail(email: string) {
-    const response = await instanceAxios.post<UniversalServerType>('/user/send_recovery_password_email', {
+    const response = await instanceAxios.post<UniversalServerType>('/user/send-recovery-password-email', {
       email,
     });
     return response.data;
   },
 
   async sendConfirmedRecoveryPasswordCode(code: string, password: string) {
-    const response = await instanceAxios.post<UniversalServerType>('/user/confirm_recovery_password_code', {
+    const response = await instanceAxios.post<UniversalServerType>('/user/confirm-recovery-password-code', {
       code,
       password,
     });
@@ -56,7 +56,7 @@ export const userApi = {
   },
 
   async activateCandidateUser(code: string) {
-    const response = await instanceAxios.post<UserLoginServerType>('/user/activate-user-candidate', {
+    const response = await instanceAxios.post<UserLoginServerType>('/activation/activate-user-candidate', {
       code,
     });
     return response.data;

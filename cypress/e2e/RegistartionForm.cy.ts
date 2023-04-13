@@ -80,6 +80,8 @@ describe('example to-do app', () => {
   // });
 
   it('RegistrationForm -> user registration and activation by link in email', () => {
+    const testUserEmail = 'test-user-registration@email.com';
+    const userName = testUserEmail.split('@')[0];
     cy.intercept({
       method: 'POST',
       url: 'http://localhost:5500/api/user/create-user-candidate',
@@ -87,7 +89,7 @@ describe('example to-do app', () => {
 
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type('test-user-full-registration@email.com');
+    cy.get('input[name="email"]').type(testUserEmail);
     cy.get('input[name="password"]').type('Пароль-123');
     cy.get('input[name="passwordRepeated"]').type('Пароль-123');
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
@@ -101,11 +103,21 @@ describe('example to-do app', () => {
       .then((body) => {
         const code = body.message.split('$')[1];
         if (code) {
-          console.log('will make request with code=', code);
           cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
           cy.visit(`/user-activation/${code}`);
-          // cy.request(`http://localhost:3000/user-activation/${code}`).as('activationResult');
         }
       });
+
+    cy.get('div[class^="SuccessActivateUserForm_container"]').contains('Успешная активация');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+    cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
+    cy.get('div[class^="LoginButton_container"]').contains(userName);
+    cy.get('div[class^="MainInformation_value"]').contains(userName);
+
+    cy.deleteTestUserAddress({ email: testUserEmail });
+    cy.deleteTestUserBasket({ email: testUserEmail });
+    cy.deleteTestUserSearchRegionAndLocation({ email: testUserEmail });
+    cy.deleteTestUser({ email: testUserEmail });
+    cy.deleteTestUser({ email: testUserEmail, isUnconfirmed: true });
   });
 });

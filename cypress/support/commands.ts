@@ -42,12 +42,30 @@ Cypress.Commands.add('goToRegisterForm', () => {
 });
 
 Cypress.Commands.add('deleteTestUser', ({ email, isUnconfirmed }) => {
-  cy.request('POST', `${baseApiUrl}/user/delete-test-user`, { email, isUnconfirmed }).then((response) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user`, { email, isUnconfirmed }).then((response) => {
     if (isUnconfirmed) {
-      expect(response.body).to.have.property('message', 'testUnconfirmedUser - deleted');
+      expect(response.body).to.have.property('message', 'testUserCandidate - deleted');
     } else {
       expect(response.body).to.have.property('message', 'testUser - deleted');
     }
+  });
+});
+
+Cypress.Commands.add('deleteTestUserAddress', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-address`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserAddress - deleted');
+  });
+});
+
+Cypress.Commands.add('deleteTestUserBasket', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-basket`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserBasket - deleted');
+  });
+});
+
+Cypress.Commands.add('deleteTestUserSearchRegionAndLocation', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-search-region-and-location`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserSearchRegionAndLocation - deleted');
   });
 });
 

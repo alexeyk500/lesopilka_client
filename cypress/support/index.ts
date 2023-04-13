@@ -6,6 +6,9 @@ declare global {
       logout(): Chainable<void>;
       goToRegisterForm(): Chainable<void>;
       deleteTestUser({ email, isUnconfirmed }: { email: string; isUnconfirmed?: boolean });
+      deleteTestUserAddress({ email }: { email: string });
+      deleteTestUserBasket({ email }: { email: string });
+      deleteTestUserSearchRegionAndLocation({ email }: { email: string });
     }
   }
 }
