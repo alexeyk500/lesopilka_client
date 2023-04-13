@@ -11,6 +11,8 @@ declare global {
       deleteTestUserSearchRegionAndLocation({ email }: { email: string });
       deleteTestUserManufacturer({ email }: { email: string });
       deleteTestUserManufacturerAddress({ email }: { email: string });
+      deleteTestUserReseller({ email }: { email: string });
+      deleteTestUserResellerAddress({ email }: { email: string });
     }
   }
 }

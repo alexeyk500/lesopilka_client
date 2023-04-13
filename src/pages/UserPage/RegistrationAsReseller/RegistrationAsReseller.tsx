@@ -38,7 +38,12 @@ const RegistrationAsReseller: React.FC = () => {
           </div>
         </div>
         <div className={classes.value}>
-          <ButtonComponent title={'Доступ'} buttonType={ButtonType.SECONDARY} onClick={onClick} />
+          <ButtonComponent
+            title={'Доступ'}
+            buttonType={ButtonType.SECONDARY}
+            onClick={onClick}
+            data-test-id={'registerAsReseller'}
+          />
         </div>
       </div>
     </SectionContainer>

@@ -3,7 +3,6 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
     cy.visit('/');
   });
   const testUserEmail = 'test-user@email.com';
-  const userName = testUserEmail.split('@')[0];
 
   it('user try register as manufacturer', () => {
     cy.login({ email: testUserEmail, password: 'secret' });
@@ -30,7 +29,7 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
     cy.get('div[class^="SuccessRegistrationManufacturerForm_mainPart"]').contains('Успешная активация');
     cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
     cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
-    cy.get('div[class^="LoginButton_container"]').contains(userName);
+    cy.get('div[class^="LoginButton_container"]').contains(testUserEmail.split('@')[0]);
 
     cy.get('button[class^="MenuButton_container"]').click();
     cy.get('button[class^="MenuContent_menuButton"]').contains('Лицензии').click();
@@ -38,5 +37,36 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
 
     cy.deleteTestUserManufacturerAddress({ email: testUserEmail });
     cy.deleteTestUserManufacturer({ email: testUserEmail });
+  });
+
+  it('user try register as reseller', () => {
+    cy.login({ email: testUserEmail, password: 'secret' });
+    cy.get('button[class^="MenuButton_container"]').click();
+
+    cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
+    cy.get('button[data-test-id="registerAsReseller"]').click();
+    cy.get('div[class^="RulesInformForm_titleBold"]').contains('реселлер').should('be.visible');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+    cy.get('div[class^="RulesInformForm_titleBold"]').should('not.exist');
+
+    cy.get('input[name="fam1ly"]').type('Иванов');
+    cy.get('input[name="nam6"]').type('Алексей');
+    cy.get('input[name="m11dl6nam6"]').type('Сергеевич');
+    cy.get('input[name="ph0n6"]').type('+79818842777');
+    cy.get('select[data-test-id="selectorRegion"]').select('Санкт-Петербург');
+    cy.get('select[data-test-id="selectorLocation"]').select('г.Петродворец');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
+
+    cy.get('div[class^="SuccessRegistrationResellerForm_mainPart"]').contains('Успешная активация');
+    cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+    cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
+    cy.get('div[class^="LoginButton_container"]').contains(testUserEmail.split('@')[0]);
+
+    cy.get('button[class^="MenuButton_container"]').click();
+    cy.get('button[class^="MenuContent_menuButton"]').contains('Кабинет').click();
+    cy.get('div[class^="IconButton_title"]').contains('Новый поставщик');
+
+    cy.deleteTestUserResellerAddress({ email: testUserEmail });
+    cy.deleteTestUserReseller({ email: testUserEmail });
   });
 });

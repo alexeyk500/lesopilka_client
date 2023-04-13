@@ -8,6 +8,8 @@ import { useAppDispatch } from '../../../../hooks/hooks';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../../components/AppRouter/AppRouter';
 import { userCreateResellerThunk } from '../../../../store/userSlice';
+import { showPortalPopUp } from '../../../../components/PortalPopUp/PortalPopUp';
+import SuccessRegistrationResellerForm from '../SuccessRegistrationResellerForm/SuccessRegistrationResellerForm';
 
 const ResellerRegistrationData: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +27,11 @@ const ResellerRegistrationData: React.FC = () => {
       if (token) {
         dispatch(userCreateResellerThunk({ token, family, name, middleName, phone, locationId })).then(() => {
           navigate(PageEnum.UserPage);
+          showPortalPopUp({
+            popUpContent: <SuccessRegistrationResellerForm />,
+            oneCenterConfirmBtn: true,
+            titleConfirmBtn: 'Понятно',
+          });
         });
       }
     }

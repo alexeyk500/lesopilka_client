@@ -81,6 +81,18 @@ Cypress.Commands.add('deleteTestUserManufacturerAddress', ({ email }) => {
   });
 });
 
+Cypress.Commands.add('deleteTestUserReseller', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-reseller`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserReseller - deleted');
+  });
+});
+
+Cypress.Commands.add('deleteTestUserResellerAddress', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-reseller-address`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserResellerAddress - deleted');
+  });
+});
+
 //
 //
 // -- This is a child command --

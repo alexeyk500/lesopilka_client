@@ -5,7 +5,11 @@ import { UniversalServerType, UserLoginServerType } from './serverResponseTypes'
 export const resellerApi = {
   async createReseller(createResellerParams: CreateResellerParamsType) {
     const { token, ...resellerParams } = createResellerParams;
-    const response = await instanceAxios.post<UserLoginServerType>('/reseller', resellerParams, setAuthHeader(token));
+    const response = await instanceAxios.post<UserLoginServerType>(
+      '/reseller/create',
+      resellerParams,
+      setAuthHeader(token)
+    );
     return response.data;
   },
 

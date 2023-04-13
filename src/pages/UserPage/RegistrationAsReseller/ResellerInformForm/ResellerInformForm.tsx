@@ -5,7 +5,7 @@ const ResellerInformForm: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.mainPart}>
-        <div className={classes.titleBold}>{'Правила регистрации Реселлера'}</div>
+        <div className={classes.titleBold}>{'Правила регистрации реселлера'}</div>
         <p className={classes.title}>
           Доступ Реселлера к регистрации новых поставщиков пиломатериалов, а так же доступ реселлера к отчетам о его
           комиссионных будет предоставлен сразу после регистрации.
