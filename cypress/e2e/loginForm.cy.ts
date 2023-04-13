@@ -1,4 +1,4 @@
-describe('example to-do app', () => {
+describe('test for login form', () => {
   beforeEach(() => {
     cy.visit('/');
   });
@@ -25,12 +25,12 @@ describe('example to-do app', () => {
   });
 
   it('test.user@email.com = login->logout', () => {
-    cy.login({ email: 'test.user@email.com', password: 'secret' });
+    cy.login({ email: 'test-user@email.com', password: 'secret' });
     cy.logout();
   });
 
   it('test.user@email.com = login->close logout PopUp', () => {
-    cy.login({ email: 'test.user@email.com', password: 'secret' });
+    cy.login({ email: 'test-user@email.com', password: 'secret' });
 
     cy.get('div[class^="LoginButton_container"]').click();
     cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
@@ -39,11 +39,11 @@ describe('example to-do app', () => {
     cy.get('button[class^="PortalPopUp_topCloseBtn"]').click();
     cy.get('div[class^="LoginForm_container"]').should('not.exist');
     cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
-    cy.get('div[class^="LoginButton_container"]').contains('test.user');
+    cy.get('div[class^="LoginButton_container"]').contains('test-user');
   });
 
   it('test.user@email.com = login->cancel logout', () => {
-    cy.login({ email: 'test.user@email.com', password: 'secret' });
+    cy.login({ email: 'test-user@email.com', password: 'secret' });
 
     cy.get('div[class^="LoginButton_container"]').click();
     cy.get('form[class^="PortalPopUp_container"]').should('be.visible');
@@ -52,6 +52,6 @@ describe('example to-do app', () => {
     cy.get('button[class^="ButtonComponent_container"]').contains('Отмена').click();
     cy.get('div[class^="LoginForm_container"]').should('not.exist');
     cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
-    cy.get('div[class^="LoginButton_container"]').contains('test.user');
+    cy.get('div[class^="LoginButton_container"]').contains('test-user');
   });
 });

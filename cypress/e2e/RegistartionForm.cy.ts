@@ -1,4 +1,4 @@
-describe('example to-do app', () => {
+describe('test for registration form', () => {
   beforeEach(() => {
     cy.visit('/');
   });
