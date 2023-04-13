@@ -36,7 +36,8 @@ export type ResellerType = {
 export type UserType = {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
+  address?: AddressType;
   searchRegion?: RegionType;
   searchLocation?: LocationType;
   manufacturer?: ManufacturerType;

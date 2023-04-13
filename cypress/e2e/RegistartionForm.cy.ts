@@ -79,7 +79,7 @@ describe('example to-do app', () => {
   //   cy.get('div[class^="PortalPopUp_content"]').contains('уже зарегестрирован на площадке');
   // });
 
-  it('RegistrationForm -> user registration and activation by link in email', () => {
+  it('RegistrationForm -> user full flow from registration and activation by link in email', () => {
     const testUserEmail = 'test-user-registration@email.com';
     const userName = testUserEmail.split('@')[0];
     cy.intercept({

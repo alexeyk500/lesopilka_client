@@ -12,7 +12,7 @@ export const resellerApi = {
   async createCandidateManufacturer(createCandidateManufacturerParams: CreateCandidateManufacturerParamsType) {
     const { token, ...candidateManufacturerParams } = createCandidateManufacturerParams;
     const response = await instanceAxios.post<UniversalServerType>(
-      '/reseller/manufacturer-candidate',
+      '/reseller/create-reseller-manufacturer-candidate',
       candidateManufacturerParams,
       setAuthHeader(token)
     );
@@ -20,9 +20,10 @@ export const resellerApi = {
   },
 
   async activateCandidateManufacturer(code: string) {
-    const response = await instanceAxios.post<UserLoginServerType>('/reseller/manufacturer-candidate-activate', {
-      code,
-    });
+    const response = await instanceAxios.post<UserLoginServerType>(
+      '/activation/activate-reseller-manufacturer-candidate',
+      { code }
+    );
     return response.data;
   },
 };
