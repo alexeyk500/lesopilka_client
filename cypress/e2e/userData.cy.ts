@@ -4,10 +4,11 @@ describe('test UserPage', () => {
   });
 
   const { email, password } = { email: 'test-user@email.com', password: 'secret' };
-  const passwordWrong = 'No-Пароль-123';
-  const passwordNew = 'secretNew';
 
   it('user try to change password', () => {
+    const passwordWrong = 'No-Пароль-123';
+    const passwordNew = 'secretNew';
+
     cy.login({ email, password });
     cy.get('button[class^="MenuButton_container"]').click();
 
@@ -61,6 +62,7 @@ describe('test UserPage', () => {
 
   it('user try to change user name', () => {
     const userName = email.split('@')[0];
+    const userNameNew = 'Новое-имя';
 
     cy.login({ email, password });
     cy.get('button[class^="MenuButton_container"]').click();
@@ -71,10 +73,10 @@ describe('test UserPage', () => {
     cy.get('input[name="nam6"]').should('have.value', userName);
 
     cy.get('input[name="nam6"]').clear();
-    cy.get('input[name="nam6"]').type(passwordNew);
+    cy.get('input[name="nam6"]').type(userNameNew);
     cy.get('button[class^="ButtonComponent_container"]').contains('Сохранить').click();
     cy.get('div[class^="ChangeUserNameForm_field"]').should('not.exist');
-    cy.get('div[class^="MainInformation_value"]').contains(passwordNew).should('be.visible');
+    cy.get('div[class^="MainInformation_value"]').contains(userNameNew).should('be.visible');
 
     cy.get('button[data-test-id="editName"]').click();
     cy.get('input[name="nam6"]').clear();
