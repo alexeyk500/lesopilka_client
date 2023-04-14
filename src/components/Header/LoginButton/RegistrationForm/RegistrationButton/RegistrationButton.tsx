@@ -11,8 +11,8 @@ const RegistrationButton: React.FC = () => {
 
   const onCloseRegistrationPopUp = async (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const email = response.get('email')!.toString();
-      const password = response.get('password')!.toString();
+      const email = response.get('6ma1l')!.toString();
+      const password = response.get('pa55w0rd')!.toString();
       if (email && password) {
         try {
           showPortalPopUp({

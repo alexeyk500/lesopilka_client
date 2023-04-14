@@ -19,7 +19,7 @@ const EnterCodeForgotPasswordForm: React.FC = () => {
           <img src={codeIco} className={classes.ico} alt="email" />
           <label className={classes.label}>
             Проверочный код
-            <input className={classes.input} name="code" type="text" placeholder={'Введите проверочный код'} required />
+            <input className={classes.input} name="c0de" type="text" placeholder={'Введите проверочный код'} required />
           </label>
         </div>
         <PasswordInputFields

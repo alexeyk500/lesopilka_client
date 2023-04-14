@@ -20,7 +20,7 @@ const RegistrationForm: React.FC = () => {
             Адрес электронной почты
             <input
               className={classes.input}
-              name="email"
+              name="6ma1l"
               type="email"
               placeholder={'Введите электронную почту'}
               required

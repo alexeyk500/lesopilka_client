@@ -16,7 +16,7 @@ const ConfirmSendingPasswordRecoveryCodeForm: React.FC<PropsType> = ({ email }) 
       <div className={classes.bottomTitle}>
         <div
           className={classes.subTitleRed}
-        >{`если в папке входящих писем письма нет ,\nто проверьте папку со спамом`}</div>
+        >{`если в папке входящих писем письма нет,\nто проверьте папку со спамом`}</div>
       </div>
     </div>
   );

@@ -12,8 +12,8 @@ const ForgotPasswordButton: React.FC = () => {
 
   const sendConfirmedRecoveryCodeAndNewPassword = async (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const code = response.get('code');
-      const password = response.get('password');
+      const code = response.get('c0de');
+      const password = response.get('pa55w0rd');
       if (code && password) {
         try {
           const passwordStr = password.toString();
@@ -42,7 +42,7 @@ const ForgotPasswordButton: React.FC = () => {
           showPortalPopUp({
             popUpContent: (
               <>
-                <h3 style={{ color: '#4A90E2', marginTop: 32 }}>{`Ошибка востановления пароля этап проверки кода`}</h3>
+                <h3 style={{ color: '#4A90E2', marginTop: 32 }}>{`Ошибка востановления пароля`}</h3>
                 <br />
                 {e.response.data.message && <h4 style={{ color: '#FF0000' }}>{e.response.data.message}</h4>}
               </>
@@ -60,7 +60,7 @@ const ForgotPasswordButton: React.FC = () => {
       try {
         showPortalPopUp({
           popUpContent: <EnterCodeForgotPasswordForm />,
-          titleConfirmBtn: 'Отправить',
+          titleConfirmBtn: 'Установить',
           onClosePopUp: sendConfirmedRecoveryCodeAndNewPassword,
         });
       } catch (e: any) {
@@ -81,7 +81,7 @@ const ForgotPasswordButton: React.FC = () => {
 
   const sendEmailWithRecoveryPasswordCode = async (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const email = response.get('email')!.toString();
+      const email = response.get('6ma1l')!.toString();
       if (email) {
         try {
           showPortalPopUp({

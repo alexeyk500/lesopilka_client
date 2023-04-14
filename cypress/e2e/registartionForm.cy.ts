@@ -20,33 +20,33 @@ describe('test for registration form', () => {
   it('RegistrationForm -> show/hide password letters', () => {
     cy.goToRegisterForm();
 
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="password"]').should('have.value', 'Пароль-123');
-    cy.get('input[name="password"]')
+    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rd"]').should('have.value', 'Пароль-123');
+    cy.get('input[name="pa55w0rd"]')
       .should('have.attr', 'type')
       .and('match', /password/);
     cy.get('img[class^="PasswordInputFields_visibilityIco"]').click();
-    cy.get('input[name="password"]').should('have.attr', 'type').and('match', /text/);
+    cy.get('input[name="pa55w0rd"]').should('have.attr', 'type').and('match', /text/);
   });
 
   it('RegistrationForm -> match/mismatch passwords', () => {
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type('new-user@email.com');
-    cy.get('input[name="password"]').type('Пароль-12345');
-    cy.get('input[name="passwordRepeated"]').type('Пароль');
+    cy.get('input[name="6ma1l"]').type('new-user@email.com');
+    cy.get('input[name="pa55w0rd"]').type('Пароль-12345');
+    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль');
     cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').contains('Пароли не совпадают');
 
-    cy.get('input[name="passwordRepeated"]').type('-12345');
+    cy.get('input[name="pa55w0rdRepeated"]').type('-12345');
     cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').contains('Пароли совпадают');
   });
 
   it('RegistrationForm -> register new unconfirmed user and send confirm letter', () => {
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type('test-unconfirmed-user@email.com');
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+    cy.get('input[name="6ma1l"]').type('test-unconfirmed-user@email.com');
+    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль-123');
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
@@ -56,9 +56,9 @@ describe('test for registration form', () => {
   it('RegistrationForm -> register existing unconfirmedUser  ', () => {
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type('test-unconfirmed-user@email.com');
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+    cy.get('input[name="6ma1l"]').type('test-unconfirmed-user@email.com');
+    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль-123');
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
 
     cy.get('div[class^="PortalPopUp_content"]').contains('Ошибка регистрации');
@@ -70,9 +70,9 @@ describe('test for registration form', () => {
   it('RegistrationForm -> try to double register confirmed user by email ', () => {
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type('test.user@email.com');
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+    cy.get('input[name="6ma1l"]').type('test.user@email.com');
+    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль-123');
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
 
     cy.get('div[class^="PortalPopUp_content"]').contains('Ошибка регистрации');
@@ -89,9 +89,9 @@ describe('test for registration form', () => {
 
     cy.goToRegisterForm();
 
-    cy.get('input[name="email"]').type(testUserEmail);
-    cy.get('input[name="password"]').type('Пароль-123');
-    cy.get('input[name="passwordRepeated"]').type('Пароль-123');
+    cy.get('input[name="6ma1l"]').type(testUserEmail);
+    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль-123');
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
@@ -119,5 +119,130 @@ describe('test for registration form', () => {
     cy.deleteTestUserSearchRegionAndLocation({ email: testUserEmail });
     cy.deleteTestUser({ email: testUserEmail });
     cy.deleteTestUser({ email: testUserEmail, isUnconfirmed: true });
+  });
+
+  it('RegistrationForm -> forgot password -> ask new code and success result', () => {
+    const { email, password } = { email: 'test-user@email.com', password: 'secret' };
+    const passwordNew = 'secretNew';
+    cy.intercept({
+      method: 'POST',
+      url: 'http://localhost:5500/api/user/send-recovery-password-email',
+    }).as('recoveryPasswordResult');
+
+    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+    cy.get('button[class^="LoginButton_forgotBtn"]').contains('Не помню пароль').click();
+    cy.get('input[name="6ma1l"]').type(email);
+    cy.get('button[class^="ButtonComponent_container"]').contains('Запросить код').click();
+
+    cy.wait('@recoveryPasswordResult')
+      .its('response.body')
+      .then((body) => {
+        const code = body.message.split('$')[1];
+        cy.log('code = ').log(code);
+        if (code) {
+          cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+          cy.get('div[class^="EnterCodeForgotPasswordForm_title"]')
+            .contains('введите проверочный код')
+            .should('be.visible');
+          cy.get('input[name="c0de"]').type(code);
+          cy.get('input[name="pa55w0rd"]').type(passwordNew);
+          cy.get('input[name="pa55w0rdRepeated"]').type(passwordNew);
+          cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]')
+            .contains('Пароли совпадают')
+            .should('be.visible');
+          cy.get('button[class^="ButtonComponent_container"]').contains('Установить').click();
+          cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').should('not.exist');
+          cy.get('div[class^="PortalPopUp_content"]').contains('успешно изменен').should('be.visible');
+          cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+          cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
+          cy.get('div[class^="LoginButton_container"]').contains('Войти');
+
+          cy.login({ email, password: passwordNew });
+          cy.get('button[class^="MenuButton_container"]').click();
+          cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
+          cy.get('button[class^="ButtonComponent_container"]').contains('Изменить').click();
+
+          cy.get('input[name="curr6ntPa55w0rd"]').type(passwordNew);
+          cy.get('button[class^="ButtonComponent_container"]').contains('Ввести').click();
+
+          cy.get('input[name="pa55w0rd"]').type(password);
+          cy.get('input[name="pa55w0rdRepeated"]').type(password);
+          cy.get('button[class^="ButtonComponent_container"]').contains('Установить').click();
+
+          cy.get('div[class^="PortalPopUp_content"]').contains('успешно изменен').should('be.visible');
+          cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+          cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
+        }
+      });
+  });
+
+  it('RegistrationForm -> forgot password -> ask new code for not existing email', () => {
+    const emailWrong = 'wrong@email.com';
+    const passwordAny = 'secretAny';
+    const codeAny = '12any34';
+
+    cy.intercept({
+      method: 'POST',
+      url: 'http://localhost:5500/api/user/send-recovery-password-email',
+    }).as('recoveryPasswordResult');
+
+    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+    cy.get('button[class^="LoginButton_forgotBtn"]').contains('Не помню пароль').click();
+    cy.get('input[name="6ma1l"]').type(emailWrong);
+    cy.get('button[class^="ButtonComponent_container"]').contains('Запросить код').click();
+
+    cy.wait('@recoveryPasswordResult')
+      .its('response.body')
+      .then(() => {
+        cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+        cy.get('div[class^="EnterCodeForgotPasswordForm_title"]')
+          .contains('введите проверочный код')
+          .should('be.visible');
+        cy.get('input[name="c0de"]').type(codeAny);
+        cy.get('input[name="pa55w0rd"]').type(passwordAny);
+        cy.get('input[name="pa55w0rdRepeated"]').type(passwordAny);
+        cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').contains('Пароли совпадают').should('be.visible');
+        cy.get('button[class^="ButtonComponent_container"]').contains('Установить').click();
+        cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').should('not.exist');
+
+        cy.get('div[class^="PortalPopUp_content"]').contains('неверный код').should('be.visible');
+        cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+        cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
+      });
+  });
+
+  it('RegistrationForm -> forgot password -> ask new code and type wrong code', () => {
+    const email = 'test-user@email.com';
+    const passwordNew = 'secretNew';
+    const wrongCode = '12wrong34';
+
+    cy.intercept({
+      method: 'POST',
+      url: 'http://localhost:5500/api/user/send-recovery-password-email',
+    }).as('recoveryPasswordResult');
+
+    cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
+    cy.get('button[class^="LoginButton_forgotBtn"]').contains('Не помню пароль').click();
+    cy.get('input[name="6ma1l"]').type(email);
+    cy.get('button[class^="ButtonComponent_container"]').contains('Запросить код').click();
+
+    cy.wait('@recoveryPasswordResult')
+      .its('response.body')
+      .then(() => {
+        cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+        cy.get('div[class^="EnterCodeForgotPasswordForm_title"]')
+          .contains('введите проверочный код')
+          .should('be.visible');
+        cy.get('input[name="c0de"]').type(wrongCode);
+        cy.get('input[name="pa55w0rd"]').type(passwordNew);
+        cy.get('input[name="pa55w0rdRepeated"]').type(passwordNew);
+        cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').contains('Пароли совпадают').should('be.visible');
+        cy.get('button[class^="ButtonComponent_container"]').contains('Установить').click();
+        cy.get('div[class^="PasswordInputFields_checkPasswordInfo"]').should('not.exist');
+
+        cy.get('div[class^="PortalPopUp_content"]').contains('неверный код').should('be.visible');
+        cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
+        cy.get('div[class^="PortalPopUp_content"]').should('not.exist');
+      });
   });
 });
