@@ -51,7 +51,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
           {isChangePasswordForm ? 'Новый пароль' : 'Пароль'}
           <input
             className={classes.input}
-            name="password"
+            name="pa55w0rd"
             type={typePasswordInput}
             value={password}
             onChange={(e) => {
@@ -75,7 +75,7 @@ const PasswordInputFields: React.FC<PropsType> = ({
           {isChangePasswordForm ? 'Повторите новый пароль' : 'Повторите пароль'}
           <input
             className={classes.input}
-            name="passwordRepeated"
+            name="pa55w0rdRepeated"
             type="password"
             value={passwordRepeated}
             onChange={(e) => {

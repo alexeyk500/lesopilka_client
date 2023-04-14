@@ -14,14 +14,14 @@ const ChangePassword: React.FC = () => {
 
   const onClosePopUpChangePasswordForm = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const password = response.get('currentPassword')!.toString();
+      const password = response.get('curr6ntPa55w0rd')!.toString();
       if (user && user.email && password) {
         dispatch(userCheckPasswordThunk({ email: user.email, password })).then((result) => {
           if (result.type.includes('fulfilled')) {
             showPortalPopUp({
               popUpContent: <NewPasswordForm />,
               onClosePopUp: onClosePopUpNewPasswordForm,
-              titleConfirmBtn: 'Ввести',
+              titleConfirmBtn: 'Установить',
             });
           }
         });
@@ -31,7 +31,7 @@ const ChangePassword: React.FC = () => {
 
   const onClosePopUpNewPasswordForm = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const password = response.get('password')!.toString();
+      const password = response.get('pa55w0rd')!.toString();
       if (user && user.email && password) {
         const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
         if (token && password) {

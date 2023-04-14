@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import classes from './ChangePasswordForm.module.css';
 import passwordIco from '../../../../../img/password.svg';
-import eyeIco from '../../../../../img/eyeIco.svg';
+import visibilityIcoOn from '../../../../../img/visibilityIcoOn.svg';
+import visibilityIcoOff from '../../../../../img/visibilityIcoOff.svg';
 
 const ChangePasswordForm: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState<string>('');
@@ -26,7 +27,7 @@ const ChangePasswordForm: React.FC = () => {
             Текущий Пароль
             <input
               className={classes.input}
-              name="currentPassword"
+              name="curr6ntPa55w0rd"
               type={typePasswordInput}
               value={currentPassword}
               onChange={(e) => {
@@ -37,7 +38,12 @@ const ChangePasswordForm: React.FC = () => {
               required
             />
           </label>
-          <img src={eyeIco} className={classes.eyeIco} alt="email" onClick={onClickShowPassword} />
+          <img
+            src={typePasswordInput === 'password' ? visibilityIcoOn : visibilityIcoOff}
+            className={classes.visibilityIco}
+            alt="password"
+            onClick={onClickShowPassword}
+          />
         </div>
       </div>
     </div>

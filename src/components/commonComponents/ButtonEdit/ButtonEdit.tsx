@@ -6,9 +6,10 @@ import editBtnIco from '../../../img/editBtnIco.svg';
 type PropsType = {
   onClick?: () => void;
   customClassName?: string;
+  dataTestId?: string;
 };
 
-const ButtonEdit: React.FC<PropsType> = ({ onClick, customClassName }) => {
+const ButtonEdit: React.FC<PropsType> = ({ onClick, customClassName, dataTestId }) => {
   const customClasses = classNames(customClassName);
 
   const onClickHandler = () => {
@@ -16,7 +17,11 @@ const ButtonEdit: React.FC<PropsType> = ({ onClick, customClassName }) => {
   };
 
   return (
-    <button className={classNames(classes.container, { [customClasses]: customClassName })} onClick={onClickHandler}>
+    <button
+      className={classNames(classes.container, { [customClasses]: customClassName })}
+      onClick={onClickHandler}
+      data-test-id={dataTestId}
+    >
       <img className={classes.editButtonIco} src={editBtnIco} alt="edit" />
     </button>
   );

@@ -21,7 +21,7 @@ const ChangeUserPhoneForm: React.FC<PropsType> = ({ phone }) => {
             Телефон пользователя
             <input
               className={classes.input}
-              name="phone"
+              name="ph0n6"
               type="text"
               placeholder={'Введите телефон пользователя'}
               value={phoneValue}

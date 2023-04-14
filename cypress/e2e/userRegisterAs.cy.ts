@@ -2,10 +2,10 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
   beforeEach(() => {
     cy.visit('/');
   });
-  const testUserEmail = 'test-user@email.com';
+  const { email, password } = { email: 'test-user@email.com', password: 'secret' };
 
   it('user try register as manufacturer', () => {
-    cy.login({ email: testUserEmail, password: 'secret' });
+    cy.login({ email, password });
     cy.get('button[class^="MenuButton_container"]').click();
 
     cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
@@ -29,18 +29,18 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
     cy.get('div[class^="SuccessRegistrationManufacturerForm_mainPart"]').contains('Успешная активация');
     cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
     cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
-    cy.get('div[class^="LoginButton_container"]').contains(testUserEmail.split('@')[0]);
+    cy.get('div[class^="LoginButton_container"]').contains(email.split('@')[0]);
 
     cy.get('button[class^="MenuButton_container"]').click();
     cy.get('button[class^="MenuContent_menuButton"]').contains('Лицензии').click();
     cy.get('span[class^="LicensesMonitor_amount"]').contains('500');
 
-    cy.deleteTestUserManufacturerAddress({ email: testUserEmail });
-    cy.deleteTestUserManufacturer({ email: testUserEmail });
+    cy.deleteTestUserManufacturerAddress({ email });
+    cy.deleteTestUserManufacturer({ email });
   });
 
   it('user try register as reseller', () => {
-    cy.login({ email: testUserEmail, password: 'secret' });
+    cy.login({ email, password });
     cy.get('button[class^="MenuButton_container"]').click();
 
     cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
@@ -60,13 +60,13 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
     cy.get('div[class^="SuccessRegistrationResellerForm_mainPart"]').contains('Успешная активация');
     cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
     cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
-    cy.get('div[class^="LoginButton_container"]').contains(testUserEmail.split('@')[0]);
+    cy.get('div[class^="LoginButton_container"]').contains(email.split('@')[0]);
 
     cy.get('button[class^="MenuButton_container"]').click();
     cy.get('button[class^="MenuContent_menuButton"]').contains('Кабинет').click();
     cy.get('div[class^="IconButton_title"]').contains('Новый поставщик');
 
-    cy.deleteTestUserResellerAddress({ email: testUserEmail });
-    cy.deleteTestUserReseller({ email: testUserEmail });
+    cy.deleteTestUserResellerAddress({ email });
+    cy.deleteTestUserReseller({ email });
   });
 });

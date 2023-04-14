@@ -21,7 +21,7 @@ const ChangeUserNameForm: React.FC<PropsType> = ({ name }) => {
             Имя пользователя
             <input
               className={classes.input}
-              name="name"
+              name="nam6"
               type="text"
               placeholder={'Введите имя пользователя'}
               value={nameValue}

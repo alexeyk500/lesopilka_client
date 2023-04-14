@@ -14,8 +14,8 @@ const MainInformation: React.FC = () => {
 
   const onClosePopUp = (response: boolean | FormData | undefined) => {
     if (response instanceof FormData) {
-      const name = response.get('name')?.toString();
-      const phone = response.get('phone')?.toString();
+      const name = response.get('nam6')?.toString();
+      const phone = response.get('ph0n6')?.toString();
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token && name) {
         dispatch(userUpdateThunk({ token, name }));
@@ -58,7 +58,7 @@ const MainInformation: React.FC = () => {
               <div className={classes.title}>{'Имя :'}</div>
               <div className={classes.value}>
                 {user?.name}
-                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditName} />
+                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditName} dataTestId={'editName'} />
               </div>
             </div>
             <div className={classes.rowDataContainer}>
@@ -70,7 +70,7 @@ const MainInformation: React.FC = () => {
               <div className={classes.title}>{'Телефон :'}</div>
               <div className={classes.value}>
                 {user?.phone}
-                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditPhone} />
+                <ButtonEdit customClassName={classes.btnEdit} onClick={onClickEditPhone} dataTestId={'editPhone'} />
               </div>
             </div>
           </div>
