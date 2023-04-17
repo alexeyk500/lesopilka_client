@@ -14,11 +14,19 @@
   padding-right: 8px;
 }
 
-.tableColumnManufacturer {
+.tableColumnNumber {
   display: flex;
   margin-left:14px;
+  width: 3%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnManufacturer {
+  display: flex;
   margin-right: 12px;
-  width: 20%;
+  width: 18%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -27,7 +35,7 @@
 .tableColumnLocation {
   display: flex;
   margin-right: 12px;
-  width: 16%;
+  width: 13%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,6 +88,5 @@
   padding-top: 8px;
   padding-right: 4px;
   flex-direction: column;
-  /*width: 100%;*/
   overflow-y: scroll;
 }

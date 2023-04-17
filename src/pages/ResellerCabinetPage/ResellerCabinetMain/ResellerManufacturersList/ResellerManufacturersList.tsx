@@ -11,6 +11,7 @@ const ResellerManufacturersList: React.FC<PropsType> = ({ manufacturers }) => {
   return (
     <div className={classes.container}>
       <div className={classes.tableTitle}>
+        <div className={classes.tableColumnNumber}>{'№'}</div>
         <div className={classes.tableColumnManufacturer}>{'Поставщик'}</div>
         <div className={classes.tableColumnLocation}>{'Локация'}</div>
         <div className={classes.tableColumnPublications}>{'Публикации'}</div>
@@ -20,8 +21,8 @@ const ResellerManufacturersList: React.FC<PropsType> = ({ manufacturers }) => {
         <div className={classes.tableColumnStatus}>{'Статус'}</div>
       </div>
       <div className={classes.scrollContainer}>
-        {manufacturers.map((manufacturer) => (
-          <ResellerManufacturerListItem key={manufacturer.id} manufacturer={manufacturer} />
+        {manufacturers.map((manufacturer, ind) => (
+          <ResellerManufacturerListItem key={ind} ind={ind} manufacturer={manufacturer} />
         ))}
       </div>
     </div>

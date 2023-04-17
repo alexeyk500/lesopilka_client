@@ -12,11 +12,19 @@
   align-items: center;
 }
 
+.tableColumnNumber {
+  display: flex;
+  margin-left:14px;
+  width: 3%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .tableColumnManufacturer {
   display: flex;
-  width: calc(20% - 2px);
-  margin-left:14px;
   margin-right: 12px;
+  width: calc(18% - 2px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -25,7 +33,7 @@
 .tableColumnLocation {
   display: flex;
   margin-right: 12px;
-  width: 16%;
+  width: 14%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -39,6 +47,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 12px;
 }
 
 .tableColumnLicenses {
