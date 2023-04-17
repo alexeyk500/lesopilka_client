@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 0 24px;
+}
+
+.popUpTitle {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--gray_color);
+  margin-bottom: 32px;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 6px;
+  color: var(--gray_color);
+}
+
+.separator {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding-right: 14px;
+}
+
+.title {
+  display: flex;
+  white-space: nowrap;
+  width: 200px;
+}
+
+.subTitle {
+  display: flex;
+  font-weight: 600;
+  color: var(--blue_color);
+}

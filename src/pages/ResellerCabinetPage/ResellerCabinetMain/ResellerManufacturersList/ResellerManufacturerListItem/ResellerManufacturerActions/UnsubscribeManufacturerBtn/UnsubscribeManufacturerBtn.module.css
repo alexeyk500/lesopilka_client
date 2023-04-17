@@ -10,3 +10,23 @@
   margin-right: 14px;
   cursor: pointer;
 }
+
+.infoPopUpText {
+  text-align: center;
+  color: var(--blue_color);
+  font-size: 22px;
+  font-weight: 600;
+  white-space: pre;
+}
+
+
+.thinText {
+  font-size: 18px;
+  font-weight: 400;
+  white-space: pre;
+}
+.customPopUpBottomBtnGroup {
+  width: 378px;
+  padding: 0 32px !important;
+  margin-bottom: 0 !important;
+}

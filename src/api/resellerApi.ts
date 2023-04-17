@@ -38,4 +38,13 @@ export const resellerApi = {
     );
     return response.data;
   },
+
+  async unregisterResellerManufacturer({ manufacturerId, token }: { manufacturerId: number; token: string }) {
+    const response = await instanceAxios.post<ManufacturerType[]>(
+      '/reseller/unregister-reseller-manufacturer',
+      { manufacturerId },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
 };

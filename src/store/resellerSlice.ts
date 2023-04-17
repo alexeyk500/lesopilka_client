@@ -52,6 +52,18 @@ export const getResellerManufacturersThunk = createAsyncThunk<ManufacturerType[]
   }
 );
 
+export const unregisterResellerManufacturerThunk = createAsyncThunk<
+  ManufacturerType[],
+  { manufacturerId: number; token: string },
+  { rejectValue: string }
+>('reseller/unregisterResellerManufacturerThunk', async ({ manufacturerId, token }, { rejectWithValue }) => {
+  try {
+    return await serverApi.unregisterResellerManufacturer({ manufacturerId, token });
+  } catch (e: any) {
+    return rejectWithValue('Ошибка отвязки поставщика\n' + e.response?.data?.message);
+  }
+});
+
 export const resellerSlice = createSlice({
   name: 'resellerSlice',
   initialState,
@@ -62,10 +74,13 @@ export const resellerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getResellerManufacturersThunk.fulfilled, (state, action) => {
-        state.resellerManufacturers = action.payload;
-        state.isLoading = false;
-      })
+      .addMatcher(
+        isAnyOf(getResellerManufacturersThunk.fulfilled, unregisterResellerManufacturerThunk.fulfilled),
+        (state, action) => {
+          state.resellerManufacturers = action.payload;
+          state.isLoading = false;
+        }
+      )
       .addMatcher(
         isAnyOf(createCandidateManufacturerThunk.fulfilled, activateCandidateManufacturerThunk.fulfilled),
         (state) => {
@@ -76,7 +91,8 @@ export const resellerSlice = createSlice({
         isAnyOf(
           createCandidateManufacturerThunk.pending,
           activateCandidateManufacturerThunk.pending,
-          getResellerManufacturersThunk.pending
+          getResellerManufacturersThunk.pending,
+          unregisterResellerManufacturerThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -86,7 +102,8 @@ export const resellerSlice = createSlice({
         isAnyOf(
           createCandidateManufacturerThunk.rejected,
           activateCandidateManufacturerThunk.rejected,
-          getResellerManufacturersThunk.rejected
+          getResellerManufacturersThunk.rejected,
+          unregisterResellerManufacturerThunk.rejected
         ),
         (state, action) => {
           state.isLoading = false;

@@ -10,6 +10,7 @@ export type AddressType = {
   id: number;
   region: RegionType;
   location: LocationType;
+  postIndex?: string;
   street?: string;
   building?: string;
   office?: string;

@@ -37,7 +37,7 @@ const ResellerManufacturerListItem: React.FC<PropsType> = ({ ind, manufacturer }
       <div className={classes.tableColumnLicenses}>{manufacturer.restLicenses}</div>
       <div className={classes.tableColumnForecast}>{forecastTitle}</div>
       <div className={classes.tableColumnActions}>
-        <ResellerManufacturerActions />
+        <ResellerManufacturerActions manufacturer={manufacturer} />
       </div>
       <div className={classes.tableColumnStatus}>
         {/*<ResellerManufacturerStatus forecastDayAmount={forecastDayAmount} isApproved={manufacturer.approved} />*/}
