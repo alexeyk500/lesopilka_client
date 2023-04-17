@@ -1,17 +1,19 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { UniversalServerType, UserLoginServerType } from '../api/serverResponseTypes';
-import { CreateCandidateManufacturerParamsType } from '../types/types';
+import { CreateCandidateManufacturerParamsType, ManufacturerType } from '../types/types';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
 
 type ResellerSliceType = {
   licensesStatusOptionsId: number;
+  resellerManufacturers: ManufacturerType[];
   isLoading: boolean;
 };
 
 const initialState: ResellerSliceType = {
   licensesStatusOptionsId: 0,
+  resellerManufacturers: [],
   isLoading: false,
 };
 
@@ -39,6 +41,17 @@ export const activateCandidateManufacturerThunk = createAsyncThunk<
   }
 });
 
+export const getResellerManufacturersThunk = createAsyncThunk<ManufacturerType[], string, { rejectValue: string }>(
+  'reseller/getResellerManufacturersThunk',
+  async (token, { rejectWithValue }) => {
+    try {
+      return await serverApi.getResellerManufacturers(token);
+    } catch (e: any) {
+      return rejectWithValue('Ошибка получения списка поставщиков для реселлера\n' + e.response?.data?.message);
+    }
+  }
+);
+
 export const resellerSlice = createSlice({
   name: 'resellerSlice',
   initialState,
@@ -49,6 +62,10 @@ export const resellerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getResellerManufacturersThunk.fulfilled, (state, action) => {
+        state.resellerManufacturers = action.payload;
+        state.isLoading = false;
+      })
       .addMatcher(
         isAnyOf(createCandidateManufacturerThunk.fulfilled, activateCandidateManufacturerThunk.fulfilled),
         (state) => {
@@ -56,13 +73,21 @@ export const resellerSlice = createSlice({
         }
       )
       .addMatcher(
-        isAnyOf(createCandidateManufacturerThunk.pending, activateCandidateManufacturerThunk.pending),
+        isAnyOf(
+          createCandidateManufacturerThunk.pending,
+          activateCandidateManufacturerThunk.pending,
+          getResellerManufacturersThunk.pending
+        ),
         (state) => {
           state.isLoading = true;
         }
       )
       .addMatcher(
-        isAnyOf(createCandidateManufacturerThunk.rejected, activateCandidateManufacturerThunk.rejected),
+        isAnyOf(
+          createCandidateManufacturerThunk.rejected,
+          activateCandidateManufacturerThunk.rejected,
+          getResellerManufacturersThunk.rejected
+        ),
         (state, action) => {
           state.isLoading = false;
           showErrorPopUp(action.payload ? action.payload : 'Неизвестная ошибка - resellerSlice');
@@ -75,5 +100,6 @@ export const { setLicensesStatusOptionsId } = resellerSlice.actions;
 
 export const selectorResellerLicensesStatusOptionsId = (state: RootState) => state.reseller.licensesStatusOptionsId;
 export const selectorResellerIsLoading = (state: RootState) => state.reseller.isLoading;
+export const selectorResellerManufacturers = (state: RootState) => state.reseller.resellerManufacturers;
 
 export default resellerSlice.reducer;

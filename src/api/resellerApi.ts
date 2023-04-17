@@ -1,4 +1,4 @@
-import { CreateCandidateManufacturerParamsType, CreateResellerParamsType } from '../types/types';
+import { CreateCandidateManufacturerParamsType, CreateResellerParamsType, ManufacturerType } from '../types/types';
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { UniversalServerType, UserLoginServerType } from './serverResponseTypes';
 
@@ -27,6 +27,14 @@ export const resellerApi = {
     const response = await instanceAxios.post<UserLoginServerType>(
       '/activation/activate-reseller-manufacturer-candidate',
       { code }
+    );
+    return response.data;
+  },
+
+  async getResellerManufacturers(token: string) {
+    const response = await instanceAxios.get<ManufacturerType[]>(
+      '/reseller/reseller-manufacturers-list',
+      setAuthHeader(token)
     );
     return response.data;
   },

@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  width: calc(100% - 2px);
+  margin-bottom: 8px;
+  margin-left: 2px;
+  padding: 4px 0;
+  background-color: var(--main_background);
+  color: var(--gray_color);
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+  align-items: center;
+}
+
+.tableColumnManufacturer {
+  display: flex;
+  width: calc(20% - 2px);
+  margin-left:14px;
+  margin-right: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLocation {
+  display: flex;
+  margin-right: 12px;
+  width: 16%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnPublications {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: 12%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLicenses {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: 12%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnForecast {
+  display: flex;
+  padding-left: 2px;
+  margin-right: 12px;
+  justify-content: flex-start;
+  width: 14%;
+  white-space: pre-line;
+}
+
+.tableColumnActions {
+  display: flex;
+  padding-left: 2px;
+  margin-right: 12px;
+  justify-content: flex-start;
+  width: 11%;
+}
+
+.tableColumnStatus {
+  display: flex;
+  justify-content: center;
+  width: 15%;
+  padding-right:12px;
+}

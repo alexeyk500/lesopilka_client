@@ -1,0 +1,85 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.tableTitle {
+  display: flex;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 8px;
+}
+
+.tableColumnManufacturer {
+  display: flex;
+  margin-left:14px;
+  margin-right: 12px;
+  width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLocation {
+  display: flex;
+  margin-right: 12px;
+  width: 16%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnPublications {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: 12%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLicenses {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: 12%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnForecast {
+  display: flex;
+  margin-right: 12px;
+  justify-content: flex-start;
+  width: 14%;
+  white-space: pre-line;
+}
+
+.tableColumnActions {
+  display: flex;
+  margin-right: 12px;
+  justify-content: flex-start;
+  width: 11%;
+}
+
+.tableColumnStatus {
+  display: flex;
+  justify-content: center;
+  padding-right:12px;
+  width: 15%;
+}
+
+.scrollContainer {
+  display: flex;
+  padding-top: 8px;
+  padding-right: 4px;
+  flex-direction: column;
+  /*width: 100%;*/
+  overflow-y: scroll;
+}

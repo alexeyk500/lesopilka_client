@@ -22,6 +22,9 @@ export type ManufacturerType = {
   phone: string;
   email: string;
   address: AddressType;
+  approved?: boolean;
+  restLicenses?: number;
+  activeCards?: number;
 };
 
 export type ResellerType = {
@@ -90,10 +93,11 @@ export enum OrderViewEnum {
   all = ' Все',
 }
 
-export enum manufacturerLicensesStatusEnum {
+export enum ResellerManufacturerStatusEnum {
   normal = 'В порядке',
   attention = 'Внимание',
   noPublication = 'Без публикаций',
+  blocked = 'Заблокирован',
 }
 
 export type OrderInfoType = {

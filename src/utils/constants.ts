@@ -42,6 +42,8 @@ export const MONTH_SHIFT_FOR_MANUFACTURER_LICENSE = -3;
 
 export const WELCOME_LICENSES_AMOUNT = 500;
 
+export const RESELLER_MANUFACTURER_STATUS_ATTENTION_DAYS = 7;
+
 export const orderStatusOptions: OptionsType[] = [
   { id: 0, title: OrderViewEnum.active, toolTip: '' },
   { id: 1, title: OrderViewEnum.onConfirming, toolTip: '' },

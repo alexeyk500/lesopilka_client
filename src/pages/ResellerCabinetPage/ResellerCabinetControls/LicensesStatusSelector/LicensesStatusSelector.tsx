@@ -1,15 +1,16 @@
 import React from 'react';
 import CheckBoxSection from '../../../../components/commonComponents/CheckBoxSection/CheckBoxSection';
 import CheckBoxSquare from '../../../../components/commonComponents/CheckBoxSquare/CheckBoxSquare';
-import { manufacturerLicensesStatusEnum, OptionsType } from '../../../../types/types';
+import { ResellerManufacturerStatusEnum, OptionsType } from '../../../../types/types';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorResellerLicensesStatusOptionsId, setLicensesStatusOptionsId } from '../../../../store/resellerSlice';
 
 const licensesStatusOptions: OptionsType[] = [
   { id: 0, title: 'Все', toolTip: 'Общий список' },
-  { id: 1, title: manufacturerLicensesStatusEnum.normal, toolTip: 'Лицензий достаточно' },
-  { id: 2, title: manufacturerLicensesStatusEnum.attention, toolTip: 'Лицензии на исходе' },
-  { id: 3, title: manufacturerLicensesStatusEnum.noPublication, toolTip: 'Лицензии закончились' },
+  { id: 1, title: ResellerManufacturerStatusEnum.normal, toolTip: 'Лицензий достаточно' },
+  { id: 2, title: ResellerManufacturerStatusEnum.attention, toolTip: 'Лицензии на исходе' },
+  { id: 3, title: ResellerManufacturerStatusEnum.noPublication, toolTip: 'Лицензии закончились' },
+  { id: 4, title: ResellerManufacturerStatusEnum.blocked, toolTip: 'Публикация заблокирована' },
 ];
 
 const LicensesStatusSelector: React.FC = () => {

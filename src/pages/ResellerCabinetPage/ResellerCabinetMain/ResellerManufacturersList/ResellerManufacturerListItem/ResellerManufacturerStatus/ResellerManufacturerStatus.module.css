@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: var(--main_background);
+}
+
+.statusTitle {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  white-space: pre-line;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.statusBlocked {
+  color: var(--main_background);
+  background-color: var(--red_color);
+}
+
+.statusNormal {
+  border: 1px solid var(--green_color_light);
+  color: var(--green_color_light);
+}
+
+.statusAttention {
+  border: 1px solid var(--orange_color);
+  color: var(--orange_color);
+}
+
+.statusAttention {
+  border: 1px solid var(--orange_color);
+  color: var(--orange_color);
+}
+
+.statusNoPublication {
+  border: 1px solid var(--red_color);
+  color: var(--red_color);
+}
