@@ -33,7 +33,7 @@ export const productApi = {
     const formData = new FormData();
     formData.append('productId', String(productId));
     formData.append('img', img);
-    const response = await instanceAxios.post<ProductType>(`/picture`, formData, {
+    const response = await instanceAxios.post<ProductType>(`/picture/product`, formData, {
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
     });
     return response.data;

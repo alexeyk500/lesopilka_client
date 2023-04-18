@@ -18,6 +18,7 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard, productId })
     if (productId && event.target && event.target.files && event.target.files[0]) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       const img = event.target.files[0];
+      event.target.value = '';
       if (token && img) {
         dispatch(uploadPictureToProductThunk({ token, productId, img }));
       }
