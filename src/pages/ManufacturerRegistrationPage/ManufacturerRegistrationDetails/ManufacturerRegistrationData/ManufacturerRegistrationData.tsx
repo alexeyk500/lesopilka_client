@@ -84,13 +84,15 @@ const ManufacturerRegistrationData: React.FC<PropsType> = ({ isFromReseller }) =
               office,
               postIndex,
             })
-          ).then(() => {
-            navigate(PageEnum.UserPage);
-            showPortalPopUp({
-              popUpContent: <SuccessRegistrationManufacturerForm />,
-              oneCenterConfirmBtn: true,
-              titleConfirmBtn: 'Понятно',
-            });
+          ).then((result) => {
+            if (!result.type.includes('/rejected')) {
+              navigate(PageEnum.UserPage);
+              showPortalPopUp({
+                popUpContent: <SuccessRegistrationManufacturerForm />,
+                oneCenterConfirmBtn: true,
+                titleConfirmBtn: 'Понятно',
+              });
+            }
           });
         }
       }

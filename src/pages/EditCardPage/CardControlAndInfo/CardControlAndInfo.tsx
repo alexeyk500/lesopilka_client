@@ -202,7 +202,7 @@ const CardControlAndInfo: React.FC = () => {
         {priceEditProductId ? (
           <BottomButtonReturnTo returnTo={ReturnToEnum.price} />
         ) : (
-          <BottomButtonReturnTo returnTo={ReturnToEnum.catalog} />
+          <BottomButtonReturnTo returnTo={ReturnToEnum.manufacturerProducts} />
         )}
       </div>
     </div>

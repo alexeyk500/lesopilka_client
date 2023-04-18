@@ -81,6 +81,7 @@ describe('test for registration form', () => {
 
   it('RegistrationForm -> user full flow from registration and activation by link in email', () => {
     const testUserEmail = 'test-user-registration@email.com';
+    const testUserPassword = 'Пароль-123';
     const userName = testUserEmail.split('@')[0];
     cy.intercept({
       method: 'POST',
@@ -90,8 +91,8 @@ describe('test for registration form', () => {
     cy.goToRegisterForm();
 
     cy.get('input[name="6ma1l"]').type(testUserEmail);
-    cy.get('input[name="pa55w0rd"]').type('Пароль-123');
-    cy.get('input[name="pa55w0rdRepeated"]').type('Пароль-123');
+    cy.get('input[name="pa55w0rd"]').type(testUserPassword);
+    cy.get('input[name="pa55w0rdRepeated"]').type(testUserPassword);
     cy.get('button[class^="ButtonComponent_container"]').contains('Регистрация').click();
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('Письмо');
     cy.get('div[class^="ConfirmEmailForm_bottomTitle"]').contains('отправлено');
@@ -113,6 +114,10 @@ describe('test for registration form', () => {
     cy.get('div[class^="SuccessActivateUserForm_container"]').should('not.exist');
     cy.get('div[class^="LoginButton_container"]').contains(userName);
     cy.get('div[class^="MainInformation_value"]').contains(userName);
+
+    cy.logout();
+    cy.login({ email: testUserEmail, password: testUserPassword });
+    cy.get('div[class^="LoginButton_container"]').contains(userName);
 
     cy.deleteTestUserAddress({ email: testUserEmail });
     cy.deleteTestUserBasket({ email: testUserEmail });

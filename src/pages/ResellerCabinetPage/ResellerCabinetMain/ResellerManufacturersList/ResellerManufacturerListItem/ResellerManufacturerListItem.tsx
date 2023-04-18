@@ -5,7 +5,7 @@ import { lastDigitToWord } from '../../../../../utils/dateTimeFunctions';
 import ResellerManufacturerStatus from './ResellerManufacturerStatus/ResellerManufacturerStatus';
 import ResellerManufacturerActions from './ResellerManufacturerActions/ResellerManufacturerActions';
 
-const getForecastDayAmount = (manufacturer: ManufacturerType) => {
+export const getForecastDayAmount = (manufacturer: ManufacturerType) => {
   if (manufacturer.restLicenses && manufacturer.activeCards) {
     return Math.floor(manufacturer.restLicenses / manufacturer.activeCards);
   }
@@ -40,8 +40,7 @@ const ResellerManufacturerListItem: React.FC<PropsType> = ({ ind, manufacturer }
         <ResellerManufacturerActions manufacturer={manufacturer} />
       </div>
       <div className={classes.tableColumnStatus}>
-        {/*<ResellerManufacturerStatus forecastDayAmount={forecastDayAmount} isApproved={manufacturer.approved} />*/}
-        <ResellerManufacturerStatus forecastDayAmount={-1} isApproved={true} />
+        <ResellerManufacturerStatus forecastDayAmount={forecastDayAmount} isApproved={manufacturer.approved} />
       </div>
     </div>
   );

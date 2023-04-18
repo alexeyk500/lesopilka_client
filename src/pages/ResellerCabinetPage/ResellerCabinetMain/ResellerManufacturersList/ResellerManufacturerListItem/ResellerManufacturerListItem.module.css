@@ -62,7 +62,6 @@
 
 .tableColumnForecast {
   display: flex;
-  padding-left: 2px;
   margin-right: 12px;
   justify-content: flex-start;
   width: 14%;
@@ -71,7 +70,6 @@
 
 .tableColumnActions {
   display: flex;
-  padding-left: 2px;
   margin-right: 12px;
   justify-content: flex-start;
   width: 11%;

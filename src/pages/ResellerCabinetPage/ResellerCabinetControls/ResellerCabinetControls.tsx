@@ -7,13 +7,19 @@ import addManufacturerIco from '../../../img/addManufacturerIco.svg';
 import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import { useAppSelector } from '../../../hooks/hooks';
+import { selectorResellerManufacturers } from '../../../store/resellerSlice';
 
 const publicationWords = ['публикация', 'публикации', 'публикаций'];
 
 const ResellerCabinetControls: React.FC = () => {
   const navigate = useNavigate();
+  const resellerManufacturers = useAppSelector(selectorResellerManufacturers);
+  const publicationAmount = resellerManufacturers.reduce((acc, manufacturer) => {
+    const activeCardsAmount = manufacturer?.activeCards ? manufacturer.activeCards : 0;
+    return acc + activeCardsAmount;
+  }, 0);
   const date = formatUTCtoDDMMMMYYYY(new Date().toString()).replace('.', 'ода');
-  const publicationAmount = 9;
   const publicationAmountWord = lastDigitToWord(publicationAmount, publicationWords);
 
   const onClickCreateManufacturer = () => {
