@@ -24,6 +24,24 @@ export const productApi = {
     return response.data;
   },
 
+  async productPublication({ token, productId }: { token: string; productId: number }) {
+    const response = await instanceAxios.post<ProductType>(
+      `/product/product-publication`,
+      { productId },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async productStopPublication({ token, productId }: { token: string; productId: number }) {
+    const response = await instanceAxios.post<ProductType>(
+      `/product/product-stop-publication`,
+      { productId },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
   async updateProductDescription(token: string, updateData: UpdateProductDataType) {
     const response = await instanceAxios.put<ProductType>(`/product/description`, updateData, setAuthHeader(token));
     return response.data;

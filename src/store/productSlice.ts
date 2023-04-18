@@ -121,6 +121,30 @@ export const updateProductThunk = createAsyncThunk<
   }
 });
 
+export const productPublicationThunk = createAsyncThunk<
+  ProductType,
+  { token: string; productId: number },
+  { rejectValue: string }
+>('product/productPublicationThunk', async ({ token, productId }, { rejectWithValue }) => {
+  try {
+    return await serverApi.productPublication({ token, productId });
+  } catch (e: any) {
+    return rejectWithValue(`Ошибка публикации товара c id=${productId}\n` + e.response?.data?.message);
+  }
+});
+
+export const productStopPublicationThunk = createAsyncThunk<
+  ProductType,
+  { token: string; productId: number },
+  { rejectValue: string }
+>('product/productStopPublicationThunk', async ({ token, productId }, { rejectWithValue }) => {
+  try {
+    return await serverApi.productStopPublication({ token, productId });
+  } catch (e: any) {
+    return rejectWithValue(`Ошибка снятия с публикации товара c id=${productId}\n` + e.response?.data?.message);
+  }
+});
+
 export const updateProductDescriptionThunk = createAsyncThunk<
   ProductType,
   { token: string; updateData: UpdateProductDataType },
@@ -233,7 +257,9 @@ export const productsSlice = createSlice({
           updateProductThunk.fulfilled,
           uploadPictureToProductThunk.fulfilled,
           deleteProductPictureThunk.fulfilled,
-          updateProductDescriptionThunk.fulfilled
+          updateProductDescriptionThunk.fulfilled,
+          productPublicationThunk.fulfilled,
+          productStopPublicationThunk.fulfilled
         ),
         (state, action) => {
           state.editProduct = action.payload;
@@ -255,7 +281,9 @@ export const productsSlice = createSlice({
           updateProductThunk.pending,
           uploadPictureToProductThunk.pending,
           deleteProductPictureThunk.pending,
-          updateProductDescriptionThunk.pending
+          updateProductDescriptionThunk.pending,
+          productPublicationThunk.pending,
+          productStopPublicationThunk.pending
         ),
         (state) => {
           state.isSaving = true;
@@ -266,7 +294,9 @@ export const productsSlice = createSlice({
           updateProductThunk.rejected,
           uploadPictureToProductThunk.rejected,
           deleteProductPictureThunk.rejected,
-          updateProductDescriptionThunk.rejected
+          updateProductDescriptionThunk.rejected,
+          productPublicationThunk.rejected,
+          productStopPublicationThunk.rejected
         ),
         (state, action) => {
           state.isSaving = false;

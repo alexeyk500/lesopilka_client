@@ -7,9 +7,10 @@ import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllips
 import { selectorUser } from '../../../store/userSlice';
 import {
   deleteProductThunk,
+  productPublicationThunk,
+  productStopPublicationThunk,
   selectorEditProduct,
   selectorProductsSaving,
-  updateProductThunk,
 } from '../../../store/productSlice';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
@@ -126,29 +127,19 @@ const CardControlAndInfo: React.FC = () => {
     updatePriceList();
   }, [updatePriceList]);
 
-  const onClosePopUpUnPublish = () => {
+  const stopPublicationProduct = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    const publicationDate = null;
     if (token) {
-      const updateData = {
-        productId: editProduct.id,
-        publicationDate,
-      };
-      dispatch(updateProductThunk({ token, updateData })).then(() => {
+      dispatch(productStopPublicationThunk({ token, productId: editProduct.id })).then(() => {
         dispatch(getManufacturerLicensesInfoThunk({ token }));
       });
     }
   };
 
-  const onClosePopUpPublish = () => {
+  const publicationProduct = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-    const publicationDate = new Date().toISOString();
-    if (token && publicationDate) {
-      const updateData = {
-        productId: editProduct.id,
-        publicationDate,
-      };
-      dispatch(updateProductThunk({ token, updateData })).then(() => {
+    if (token) {
+      dispatch(productPublicationThunk({ token, productId: editProduct.id })).then(() => {
         dispatch(getManufacturerLicensesInfoThunk({ token }));
       });
     }
@@ -157,21 +148,21 @@ const CardControlAndInfo: React.FC = () => {
   const onSelectHandler = (isChecked?: boolean) => {
     if (isChecked) {
       showPortalPopUp({
-        popUpContent: <div className={classNames(classes.publishPopUp)}>{`Снять карточку с публикации?`}</div>,
+        popUpContent: <div className={classNames(classes.publishPopUp)}>{`Снять товар с публикации?`}</div>,
         titleConfirmBtn: 'Снять',
         onClosePopUp: (result) => {
-          result && onClosePopUpUnPublish();
+          result && stopPublicationProduct();
         },
       });
     } else {
       const isConditionsChecked = checkConditions();
       if (isConditionsChecked) {
         showPortalPopUp({
-          popUpContent: <div className={classNames(classes.publishPopUp)}>{`Опубликовать карточку?`}</div>,
+          popUpContent: <div className={classNames(classes.publishPopUp)}>{`Опубликовать товар?`}</div>,
           titleConfirmBtn: 'Публикация',
           customClassBottomBtnGroup: classes.customClassBottomBtnGroupLogout,
           onClosePopUp: (result) => {
-            result && onClosePopUpPublish();
+            result && publicationProduct();
           },
         });
       }
