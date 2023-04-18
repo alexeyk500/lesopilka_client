@@ -85,7 +85,7 @@ const ProductCard: React.FC<PropsType> = ({
         ) : (
           <>
             <div className={classNames(classes.imageContainer, { [classes.notPublished]: isDraftProductCard })}>
-              {product?.images ? (
+              {product?.images?.[0] ? (
                 <img src={product.images?.[0] ? product.images[0] : undefined} className={classes.img} alt="product" />
               ) : (
                 <div className={classes.noImageContainer}>

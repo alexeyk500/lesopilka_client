@@ -5,13 +5,10 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { EditCardSectionsEnum, PageTypeEnum, QueryEnum } from '../../../types/types';
 import CheckBoxEllipse from '../../../components/commonComponents/CheckBoxEllipse/CheckBoxEllipse';
 import { selectorUser } from '../../../store/userSlice';
-import { getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import {
   deleteProductThunk,
-  selectorCatalogSearchParams,
   selectorEditProduct,
   selectorProductsSaving,
-  setCatalogSearchParams,
   updateProductThunk,
 } from '../../../store/productSlice';
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
@@ -26,11 +23,12 @@ import { checkImagesSection } from '../EditCardMainPart/ProductDetails/ProductIm
 import { checkDescriptionSection } from '../EditCardMainPart/ProductDetails/ProductDescription/ProductDescription';
 import { checkCodeSection } from '../EditCardMainPart/ProductDetails/ProductCodeSection/ProductCodeSection';
 import { checkPriceSection } from '../EditCardMainPart/ProductDetails/ProductPriceSection/ProductPriceSection';
-import { getPriceProductsThunk, selectorPriceEditProductId, setPriceEditProductId } from '../../../store/priceSlice';
+import { getPriceProductsThunk, selectorPriceEditProductId } from '../../../store/priceSlice';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import LicensesMonitor from '../../../components/commonComponents/LicensesMonitor/LicensesMonitor';
 import { formatUTC } from '../../../utils/dateTimeFunctions';
 import { getManufacturerLicensesInfoThunk } from '../../../store/manLicensesSlice';
+import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
 
 const CardControlAndInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -39,7 +37,6 @@ const CardControlAndInfo: React.FC = () => {
   const editProduct = useAppSelector(selectorEditProduct);
   const isSaving = useAppSelector(selectorProductsSaving);
   const priceEditProductId = useAppSelector(selectorPriceEditProductId);
-  const catalogSearchParams = useAppSelector(selectorCatalogSearchParams);
 
   const getInfoPopUp = (sectionTitle: string) => {
     return showPortalPopUp({
@@ -56,23 +53,12 @@ const CardControlAndInfo: React.FC = () => {
     });
   };
 
-  const returnToCatalog = () => {
-    const getBackwardRoute = getBackwardRouteToManufacturerCatalog(user?.manufacturer?.id, catalogSearchParams);
-    dispatch(setCatalogSearchParams(undefined));
-    dispatch(setPriceEditProductId(undefined));
-    navigate(getBackwardRoute);
-  };
-
-  const returnToPrice = () => {
-    navigate(PageEnum.ManufacturerPricePage);
-  };
-
   const onCloseDeleteCardPopUp = (result?: boolean | FormData) => {
     if (result) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token) {
         dispatch(deleteProductThunk({ token, productId: editProduct.id })).then(() => {
-          returnToCatalog();
+          navigate(PageEnum.ManufacturerPage);
         });
       }
     }
@@ -217,15 +203,15 @@ const CardControlAndInfo: React.FC = () => {
         </div>
       </div>
 
-      <div className={classes.licensesMonitorContainer}>
+      <div className={classes.middleSpreadContainer}>
         <LicensesMonitor />
       </div>
 
-      <div className={classes.btnReadyContainer}>
+      <div className={classes.bottomContainer}>
         {priceEditProductId ? (
-          <ButtonComponent title={'В прайс'} onClick={returnToPrice} />
+          <BottomButtonReturnTo returnTo={ReturnToEnum.price} />
         ) : (
-          <ButtonComponent title={'В каталог'} onClick={returnToCatalog} />
+          <BottomButtonReturnTo returnTo={ReturnToEnum.catalog} />
         )}
       </div>
     </div>

@@ -12,6 +12,7 @@ export enum ReturnToEnum {
   basket = 'В корзину',
   userOrders = 'В заказы',
   manufacturerOrders = 'В заказы ',
+  price = 'В прайс',
 }
 
 type PropsType = {
@@ -39,6 +40,8 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
       navigate(PageEnum.UserOrdersPage);
     } else if (returnTo === ReturnToEnum.manufacturerOrders) {
       navigate(PageEnum.ManufacturerOrdersPage);
+    } else if (returnTo === ReturnToEnum.price) {
+      navigate(PageEnum.ManufacturerPricePage);
     } else if (returnTo === ReturnToEnum.catalog) {
       returnToCatalog();
     }

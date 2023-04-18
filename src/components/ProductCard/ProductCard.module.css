@@ -50,6 +50,11 @@
   border-radius: 12px 12px 0 0
 }
 
+.imgPlaceHolder {
+  width: 64px;
+  height: 64px;
+}
+
 .noImageContainer {
   display: flex;
   flex-direction: column;

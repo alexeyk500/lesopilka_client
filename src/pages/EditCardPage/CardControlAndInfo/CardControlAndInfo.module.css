@@ -22,6 +22,7 @@
 .cardContainer {
   display: flex;
   width: 256px;
+  margin-left: -10px;
   margin-top: -22px;
   scale: 0.85
 }
@@ -77,8 +78,13 @@
   padding: 0 14px;
 }
 
-.btnReadyContainer {
-  margin-bottom: 32px;
+/*.btnReadyContainer {*/
+/*  margin-bottom: 32px;*/
+/*}*/
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .btnDeleteContainer {
@@ -111,8 +117,12 @@
   padding: 0 64px 0 64px;
 }
 
-.licensesMonitorContainer {
-  margin-left: -8px;
+.middleSpreadContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 32px;
 }
 
 
