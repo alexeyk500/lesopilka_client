@@ -29,3 +29,8 @@
   background-color: var(--section_background);
   overflow-y: scroll;
 }
+
+.scrollContainer::-webkit-scrollbar-track {
+  margin-top: 12px;
+  background: inherit;
+}

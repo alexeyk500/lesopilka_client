@@ -160,7 +160,7 @@ template {
   width: 6px;
 }
 *::-webkit-scrollbar-track {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   background: inherit;
 }
 *::-webkit-scrollbar-thumb {

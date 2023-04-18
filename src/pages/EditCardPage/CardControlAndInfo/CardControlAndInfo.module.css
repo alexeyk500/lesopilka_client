@@ -22,7 +22,7 @@
 .cardContainer {
   display: flex;
   width: 256px;
-  margin-left: -10px;
+  margin-left: -6px;
   margin-top: -22px;
   scale: 0.85
 }
