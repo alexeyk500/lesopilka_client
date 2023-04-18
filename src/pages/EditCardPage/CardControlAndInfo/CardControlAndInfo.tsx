@@ -199,7 +199,7 @@ const CardControlAndInfo: React.FC = () => {
           <div className={classes.info}>{formatUTC(editProduct.publicationDate)}</div>
         </div>
         <div className={classes.btnDeleteContainer}>
-          <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED} onClick={onClickDeleteBtn} />
+          <ButtonComponent title={'Удалить'} buttonType={ButtonType.RED_SECONDARY} onClick={onClickDeleteBtn} />
         </div>
       </div>
 

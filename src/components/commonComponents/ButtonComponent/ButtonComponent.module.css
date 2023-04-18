@@ -43,6 +43,12 @@
   border: solid 2px var(--blue_color);
 }
 
+.red_secondary {
+  color: var(--red_color);
+  background-color: #FFFFFF;
+  border: solid 2px var(--red_color);
+}
+
 .filter {
   display: flex !important;
   height: 28px;

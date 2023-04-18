@@ -10,6 +10,7 @@ export enum ButtonType {
   RED,
   GREEN,
   GRAY,
+  RED_SECONDARY,
 }
 
 type PropsType = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -43,6 +44,7 @@ const ButtonComponent: React.FC<PropsType> = ({
         [classes.secondary]: buttonType === ButtonType.SECONDARY && !disabled,
         [classes.filter]: buttonType === ButtonType.FILTER && !disabled,
         [classes.red]: buttonType === ButtonType.RED && !disabled,
+        [classes.red_secondary]: buttonType === ButtonType.RED_SECONDARY && !disabled,
         [classes.green]: buttonType === ButtonType.GREEN && !disabled,
         [classes.gray]: buttonType === ButtonType.GRAY && !disabled,
         [classes.disabled]: disabled,
