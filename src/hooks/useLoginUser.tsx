@@ -10,7 +10,7 @@ import React, { useRef } from 'react';
 import { useAppDispatch } from './hooks';
 import { useNavigate } from 'react-router-dom';
 
-export default function useLoginUser(redirectRoute = PageEnum.RootPage) {
+export default function useLoginUser(redirectRoute = PageEnum.MainPage) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const preloaderPopUpRef = useRef<PopupRef | null>(null);

@@ -23,7 +23,7 @@ import ContactsPage from '../../pages/ContactsPage/ContactsPage';
 import ResellerRegistrationPage from '../../pages/ResellerRegistrationPage/ResellerRegistrationPage';
 import ResellerCabinetPage from '../../pages/ResellerCabinetPage/ResellerCabinetPage';
 import ResellerReportPage from '../../pages/ResellerReportPage/ResellerReportPage';
-import ResellerReportDetailsPage from '../../pages/ResellerReportDetailsPage/ResellerReportDetailsPage';
+import ResellerDetailReportPage from '../../pages/ResellerDetailReportPage/ResellerDetailReportPage';
 import ResellerCreateManufacturerPage from '../../pages/ResellerCreateManufacturerPage/ResellerCreateManufacturerPage';
 import ManufacturerActivationPage from '../../pages/ManufacturerActivationPage/ManufacturerActivationPage';
 import UserActivationPage from '../../pages/UserActivationPage/UserActivationPage';
@@ -34,7 +34,7 @@ type RouteType = {
 };
 
 export enum PageEnum {
-  RootPage = '/',
+  MainPage = '/',
   UserPricePage = '/user-price-page',
   SuccessRegistrationPage = '/success-registration',
   RedirectPageWithLogin = '/redirect-with-login',
@@ -65,7 +65,7 @@ export enum PageEnum {
 }
 
 const publicRoutes: RouteType[] = [
-  { path: PageEnum.RootPage, element: <UnitedPage /> },
+  { path: PageEnum.MainPage, element: <UnitedPage /> },
   { path: `${PageEnum.UserPricePage}/:mid`, element: <UserPricePage /> },
   { path: PageEnum.SuccessRegistrationPage, element: <SuccessRegistrationPage /> },
   { path: PageEnum.ManufacturerShowCasePage, element: <ManufacturerShowCasePage /> },
@@ -93,7 +93,7 @@ const protectedRoutes: RouteType[] = [
   { path: PageEnum.AddToBasketPage, element: <ManufacturerShowCasePage isAddToBasketPage /> },
   { path: PageEnum.ResellerCabinetPage, element: <ResellerCabinetPage /> },
   { path: PageEnum.ResellerReportPage, element: <ResellerReportPage /> },
-  { path: PageEnum.ResellerReportDetailsPage, element: <ResellerReportDetailsPage /> },
+  { path: PageEnum.ResellerReportDetailsPage, element: <ResellerDetailReportPage /> },
   { path: PageEnum.ResellerCreateManufacturerPage, element: <ResellerCreateManufacturerPage /> },
 ];
 

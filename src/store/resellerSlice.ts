@@ -7,6 +7,7 @@ import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErr
 import { dateMonthShift } from '../utils/dateTimeFunctions';
 import { MONTH_SHIFT_FOR_RESELLER_REPORT } from '../utils/constants';
 import { getManufacturerLicensesActionsParamsType } from '../api/licensesApi';
+import { PageEnum } from '../components/AppRouter/AppRouter';
 
 type ResellerSliceType = {
   reportDateFrom: string;
@@ -14,6 +15,8 @@ type ResellerSliceType = {
   licensesStatusOptionsId: number;
   resellerManufacturers: ManufacturerType[];
   resellerManufacturersLicenseActions: LicenceAction[];
+  detailReportDate: string;
+  detailReportBackwardRoute: string;
   isLoading: boolean;
 };
 
@@ -26,6 +29,8 @@ const initialState: ResellerSliceType = {
   licensesStatusOptionsId: 0,
   resellerManufacturers: [],
   resellerManufacturersLicenseActions: [],
+  detailReportDate: reportDateTo,
+  detailReportBackwardRoute: PageEnum.MainPage,
   isLoading: false,
 };
 
@@ -104,6 +109,12 @@ export const resellerSlice = createSlice({
     setResellerReportDateTo: (state, actions) => {
       state.reportDateTo = actions.payload;
     },
+    setResellerDetailReportDate: (state, actions) => {
+      state.detailReportDate = actions.payload;
+    },
+    setResellerDetailReportBackwardRoute: (state, actions) => {
+      state.detailReportBackwardRoute = actions.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -152,7 +163,13 @@ export const resellerSlice = createSlice({
   },
 });
 
-export const { setLicensesStatusOptionsId, setResellerReportDateFrom, setResellerReportDateTo } = resellerSlice.actions;
+export const {
+  setLicensesStatusOptionsId,
+  setResellerReportDateFrom,
+  setResellerReportDateTo,
+  setResellerDetailReportDate,
+  setResellerDetailReportBackwardRoute,
+} = resellerSlice.actions;
 
 export const selectorResellerIsLoading = (state: RootState) => state.reseller.isLoading;
 export const selectorResellerLicensesStatusOptionsId = (state: RootState) => state.reseller.licensesStatusOptionsId;
@@ -161,5 +178,7 @@ export const selectorResellerReportDateFrom = (state: RootState) => state.resell
 export const selectorResellerReportDateTo = (state: RootState) => state.reseller.reportDateTo;
 export const selectorResellerManufacturersLicenseActions = (state: RootState) =>
   state.reseller.resellerManufacturersLicenseActions;
+export const selectorResellerDetailReportDate = (state: RootState) => state.reseller.detailReportDate;
+export const selectorResellerDetailReportBackwardRoute = (state: RootState) => state.reseller.detailReportBackwardRoute;
 
 export default resellerSlice.reducer;

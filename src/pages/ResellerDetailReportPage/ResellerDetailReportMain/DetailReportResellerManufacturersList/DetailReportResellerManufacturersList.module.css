@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.tableTitle {
+  display: flex;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 8px;
+}
+
+.tableColumnNumber {
+  display: flex;
+  margin-left:14px;
+  margin-right: 12px;
+  width: 8%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnManufacturer {
+  display: flex;
+  margin-right: 12px;
+  width: 28%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLocation {
+  display: flex;
+  margin-right: 12px;
+  width: 24%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnPublications {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: 19%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnActions {
+  display: flex;
+  justify-content: center;
+  width: 13%;
+}
+
+.scrollContainer {
+  display: flex;
+  padding-top: 8px;
+  padding-right: 4px;
+  flex-direction: column;
+  overflow-y: scroll;
+}

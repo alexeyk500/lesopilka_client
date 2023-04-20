@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  width: calc(100% - 2px);
+  margin-bottom: 8px;
+  margin-left: 2px;
+  padding: 4px 0;
+  background-color: var(--main_background);
+  color: var(--gray_color);
+  font-size: 14px;
+  border-radius: 12px;
+  box-shadow: var(--box_shadow);
+  align-items: center;
+}
+
+.tableTitle {
+  display: flex;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  padding-right: 8px;
+}
+
+.tableColumnNumber {
+  display: flex;
+  margin-left:14px;
+  margin-right: 12px;
+  width: calc(8% - 2px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnManufacturer {
+  display: flex;
+  margin-right: 12px;
+  width: calc(28% + 3px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnLocation {
+  display: flex;
+  margin-right: 12px;
+  width: calc(24% + 3px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnPublications {
+  display: flex;
+  justify-content: center;
+  margin-right: 12px;
+  width: calc(19% + 3px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tableColumnActions {
+  display: flex;
+  justify-content: center;
+  width: calc(12% + 2px);
+  padding-left: 24px;
+}

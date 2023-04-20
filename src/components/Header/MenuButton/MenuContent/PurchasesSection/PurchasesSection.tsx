@@ -22,7 +22,7 @@ const PurchasesSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const loginUserToFavoriteProductPage = useLoginUser(PageEnum.FavoriteProductPage);
 
   const onClickCatalog = () => {
-    navigate(PageEnum.RootPage);
+    navigate(PageEnum.MainPage);
     closeMenuContent();
   };
 

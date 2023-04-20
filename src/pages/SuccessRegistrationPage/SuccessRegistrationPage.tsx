@@ -9,7 +9,7 @@ const SuccessRegistrationPage: React.FC = () => {
   const navigate = useNavigate();
 
   const onClosePopUp = () => {
-    navigate(PageEnum.RootPage, { replace: true });
+    navigate(PageEnum.MainPage, { replace: true });
   };
 
   useEffect(() => {

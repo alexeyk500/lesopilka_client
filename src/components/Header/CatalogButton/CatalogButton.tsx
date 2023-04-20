@@ -12,9 +12,9 @@ const CatalogButton: React.FC = () => {
 
   const onClickGoToCatalog = () => {
     if (catalogSearchParams) {
-      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`);
+      navigate(`${PageEnum.MainPage}?${catalogSearchParams}`);
     } else {
-      navigate(PageEnum.RootPage);
+      navigate(PageEnum.MainPage);
     }
   };
 

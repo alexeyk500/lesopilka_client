@@ -36,7 +36,7 @@ const ManufacturerActivationPage: React.FC = () => {
           });
         } else {
           setTimeout(() => {
-            navigate(PageEnum.RootPage);
+            navigate(PageEnum.MainPage);
           }, 1500);
         }
       });

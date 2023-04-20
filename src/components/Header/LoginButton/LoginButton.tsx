@@ -21,7 +21,7 @@ const LoginButton: React.FC = () => {
   const onClosePopUpLogout = (result?: boolean | FormData | undefined) => {
     if (result) {
       logoutUser();
-      navigate(PageEnum.RootPage);
+      navigate(PageEnum.MainPage);
     }
   };
 

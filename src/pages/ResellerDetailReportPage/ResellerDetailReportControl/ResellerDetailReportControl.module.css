@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.dateSelectorRow {
+  display: flex;
+  margin-bottom: 8px;
+  margin-left: -6px;
+  padding-right: 20px;
+}
+
+.publicationAmountTitle {
+  display: flex;
+  margin-top: 12px;
+  margin-bottom: 32px;
+  justify-content: center;
+  color: var(--orange_color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.middleSpreadContainer {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bottomContainer {
+  display: flex;
+  flex-direction: column;
+}

@@ -7,7 +7,7 @@ const Logo: React.FC = () => {
   const navigate = useNavigate();
 
   const onClick = () => {
-    navigate(PageEnum.RootPage);
+    navigate(PageEnum.MainPage);
   };
 
   return (

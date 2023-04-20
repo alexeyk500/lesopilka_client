@@ -28,15 +28,15 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
 
   const returnToCatalog = () => {
     if (catalogSearchParams) {
-      navigate(`${PageEnum.RootPage}?${catalogSearchParams}`);
+      navigate(`${PageEnum.MainPage}?${catalogSearchParams}`);
     } else {
-      navigate(PageEnum.RootPage);
+      navigate(PageEnum.MainPage);
     }
   };
 
   const onClickHandler = () => {
     if (returnTo === ReturnToEnum.mainPage) {
-      navigate(PageEnum.RootPage);
+      navigate(PageEnum.MainPage);
     } else if (returnTo === ReturnToEnum.basket) {
       navigate(PageEnum.BasketPage);
     } else if (returnTo === ReturnToEnum.userOrders) {

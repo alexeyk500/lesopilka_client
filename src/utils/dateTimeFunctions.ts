@@ -121,7 +121,7 @@ export const splitDatesArrayByMonth = (dates: Date[]) => {
 };
 
 export const lastDigitToWord = (digit: number | undefined, words: string[]) => {
-  if (!digit) {
+  if (digit === undefined) {
     return '';
   }
   if (digit >= 11 && digit < 15) {
