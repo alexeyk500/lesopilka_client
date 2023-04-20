@@ -28,6 +28,10 @@ const ResellerReportPageMainPart: React.FC = () => {
     }
   }, [dateFromSelector, dateToSelector, dispatch]);
 
+  const onItemClick = (date: Date) => {
+    console.log(date);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.title}>{'Использование лицензий поставщиками'}</div>
@@ -36,6 +40,7 @@ const ResellerReportPageMainPart: React.FC = () => {
           dates={dates}
           licensesActions={licenseActions}
           licenseActionType={LicenseActionTypeEnum.redeem}
+          onItemClick={onItemClick}
         />
       </div>
     </div>

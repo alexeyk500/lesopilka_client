@@ -8,9 +8,10 @@ type PropsType = {
   dates: Date[];
   licensesActions: LicenceAction[];
   licenseActionType: LicenseActionTypeEnum;
+  onItemClick?: (date: Date) => void;
 };
 
-const LicenseActionsList: React.FC<PropsType> = ({ dates, licensesActions, licenseActionType }) => {
+const LicenseActionsList: React.FC<PropsType> = ({ dates, licensesActions, licenseActionType, onItemClick }) => {
   const datesSplittedByMonth = useMemo(() => splitDatesArrayByMonth(dates), [dates]);
   return (
     <div className={classes.container}>
@@ -22,6 +23,7 @@ const LicenseActionsList: React.FC<PropsType> = ({ dates, licensesActions, licen
               monthDates={monthDates}
               licensesActions={licensesActions}
               licenseActionType={licenseActionType}
+              onItemClick={onItemClick}
             />
           );
         })}

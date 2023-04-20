@@ -16,12 +16,18 @@ type PropsType = {
   monthDates: Date[];
   licensesActions: LicenceAction[];
   licenseActionType: LicenseActionTypeEnum;
+  onItemClick?: (date: Date) => void;
 };
 
 const dayWords = ['день', 'дня', 'дней'];
 const licenseWords = ['публикация', 'публикации', 'публикаций'];
 
-const LicenseActionsListItem: React.FC<PropsType> = ({ monthDates, licensesActions, licenseActionType }) => {
+const LicenseActionsListItem: React.FC<PropsType> = ({
+  monthDates,
+  licensesActions,
+  licenseActionType,
+  onItemClick,
+}) => {
   const title = formatUTCtoMMMMYYYY(monthDates[0]?.toISOString());
   const monthDaysAmount = monthDates.length;
   const monthDaysAmountWord = lastDigitToWord(monthDaysAmount, dayWords);
@@ -42,6 +48,7 @@ const LicenseActionsListItem: React.FC<PropsType> = ({ monthDates, licensesActio
               date={date}
               licensesActions={monthLicensesActions}
               licenseActionType={licenseActionType}
+              onItemClick={onItemClick}
             />
           );
         })}

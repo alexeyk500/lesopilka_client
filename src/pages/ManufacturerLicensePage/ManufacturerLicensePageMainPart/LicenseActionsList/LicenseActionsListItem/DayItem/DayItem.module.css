@@ -6,6 +6,7 @@
   border-radius: 6px;
   border: 1px solid var(--blue_color);
   background-color: var(--gray_color_light_light);
+  cursor: pointer;
 }
 
 .title {
