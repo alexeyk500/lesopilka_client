@@ -3,12 +3,14 @@ import classes from './ResellerDetailReportControl.module.css';
 import DatePickerComponent from '../../../components/commonComponents/DatePickerComponent/DatePickerComponent';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
+  selectorResellerDetailReportBackwardRoute,
   selectorResellerDetailReportDate,
   selectorResellerManufacturers,
   setResellerDetailReportDate,
 } from '../../../store/resellerSlice';
 import { lastDigitToWord } from '../../../utils/dateTimeFunctions';
 import BottomButtonReturnTo, { ReturnToEnum } from '../../../components/BottomButtonReturnTo/BottomButtonReturnTo';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
 const ResellerDetailReportControl = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +22,9 @@ const ResellerDetailReportControl = () => {
     return acc + activeCardsAmount;
   }, 0);
   const publicationAmountWord = lastDigitToWord(publicationAmount, ['публикация', 'публикации', 'публикаций']);
+
+  const resellerDetailReportBackwardRoute = useAppSelector(selectorResellerDetailReportBackwardRoute);
+  const isBackwardRouteToReport = resellerDetailReportBackwardRoute === PageEnum.ResellerReportPage;
 
   const onSelectDate = (date: Date) => {
     dispatch(setResellerDetailReportDate(date.toISOString()));
@@ -38,7 +43,9 @@ const ResellerDetailReportControl = () => {
         <div className={classes.publicationAmountTitle}>{`${publicationAmount} ${publicationAmountWord}`}</div>
       </div>
       <div className={classes.bottomContainer}>
-        <BottomButtonReturnTo returnTo={ReturnToEnum.mainPage} />
+        <BottomButtonReturnTo
+          returnTo={isBackwardRouteToReport ? ReturnToEnum.resellerReport : ReturnToEnum.mainPage}
+        />
       </div>
     </div>
   );

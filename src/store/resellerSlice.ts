@@ -69,6 +69,18 @@ export const getResellerManufacturersThunk = createAsyncThunk<ManufacturerType[]
   }
 );
 
+export const getResellerManufacturersListByDateThunk = createAsyncThunk<
+  ManufacturerType[],
+  { token: string; date: string },
+  { rejectValue: string }
+>('reseller/getResellerManufacturersListByDateThunk', async ({ token, date }, { rejectWithValue }) => {
+  try {
+    return await serverApi.getResellerManufacturersListByDate({ token, date });
+  } catch (e: any) {
+    return rejectWithValue('Ошибка получения списка поставщиков для реселлера на дату\n' + e.response?.data?.message);
+  }
+});
+
 export const unregisterResellerManufacturerThunk = createAsyncThunk<
   ManufacturerType[],
   { manufacturerId: number; token: string },
@@ -123,7 +135,11 @@ export const resellerSlice = createSlice({
         state.isLoading = false;
       })
       .addMatcher(
-        isAnyOf(getResellerManufacturersThunk.fulfilled, unregisterResellerManufacturerThunk.fulfilled),
+        isAnyOf(
+          getResellerManufacturersThunk.fulfilled,
+          unregisterResellerManufacturerThunk.fulfilled,
+          getResellerManufacturersListByDateThunk.fulfilled
+        ),
         (state, action) => {
           state.resellerManufacturers = action.payload;
           state.isLoading = false;
@@ -141,7 +157,8 @@ export const resellerSlice = createSlice({
           activateCandidateManufacturerThunk.pending,
           getResellerManufacturersThunk.pending,
           unregisterResellerManufacturerThunk.pending,
-          getResellerManufacturersLicenseActionsThunk.pending
+          getResellerManufacturersLicenseActionsThunk.pending,
+          getResellerManufacturersListByDateThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -153,7 +170,8 @@ export const resellerSlice = createSlice({
           activateCandidateManufacturerThunk.rejected,
           getResellerManufacturersThunk.rejected,
           unregisterResellerManufacturerThunk.rejected,
-          getResellerManufacturersLicenseActionsThunk.rejected
+          getResellerManufacturersLicenseActionsThunk.rejected,
+          getResellerManufacturersListByDateThunk.rejected
         ),
         (state, action) => {
           state.isLoading = false;

@@ -15,6 +15,7 @@ export enum ReturnToEnum {
   manufacturerOrders = 'В заказы ',
   manufacturerProducts = 'В мои товары',
   price = 'В прайс',
+  resellerReport = 'В отчет',
 }
 
 type PropsType = {
@@ -45,6 +46,8 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
       navigate(PageEnum.ManufacturerOrdersPage);
     } else if (returnTo === ReturnToEnum.price) {
       navigate(PageEnum.ManufacturerPricePage);
+    } else if (returnTo === ReturnToEnum.resellerReport) {
+      navigate(PageEnum.ResellerReportPage);
     } else if (returnTo === ReturnToEnum.manufacturerProducts) {
       if (user?.manufacturer?.id) {
         navigate(`${PageEnum.ManufacturerPage}/?mid=${user.manufacturer.id}`);

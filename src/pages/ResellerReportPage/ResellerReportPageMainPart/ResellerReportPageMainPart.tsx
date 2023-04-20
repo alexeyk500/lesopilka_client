@@ -8,10 +8,15 @@ import {
   selectorResellerManufacturersLicenseActions,
   selectorResellerReportDateFrom,
   selectorResellerReportDateTo,
+  setResellerDetailReportBackwardRoute,
+  setResellerDetailReportDate,
 } from '../../../store/resellerSlice';
 import { LicenseActionTypeEnum } from '../../../types/types';
+import { PageEnum } from '../../../components/AppRouter/AppRouter';
+import { useNavigate } from 'react-router-dom';
 
 const ResellerReportPageMainPart: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const dateFromSelector = useAppSelector(selectorResellerReportDateFrom);
   const dateToSelector = useAppSelector(selectorResellerReportDateTo);
@@ -29,7 +34,9 @@ const ResellerReportPageMainPart: React.FC = () => {
   }, [dateFromSelector, dateToSelector, dispatch]);
 
   const onItemClick = (date: Date) => {
-    console.log(date);
+    dispatch(setResellerDetailReportDate(date.toISOString()));
+    dispatch(setResellerDetailReportBackwardRoute(PageEnum.ResellerReportPage));
+    navigate(PageEnum.ResellerReportDetailsPage);
   };
 
   return (

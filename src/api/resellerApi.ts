@@ -50,6 +50,15 @@ export const resellerApi = {
     return response.data;
   },
 
+  async getResellerManufacturersListByDate({ token, date }: { token: string; date: string }) {
+    const response = await instanceAxios.post<ManufacturerType[]>(
+      '/reseller/reseller-manufacturers-list-by-date',
+      { date },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
   async unregisterResellerManufacturer({ manufacturerId, token }: { manufacturerId: number; token: string }) {
     const response = await instanceAxios.post<ManufacturerType[]>(
       '/reseller/unregister-reseller-manufacturer',

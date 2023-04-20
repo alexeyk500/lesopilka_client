@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import {
-  getResellerManufacturersThunk,
+  getResellerManufacturersListByDateThunk,
   selectorResellerDetailReportDate,
   selectorResellerManufacturers,
 } from '../../../store/resellerSlice';
@@ -18,13 +18,13 @@ const ResellerDetailReportMain: React.FC = () => {
   useEffect(() => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token && reportDate) {
-      dispatch(getResellerManufacturersThunk(token));
+      dispatch(getResellerManufacturersListByDateThunk({ token, date: reportDate }));
     }
   }, [dispatch, reportDate]);
 
   return (
     <div className={classes.container}>
-      <div className={classes.pageTitle}>{`Публикации поставщиков на ${reportDateStr}`}</div>
+      <div className={classes.pageTitle}>{`Публикации поставщиков ${reportDateStr}`}</div>
       <DetailReportResellerManufacturersList resellerManufacturers={resellerManufacturers} />
     </div>
   );
