@@ -5,6 +5,8 @@ import resellerReportIco from '../../../../../img/resellerReportIco.svg';
 import resellerDetailsReportIco from '../../../../../img/resellerDetailsReportIco.svg';
 import { PageEnum } from '../../../../AppRouter/AppRouter';
 import { useNavigate } from 'react-router-dom';
+import { setResellerDetailReportBackwardRoute, setResellerDetailReportDate } from '../../../../../store/resellerSlice';
+import { useAppDispatch } from '../../../../../hooks/hooks';
 
 type PropsType = {
   closeMenuContent: () => void;
@@ -12,6 +14,7 @@ type PropsType = {
 
 const ResellerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onClickCabinet = () => {
     navigate(PageEnum.ResellerCabinetPage);
@@ -24,6 +27,9 @@ const ResellerSection: React.FC<PropsType> = ({ closeMenuContent }) => {
   };
 
   const onClickReportDetails = () => {
+    const nowDate = new Date();
+    dispatch(setResellerDetailReportBackwardRoute(PageEnum.MainPage));
+    dispatch(setResellerDetailReportDate(nowDate.toISOString()));
     navigate(PageEnum.ResellerReportDetailsPage);
     closeMenuContent();
   };
