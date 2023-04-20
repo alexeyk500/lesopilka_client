@@ -6,11 +6,16 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
 import { selectorResellerLicensesStatusOptionsId, setLicensesStatusOptionsId } from '../../../../store/resellerSlice';
 
 const licensesStatusOptions: OptionsType[] = [
-  { id: 0, title: 'Все', toolTip: 'Общий список' },
-  { id: 1, title: ResellerManufacturerStatusEnum.normal, toolTip: 'Лицензий достаточно' },
-  { id: 2, title: ResellerManufacturerStatusEnum.attention, toolTip: 'Лицензии на исходе' },
-  { id: 3, title: ResellerManufacturerStatusEnum.noPublication, toolTip: 'Лицензии закончились' },
-  { id: 4, title: ResellerManufacturerStatusEnum.blocked, toolTip: 'Публикация заблокирована' },
+  { id: 0, title: 'Все', toolTip: 'Общий список', dataTestId: 'all' },
+  { id: 1, title: ResellerManufacturerStatusEnum.normal, toolTip: 'Лицензий достаточно', dataTestId: 'normal' },
+  { id: 2, title: ResellerManufacturerStatusEnum.attention, toolTip: 'Лицензии на исходе', dataTestId: 'attention' },
+  {
+    id: 3,
+    title: ResellerManufacturerStatusEnum.noPublication,
+    toolTip: 'Лицензии закончились',
+    dataTestId: 'noPublication',
+  },
+  { id: 4, title: ResellerManufacturerStatusEnum.blocked, toolTip: 'Публикация заблокирована', dataTestId: 'blocked' },
 ];
 
 const LicensesStatusSelector: React.FC = () => {
@@ -32,6 +37,7 @@ const LicensesStatusSelector: React.FC = () => {
           toolTip={option.toolTip}
           toolTipVerticalShift={245}
           onSelect={onSelect}
+          dataTestId={option.dataTestId}
         />
       ))}
     </CheckBoxSection>

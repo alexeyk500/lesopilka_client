@@ -1,0 +1,155 @@
+{
+  "data":
+  [
+    {
+      "id": 1,
+      "inn": "231233332345",
+      "title": "ООО Лесопилка",
+      "phone": "+79818842701",
+      "email": "alexeyk500777@yandex.ru",
+      "address": {
+        "id": 2,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 1,
+          "title": "г.Гатчина"
+        },
+        "postIndex": "996159",
+        "street": "Шуваловский проспект",
+        "building": "41",
+        "office": "750"
+      },
+      "approved": true,
+      "activeCards": 15,
+      "restLicenses": 2242
+    },
+    {
+      "id": 2,
+      "inn": "777565286777",
+      "title": "ООО ЧеткоПилим",
+      "phone": "+79219487066",
+      "email": "stepanov77lesha@gmail.com",
+      "address": {
+        "id": 3,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 3,
+          "title": "г.Петродворец"
+        },
+        "postIndex": "996159",
+        "street": "Дунайский",
+        "building": "3/41111",
+        "office": "606"
+      },
+      "approved": true,
+      "activeCards": 3,
+      "restLicenses": 920
+    },
+    {
+      "id": 66,
+      "inn": "123123123123",
+      "title": "ООО Рога и Копыта",
+      "phone": "+79818842801",
+      "email": "manRes_1@email.com",
+      "address": {
+        "id": 223,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 3,
+          "title": "г.Петродворец"
+        },
+        "postIndex": "996159",
+        "street": "Серебристый бульвар",
+        "building": "12",
+        "office": "44"
+      },
+      "approved": true,
+      "activeCards": 1,
+      "restLicenses": 6
+    },
+    {
+      "id": 67,
+      "inn": "999988887777",
+      "title": "ООО ПилимВсе",
+      "phone": "+79812345667",
+      "email": "manRes_2@email.com",
+      "address": {
+        "id": 225,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 3,
+          "title": "г.Петродворец"
+        },
+        "postIndex": "196157",
+        "street": "Разводная",
+        "building": "2/4",
+        "office": ""
+      },
+      "approved": true,
+      "activeCards": 2,
+      "restLicenses": 16
+    },
+    {
+      "id": 68,
+      "inn": "123412341234",
+      "title": "ООО ПилимПерепилим",
+      "phone": "+9143778542",
+      "email": "manRes_3@email.com",
+      "address": {
+        "id": 230,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 3,
+          "title": "г.Петродворец"
+        },
+        "postIndex": "134567",
+        "street": "Постникова",
+        "building": "3/4",
+        "office": "606"
+      },
+      "approved": true,
+      "activeCards": 1,
+      "restLicenses": 0
+    },
+    {
+      "id": 69,
+      "inn": "999988887776",
+      "title": "OAO СпилимВсе",
+      "phone": "+79834567898",
+      "email": "manRes_4@email.com",
+      "address": {
+        "id": 232,
+        "region": {
+          "id": 3,
+          "title": "Санкт-Петербург"
+        },
+        "location": {
+          "id": 3,
+          "title": "г.Петродворец"
+        },
+        "postIndex": "996159",
+        "street": "Усатого",
+        "building": "11",
+        "office": ""
+      },
+      "approved": false,
+      "activeCards": 1,
+      "restLicenses": 499
+    }
+  ]
+}

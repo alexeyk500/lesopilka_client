@@ -40,7 +40,7 @@ const ResellerCabinetControls: React.FC = () => {
         />
       </div>
       <div className={classes.bottomContainer}>
-        <BottomButtonReturnTo returnTo={ReturnToEnum.rootPage} />
+        <BottomButtonReturnTo returnTo={ReturnToEnum.mainPage} />
       </div>
     </div>
   );

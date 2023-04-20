@@ -4,6 +4,7 @@ export type OptionsType = {
   key?: string;
   value?: string;
   toolTip?: string;
+  dataTestId?: string;
 };
 
 export type AddressType = {

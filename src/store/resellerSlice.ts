@@ -1,19 +1,31 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { UniversalServerType, UserLoginServerType } from '../api/serverResponseTypes';
-import { CreateCandidateManufacturerParamsType, ManufacturerType } from '../types/types';
+import { CreateCandidateManufacturerParamsType, LicenceAction, ManufacturerType } from '../types/types';
 import { serverApi } from '../api/serverApi';
 import { showErrorPopUp } from '../components/InfoAndErrorMessageForm/InfoAndErrorMessageForm';
+import { dateMonthShift } from '../utils/dateTimeFunctions';
+import { MONTH_SHIFT_FOR_RESELLER_REPORT } from '../utils/constants';
+import { getManufacturerLicensesActionsParamsType } from '../api/licensesApi';
 
 type ResellerSliceType = {
+  reportDateFrom: string;
+  reportDateTo: string;
   licensesStatusOptionsId: number;
   resellerManufacturers: ManufacturerType[];
+  resellerManufacturersLicenseActions: LicenceAction[];
   isLoading: boolean;
 };
 
+const reportDateFrom = dateMonthShift(new Date(), MONTH_SHIFT_FOR_RESELLER_REPORT).toISOString();
+const reportDateTo = new Date().toISOString();
+
 const initialState: ResellerSliceType = {
+  reportDateFrom,
+  reportDateTo,
   licensesStatusOptionsId: 0,
   resellerManufacturers: [],
+  resellerManufacturersLicenseActions: [],
   isLoading: false,
 };
 
@@ -64,6 +76,21 @@ export const unregisterResellerManufacturerThunk = createAsyncThunk<
   }
 });
 
+export const getResellerManufacturersLicenseActionsThunk = createAsyncThunk<
+  LicenceAction[],
+  getManufacturerLicensesActionsParamsType,
+  { rejectValue: string }
+>(
+  'reseller/getResellerManufacturersLicenseActionsThunk',
+  async (getManufacturerLicensesActionsParams, { rejectWithValue }) => {
+    try {
+      return await serverApi.getResellerManufacturersLicenseActions(getManufacturerLicensesActionsParams);
+    } catch (e) {
+      return rejectWithValue('Ошибка получения отчета реселлера');
+    }
+  }
+);
+
 export const resellerSlice = createSlice({
   name: 'resellerSlice',
   initialState,
@@ -71,9 +98,19 @@ export const resellerSlice = createSlice({
     setLicensesStatusOptionsId: (state, actions) => {
       state.licensesStatusOptionsId = actions.payload;
     },
+    setResellerReportDateFrom: (state, actions) => {
+      state.reportDateFrom = actions.payload;
+    },
+    setResellerReportDateTo: (state, actions) => {
+      state.reportDateTo = actions.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getResellerManufacturersLicenseActionsThunk.fulfilled, (state, action) => {
+        state.resellerManufacturersLicenseActions = action.payload;
+        state.isLoading = false;
+      })
       .addMatcher(
         isAnyOf(getResellerManufacturersThunk.fulfilled, unregisterResellerManufacturerThunk.fulfilled),
         (state, action) => {
@@ -92,7 +129,8 @@ export const resellerSlice = createSlice({
           createCandidateManufacturerThunk.pending,
           activateCandidateManufacturerThunk.pending,
           getResellerManufacturersThunk.pending,
-          unregisterResellerManufacturerThunk.pending
+          unregisterResellerManufacturerThunk.pending,
+          getResellerManufacturersLicenseActionsThunk.pending
         ),
         (state) => {
           state.isLoading = true;
@@ -103,7 +141,8 @@ export const resellerSlice = createSlice({
           createCandidateManufacturerThunk.rejected,
           activateCandidateManufacturerThunk.rejected,
           getResellerManufacturersThunk.rejected,
-          unregisterResellerManufacturerThunk.rejected
+          unregisterResellerManufacturerThunk.rejected,
+          getResellerManufacturersLicenseActionsThunk.rejected
         ),
         (state, action) => {
           state.isLoading = false;
@@ -113,10 +152,14 @@ export const resellerSlice = createSlice({
   },
 });
 
-export const { setLicensesStatusOptionsId } = resellerSlice.actions;
+export const { setLicensesStatusOptionsId, setResellerReportDateFrom, setResellerReportDateTo } = resellerSlice.actions;
 
-export const selectorResellerLicensesStatusOptionsId = (state: RootState) => state.reseller.licensesStatusOptionsId;
 export const selectorResellerIsLoading = (state: RootState) => state.reseller.isLoading;
+export const selectorResellerLicensesStatusOptionsId = (state: RootState) => state.reseller.licensesStatusOptionsId;
 export const selectorResellerManufacturers = (state: RootState) => state.reseller.resellerManufacturers;
+export const selectorResellerReportDateFrom = (state: RootState) => state.reseller.reportDateFrom;
+export const selectorResellerReportDateTo = (state: RootState) => state.reseller.reportDateTo;
+export const selectorResellerManufacturersLicenseActions = (state: RootState) =>
+  state.reseller.resellerManufacturersLicenseActions;
 
 export default resellerSlice.reducer;

@@ -1,6 +1,17 @@
-import { CreateCandidateManufacturerParamsType, CreateResellerParamsType, ManufacturerType } from '../types/types';
+import {
+  CreateCandidateManufacturerParamsType,
+  CreateResellerParamsType,
+  LicenceAction,
+  ManufacturerType,
+} from '../types/types';
 import { instanceAxios, setAuthHeader } from './instanceAxios';
 import { UniversalServerType, UserLoginServerType } from './serverResponseTypes';
+
+export type getResellerManufacturersLicenseActionsParamsType = {
+  dateFrom: string;
+  dateTo: string;
+  token: string;
+};
 
 export const resellerApi = {
   async createReseller(createResellerParams: CreateResellerParamsType) {
@@ -43,6 +54,19 @@ export const resellerApi = {
     const response = await instanceAxios.post<ManufacturerType[]>(
       '/reseller/unregister-reseller-manufacturer',
       { manufacturerId },
+      setAuthHeader(token)
+    );
+    return response.data;
+  },
+
+  async getResellerManufacturersLicenseActions({
+    dateFrom,
+    dateTo,
+    token,
+  }: getResellerManufacturersLicenseActionsParamsType) {
+    const response = await instanceAxios.post<LicenceAction[]>(
+      `/reseller/reseller-manufacturer-license-actions`,
+      { dateFrom, dateTo },
       setAuthHeader(token)
     );
     return response.data;

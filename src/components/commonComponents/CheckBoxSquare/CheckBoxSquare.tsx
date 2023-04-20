@@ -12,6 +12,7 @@ type PropsType = {
   amount?: number;
   toolTip?: string;
   toolTipVerticalShift?: number;
+  dataTestId?: string;
 };
 
 const CheckBoxSquare: React.FC<PropsType> = ({
@@ -22,6 +23,7 @@ const CheckBoxSquare: React.FC<PropsType> = ({
   amount,
   toolTip,
   toolTipVerticalShift = 0,
+  dataTestId,
 }) => {
   const refContainer = useRef<HTMLDivElement | null>(null);
   const refTitle = useRef<HTMLDivElement | null>(null);
@@ -58,13 +60,16 @@ const CheckBoxSquare: React.FC<PropsType> = ({
 
   return (
     <div ref={refContainer} className={classes.container}>
-      {checked ? (
-        <div className={classes.checkedBox} onClick={onClick}>
-          <img src={checkStatusIco} className={classes.checkStatusIco} alt="check status ico" />
-        </div>
-      ) : (
-        <div className={classes.box} onClick={onClick} />
-      )}
+      <button className={classes.button} onClick={onClick} data-test-id={dataTestId}>
+        {checked ? (
+          <div className={classes.checkedBox}>
+            <img src={checkStatusIco} alt="check status ico" />
+          </div>
+        ) : (
+          <div className={classes.box} />
+        )}
+      </button>
+
       <div className={classes.title} onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
         <div ref={refTitle} className={classNames({ [classes.constantWidth]: amount !== undefined })}>
           {title}

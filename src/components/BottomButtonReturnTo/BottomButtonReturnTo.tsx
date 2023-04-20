@@ -8,7 +8,7 @@ import { PageEnum } from '../AppRouter/AppRouter';
 import { selectorUser } from '../../store/userSlice';
 
 export enum ReturnToEnum {
-  rootPage = 'На главную',
+  mainPage = 'На главную',
   catalog = 'В каталог',
   basket = 'В корзину',
   userOrders = 'В заказы',
@@ -35,7 +35,7 @@ const BottomButtonReturnTo: React.FC<PropsType> = ({ returnTo }) => {
   };
 
   const onClickHandler = () => {
-    if (returnTo === ReturnToEnum.rootPage) {
+    if (returnTo === ReturnToEnum.mainPage) {
       navigate(PageEnum.RootPage);
     } else if (returnTo === ReturnToEnum.basket) {
       navigate(PageEnum.BasketPage);
