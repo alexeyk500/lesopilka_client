@@ -1,104 +1,50 @@
 .container {
   display: flex;
-  width: 600px;
+  max-width: 480px;
+  min-width: 360px;
   flex-direction: column;
   align-items: center;
   border-radius: 12px;
+  color: var(--blue_color);
   background-color: inherit;
 }
 
 .mainPart {
   display: flex;
   width: 100%;
-  padding: 48px 32px 24px 32px;
+  padding: 8px 16px 16px 16px;
   flex-direction: column;
 }
 
 .titleBold {
   display: flex;
   width: 100%;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   justify-content: center;
   text-align: center;
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
   letter-spacing: 3px;
-  color: var(--blue_color);
   white-space: pre-line;
-}
-
-.manufacturerTitle {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 18px;
-  margin: 8px 0 12px 0;
-  letter-spacing: 3px;
-  color: var(--blue_color);
-  white-space: pre-line;
-}
-
-.rulesContainer {
-  display: flex;
 }
 
 .firstTitle {
   display: flex;
-  margin: 0;
   flex-direction: column;
   width: 100%;
   font-weight: 400;
   font-size: 14px;
-  color: var(--blue_color);
   white-space: pre-line;
   text-indent: 16px;
   text-align: center;
-  margin-bottom: 24px;
 }
 
 .title {
   display: flex;
-  margin-top: 0;
-  width: 100%;
-  font-weight: 400;
-  font-size: 14px;
-  color: var(--blue_color);
-  white-space: pre-line;
-  text-indent: 16px;
-  text-align: center;
-}
-
-.subTitle {
-  display: flex;
-  margin-top: 0;
-  margin-bottom: 12px;
-  width: 100%;
-  font-weight: 400;
-  font-size: 14px;
-  color: var(--blue_color);
-  white-space: pre-line;
   justify-content: center;
-  text-align: center;
-}
-
-.email {
-  display: flex;
-  width: 100%;
   font-weight: 400;
   font-size: 14px;
-  color: var(--blue_color);
   white-space: pre-line;
-  margin-bottom: 32px;
-}
-
-.titleBold {
-  font-weight: 600;
-}
-
-.emailBold {
-  font-weight: 600;
-  margin-top: 4px;
-  margin-bottom: 8px;
+  text-align: center;
 }
