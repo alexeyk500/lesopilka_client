@@ -34,7 +34,8 @@ const RegistrationAsReseller: React.FC = () => {
       <div className={classes.content}>
         <div className={classes.rowContainer}>
           <div className={classes.titleContainer}>
-            {`Хочу получить доступ к регистрации новых поставщиков пиломатериалов\nи получению комиссии c их публикаций о продаже пиломатериалов.`}
+            {`Хочу получить доступ к регистрации новых поставщиков пиломатериалов
+            и получению комиссии c их публикаций о продаже пиломатериалов.`}
           </div>
         </div>
         <div className={classes.value}>
