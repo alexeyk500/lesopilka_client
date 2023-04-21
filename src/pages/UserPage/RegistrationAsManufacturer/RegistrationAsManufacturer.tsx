@@ -5,7 +5,7 @@ import ButtonComponent, { ButtonType } from '../../../components/commonComponent
 import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
-import RulesInformForm from './RulesInformForm/RulesInformForm';
+import ManufacturerRulesInformForm from './ManufacturerRulesInformForm/ManufacturerRulesInformForm';
 import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 
@@ -22,7 +22,7 @@ const RegistrationAsManufacturer = () => {
   const onClick = () => {
     if (user && user.email) {
       showPortalPopUp({
-        popUpContent: <RulesInformForm email={user.email} />,
+        popUpContent: <ManufacturerRulesInformForm />,
         onClosePopUp: onCloseRulesInformForm,
         titleConfirmBtn: 'Понятно',
       });

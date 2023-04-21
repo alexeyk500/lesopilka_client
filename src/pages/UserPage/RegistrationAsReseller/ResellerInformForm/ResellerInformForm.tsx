@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from '../../RegistrationAsManufacturer/RulesInformForm/RulesInformForm.module.css';
+import classes from '../../RegistrationAsManufacturer/ManufacturerRulesInformForm/ManufacturerRulesInformForm.module.css';
 
 const ResellerInformForm: React.FC = () => {
   return (
