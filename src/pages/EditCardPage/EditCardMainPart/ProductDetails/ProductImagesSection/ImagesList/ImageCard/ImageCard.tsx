@@ -50,7 +50,7 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard, productId })
           {imageUrl && (
             <>
               <div className={classes.containerImg}>
-                <img src={imageUrl} className={classes.img} alt="product" />
+                <img src={imageUrl} className={classes.imgProduct} alt="product" />
               </div>
               <button className={classes.deleteBtn} onClick={onClickDelete}>
                 <img src={redRoundDeleteIco} className={classes.imgDeleteBtn} alt="delete" />

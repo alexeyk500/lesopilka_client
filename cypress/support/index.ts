@@ -13,6 +13,7 @@ declare global {
       deleteTestUserManufacturerAddress({ email }: { email: string });
       deleteTestUserReseller({ email }: { email: string });
       deleteTestUserResellerAddress({ email }: { email: string });
+      deleteTestUserManufacturerProductsAll({ email }: { email: string });
     }
   }
 }
