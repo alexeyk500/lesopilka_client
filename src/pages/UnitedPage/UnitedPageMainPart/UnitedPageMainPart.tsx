@@ -8,7 +8,7 @@ import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumps';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { CrumbType } from '../../../types/types';
-import { getManufacturerOrUserName } from '../../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../../UserPage/UserPage';
 
 const UnitedPageMainPart = () => {
   const location = useLocation();
@@ -16,7 +16,7 @@ const UnitedPageMainPart = () => {
   const user = useAppSelector(selectorUser);
   const isManufacturerPage = checkIsManufacturerPage(location);
   const isShowFiltersRow = checkIsShowFiltersRow(searchParams);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Каталог Товаров' }];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrResellerOrUserName(user) }, { title: 'Каталог Товаров' }];
 
   return (
     <div className={classes.container}>

@@ -5,7 +5,7 @@ import ProductDetails from './ProductDetails/ProductDetails';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import { CrumbType } from '../../../types/types';
-import { getManufacturerOrUserName } from '../../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../../UserPage/UserPage';
 import { selectorCatalogSearchParams } from '../../../store/productSlice';
 import { getBackwardRouteToManufacturerCatalog } from '../../../utils/functions';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
@@ -20,13 +20,13 @@ const EditCardMainPart: React.FC = () => {
 
   const crumbs: CrumbType[] = priceEditProductId
     ? [
-        { title: getManufacturerOrUserName(user) },
+        { title: getManufacturerOrResellerOrUserName(user) },
         { title: 'Продажи', route: getBackwardRoute },
         { title: 'Прайс лист', route: PageEnum.ManufacturerPricePage },
         { title: 'Редактирование товара' },
       ]
     : [
-        { title: getManufacturerOrUserName(user) },
+        { title: getManufacturerOrResellerOrUserName(user) },
         { title: 'Продажи', route: getBackwardRoute },
         { title: 'Редактирование товара' },
       ];

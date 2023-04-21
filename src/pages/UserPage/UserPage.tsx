@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import { CrumbType, UserType } from '../../types/types';
 
-export const getManufacturerOrUserName = (user: UserType | undefined) => {
+export const getManufacturerOrResellerOrUserName = (user: UserType | undefined) => {
   if (user) {
     if (user.manufacturer?.title) {
       return user.manufacturer.title;
@@ -20,7 +20,7 @@ export const getManufacturerOrUserName = (user: UserType | undefined) => {
 
 const UserPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'личный кабинет' }];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrResellerOrUserName(user) }, { title: 'личный кабинет' }];
 
   return (
     <div className={classes.container}>

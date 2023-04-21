@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { PageEnum } from '../../../components/AppRouter/AppRouter';
 import { useAppSelector } from '../../../hooks/hooks';
 import { selectorResellerManufacturers } from '../../../store/resellerSlice';
+import classNames from 'classnames';
 
 const publicationWords = ['публикация', 'публикации', 'публикаций'];
 
@@ -29,9 +30,13 @@ const ResellerCabinetControls: React.FC = () => {
   return (
     <div className={classes.container}>
       <div className={classes.dateTitle}>{date}</div>
-      <div className={classes.publicationAmountTitle}>{`${publicationAmount} ${publicationAmountWord}`}</div>
-      <LicensesStatusSelector />
-      <div className={classes.buttonContainer}>
+      {!!resellerManufacturers.length && (
+        <>
+          <div className={classes.publicationAmountTitle}>{`${publicationAmount} ${publicationAmountWord}`}</div>
+          <LicensesStatusSelector />
+        </>
+      )}
+      <div className={classNames(classes.buttonContainer, { [classes.buttonCenter]: !resellerManufacturers.length })}>
         <IconButton
           ico={addManufacturerIco}
           title={'Новый поставщик'}

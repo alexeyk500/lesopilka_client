@@ -4,14 +4,14 @@ import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import { CrumbType } from '../../types/types';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumps';
-import { getManufacturerOrUserName } from '../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../UserPage/UserPage';
 import ManufacturerRegistrationDetails from './ManufacturerRegistrationDetails/ManufacturerRegistrationDetails';
 import { PageEnum } from '../../components/AppRouter/AppRouter';
 
 const ManufacturerRegistrationPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
   const crumbs: CrumbType[] = [
-    { title: getManufacturerOrUserName(user) },
+    { title: getManufacturerOrResellerOrUserName(user) },
     { title: 'профиль пользователя', route: PageEnum.UserPage },
     { title: 'регистрация поставщика' },
   ];

@@ -3,7 +3,7 @@ import LeftColumn from '../../components/LeftColumn/LeftColumn';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
 import { CrumbType } from '../../types/types';
-import { getManufacturerOrUserName } from '../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../UserPage/UserPage';
 import MainColumn from '../../components/MainColumn/MainColumn';
 import classes from './ManufacturerLicensePage.module.css';
 import ManufacturerLicensePageControl from './ManufacturerLicensePageControl/ManufacturerLicensePageControl';
@@ -11,7 +11,10 @@ import ManufacturerLicensePageMainPart from './ManufacturerLicensePageMainPart/M
 
 const ManufacturerLicensePage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Лицензии на публикацию' }];
+  const crumbs: CrumbType[] = [
+    { title: getManufacturerOrResellerOrUserName(user) },
+    { title: 'Лицензии на публикацию' },
+  ];
 
   return (
     <div className={classes.container}>

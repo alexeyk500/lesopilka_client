@@ -16,3 +16,54 @@
   line-height: 32px;
   margin-bottom: 6px;
 }
+
+.noManufacturersContainer {
+  display: flex;
+  padding-top: 10%;
+  flex-direction: column;
+  margin-bottom: 32px;
+  justify-content: center;
+  overflow: scroll;
+}
+
+.noManufacturersTitle {
+  display: flex;
+  margin-bottom: 32px;
+  font-weight: 600;
+  justify-content: center;
+  color: var(--orange_color);
+}
+
+.noManufacturersAdvise {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  color: var(--blue_color);
+  align-items:  center;
+}
+
+.itemRow {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin-bottom: 6px;
+}
+
+.advantageTitle {
+  display: flex;
+  margin-top: 32px;
+  margin-bottom: 8px;
+  color: var(--gray_color);
+  font-weight: 600;
+  font-size: 14px;
+  justify-content: center;
+}
+
+.itemRowAdvantage {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin-bottom: 6px;
+  color: var(--green_color);
+  font-size: 14px;
+}

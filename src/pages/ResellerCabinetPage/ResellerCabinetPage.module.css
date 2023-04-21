@@ -5,31 +5,3 @@
   justify-content: center;
   align-items: center;
 }
-
-/*.gradContainer {*/
-/*  display: flex;*/
-/*  width: 300px;*/
-/*  height: 500px;*/
-/*  padding: 20px;*/
-/*  border: 1px solid blue;*/
-/*  border-radius: 12px;*/
-/*  overflow-y: scroll;*/
-/*  color: #84b000;*/
-/*}*/
-
-/*.gradContainer {*/
-/*  background: linear-gradient(to bottom, transparent 5%, black 20%, black 80%, transparent 95%);*/
-/*}*/
-
-/*.gradContainer::-webkit-scrollbar {*/
-/*  width: 8px;*/
-/* }*/
-
-/*.gradContainer::-webkit-scrollbar-track {*/
-/*  margin: 12px 0;*/
-/*  background: linear-gradient(to bottom, transparent 50%, black 20%, black 80%, transparent 50%);*/
-/* }*/
-
-/*.gradContainer::-webkit-scrollbar-thumb {*/
-/*  background: #C89D62;*/
-/* }*/

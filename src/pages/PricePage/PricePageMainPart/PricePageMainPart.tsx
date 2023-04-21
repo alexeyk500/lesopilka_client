@@ -4,7 +4,7 @@ import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumps';
 import { useLocation } from 'react-router-dom';
 import { checkIsManufacturerPage } from '../../../utils/functions';
 import { CrumbType } from '../../../types/types';
-import { getManufacturerOrUserName } from '../../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../../UserPage/UserPage';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { selectorUser } from '../../../store/userSlice';
 import PriceList from './PriceList/PriceList';
@@ -17,7 +17,7 @@ const PricePageMainPart: React.FC = () => {
 
   const isManufacturerPage = checkIsManufacturerPage(location);
 
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Прайс лист' }];
+  const crumbs: CrumbType[] = [{ title: getManufacturerOrResellerOrUserName(user) }, { title: 'Прайс лист' }];
 
   useEffect(() => {
     if (user && !isManufacturerPage) {

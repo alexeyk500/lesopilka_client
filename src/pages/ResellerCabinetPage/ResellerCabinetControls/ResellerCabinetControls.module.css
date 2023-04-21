@@ -32,6 +32,11 @@
   margin: 32px 0;
 }
 
+.buttonCenter {
+  margin-top: 110px;
+  align-items: flex-start;
+}
+
 .bottomContainer {
   display: flex;
   flex-direction: column;

@@ -7,11 +7,14 @@ import ManOrdersPageMain from './ManOrdersPageMain/ManOrdersPageMain';
 import { CrumbType } from '../../types/types';
 import { useAppSelector } from '../../hooks/hooks';
 import { selectorUser } from '../../store/userSlice';
-import { getManufacturerOrUserName } from '../UserPage/UserPage';
+import { getManufacturerOrResellerOrUserName } from '../UserPage/UserPage';
 
 const ManufacturerOrdersPage: React.FC = () => {
   const user = useAppSelector(selectorUser);
-  const crumbs: CrumbType[] = [{ title: getManufacturerOrUserName(user) }, { title: 'Заказы от покупателей' }];
+  const crumbs: CrumbType[] = [
+    { title: getManufacturerOrResellerOrUserName(user) },
+    { title: 'Заказы от покупателей' },
+  ];
 
   return (
     <div className={classes.container}>
