@@ -91,23 +91,23 @@ const ProductList = () => {
         ) : (
           <>
             {isManufacturerPage && <ProductCard isAddProductCard onClick={onClickAddProductCard} />}
-            {products.length > 0 ? (
-              products.map((product, index) => {
-                if (index === products.length - 1) {
-                  return (
-                    <div ref={lastProductRef} key={index + 'div'}>
-                      <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />
-                    </div>
-                  );
-                } else {
-                  return <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />;
-                }
-              })
-            ) : (
-              <div className={classes.noProductsContainer}>
-                {'Товары c такими параметрами не найдены,\nизмените параметры поиска.'}
-              </div>
-            )}
+            {products.length > 0
+              ? products.map((product, index) => {
+                  if (index === products.length - 1) {
+                    return (
+                      <div ref={lastProductRef} key={index + 'div'}>
+                        <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />
+                      </div>
+                    );
+                  } else {
+                    return <ProductListItem key={index} product={product} isManufacturerPage={isManufacturerPage} />;
+                  }
+                })
+              : !isManufacturerPage && (
+                  <div className={classes.noProductsContainer}>
+                    {'Товары c такими параметрами не найдены,\nизмените параметры поиска.'}
+                  </div>
+                )}
             {isAddingProducts && <div className={classes.isAddingProductsTitle}>Подождите идет загрузка ...</div>}
           </>
         )}
