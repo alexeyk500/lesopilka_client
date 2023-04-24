@@ -4,6 +4,7 @@ import addImgButton from '../../../../../../../img/addImageButton.svg';
 import { useAppDispatch } from '../../../../../../../hooks/hooks';
 import redRoundDeleteIco from './../../../../../../../img/redRoundDeleteIco.svg';
 import { deleteProductPictureThunk, uploadPictureToProductThunk } from '../../../../../../../store/productSlice';
+import { compressImage } from '../../../../../../../utils/pictureFunctions';
 
 type PropsType = {
   productId?: number;
@@ -17,10 +18,12 @@ const ImageCard: React.FC<PropsType> = ({ imageUrl, isAddImageCard, productId })
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (productId && event.target && event.target.files && event.target.files[0]) {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
-      const img = event.target.files[0];
-      event.target.value = '';
-      if (token && img) {
-        dispatch(uploadPictureToProductThunk({ token, productId, img }));
+      const imgFile = event.target.files[0];
+      if (token && imgFile) {
+        const saveImgFile = (file: File) => {
+          dispatch(uploadPictureToProductThunk({ token, productId, img: file }));
+        };
+        compressImage(imgFile, saveImgFile);
       }
     }
   };
