@@ -82,18 +82,21 @@ const ProductSortAndSepticSection = () => {
           options={sortsOption}
           selectedOption={selectedSortId}
           onChangeSelector={onChangeSortSelector}
+          dataTestId={'Сорт'}
         />
         <SectionSelector
           title={'Влажность'}
           options={driedOptions}
           selectedOption={editProduct.isDried ? driedOptions[1] : driedOptions[0]}
           onChangeSelector={onChangeDriedSelector}
+          dataTestId={'Влажность'}
         />
         <SectionSelector
           title={'Обработка антисептиком'}
           options={antisepticOptions}
           selectedOption={editProduct.isSeptic ? antisepticOptions[1] : antisepticOptions[0]}
           onChangeSelector={onChangeSepticSelector}
+          dataTestId={'Обработка антисептиком'}
         />
       </div>
     </SectionContainer>

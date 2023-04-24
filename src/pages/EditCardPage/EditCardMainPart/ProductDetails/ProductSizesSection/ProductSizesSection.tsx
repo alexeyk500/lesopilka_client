@@ -40,14 +40,14 @@ const ProductSizesSection = () => {
     >
       <div className={classes.rowContainer}>
         {editProduct.category?.id && CALIBER_PRODUCT_CATEGORIES.includes(editProduct.category.id) ? (
-          <SizeSelector title={'Диаметр'} sizeType={SizeTypeEnum.caliber} />
+          <SizeSelector title={'Диаметр'} sizeType={SizeTypeEnum.caliber} dataTestId={SizeTypeEnum.caliber} />
         ) : (
           <>
-            <SizeSelector title={'Толщина'} sizeType={SizeTypeEnum.height} />
-            <SizeSelector title={'Ширина'} sizeType={SizeTypeEnum.width} />
+            <SizeSelector title={'Толщина'} sizeType={SizeTypeEnum.height} dataTestId={SizeTypeEnum.height} />
+            <SizeSelector title={'Ширина'} sizeType={SizeTypeEnum.width} dataTestId={SizeTypeEnum.width} />
           </>
         )}
-        <SizeSelector title={'Длинна'} sizeType={SizeTypeEnum.length} />
+        <SizeSelector title={'Длинна'} sizeType={SizeTypeEnum.length} dataTestId={SizeTypeEnum.length} />
       </div>
     </SectionContainer>
   );

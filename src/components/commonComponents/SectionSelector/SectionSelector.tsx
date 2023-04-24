@@ -12,6 +12,7 @@ type PropsType = {
   showCustomSizeInput?: boolean;
   customSizeInputValue?: string;
   onChangeCustomSize?: (value: string | undefined) => void;
+  dataTestId?: string;
 };
 
 const SectionSelector: React.FC<PropsType> = ({
@@ -22,6 +23,7 @@ const SectionSelector: React.FC<PropsType> = ({
   customSizeInputValue,
   onChangeCustomSize,
   showCustomSizeInput,
+  dataTestId,
 }) => {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '' || regExpOnlyDigit.test(e.target.value)) {
@@ -38,6 +40,7 @@ const SectionSelector: React.FC<PropsType> = ({
           selectedOption={selectedOption}
           customClassName={classes.selector}
           onChange={onChangeSelector}
+          dataTestId={dataTestId}
         />
       </div>
       {showCustomSizeInput && (
@@ -47,6 +50,7 @@ const SectionSelector: React.FC<PropsType> = ({
             value={customSizeInputValue || ''}
             onChange={onChangeInput}
             type="text"
+            data-test-id={`${dataTestId}CustomSize`}
           />
           {'мм'}
         </div>

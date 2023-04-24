@@ -9,7 +9,7 @@ type PropsType = {
 
 const CheckIndicator: React.FC<PropsType> = ({ title, checked }) => {
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-test-id={title}>
       <div className={classes.topLine}>
         {checked ? (
           <div className={classes.checkedRound}>

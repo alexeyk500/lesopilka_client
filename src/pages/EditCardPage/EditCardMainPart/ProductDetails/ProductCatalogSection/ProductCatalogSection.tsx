@@ -118,18 +118,21 @@ const ProductCatalogSection: React.FC = () => {
           options={categories}
           selectedOption={selectedCategory ? selectedCategory : formEditCardCategory ? formEditCardCategory : undefined}
           onChangeSelector={onChangeCategorySelector}
+          dataTestId={'categorySelector'}
         />
         <SectionSelector
           title={'Тип пиломатериала'}
           options={subCategories}
           selectedOption={selectedSubCategory}
           onChangeSelector={onChangeSubCategorySelector}
+          dataTestId={'subCategorySelector'}
         />
         <SectionSelector
           title={'Порода древесины'}
           options={productMaterials}
           selectedOption={selectedProductMaterial}
           onChangeSelector={onChangeMaterialSelector}
+          dataTestId={'materialSelector'}
         />
       </div>
     </SectionContainer>

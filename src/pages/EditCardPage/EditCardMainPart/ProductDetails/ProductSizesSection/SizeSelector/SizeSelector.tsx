@@ -25,9 +25,10 @@ const getSizeOptions = (sizes: CategorySizeType[], categoryId: number | undefine
 type PropsType = {
   title: string;
   sizeType: SizeTypeEnum;
+  dataTestId?: string;
 };
 
-const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
+const SizeSelector: React.FC<PropsType> = ({ title, sizeType, dataTestId }) => {
   const dispatch = useAppDispatch();
   const editProduct = useAppSelector(selectorEditProduct);
   const allCategorySizes = useAppSelector(selectorCategorySizes);
@@ -130,6 +131,7 @@ const SizeSelector: React.FC<PropsType> = ({ title, sizeType }) => {
       showCustomSizeInput={isShowCustomSizeInput}
       customSizeInputValue={customInputValue}
       onChangeCustomSize={onChangeCustomValue}
+      dataTestId={dataTestId}
     />
   );
 };
