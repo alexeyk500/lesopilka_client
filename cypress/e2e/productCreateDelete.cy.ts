@@ -19,7 +19,7 @@ describe('create and delete product', () => {
     cy.deleteTestUserManufacturerProductsAll({ email });
   });
 
-  it('create 3 Products from empty test manufacturer', () => {
+  it('create three products for empty manufacturer', () => {
     cy.createTestProduct();
     cy.get('button[class^="ButtonComponent_container"]').contains('Мои товары').click();
     cy.get('div[class^="ProductList_scrollContainer"]').children().should('have.length', 2);
