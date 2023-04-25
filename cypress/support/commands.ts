@@ -30,6 +30,73 @@ Cypress.Commands.add('goToRegisterForm', () => {
   cy.get('div[class^="RegistrationForm_container"]').should('be.visible');
 });
 
+Cypress.Commands.add('createTestProduct', () => {
+  cy.intercept('PUT', '**/product').as('updateProduct');
+
+  cy.get('[data-test-id="categorySelector"]').select('Брус');
+  cy.get('[data-test-id="subCategorySelector"]').select('Калиброваннный Брус');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="materialSelector"]').select('Сосна');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="height"]').select('100 мм');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="width"]').select('180 мм');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="length"]').select('4000 мм');
+  cy.wait('@updateProduct');
+
+  cy.get('[data-test-id="Сорт"]').select('2-й и 3-й сорт');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="Сорт"]').contains('2-й и 3-й сорт');
+
+  cy.get('[data-test-id="Влажность"]').select('Камерная сушка');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="Влажность"]').contains('Камерная сушка');
+
+  cy.get('[data-test-id="Обработка антисептиком"]').select('Септирован');
+  cy.wait('@updateProduct');
+  cy.get('[data-test-id="Обработка антисептиком"]').contains('Септирован');
+
+  cy.intercept('POST', '**/picture/product').as('uploadPicture');
+
+  cy.get('div[class^="ImagesList_container"]').children().should('have.length', 1);
+  cy.get('label[class^="ImageCard_addImageButton"]').should('be.visible');
+
+  cy.get('label[class^="ImageCard_addImageButton"]').selectFile('cypress/fixtures/productImg_1.jpg');
+  cy.wait('@uploadPicture');
+  cy.get('div[class^="ImagesList_container"]').children().should('have.length', 2);
+  cy.get('div[class^="ImagesList_container"]').children('div[class^="ImageCard_container"]').should('have.length', 2);
+  cy.get('img[class^="ImageCard_imgProduct"]').should('have.length', 1);
+  cy.get('label[class^="ImageCard_addImageButton"]').should('be.visible');
+
+  cy.get('label[class^="ImageCard_addImageButton"]').selectFile('cypress/fixtures/productImg_2.jpg');
+  cy.wait('@uploadPicture');
+  cy.get('div[class^="ImagesList_container"]').children().should('have.length', 3);
+  cy.get('div[class^="ImagesList_container"]').children('div[class^="ImageCard_container"]').should('have.length', 3);
+  cy.get('img[class^="ImageCard_imgProduct"]').should('have.length', 2);
+  cy.get('label[class^="ImageCard_addImageButton"]').should('be.visible');
+
+  cy.get('label[class^="ImageCard_addImageButton"]').selectFile('cypress/fixtures/productImg_3.jpg');
+  cy.wait('@uploadPicture');
+  cy.get('div[class^="ImagesList_container"]').children().should('have.length', 3);
+  cy.get('div[class^="ImagesList_container"]').children('div[class^="ImageCard_container"]').should('have.length', 3);
+  cy.get('img[class^="ImageCard_imgProduct"]').should('have.length', 3);
+  cy.get('label[class^="ImageCard_addImageButton"]').should('not.exist');
+
+  cy.intercept('PUT', '**/description').as('updateDescription');
+  cy.get('textarea[class^="ProductDescription"]').type('Самое описание, описание из описаний.');
+  cy.wait('@updateDescription');
+  cy.get('textarea[class^="ProductDescription"]').should('have.value', 'Самое описание, описание из описаний.');
+
+  cy.get('input[class^="ProductCodeSection_customSizeInput"]').type('Артикул - 123/4567 Vk');
+  cy.wait('@updateProduct');
+  cy.get('input[class^="ProductCodeSection_customSizeInput"]').should('have.value', 'Артикул - 123/4567 Vk');
+
+  cy.get('input[class^="ProductPriceSection_customSizeInput"]').type('123.50');
+  cy.get('input[class^="ProductPriceSection_customSizeInput"]').should('have.value', '123.50');
+  cy.wait('@updateProduct');
+});
+
 Cypress.Commands.add('deleteTestUser', ({ email, isUnconfirmed }) => {
   cy.request('POST', `${baseApiUrl}/test/delete-test-user`, { email, isUnconfirmed }).then((response) => {
     if (isUnconfirmed) {
