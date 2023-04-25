@@ -59,7 +59,7 @@ const CardControlAndInfo: React.FC = () => {
       const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
       if (token) {
         dispatch(deleteProductThunk({ token, productId: editProduct.id })).then(() => {
-          navigate(PageEnum.ManufacturerPage);
+          navigate(`${PageEnum.ManufacturerPage}/?mid=${user?.manufacturer?.id}`);
         });
       }
     }

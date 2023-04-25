@@ -13,7 +13,7 @@ export enum ReturnToEnum {
   basket = 'В корзину',
   userOrders = 'В заказы',
   manufacturerOrders = 'В заказы ',
-  manufacturerProducts = 'В мои товары',
+  manufacturerProducts = 'Мои товары',
   price = 'В прайс',
   resellerReport = 'В отчет',
 }
