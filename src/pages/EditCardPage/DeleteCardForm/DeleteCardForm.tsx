@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './DeleteCardForm.module.css';
-import ProductCard from '../../../components/ProductCard/ProductCard';
 import { ProductType } from '../../../types/types';
+import ProductCardLayout from '../../../components/ProductCard/ProductCardLayout';
 
 type PropsType = {
   product: ProductType;
@@ -12,7 +12,7 @@ const DeleteCardForm: React.FC<PropsType> = ({ product }) => {
     <div className={classes.container}>
       <div className={classes.title}>Удалить карточку товара</div>
       <div className={classes.cardContainer}>
-        <ProductCard product={product} isManufacturerProductCard />
+        <ProductCardLayout product={product} isManufacturerProductCard />
       </div>
     </div>
   );
