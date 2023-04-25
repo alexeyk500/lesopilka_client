@@ -11,8 +11,8 @@ describe('edit product form inputs testing', () => {
     cy.get('button[class^="MenuContent_menuButton"]').contains('Мои товары').click();
 
     cy.get('div[class^="ProductList_scrollContainer"]').should('have.length', 1);
-    cy.get('div[class^="ProductCard_addProductCardContainer"]').contains('Добавить карточку').should('be.visible');
-    cy.get('div[class^="ProductCard_addProductCardContainer"]').click();
+    cy.get('div[class^="ProductCardLayout_wrapper"]').contains('Добавить карточку').should('be.visible');
+    cy.get('div[class^="ProductCardLayout_wrapper"]').contains('Добавить карточку').click();
   });
 
   afterEach(() => {
