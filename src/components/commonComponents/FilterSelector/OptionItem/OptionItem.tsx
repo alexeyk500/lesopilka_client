@@ -6,9 +6,10 @@ type PropsType = {
   option: OptionsType;
   selectedOptionId?: number;
   onSelect?: (id: number | undefined) => void;
+  dataTestId?: string;
 };
 
-const OptionItem: React.FC<PropsType> = ({ option, selectedOptionId, onSelect }) => {
+const OptionItem: React.FC<PropsType> = ({ option, selectedOptionId, onSelect, dataTestId }) => {
   const onChangeHandler = () => {
     if (onSelect && option.id) {
       if (option.id === selectedOptionId) {
@@ -26,6 +27,7 @@ const OptionItem: React.FC<PropsType> = ({ option, selectedOptionId, onSelect })
         className={classes.checkbox}
         checked={option.id === selectedOptionId}
         onChange={onChangeHandler}
+        data-test-id={dataTestId}
       />
       <div className={classes.title}>{option.title}</div>
     </div>

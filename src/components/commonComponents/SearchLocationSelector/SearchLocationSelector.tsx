@@ -143,6 +143,7 @@ const SearchLocationSelector: React.FC = () => {
               selectedOption={selectedRegionOption}
               onChange={onChangeRegion}
               customClassName={classes.selector}
+              dataTestId={'searchRegionSelector'}
             />
           </div>
           <div className={classes.selectorContainer}>
@@ -155,6 +156,7 @@ const SearchLocationSelector: React.FC = () => {
                 selectedOption={selectedLocationOption}
                 onChange={onChangeLocationLocal}
                 customClassName={classes.selector}
+                dataTestId={'searchLocationSelector'}
               />
             )}
           </div>

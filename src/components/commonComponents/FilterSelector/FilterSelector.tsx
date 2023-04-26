@@ -35,7 +35,13 @@ const FilterSelector: React.FC<PropsType> = ({ title, options, selectedOptionId,
       {expand && !!options.length && (
         <div className={classes.expandPart}>
           {options.map((option) => (
-            <OptionItem key={option.id} option={option} selectedOptionId={selectedOptionId} onSelect={onSelect} />
+            <OptionItem
+              key={option.id}
+              option={option}
+              selectedOptionId={selectedOptionId}
+              onSelect={onSelect}
+              dataTestId={`${title}-${option.title}`}
+            />
           ))}
         </div>
       )}
