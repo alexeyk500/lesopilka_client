@@ -190,7 +190,12 @@ const OrderToManufacturerItem: React.FC<PropsType> = ({
       {amountType === AmountTypeEnum.inBasket && (
         <div className={classes.actionsColumn}>
           <div className={classes.actionContainer} onClick={onClickDeleteFromBasket}>
-            <img src={product.publicationDate ? deleteIco : deleteRedIco} className={classes.deleteIco} alt="delete" />
+            <img
+              src={product.publicationDate ? deleteIco : deleteRedIco}
+              className={classes.deleteIco}
+              data-test-id={'deleteFromOrder'}
+              alt="delete"
+            />
           </div>
         </div>
       )}
