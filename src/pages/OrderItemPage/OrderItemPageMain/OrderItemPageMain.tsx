@@ -22,7 +22,7 @@ const OrderItemPageMain: React.FC<PropsType> = ({ order, updateOrderItem, isManu
               key={order?.order?.id}
               order={order}
               updateOrders={updateOrderItem}
-              isOrderForManufacturer={isManufacturerOrder}
+              isManufacturer={isManufacturerOrder}
               openDetails
             />
           </div>

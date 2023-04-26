@@ -44,13 +44,13 @@ const ManOrdersList: React.FC = () => {
 
   return (
     <div className={classes.container}>
-      <OrderItemTableTile />
+      <OrderItemTableTile isManufacturer />
       <div className={classes.scrollContainer}>
         {manOrders.length === 0 && (
           <div className={classes.emptyList}>{`список заказов со статусом "${ordersStatus}" пуст ...`}</div>
         )}
         {manOrders.map((order) => (
-          <OrderItem key={order.order.id} order={order} updateOrders={getManOrdersByParams} isOrderForManufacturer />
+          <OrderItem key={order.order.id} order={order} updateOrders={getManOrdersByParams} isManufacturer={true} />
         ))}
       </div>
     </div>

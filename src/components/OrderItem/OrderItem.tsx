@@ -19,11 +19,11 @@ import ManDetailsDeliveryConfirmation from '../../pages/ManufacturerOrdersPage/M
 type PropsType = {
   order: OrderType;
   updateOrders: () => void;
-  isOrderForManufacturer?: boolean;
   openDetails?: boolean;
+  isManufacturer?: boolean;
 };
 
-const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufacturer, openDetails }) => {
+const OrderItem: React.FC<PropsType> = ({ order, updateOrders, openDetails, isManufacturer }) => {
   const dispatch = useAppDispatch();
   const [isOpenDetails, setIsOpenDetails] = useState(!!openDetails);
   const [isOpenMessage, setIsOpenMessage] = useState(!!openDetails);
@@ -41,7 +41,9 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
   const isArchivedOrder = getIsArchivedOrder(order);
   const isOrderOnConfirming = getIsOrderOnConfirming(order);
 
-  const title = isOrderForManufacturer
+  console.log(order.order);
+
+  const title = isManufacturer
     ? order.order.userInfo?.name || order.order.userInfo?.email || ''
     : order.products[0]?.manufacturer?.title ?? '';
 
@@ -78,7 +80,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
     if (token && order.order.id && message.length > 0) {
       const createOrderMessagesParams: CreateOrderMessagesParamsType = {
         orderId: order.order.id,
-        isManufacturerMessage: !!isOrderForManufacturer,
+        isManufacturerMessage: !!isManufacturer,
         messageText: message,
         token,
       };
@@ -108,18 +110,14 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
             toggleManDelivery={toggleManDelivery}
             isOpenChat={isOpenMessage}
             toggleChat={toggleChat}
-            isOrderForManufacturer={isOrderForManufacturer}
+            isOrderForManufacturer={isManufacturer}
           />
         </div>
         <div className={classNames(listClasses.tableColumnStatus, classes.rightAlign)}>
-          <OrderStatus
-            order={order}
-            onOrderStatusClick={onOrderStatusClick}
-            isOrderForManufacturer={isOrderForManufacturer!}
-          />
+          <OrderStatus order={order} onOrderStatusClick={onOrderStatusClick} isOrderForManufacturer={isManufacturer!} />
         </div>
       </div>
-      {isOpenDetails && isOrderForManufacturer && (
+      {isOpenDetails && isManufacturer && (
         <ManOrderDetails
           order={order}
           updateOrders={updateOrders}
@@ -127,7 +125,7 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           confirmedDeliveryPrice={confirmedDeliveryPrice}
         />
       )}
-      {isOrderForManufacturer && isOpenManDelivery && isOrderOnConfirming && (
+      {isManufacturer && isOpenManDelivery && isOrderOnConfirming && (
         <ManDetailsDeliveryConfirmation
           order={order}
           freeDelivery={freeDelivery}
@@ -136,11 +134,11 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, isOrderForManufac
           setConfirmedDeliveryPrice={setConfirmedDeliveryPrice}
         />
       )}
-      {isOpenDetails && !isOrderForManufacturer && <OrderDetails order={order} />}
+      {isOpenDetails && !isManufacturer && <OrderDetails order={order} />}
       {isOpenMessage && (
         <OrderMessagesSection
           order={order}
-          isOrderForManufacturer={isOrderForManufacturer}
+          isOrderForManufacturer={isManufacturer}
           sendNewOrderMessage={isArchivedOrder ? undefined : sendNewOrderMessage}
         />
       )}
