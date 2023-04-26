@@ -4,6 +4,7 @@ import { DeliveryMethodEnum, AmountTypeEnum, OrderType } from '../../../../types
 import { getDeliveryTitle, getOrderDetailHeader } from '../../../../utils/ordersFunctions';
 import { formatUTCtoDDMMMMYYYY } from '../../../../utils/dateTimeFunctions';
 import { getPaymentMethodTitle } from '../../../../pages/NewOrderPage/NewOrderPageMainPart/PaymentMethodSection/PaymentMethodSection';
+import classNames from 'classnames';
 
 type PropsType = {
   order: OrderType;
@@ -35,7 +36,9 @@ const DetailsHeader: React.FC<PropsType> = ({ order, infoTab, isConfirmedOrder }
   return (
     <div className={classes.detailsHeader}>
       <div className={classes.rightColumn}>
-        <div className={classes.titleRow}>{orderDetailsHeader}</div>
+        <div className={classNames(classes.titleRow, { [classes.titleRowNoConfirmed]: !isConfirmedOrder })}>
+          {orderDetailsHeader}
+        </div>
         <div className={classes.row}>
           <div className={classes.title}>{'Поставщик:'}</div>
           <div className={classes.info}>
