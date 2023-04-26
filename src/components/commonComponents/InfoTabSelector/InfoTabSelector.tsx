@@ -7,9 +7,10 @@ type PropsType = {
   infoTab: AmountTypeEnum;
   setInfoTab: (value: AmountTypeEnum) => void;
   isOrderForManufacturer?: boolean;
+  isConfirmedOrder?: boolean;
 };
 
-const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab, isOrderForManufacturer }) => {
+const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab, isOrderForManufacturer, isConfirmedOrder }) => {
   const setInfoTabOrder = () => {
     if (infoTab !== AmountTypeEnum.inOrder) {
       setInfoTab(AmountTypeEnum.inOrder);
@@ -73,8 +74,12 @@ const InfoTabSelector: React.FC<PropsType> = ({ infoTab, setInfoTab, isOrderForM
         ) : (
           <>
             <OrderTab />
-            <ConfirmationTab />
-            <DivergenceTab />
+            {isConfirmedOrder && (
+              <>
+                <ConfirmationTab />
+                <DivergenceTab />
+              </>
+            )}
           </>
         )}
       </div>

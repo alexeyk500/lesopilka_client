@@ -41,8 +41,6 @@ const OrderItem: React.FC<PropsType> = ({ order, updateOrders, openDetails, isMa
   const isArchivedOrder = getIsArchivedOrder(order);
   const isOrderOnConfirming = getIsOrderOnConfirming(order);
 
-  console.log(order.order);
-
   const title = isManufacturer
     ? order.order.userInfo?.name || order.order.userInfo?.email || ''
     : order.products[0]?.manufacturer?.title ?? '';

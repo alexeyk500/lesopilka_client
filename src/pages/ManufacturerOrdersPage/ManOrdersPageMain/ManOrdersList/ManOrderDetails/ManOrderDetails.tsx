@@ -123,7 +123,7 @@ const ManOrderDetails: React.FC<PropsType> = ({ order, updateOrders, freeDeliver
       <div className={classes.delimiter} />
       <OrderSubSectionSelector title={'Товары'}>
         <>
-          <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} isOrderForManufacturer />
+          <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} isOrderForManufacturer isConfirmedOrder />
           {isShowNoDivergenceInOrder ? (
             <div className={classes.noDivergenceTitle}>Расхождений в Подтверждении и Заказе нет</div>
           ) : (

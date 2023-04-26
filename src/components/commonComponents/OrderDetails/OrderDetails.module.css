@@ -7,14 +7,30 @@
 
 .detailsHeader {
   display: flex;
-  width: 100%;
   margin-top: 8px;
+}
+
+.rightColumn {
+  display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.leftColumn {
+  display: flex;
+  width: 180px;
+  white-space: pre-line;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--orange_color);
+  font-weight: 600;
 }
 
 .titleRow {
   display: flex;
   width: 100%;
+  padding-left: 180px;
   margin-bottom: 8px;
   justify-content: center;
   font-size: 16px;

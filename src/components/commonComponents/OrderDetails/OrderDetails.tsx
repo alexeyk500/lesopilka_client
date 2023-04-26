@@ -4,7 +4,7 @@ import { AmountTypeEnum, OrderType, ProductType } from '../../../types/types';
 import OrderProductsList from '../../../pages/BasketPage/BasketPageMainPart/BasketList/OrderToManufacturer/OrderProductsList/OrderProductsList';
 import DetailsHeader from './DetailsHeader/DetailsHeader';
 import DetailsConclusion from './DetailsConclusion/DetailsConclusion';
-import { getProductsAllAmountsType } from '../../../utils/ordersFunctions';
+import { getIsConfirmedOrder, getProductsAllAmountsType } from '../../../utils/ordersFunctions';
 import InfoTabSelector from '../InfoTabSelector/InfoTabSelector';
 
 type PropsType = {
@@ -36,13 +36,14 @@ const OrderDetails: React.FC<PropsType> = ({ order }) => {
   const [amountType, setAmountType] = useState(AmountTypeEnum.inOrder);
   const products = getProductsAllAmountsType(order);
 
+  const isConfirmedOrder = getIsConfirmedOrder(order);
   const isShowNoConfirmation = getIsShowNoConfirmation(order, amountType);
 
   const isShowNoDivergenceInOrder = getIsShowNoDivergenceInOrder(products, amountType);
 
   return (
     <div className={classes.container}>
-      <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} />
+      <InfoTabSelector infoTab={amountType} setInfoTab={setAmountType} isConfirmedOrder={isConfirmedOrder} />
       {isShowNoConfirmation ? (
         <div className={classes.noConfirmationTitle}>Подтверждение заказа от поставщика еще не получено</div>
       ) : (
@@ -51,7 +52,7 @@ const OrderDetails: React.FC<PropsType> = ({ order }) => {
             <div className={classes.noDivergenceTitle}>Расхождений в Заказе и Подтверждении нет</div>
           ) : (
             <>
-              <DetailsHeader order={order} infoTab={amountType} />
+              <DetailsHeader order={order} infoTab={amountType} isConfirmedOrder={isConfirmedOrder} />
               <div className={classes.delimiter} />
               <OrderProductsList products={products} amountType={amountType} />
               <div className={classes.delimiter} />

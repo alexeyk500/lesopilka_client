@@ -8,9 +8,10 @@ import { getPaymentMethodTitle } from '../../../../pages/NewOrderPage/NewOrderPa
 type PropsType = {
   order: OrderType;
   infoTab: AmountTypeEnum;
+  isConfirmedOrder: boolean;
 };
 
-const DetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
+const DetailsHeader: React.FC<PropsType> = ({ order, infoTab, isConfirmedOrder }) => {
   const manufacturerTitle = order.products[0]?.manufacturer?.title ?? '';
   const manufacturerLocationTitle = order.products[0]?.manufacturer?.address.location.title ?? '';
   const manufacturerPhone = order.products[0]?.manufacturer?.phone ?? '';
@@ -33,39 +34,48 @@ const DetailsHeader: React.FC<PropsType> = ({ order, infoTab }) => {
 
   return (
     <div className={classes.detailsHeader}>
-      <div className={classes.titleRow}>{orderDetailsHeader}</div>
-      <div className={classes.row}>
-        <div className={classes.title}>{'Поставщик:'}</div>
-        <div className={classes.info}>
-          {`${manufacturerTitle},`}
-          &nbsp;&nbsp;
-          {`${manufacturerLocationTitle},`}
-          &nbsp;&nbsp;
-          {`${manufacturerPhone},`}
-          &nbsp;&nbsp;
-          {`${manufacturerEmail}`}
+      <div className={classes.rightColumn}>
+        <div className={classes.titleRow}>{orderDetailsHeader}</div>
+        <div className={classes.row}>
+          <div className={classes.title}>{'Поставщик:'}</div>
+          <div className={classes.info}>
+            {`${manufacturerTitle},`}
+            &nbsp;&nbsp;
+            {`${manufacturerLocationTitle},`}
+            &nbsp;&nbsp;
+            {`${manufacturerPhone},`}
+            &nbsp;&nbsp;
+            {`${manufacturerEmail}`}
+          </div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.title}>{'Дата поставки:'}</div>
+          <div className={classes.info}>{`${deliveryDate}`}</div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.title}>{'Способ поставки:'}</div>
+          <div className={classes.info}>{`${deliveryTitle}`}</div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.title}>{'Способ оплаты:'}</div>
+          <div className={classes.info}>{`${paymentMethodTitle}`}</div>
+        </div>
+        <div className={classes.row}>
+          <div className={classes.title}>{'Контактное лицо:'}</div>
+          <div className={classes.info}>
+            {`${contactPersonPhone},`}
+            &nbsp;&nbsp;
+            {`${contactPersonName}`}
+          </div>
         </div>
       </div>
-      <div className={classes.row}>
-        <div className={classes.title}>{'Дата поставки:'}</div>
-        <div className={classes.info}>{`${deliveryDate}`}</div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.title}>{'Способ поставки:'}</div>
-        <div className={classes.info}>{`${deliveryTitle}`}</div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.title}>{'Способ оплаты:'}</div>
-        <div className={classes.info}>{`${paymentMethodTitle}`}</div>
-      </div>
-      <div className={classes.row}>
-        <div className={classes.title}>{'Контактное лицо:'}</div>
-        <div className={classes.info}>
-          {`${contactPersonPhone},`}
-          &nbsp;&nbsp;
-          {`${contactPersonName}`}
+      {!isConfirmedOrder && (
+        <div className={classes.leftColumn}>
+          {`Поставщик еще
+          рассматривает
+          ваш заказ`}
         </div>
-      </div>
+      )}
     </div>
   );
 };
