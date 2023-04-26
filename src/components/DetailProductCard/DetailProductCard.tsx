@@ -7,7 +7,6 @@ import SectionGeneralInfo from './SectionGeneralInfo/SectionGeneralInfo';
 import SectionSizeInfo from './SectionSizeInfo/SectionSizeInfo';
 import SectionDescription from './SectionDescription/SectionDescription';
 import SectionPriceInfo from './SectionPriceInfo/SectionPriceInfo';
-import SectionReviews from './SectionReviews/SectionReviews';
 import {
   showPopUpDeleteProductFromBasket,
   showPopUpDeleteProductFromFavorite,
@@ -118,10 +117,7 @@ export const DetailProductCard: React.FC<PropsType> = ({
           <SectionSizeInfo product={product} />
           <div className={classes.delimiter} />
           <SectionDescription description={product.description} />
-          <div className={classes.delimiter} />
           <SectionPriceInfo product={product} />
-          <div className={classes.delimiter} />
-          <SectionReviews />
         </div>
       </div>
     </div>
