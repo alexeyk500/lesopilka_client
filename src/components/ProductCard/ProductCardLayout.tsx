@@ -124,14 +124,14 @@ const ProductCardLayout: React.FC<PropsType> = ({
                 <div className={classes.wareHouseIcoContainer}>
                   <img src={wareHouseIco} className={classes.wareHouseIco} alt="dimensions" />
                 </div>
-                {product?.manufacturer?.title}
+                <span className={classes.clippedText}>{product?.manufacturer?.title}</span>
               </div>
               <div className={classes.delimiter} />
               <div className={classes.rowContainer}>
                 <div className={classes.locationIcoContainer}>
                   <img src={locationIco} className={classes.locationIco} alt="dimensions" />
                 </div>
-                {product?.manufacturer?.address.location.title}
+                <span className={classes.clippedText}>{product?.manufacturer?.address.location.title}</span>
               </div>
               <div className={classes.delimiter} />
               <div className={classes.rowContainer}>

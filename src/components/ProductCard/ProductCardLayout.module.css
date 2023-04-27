@@ -129,6 +129,12 @@
   align-items: center;
 }
 
+.clippedText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dimensionsTile {
   font-size: 14px;
 }
