@@ -42,7 +42,7 @@ describe('create and delete product', () => {
     cy.get('div[class^="ProductList_scrollContainer"]').children().eq(1).click();
 
     cy.get('button[class^="ButtonComponent_container"]').contains('Удалить').click();
-    cy.get('div[class^="DeleteCardForm_container"]').contains('Удалить карточку товара').should('be.visible');
+    cy.get('div[class^="PortalPopUp_content"]').contains('Удалить карточку товара').should('be.visible');
 
     cy.get('button[class^="PortalPopUp_topCloseBtn"]').click();
     cy.get('div[class^="DeleteCardForm_container"]').should('not.exist');

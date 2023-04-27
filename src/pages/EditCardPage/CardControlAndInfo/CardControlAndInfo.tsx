@@ -15,7 +15,7 @@ import {
 import ButtonComponent, { ButtonType } from '../../../components/commonComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 import { showPortalPopUp } from '../../../components/PortalPopUp/PortalPopUp';
-import DeleteCardForm from '../DeleteCardForm/DeleteCardForm';
+import DisplayCardForm from '../DisplayCardForm/DisplayCardForm';
 import classNames from 'classnames';
 import { checkCatalogSection } from '../EditCardMainPart/ProductDetails/ProductCatalogSection/ProductCatalogSection';
 import { checkSizesSection } from '../EditCardMainPart/ProductDetails/ProductSizesSection/ProductSizesSection';
@@ -67,7 +67,7 @@ const CardControlAndInfo: React.FC = () => {
 
   const onClickDeleteBtn = () => {
     showPortalPopUp({
-      popUpContent: <DeleteCardForm product={editProduct} />,
+      popUpContent: <DisplayCardForm title={'Удалить карточку товара'} product={editProduct} />,
       onClosePopUp: onCloseDeleteCardPopUp,
       titleConfirmBtn: 'Удалить',
       customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
@@ -140,7 +140,9 @@ const CardControlAndInfo: React.FC = () => {
     const token = localStorage.getItem(process.env.REACT_APP_APP_ACCESS_TOKEN!);
     if (token) {
       dispatch(productPublicationThunk({ token, productId: editProduct.id })).then(() => {
-        dispatch(getManufacturerLicensesInfoThunk({ token }));
+        if (user?.manufacturer?.id) {
+          navigate(`${PageEnum.ManufacturerPage}/?mid=${user.manufacturer.id}`);
+        }
       });
     }
   };
@@ -148,8 +150,10 @@ const CardControlAndInfo: React.FC = () => {
   const onSelectHandler = (isChecked?: boolean) => {
     if (isChecked) {
       showPortalPopUp({
-        popUpContent: <div className={classNames(classes.publishPopUp)}>{`Снять товар с публикации?`}</div>,
+        popUpContent: <DisplayCardForm title={'Снять товар с публикации?'} product={editProduct} />,
         titleConfirmBtn: 'Снять',
+        customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
+        isDeletePopUp: true,
         onClosePopUp: (result) => {
           result && stopPublicationProduct();
         },
@@ -158,9 +162,9 @@ const CardControlAndInfo: React.FC = () => {
       const isConditionsChecked = checkConditions();
       if (isConditionsChecked) {
         showPortalPopUp({
-          popUpContent: <div className={classNames(classes.publishPopUp)}>{`Опубликовать товар?`}</div>,
+          popUpContent: <DisplayCardForm title={'Опубликовать товар?'} product={editProduct} isPreview />,
           titleConfirmBtn: 'Публикация',
-          customClassBottomBtnGroup: classes.customClassBottomBtnGroupLogout,
+          customClassBottomBtnGroup: classes.customClassBottomBtnGroup,
           onClosePopUp: (result) => {
             result && publicationProduct();
           },
