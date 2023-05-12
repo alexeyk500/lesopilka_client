@@ -10,7 +10,7 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
 
     cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
     cy.get('button[data-test-id="registerAsManufacturer"]').click();
-    cy.get('div[class^="RulesInformForm_titleBold"]').contains('поставщик').should('be.visible');
+    cy.get('div[class^="ManufacturerRulesInformForm_titleBold"]').contains('поставщик').should('be.visible');
     cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
     cy.get('div[class^="RulesInformForm_titleBold"]').should('not.exist');
 
@@ -36,6 +36,7 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
     cy.get('span[class^="LicensesMonitor_amount"]').contains('500');
 
     cy.deleteTestUserManufacturerAddress({ email });
+    cy.deleteTestUserManufacturerPickUpAddress({ email });
     cy.deleteTestUserManufacturer({ email });
   });
 
@@ -45,7 +46,7 @@ describe('test registration existed user as Manufacturer or Reseller', () => {
 
     cy.get('button[class^="MenuContent_menuButton"]').contains('Личный кабинет').click();
     cy.get('button[data-test-id="registerAsReseller"]').click();
-    cy.get('div[class^="RulesInformForm_titleBold"]').contains('реселлер').should('be.visible');
+    cy.get('div[class^="ResellerInformForm_titleBold"]').contains('реселлер').should('be.visible');
     cy.get('button[class^="ButtonComponent_container"]').contains('Понятно').click();
     cy.get('div[class^="RulesInformForm_titleBold"]').should('not.exist');
 

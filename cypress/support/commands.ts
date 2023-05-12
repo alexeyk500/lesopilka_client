@@ -137,6 +137,12 @@ Cypress.Commands.add('deleteTestUserManufacturerAddress', ({ email }) => {
   });
 });
 
+Cypress.Commands.add('deleteTestUserManufacturerPickUpAddress', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-manufacturer-pick-up-address`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserManufacturerPickUpAddress - deleted');
+  });
+});
+
 Cypress.Commands.add('deleteTestUserReseller', ({ email }) => {
   cy.request('POST', `${baseApiUrl}/test/delete-test-user-reseller`, { email }).then((response) => {
     expect(response.body).to.have.property('message', 'testUserReseller - deleted');

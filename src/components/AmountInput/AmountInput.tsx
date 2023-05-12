@@ -37,7 +37,7 @@ const AmountInput: React.FC<PropsType> = ({ amount, onChangeAmount }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.btnContainer} onClick={onClickDec}>
+      <div className={classes.btnContainer} onClick={onClickDec} data-test-id={'minesAmountBtn'}>
         <img src={minesBlueIco} alt="mines" />
       </div>
       <div className={classes.inputContainer}>
@@ -49,7 +49,7 @@ const AmountInput: React.FC<PropsType> = ({ amount, onChangeAmount }) => {
           onBlur={onBlurInput}
         />
       </div>
-      <div className={classes.btnContainer} onClick={onClickInc}>
+      <div className={classes.btnContainer} onClick={onClickInc} data-test-id={'addAmountBtn'}>
         <img src={plusBlueIco} alt="plus" />
       </div>
     </div>
