@@ -26,6 +26,8 @@ import {
 } from '../../../../utils/productFunctions';
 import { checkIsManufacturerPage } from '../../../../utils/functions';
 import { useLocation, useParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { formatUTCtoDDMMMMYYYY } from '../../../../utils/dateTimeFunctions';
 
 const PriceList = () => {
   const { mid } = useParams();
@@ -43,6 +45,8 @@ const PriceList = () => {
 
   const [price, setPrice] = useState<ReactNode[]>([]);
   const [highlightedId, setHighlightedId] = useState<number | undefined>(32);
+
+  const formatDate = formatUTCtoDDMMMMYYYY(new Date().toISOString());
 
   useEffect(() => {
     const searchParams = new URLSearchParams();
@@ -130,10 +134,10 @@ const PriceList = () => {
   }, [dispatch, price, priceEditProductId]);
 
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, { [classes.containerManufacturerPage]: isManufacturerPage })}>
       <div className={classes.priceContentContainer}>
         <div className={classes.titleContainer}>
-          <div className={classes.dateRow}>15 декабря 2022 года</div>
+          <div className={classes.dateRow}>{formatDate}</div>
           <div className={classes.pageTitle}>
             {selectedPriceType === PriceSelectedTypeEnum.published
               ? `Прайс лист на пиломатериалы`
@@ -144,14 +148,15 @@ const PriceList = () => {
         </div>
         <div className={classes.twoColumnContainer}>
           <div className={classes.manufacturerInfo}>
-            <div className={classes.rowTitle}>{user?.manufacturer?.title}</div>
+            <div className={classes.rowTitle}>{products?.[0]?.manufacturer?.title}</div>
             <div className={classes.rowTitle}>
-              {user?.manufacturer?.address?.region.title}, {user?.manufacturer?.address?.location.title},{' '}
-              {user?.manufacturer?.address?.street}, {`д.${user?.manufacturer?.address?.building}`}
-              {user?.manufacturer?.address?.office && `, оф.${user?.manufacturer?.address?.office}`}
+              {products?.[0]?.manufacturer?.address?.region.title},{' '}
+              {products?.[0]?.manufacturer?.address?.location.title}, {products?.[0]?.manufacturer?.address?.street},{' '}
+              {`${products?.[0]?.manufacturer?.address?.building}`}
+              {products?.[0]?.manufacturer?.address?.office && `, ${products?.[0]?.manufacturer?.address?.office}`}
             </div>
-            <div className={classes.rowTitle}>{user?.email}</div>
-            <div className={classes.rowTitle}>{user?.manufacturer?.phone}</div>
+            <div className={classes.rowTitle}>{products?.[0]?.manufacturer?.email}</div>
+            <div className={classes.rowTitle}>{products?.[0]?.manufacturer?.phone}</div>
           </div>
         </div>
         <div className={classes.logoContainer}>
