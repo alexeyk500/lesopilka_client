@@ -10,9 +10,18 @@ type PropsType = {
   onSelect: (id: number | string) => void;
   additionalInfo?: string;
   disabled?: boolean;
+  dataTestId?: string;
 };
 
-const CheckBoxBlueSquare: React.FC<PropsType> = ({ id, title, checked, onSelect, additionalInfo, disabled }) => {
+const CheckBoxBlueSquare: React.FC<PropsType> = ({
+  id,
+  title,
+  checked,
+  onSelect,
+  additionalInfo,
+  disabled,
+  dataTestId,
+}) => {
   const onClick = () => {
     onSelect(id);
   };
@@ -21,6 +30,7 @@ const CheckBoxBlueSquare: React.FC<PropsType> = ({ id, title, checked, onSelect,
       <div
         className={classNames(classes.box, { [classes.checkedBox]: checked, [classes.disabled]: disabled })}
         onClick={onClick}
+        data-test-id={dataTestId}
       >
         {checked && <img src={checkStatusIco} className={classes.checkStatusIco} alt="check status ico" />}
       </div>

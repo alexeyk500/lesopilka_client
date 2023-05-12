@@ -67,6 +67,7 @@ const DeliverySection: React.FC = () => {
                     title={DeliveryMethodEnum.pickup}
                     checked={deliveryMethod === DeliveryMethodEnum.pickup}
                     onSelect={onSelectDeliveryMethod}
+                    dataTestId={DeliveryMethodEnum.pickup}
                   />
                   <div className={classes.pickUpAddressContainer}>
                     <div className={classes.pickUpAddressTitle}>{manufacturerPickUpAddress}</div>
@@ -80,6 +81,7 @@ const DeliverySection: React.FC = () => {
                     checked={false}
                     onSelect={() => {}}
                     disabled
+                    dataTestId={DeliveryMethodEnum.pickup}
                   />
                   <div className={classes.pickUpAddressContainer}>
                     <div className={classes.pickUpAddressTitle}>
@@ -102,6 +104,7 @@ const DeliverySection: React.FC = () => {
                   'За организацию доставки поставщик может брать дополнительную плату, ' +
                   'если доставка платная, то ее стоимость поставщик укажет в счете на заказ.'
                 }
+                dataTestId={DeliveryMethodEnum.delivery}
               />
               {deliveryMethod === DeliveryMethodEnum.delivery && (
                 <div className={classes.rowContainer}>
@@ -116,6 +119,7 @@ const DeliverySection: React.FC = () => {
                       value={deliveryAddress || ''}
                       onChange={onChangeDeliveryAddress}
                       type="text"
+                      data-test-id={'deliveryAddressInput'}
                     />
                   </div>
                 </div>
