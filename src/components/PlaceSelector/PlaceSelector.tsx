@@ -86,6 +86,7 @@ const PlaceSelector: React.FC<PropsType> = ({ onSelectLocation }) => {
               selectedOption={selectedRegionOption}
               onChange={onChangeRegion}
               customClassName={classes.selector}
+              dataTestId={'placeSelectorRegionSelector'}
             />
           </div>
           <div className={classes.selectorContainer}>
@@ -98,6 +99,7 @@ const PlaceSelector: React.FC<PropsType> = ({ onSelectLocation }) => {
                 selectedOption={selectedLocationOption}
                 onChange={onChangeLocation}
                 customClassName={classes.selector}
+                dataTestId={'placeSelectorLocationSelector'}
               />
             )}
           </div>
