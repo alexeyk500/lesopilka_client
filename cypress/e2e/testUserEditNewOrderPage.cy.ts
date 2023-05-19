@@ -149,7 +149,6 @@ describe('test user edit newOrder Page', () => {
     cy.get('[data-test-id="Самовывоз"]').invoke('attr', 'class').should('not.contain', 'CheckBoxBlueSquare_checkedBox');
     cy.get('div[class^="OrderInfoSection_infoRow"]').contains('Доставка');
 
-
     cy.get('div[class^="PlaceSelector_container"]').should('be.visible');
     cy.get('div[class^="DeliverySection_contentContainer"]').should('be.visible');
     cy.get('input[class^="DeliverySection_customSizeInput"]').should('have.value', '');
@@ -296,7 +295,7 @@ describe('test user edit newOrder Page', () => {
     cy.get('button[class^="ButtonComponent_container"]').contains('Оформить').eq(0).click();
     cy.get('div[class^="CheckIndicator_title"]').contains('Заказ поставщику').should('be.visible');
 
-    cy.get('div[class^="OrderProductsList_priceContentContainer"]').children().should('have.length',3);
+    cy.get('div[class^="OrderProductsList_priceContentContainer"]').children().should('have.length', 3);
 
     cy.get('button[class^="ButtonComponent_container"]').contains('В корзину').click();
     cy.get('[data-test-id="deleteFromOrder"]').eq(0).click();
@@ -341,7 +340,7 @@ describe('test user edit newOrder Page', () => {
 
     cy.get('[data-test-id="Наличными"]').click();
 
-    cy.get('div[class^="OrderProductsList_priceContentContainer"]').children().should('have.length',3);
+    cy.get('div[class^="OrderProductsList_priceContentContainer"]').children().should('have.length', 3);
 
     cy.get('div[class^="NewOrderPageControl_btnCreateContainer"]').contains('Отправить').click();
     cy.get('div[class^="PortalPopUp_content"]').contains('Отправить заказ поставщику');
@@ -366,5 +365,4 @@ describe('test user edit newOrder Page', () => {
 
     cy.deleteTestUserOrdersAll({ email });
   });
-
 });
