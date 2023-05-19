@@ -50,6 +50,7 @@ const PaymentMethodSection: React.FC = () => {
             title={getPaymentMethodTitle(deliveryMethod, paymentOption)}
             checked={paymentMethod === paymentOption}
             onSelect={onSelectPaymentMethod}
+            dataTestId={paymentOption}
           />
         </div>
       ))}

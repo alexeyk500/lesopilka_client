@@ -160,3 +160,9 @@ Cypress.Commands.add('deleteTestUserManufacturerProductsAll', ({ email }) => {
     expect(response.body).to.have.property('message', 'deleteTestManufacturerProductsAll - deleted');
   });
 });
+
+Cypress.Commands.add('deleteTestUserOrdersAll', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-user-orders-all`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testUserOrdersAll - deleted');
+  });
+});
