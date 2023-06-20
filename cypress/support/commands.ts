@@ -1,6 +1,6 @@
 const baseApiUrl = 'http://localhost:5500/api';
 
-Cypress.Commands.add('login', ({ email, password }) => {
+Cypress.Commands.add('login', ({ email, password, isManufacturer }) => {
   const userName = email.split('@')[0];
   cy.get('div[class^="LoginButton_container"]').contains('Войти').click();
   cy.get('input[name="email"]').type(email);
@@ -8,7 +8,9 @@ Cypress.Commands.add('login', ({ email, password }) => {
   cy.get('button').contains('Войти').click();
   cy.get('div[class^="LoginForm_container"]').should('not.exist');
   cy.get('form[class^="PortalPopUp_container"]').should('not.exist');
-  cy.get('div[class^="LoginButton_container"]').contains(userName);
+  if (!isManufacturer) {
+    cy.get('div[class^="LoginButton_container"]').contains(userName);
+  }
 });
 
 Cypress.Commands.add('logout', () => {
@@ -164,5 +166,11 @@ Cypress.Commands.add('deleteTestUserManufacturerProductsAll', ({ email }) => {
 Cypress.Commands.add('deleteTestUserOrdersAll', ({ email }) => {
   cy.request('POST', `${baseApiUrl}/test/delete-test-user-orders-all`, { email }).then((response) => {
     expect(response.body).to.have.property('message', 'testUserOrdersAll - deleted');
+  });
+});
+
+Cypress.Commands.add('deleteTestManufacturerOrdersAll', ({ email }) => {
+  cy.request('POST', `${baseApiUrl}/test/delete-test-manufacturer-orders-all`, { email }).then((response) => {
+    expect(response.body).to.have.property('message', 'testManufacturerOrdersAll - deleted');
   });
 });
